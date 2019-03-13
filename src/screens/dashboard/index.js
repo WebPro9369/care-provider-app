@@ -13,6 +13,8 @@ import {
 import { ScrollView } from "../../components/views/scroll-view";
 import { VisitDetailCard } from "../../components/cards";
 import { ContentWrapper, MatchingMessageWrapper } from "./styles";
+import RequestVisitModalComponent from "../modals/request-visit";
+import ReviewAllergiesModalComponent from "../modals/review-allergies";
 import { colors } from "../../utils/constants";
 
 const imgRightArrow = require("../../../assets/images/Right_arrow.png");
@@ -63,9 +65,25 @@ class DashboardScreen extends React.Component {
           address: "Bushwick, NY",
           color: "#f9b44d"
         }
-      ]
+      ],
+      reviewAllergyModalVisible: false
     };
   }
+
+  componentDidMount() {
+    const { ProviderState } = this.props;
+    setTimeout(() => ProviderState.setAppointment(true), 3000);
+  }
+
+  showReviewAllergyModal = () => {
+    const { ProviderState } = this.props;
+    ProviderState.setAppointment(false);
+    this.setState({ reviewAllergyModalVisible: true });
+  };
+
+  hideReviewAllergyModal = () => {
+    this.setState({ reviewAllergyModalVisible: false });
+  };
 
   render() {
     const {
@@ -73,14 +91,14 @@ class DashboardScreen extends React.Component {
       ProviderState
     } = this.props;
     const { providerData } = ProviderState;
-    const { completeApplication } = providerData;
+    const { completeApplication, appointment } = providerData;
 
     // if (appointment) {
     //   setTimeout(() => {
     //     ProviderState.setOutstandingAppointment(true);
     //   }, 3000);
     // }
-    const { user, bookingList } = this.state;
+    const { user, bookingList, reviewAllergyModalVisible } = this.state;
 
     return (
       <ContainerView>
@@ -185,6 +203,17 @@ class DashboardScreen extends React.Component {
             </ContentWrapper>
           </View>
         </ScrollView>
+        <RequestVisitModalComponent
+          modalVisible={appointment}
+          onAccept={this.showReviewAllergyModal}
+        />
+        <ReviewAllergiesModalComponent
+          modalVisible={reviewAllergyModalVisible}
+          onAccept={() => {
+            this.hideReviewAllergyModal();
+            navigate("History");
+          }}
+        />
       </ContainerView>
     );
   }
