@@ -16,6 +16,7 @@ const colors = {
   BLACK87: "rgba(0, 0, 0, 0.87)",
   BLACK38: "rgba(0, 0, 0, 0.38)",
   BLUE: "#2699fb",
+  LIGHTSKYBLUE: "#92ccf9",
   CARBON: "#1E1E1E",
   MIDGREY: "#6F6F6F",
   FLUORESCENT: "#D0FF00",
