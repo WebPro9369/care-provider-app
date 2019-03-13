@@ -6,7 +6,8 @@ class ProviderState {
   @persist("object") @observable providerData = {
     appointment: null,
     readyProviders: null,
-    outstandingAppointment: null
+    outstandingAppointment: null,
+    completeApplication: false
   };
 
   @action setAppointment(value) {
@@ -19,6 +20,10 @@ class ProviderState {
 
   @action setOutstandingAppointment(value) {
     this.providerData.outstandingAppointment = value;
+  }
+
+  @action setCompleteApplication(value) {
+    this.providerData.completeApplication = value;
   }
 }
 
@@ -34,7 +39,8 @@ hydrate("providerData", providerSingleton, {
   providerData: {
     appointment: null,
     readyProviders: null,
-    outstandingAppointment: true
+    outstandingAppointment: null,
+    completeApplication: false
   }
 }).then(() => {
   // eslint-disable-next-line no-console
