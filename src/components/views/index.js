@@ -59,9 +59,14 @@ export const HeaderWrapper = styled.View`
 export const ViewCentered = styled.View`
   justify-content: center;
   align-items: center;
-  padding-top: 12px;
-  padding-bottom: 50px;
+  padding-top: ${props => `${props.paddingTop}px`};
+  padding-bottom: ${props => `${props.paddingBottom}px`};
 `;
+
+ViewCentered.defaultProps = {
+  paddingTop: 12,
+  paddingBottom: 50
+};
 
 export const TouchableView = styled.TouchableOpacity`
   display: flex;

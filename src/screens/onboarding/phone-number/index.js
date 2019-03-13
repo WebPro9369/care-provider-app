@@ -56,7 +56,7 @@ class PhoneNumberScreen extends Component {
           <ServiceButton
             title="Authenticate"
             style={{ marginBottom: 20 }}
-            onPress={() => navigate("Tabs")}
+            onPress={() => navigate("Application")}
           />
         </View>
       </KeyboardAvoidingView>

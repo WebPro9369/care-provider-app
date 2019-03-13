@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Image, View } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 import { ServiceButton } from "../../../components/service-button";
 import { StyledText, StyledTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
+import { colors } from "../../../utils/constants";
 
-const imgLocation = require("../../../../assets/images/Location.png");
 const imgProgressbar = require("../../../../assets/images/ProgressBar1.png");
 
 class AskLocationScreen extends Component {
@@ -51,7 +52,11 @@ class AskLocationScreen extends Component {
               value={zipcode}
               onChange={this.handleInputChange}
             />
-            <Image source={imgLocation} />
+            <FontAwesome
+              name="map-marker"
+              size={30}
+              color={colors.DARKSKYBLUE}
+            />
           </View>
         </View>
         <View>
