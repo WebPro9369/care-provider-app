@@ -37,7 +37,7 @@ export default providerSingleton;
 
 hydrate("providerData", providerSingleton, {
   providerData: {
-    appointment: null,
+    appointment: false,
     readyProviders: null,
     outstandingAppointment: null,
     completeApplication: false
