@@ -14,9 +14,6 @@ const MainNavigator = createSwitchNavigator(
     Onboarding: {
       screen: OnboardingNavigator
     }
-    // Dashboard: {
-    //   screen: DashboardNavigator
-    // }
   },
   {
     initialRouteName: "AuthLoading"
