@@ -4,14 +4,12 @@ import NameCaptureScreen from "../screens/onboarding/name-capture";
 import EmailCaptureScreen from "../screens/onboarding/email-capture";
 import CreatePasswordScreen from "../screens/onboarding/create-password";
 import PhoneNumberScreen from "../screens/onboarding/phone-number";
+import ApplicationScreen from "../screens/onboarding/application";
 
 const OnboardingNavigator = createStackNavigator(
   {
     AskLocation: {
-      screen: AskLocationScreen,
-      navigationOptions: {
-        title: "Welcome to opear"
-      }
+      screen: AskLocationScreen
     },
     NameCapture: {
       screen: NameCaptureScreen
@@ -24,6 +22,9 @@ const OnboardingNavigator = createStackNavigator(
     },
     PhoneNumber: {
       screen: PhoneNumberScreen
+    },
+    Application: {
+      screen: ApplicationScreen
     }
   },
   {
