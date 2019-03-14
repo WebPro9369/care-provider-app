@@ -27,6 +27,7 @@ class ApplicationScreen extends React.Component {
       legalHistory: null,
       references: null,
       whereHeard: null,
+      supervisingPhysician: null,
       selectedIndexes: []
     };
     this.updateIndex = this.updateIndex.bind(this);
@@ -52,6 +53,7 @@ class ApplicationScreen extends React.Component {
       legalHistory,
       references,
       whereHeard,
+      supervisingPhysician,
       selectedIndexes
     } = this.state;
     return (
@@ -164,6 +166,13 @@ class ApplicationScreen extends React.Component {
                 label="Where did you hear about us?"
                 value={whereHeard}
                 placeholder="Where did you hear about us?"
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                label="Supervising Physician"
+                value={supervisingPhysician}
+                placeholder="Supervising Physician (optional)"
               />
             </FormInputWrapper>
           </FormWrapper>
