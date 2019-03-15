@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     borderRadius: 15
   },
   badgeText: {
-    color: colors.BADGE_TEXT_GREY,
+    color: colors.BLACK60,
     fontSize: 11
   }
 });

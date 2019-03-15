@@ -101,7 +101,7 @@ class ApplicationScreen extends React.Component {
               />
             </FormInputWrapper>
             <FormInputWrapper>
-              <StyledText fontSize={14} color={colors.TEXT_GREY}>
+              <StyledText fontSize={14} color={colors.BLACK60}>
                 Title (select all that apply)
               </StyledText>
               <ButtonGroup

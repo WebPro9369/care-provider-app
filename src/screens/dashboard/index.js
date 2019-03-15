@@ -173,7 +173,7 @@ class DashboardScreen extends React.Component {
                 style={{
                   paddingTop: 12,
                   paddingBottom: 12,
-                  color: colors.TEXT_GREY
+                  color: colors.BLACK60
                 }}
               >
                 1.&nbsp;&nbsp;&nbsp;&nbsp;Book a child visit
@@ -184,7 +184,7 @@ class DashboardScreen extends React.Component {
                 style={{
                   paddingTop: 12,
                   paddingBottom: 12,
-                  color: colors.TEXT_GREY
+                  color: colors.BLACK60
                 }}
               >
                 2.&nbsp;&nbsp;&nbsp;&nbsp;Have visit
@@ -195,7 +195,7 @@ class DashboardScreen extends React.Component {
                 style={{
                   paddingTop: 12,
                   paddingBottom: 12,
-                  color: colors.TEXT_GREY
+                  color: colors.BLACK60
                 }}
               >
                 3.&nbsp;&nbsp;&nbsp;&nbsp;Compete post-visit review

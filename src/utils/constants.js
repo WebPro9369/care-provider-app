@@ -16,9 +16,16 @@ const colors = {
   BLACK: "#000000",
   BLACK87: "rgba(0, 0, 0, 0.87)",
   BLACK38: "rgba(0, 0, 0, 0.38)",
+  BLACK60: "rgba(0,0,0,0.6)",
   BLUE: "#2699fb",
   LIGHTSKYBLUE: "#92ccf9",
   SEAFOAMBLUE: "#76db94",
+  DARKBLUE: "#01295F",
+  LIGHTBLUE: "#74D9F6",
+  DARKSKYBLUE: "#238ce5",
+  GREEN: "#40be65",
+  LIGHTGREEN: "rgb(118, 219, 148)",
+  TEXT_GREEN: "#54c374",
   CARBON: "#1E1E1E",
   MIDGREY: "#6F6F6F",
   FLUORESCENT: "#D0FF00",
@@ -26,18 +33,10 @@ const colors = {
   PURPLE: "#5100A8",
   DULLPURPLE: "#2D005C",
   CYAN: "#01BAEF",
-  DARKBLUE: "#01295F",
-  LIGHTBLUE: "#74D9F6",
-  DARKSKYBLUE: "#238ce5",
   VIVIDORANGE: "#FC4214",
   DULLORANGE: "#D01217",
-  GREEN: "#40be65",
-  LIGHTGREEN: "rgb(118, 219, 148)",
   DARKYELLOW: "#ffbd49",
-  BADGE_TEXT_GREY: "rgba(0,0,0,0.6)",
-  BADGE_BACKGROUND: "#efeff4",
-  TEXT_GREY: "rgba(0,0,0,0.6)",
-  TEXT_GREEN: "#54c374"
+  BADGE_BACKGROUND: "#efeff4"
 };
 
 const MAX_STARS = 5;
