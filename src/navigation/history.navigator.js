@@ -3,12 +3,12 @@ import HistoryScreen from "../screens/history";
 
 const HistoryNavigator = createStackNavigator(
   {
-    History: {
+    HistoryDefault: {
       screen: HistoryScreen
     }
   },
   {
-    initialRouteName: "History",
+    initialRouteName: "HistoryDefault",
     headerMode: "none",
     defaultNavigationOptions: {
       headerBackTitle: null

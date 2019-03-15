@@ -10,28 +10,28 @@ import { colors } from "../utils/constants";
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Dashboard: {
+    TabDashboard: {
       screen: DashboardNavigator,
       navigationOptions: () => ({
         title: "Dashboard",
         tabBarLabel: "Dashboard"
       })
     },
-    Availability: {
+    TabAvailability: {
       screen: AvailabilityScreen,
       navigationOptions: () => ({
         title: "Availability",
         tabBarLabel: "Availability"
       })
     },
-    History: {
+    TabHistory: {
       screen: HistoryNavigator,
       navigationOptions: () => ({
         title: "History",
         tabBarLabel: "History"
       })
     },
-    Account: {
+    TabAccount: {
       screen: AccountNavigator,
       navigationOptions: () => ({
         title: "Account",
@@ -40,7 +40,7 @@ const TabNavigator = createBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "Dashboard",
+    initialRouteName: "TabDashboard",
     defaultNavigationOptions: ({ navigation }) => {
       const TabBarIcon = ({ tintColor }) => {
         const { routeName } = navigation.state;

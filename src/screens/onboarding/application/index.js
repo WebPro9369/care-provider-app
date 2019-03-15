@@ -181,7 +181,7 @@ class ApplicationScreen extends React.Component {
           <FormInputWrapper style={{ marginBottom: 20 }}>
             <ServiceButton
               title="Submit Application"
-              onPress={() => navigate("Dashboard")}
+              onPress={() => navigate("TabDashboard")}
             />
           </FormInputWrapper>
         </ScrollView>

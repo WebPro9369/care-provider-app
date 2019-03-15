@@ -3,12 +3,12 @@ import DashboardScreen from "../screens/dashboard";
 
 const DashboardNavigator = createStackNavigator(
   {
-    Dashboard: {
+    DashboardDefault: {
       screen: DashboardScreen
     }
   },
   {
-    initialRouteName: "Dashboard",
+    initialRouteName: "DashboardDefault",
     headerMode: "none",
     defaultNavigationOptions: {
       headerBackTitle: null

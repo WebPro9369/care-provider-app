@@ -3,12 +3,12 @@ import AccountScreen from "../screens/account";
 
 const AccountNavigator = createStackNavigator(
   {
-    Account: {
+    AccountDefault: {
       screen: AccountScreen
     }
   },
   {
-    initialRouteName: "Account",
+    initialRouteName: "AccountDefault",
     headerMode: "none",
     defaultNavigationOptions: {
       headerBackTitle: null
