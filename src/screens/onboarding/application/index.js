@@ -168,13 +168,15 @@ class ApplicationScreen extends React.Component {
                 placeholder="Where did you hear about us?"
               />
             </FormInputWrapper>
-            <FormInputWrapper>
-              <FormTextInput
-                label="Supervising Physician"
-                value={supervisingPhysician}
-                placeholder="Supervising Physician (optional)"
-              />
-            </FormInputWrapper>
+            {selectedIndexes.includes(0) ? null : (
+              <FormInputWrapper>
+                <FormTextInput
+                  label="Supervising Physician"
+                  value={supervisingPhysician}
+                  placeholder="Supervising Physician"
+                />
+              </FormInputWrapper>
+            )}
           </FormWrapper>
           <FormInputWrapper style={{ marginBottom: 20 }}>
             <ServiceButton
