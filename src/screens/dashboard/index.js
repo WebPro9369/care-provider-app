@@ -22,11 +22,11 @@ const imgDog = require("../../../assets/images/Dog.png");
 const imgFox = require("../../../assets/images/Fox.png");
 const imgTiger = require("../../../assets/images/Tiger.png");
 
-@inject("ProviderState")
+@inject("store")
 @observer
 class DashboardScreen extends React.Component {
   static propTypes = {
-    ProviderState: PropTypes.observableObject.isRequired
+    store: PropTypes.observableObject.isRequired
   };
 
   constructor(props) {
@@ -71,13 +71,13 @@ class DashboardScreen extends React.Component {
   }
 
   componentDidMount() {
-    const { ProviderState } = this.props;
-    setTimeout(() => ProviderState.setAppointment(true), 3000);
+    const { store } = this.props;
+    setTimeout(() => store.providerStore.setAppointment(true), 3000);
   }
 
   showReviewAllergyModal = () => {
-    const { ProviderState } = this.props;
-    ProviderState.setAppointment(false);
+    const { store } = this.props;
+    store.providerStore.setAppointment(false);
     this.setState({ reviewAllergyModalVisible: true });
   };
 
@@ -88,10 +88,10 @@ class DashboardScreen extends React.Component {
   render() {
     const {
       navigation: { navigate },
-      ProviderState
+      store
     } = this.props;
-    const { providerData } = ProviderState;
-    const { completeApplication, appointment } = providerData;
+    const { providerStore } = store;
+    const { completeApplication, appointment } = providerStore;
 
     // if (appointment) {
     //   setTimeout(() => {

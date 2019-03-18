@@ -15,7 +15,7 @@ import { colors } from "../../../utils/constants";
 
 const imgAllergy = require("../../../../assets/images/AllergyImage.png");
 
-@inject("ProviderState")
+@inject("store")
 @observer
 class ReviewAllergiesModalComponent extends Component {
   state = {

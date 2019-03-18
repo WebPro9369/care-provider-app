@@ -3,15 +3,9 @@ import styled from "styled-components/native";
 import { AppLoading, SplashScreen, Font } from "expo";
 import { Provider, observer } from "mobx-react";
 
-import ApplicationState from "./src/store/app";
-import ProviderState from "./src/store/provider";
+import { mainStore } from "./src/store";
 import RootContainer from "./src/root-container";
 import { DEVICE_WIDTH, DEVICE_HEIGHT } from "./src/utils/constants";
-
-const store = {
-  ApplicationState,
-  ProviderState
-};
 
 const imgSplash = require("./assets/splash.png");
 
@@ -64,7 +58,7 @@ export default class App extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   onStartAsync() {
     setTimeout(() => {
-      ApplicationState.AppGlobalState.SplashShowing = false;
+      mainStore.applicationStore.hideSplash();
     }, 5000);
   }
 
@@ -77,9 +71,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (ApplicationState.AppGlobalState.SplashShowing === false) {
+    if (mainStore.applicationStore.getSplashShowing() === false) {
       return (
-        <Provider {...store}>
+        <Provider store={mainStore}>
           <RootContainer />
         </Provider>
       );

@@ -10,7 +10,7 @@ const imgDog = require("../../../assets/images/Dog.png");
 const imgFox = require("../../../assets/images/Fox.png");
 const imgTiger = require("../../../assets/images/Tiger.png");
 
-@inject("ProviderState")
+@inject("store")
 @observer
 class HistoryScreen extends React.Component {
   // static propTypes = {

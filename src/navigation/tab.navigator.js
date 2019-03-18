@@ -47,17 +47,17 @@ const TabNavigator = createBottomTabNavigator(
         let IconComponent = MaterialCommunityIcons;
         let iconName;
         switch (routeName) {
-          case "Dashboard":
+          case "TabDashboard":
             iconName = "home";
             break;
-          case "Availability":
+          case "TabAvailability":
             IconComponent = Ionicons;
             iconName = "ios-briefcase";
             break;
-          case "History":
+          case "TabHistory":
             iconName = "history";
             break;
-          case "Account":
+          case "TabAccount":
             iconName = "account";
             break;
           default:

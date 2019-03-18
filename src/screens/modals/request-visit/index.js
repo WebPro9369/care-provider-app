@@ -17,7 +17,7 @@ import { colors } from "../../../utils/constants";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
-@inject("ProviderState")
+@inject("store")
 @observer
 class RequestVisitModalComponent extends Component {
   state = {
@@ -40,7 +40,7 @@ class RequestVisitModalComponent extends Component {
 
   static propTypes = {
     onAccept: ReactPropTypes.func.isRequired,
-    ProviderState: PropTypes.observableObject.isRequired
+    store: PropTypes.observableObject.isRequired
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -58,9 +58,9 @@ class RequestVisitModalComponent extends Component {
   }
 
   setModalVisible = visible => {
-    const { ProviderState } = this.props;
+    const { store } = this.props;
     this.setState({ modalVisible: visible });
-    ProviderState.setAppointment(visible);
+    store.applicationStore.setAppointment(visible);
   };
 
   close = () => {
