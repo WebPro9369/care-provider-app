@@ -43,7 +43,7 @@
     "eslint-plugin-react": "^7.12.4",
     "prettier": "^1.16.4",
     "reactotron-mst": "^3.1.0",
-    "reactotron-react-native": "^2.1.4"
+    "reactotron-react-native": "^3.2.1"
   },
   "private": true
 }
