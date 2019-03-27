@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactPropTypes from "prop-types";
 import { inject, observer, PropTypes } from "mobx-react";
 import { Modal, Alert } from "react-native";
-import { MapView } from "expo";
+import MapView from "react-native-maps";
 import {
   ModalWrapper,
   ViewCentered,
