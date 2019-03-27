@@ -22,7 +22,7 @@ export const StyledTouchableButtonWrapper = styled.TouchableOpacity`
 
 export const ServiceText = styled.Text`
   color: ${colors.BLACK};
-  font-family: "Flama-Medium";
+  font-family: "FlamaMedium";
   text-align: left;
   font-size: ${props => (props.size === "small" ? "20px" : "28px")};
   line-height: ${props => (props.size === "large" ? "40px" : "30px")};

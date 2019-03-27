@@ -30,7 +30,7 @@ export const ProviderCard = ({
         <View style={{ paddingLeft: 20 }}>
           <StyledText
             fontSize={16}
-            fontFamily="Flama-Medium"
+            fontFamily="FlamaMedium"
             color={colors.BLACK87}
           >
             {name}
@@ -58,7 +58,7 @@ export const ProviderCard = ({
       >
         <AntDesign name="star" color={colors.DARKYELLOW} size={12} />
         <StyledText
-          fontFamily="Flama-Medium"
+          fontFamily="FlamaMedium"
           fontSize={11}
           color={colors.DARKYELLOW}
           lineHeight={12}
@@ -141,7 +141,7 @@ export const ProviderStarsCard = ({
         <View style={{ paddingLeft: 20 }}>
           <StyledText
             fontSize={20}
-            fontFamily="Flama-Medium"
+            fontFamily="FlamaMedium"
             color={colors.BLACK87}
           >
             {name}
@@ -161,7 +161,7 @@ export const ProviderStarsCard = ({
       >
         <AntDesign name="star" color={colors.DARKYELLOW} size={12} />
         <StyledText
-          fontFamily="Flama-Medium"
+          fontFamily="FlamaMedium"
           fontSize={11}
           color={colors.DARKYELLOW}
           lineHeight={12}
@@ -234,7 +234,7 @@ export const VisitDetailCard = ({
       <View style={{ marginLeft: 20 }}>
         <StyledText
           fontSize={14}
-          fontFamily="Flama-Medium"
+          fontFamily="FlamaMedium"
           lineHeight={18}
           color={colors.BLACK87}
         >
@@ -248,7 +248,7 @@ export const VisitDetailCard = ({
     <View style={{ display: "flex", alignItems: "center" }}>
       <StyledText
         fontSize={16}
-        fontFamily="Flama-Medium"
+        fontFamily="FlamaMedium"
         lineHeight={24}
         color={colors.BLACK60}
       >

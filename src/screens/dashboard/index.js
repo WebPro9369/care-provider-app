@@ -107,7 +107,7 @@ class DashboardScreen extends React.Component {
         </HeaderWrapper>
         <ScrollView padding={0}>
           <ContentWrapper>
-            <StyledText fontSize={28} fontFamily="Flama-Medium">
+            <StyledText fontSize={28} fontFamily="FlamaMedium">
               {"Hi, "}
               {user.name}
               {"!"}

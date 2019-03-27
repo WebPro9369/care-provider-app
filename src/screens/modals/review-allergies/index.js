@@ -66,7 +66,7 @@ class ReviewAllergiesModalComponent extends Component {
             <FlexView justifyContent="center">
               <StyledText
                 fontSize={24}
-                fontFamily="Flama-Medium"
+                fontFamily="FlamaMedium"
                 color={colors.BLACK87}
               >
                 {"Review: "}

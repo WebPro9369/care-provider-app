@@ -88,7 +88,7 @@ class RequestVisitModalComponent extends Component {
             <ViewCentered paddingTop={16} paddingBottom={16}>
               <StyledText
                 fontSize={24}
-                fontFamily="Flama-Medium"
+                fontFamily="FlamaMedium"
                 color={colors.BLACK87}
               >
                 {"Request: "}
@@ -118,7 +118,7 @@ class RequestVisitModalComponent extends Component {
                   style={{ paddingTop: 6, paddingBottom: 6 }}
                 >
                   <View style={{ width: 100 }}>
-                    <StyledText fontSize={14} fontFamily="Flama-Medium">
+                    <StyledText fontSize={14} fontFamily="FlamaMedium">
                       Allergies
                     </StyledText>
                   </View>
@@ -129,7 +129,7 @@ class RequestVisitModalComponent extends Component {
                   style={{ paddingTop: 6, paddingBottom: 6 }}
                 >
                   <View style={{ width: 100 }}>
-                    <StyledText fontSize={14} fontFamily="Flama-Medium">
+                    <StyledText fontSize={14} fontFamily="FlamaMedium">
                       Other
                     </StyledText>
                   </View>
@@ -140,7 +140,7 @@ class RequestVisitModalComponent extends Component {
                   style={{ paddingTop: 6, paddingBottom: 6 }}
                 >
                   <View style={{ width: 100 }}>
-                    <StyledText fontSize={14} fontFamily="Flama-Medium">
+                    <StyledText fontSize={14} fontFamily="FlamaMedium">
                       Visit Reason
                     </StyledText>
                   </View>

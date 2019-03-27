@@ -39,7 +39,7 @@ export const StyledText = styled.Text`
 StyledText.defaultProps = {
   color: colors.BLACK,
   fontSize: 20,
-  fontFamily: "Flama-Basic",
+  fontFamily: "Flama",
   lineHeight: 30,
   textAlign: "left"
 };
@@ -55,7 +55,7 @@ export const StyledTextInput = styled.TextInput`
 StyledTextInput.defaultProps = {
   color: colors.BLACK,
   fontSize: 20,
-  fontFamily: "Flama-Basic",
+  fontFamily: "Flama",
   lineHeight: 30,
   textAlign: "left"
 };

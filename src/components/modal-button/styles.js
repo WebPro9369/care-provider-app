@@ -28,7 +28,7 @@ export const TouchableButtonWrapper = styled.TouchableOpacity`
 `;
 
 export const Label = styled.Text`
-  font-family: "Flama-Medium";
+  font-family: "FlamaMedium";
   font-size: 20px;
   color: ${props => (props.reversed ? colors.SEAFOAMBLUE : colors.WHITE)};
 `;

@@ -60,6 +60,6 @@ export const styles = StyleSheet.create({
   badgeText: {
     color: colors.BLACK60,
     fontSize: 11,
-    fontFamily: "Flama-Medium"
+    fontFamily: "FlamaMedium"
   }
 });

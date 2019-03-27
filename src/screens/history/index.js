@@ -71,7 +71,7 @@ class HistoryScreen extends React.Component {
       <ContainerView style={{ marginTop: 44 }}>
         <ScrollView padding={0}>
           <ContentWrapper style={{ marginBottom: 48 }}>
-            <StyledText fontSize={28} fontFamily="Flama-Medium">
+            <StyledText fontSize={28} fontFamily="FlamaMedium">
               Upcoming Visits
             </StyledText>
           </ContentWrapper>
