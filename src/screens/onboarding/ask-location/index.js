@@ -31,7 +31,11 @@ class AskLocationScreen extends Component {
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
         <View>
-          <NavHeader title="Welcome to opear" hasBackButton size="small" />
+          <NavHeader
+            title="Welcome to opear"
+            hasBackButton={false}
+            size="small"
+          />
           <StyledText
             textAlign="left"
             style={{ marginTop: 24, marginBottom: 24 }}
