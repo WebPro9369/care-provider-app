@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { createBottomTabNavigator } from "react-navigation";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AccountNavigator from "./account.navigator";
 import DashboardNavigator from "./dashboard.navigator";
 import AvailabilityScreen from "../screens/availability";

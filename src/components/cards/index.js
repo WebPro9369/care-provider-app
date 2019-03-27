@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Avatar, Badge } from "react-native-elements";
-import { AntDesign } from "@expo/vector-icons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import { View, FlexView, TouchableView } from "../views";
 import { StyledText } from "../text";
 import {
