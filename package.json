@@ -1,15 +1,11 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "eject": "expo eject",
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
     "lint": "eslint src"
   },
   "dependencies": {
-    "@expo/vector-icons": "^9.0.0",
-    "expo": "^32.0.0",
     "lodash": "^4.17.11",
     "luxon": "^1.11.4",
     "mobx": "^5.8.0",
@@ -20,19 +16,27 @@
     "object-path-immutable": "^3.0.0",
     "prop-types": "^15.6.2",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native": "0.59.1",
+    "react-native-awesome-card-io": "^0.8.2",
     "react-native-elements": "^1.1.0",
+    "react-native-gesture-handler": "~1.0.14",
+    "react-native-maps": "^0.23.0",
     "react-native-phone-input": "^0.2.1",
+    "react-native-reanimated": "^1.0.0-alpha.12",
+    "react-native-tab-view": "^2.0.2",
+    "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.0.9",
     "recompose": "^0.30.0",
     "styled-components": "^4.1.3",
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.0",
     "@babel/plugin-proposal-decorators": "^7.1.6",
+    "@babel/runtime": "^7.4.0",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.5.0",
     "babel-plugin-functional-hmr": "^1.0.24",
-    "babel-preset-expo": "^5.0.0",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "eslint": "^5.15.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -41,9 +45,17 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "jest": "^24.5.0",
+    "metro-react-native-babel-preset": "^0.53.1",
     "prettier": "^1.16.4",
+    "react-test-renderer": "16.8.3",
     "reactotron-mst": "^3.1.0",
     "reactotron-react-native": "^3.2.1"
   },
-  "private": true
+  "private": true,
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  }
 }
