@@ -71,7 +71,7 @@ class DashboardScreen extends React.Component {
   }
 
   componentDidMount() {
-    const { store } = this.props;
+    // const { store } = this.props;
     // setTimeout(() => store.providerStore.setAppointment(true), 3000);
   }
 
