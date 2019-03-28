@@ -5,6 +5,11 @@ import EditNameScreen from "../screens/account/edit-name";
 import EditEmailScreen from "../screens/account/edit-email";
 import EditAddressScreen from "../screens/account/edit-address";
 import EditPhoneNumberScreen from "../screens/account/edit-phonenumber";
+import PayoutsScreen from "../screens/account/payouts";
+import EditCardScreen from "../screens/account/edit-card";
+import EditBankScreen from "../screens/account/edit-bank";
+import AddBankScreen from "../screens/account/add-bank";
+import UpdateApplicationScreen from "../screens/account/update-application";
 
 const AccountNavigator = createStackNavigator(
   {
@@ -25,6 +30,21 @@ const AccountNavigator = createStackNavigator(
     },
     AccountEditPhoneNumber: {
       screen: EditPhoneNumberScreen
+    },
+    AccountPayouts: {
+      screen: PayoutsScreen
+    },
+    AccountEditCard: {
+      screen: EditCardScreen
+    },
+    AccountEditBank: {
+      screen: EditBankScreen
+    },
+    AccountAddBank: {
+      screen: AddBankScreen
+    },
+    AccountUpdateApplication: {
+      screen: UpdateApplicationScreen
     }
   },
   {
