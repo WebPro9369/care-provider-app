@@ -46,11 +46,12 @@ export const FormWrapper = styled.View`
   flex: 1;
   justify-content: flex-start;
   padding: ${props => `${props.padding}px`};
-  padding-bottom: 40px;
+  padding-bottom: ${props => `${props.paddingBottom}px`};
 `;
 
 FormWrapper.defaultProps = {
-  padding: 16
+  padding: 16,
+  paddingBottom: 40
 };
 
 export const FormInputWrapper = styled.View`
