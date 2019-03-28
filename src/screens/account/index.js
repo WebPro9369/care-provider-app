@@ -53,11 +53,15 @@ class AccountScreen extends React.Component {
             <ListButtonText>Settings</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
-          <ListTouchableButtonWrapper onPress={() => navigate("Payment")}>
+          <ListTouchableButtonWrapper
+            onPress={() => navigate("AccountPayouts")}
+          >
             <ListButtonText>Payouts</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
-          <ListTouchableButtonWrapper>
+          <ListTouchableButtonWrapper
+            onPress={() => navigate("AccountUpdateApplication")}
+          >
             <ListButtonText>Update Application</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
