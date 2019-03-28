@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactPropTypes from "prop-types";
 import { inject, observer, PropTypes } from "mobx-react";
-import { Modal, Alert } from "react-native";
+import { Modal } from "react-native";
 import MapView from "react-native-maps";
 import {
   ModalWrapper,
@@ -24,7 +24,6 @@ class RequestVisitModalComponent extends Component {
     modalVisible: false,
     illness: "Flu Shot",
     distance: "3.8 miles away",
-    address: "22341 Justice Ave #24",
     childname: "Benjamin",
     time: "6PM",
     allergies: "Crustaceans, gluten",
@@ -60,7 +59,7 @@ class RequestVisitModalComponent extends Component {
   setModalVisible = visible => {
     const { store } = this.props;
     this.setState({ modalVisible: visible });
-    store.applicationStore.setAppointment(visible);
+    store.providerStore.setAppointment(visible);
   };
 
   close = () => {
@@ -73,7 +72,6 @@ class RequestVisitModalComponent extends Component {
       childname,
       illness,
       distance,
-      address,
       time,
       allergies,
       other,
