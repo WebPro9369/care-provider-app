@@ -67,7 +67,7 @@ export const ProviderCard = ({
         </StyledText>
       </FlexView>
     </FlexView>
-    <FlexView style={{ paddingTop: 30 }}>
+    <FlexView style={{ paddingTop: 16 }}>
       {badges.map(badge => (
         <Badge
           key={badge}
