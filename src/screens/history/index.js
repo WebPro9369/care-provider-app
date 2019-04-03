@@ -54,10 +54,9 @@ class HistoryScreen extends React.Component {
   }
 
   render() {
-    // const {
-    //   // navigation: { navigate },
-    //   ProviderState
-    // } = this.props;
+    const {
+      navigation: { navigate }
+    } = this.props;
     // const { providerData } = ProviderState;
 
     // if (appointment) {
@@ -87,6 +86,7 @@ class HistoryScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
+                      onPress={() => navigate("HistoryVisitDetails")}
                     />
                   </View>
                 ))}
@@ -105,6 +105,7 @@ class HistoryScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
+                      onPress={() => navigate("HistoryVisitDetails")}
                     />
                   </View>
                 ))}
