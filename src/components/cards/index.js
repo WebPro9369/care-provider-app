@@ -220,6 +220,37 @@ BookedDetailCard.defaultProps = {
   icon: null
 };
 
+export const LargeBookedDetailCard = ({ type, text, icon, ...rest }) => (
+  <BookedDetailCardWrapper {...rest}>
+    <View style={{ paddingTop: 12, paddingBottom: 12 }}>
+      <StyledText
+        fontSize={14}
+        fontFamily="FlamaMedium"
+        color={colors.BLACK60}
+        lineHeight={18}
+      >
+        {type}
+      </StyledText>
+    </View>
+    <CardContentContainer>
+      <StyledText fontSize={20} color={colors.BLACK87} lineHeight={20}>
+        {text}
+      </StyledText>
+      {icon}
+    </CardContentContainer>
+  </BookedDetailCardWrapper>
+);
+
+LargeBookedDetailCard.propTypes = {
+  type: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  icon: PropTypes.element
+};
+
+LargeBookedDetailCard.defaultProps = {
+  icon: null
+};
+
 export const VisitDetailCard = ({
   avatarImg,
   name,
