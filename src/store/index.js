@@ -10,7 +10,8 @@ const MainStore = types.model("MainStore", {
     appointment: false,
     readyProviders: false,
     outstandingAppointment: false,
-    completeApplication: false
+    completeApplication: false,
+    arrived: false
   })
 });
 

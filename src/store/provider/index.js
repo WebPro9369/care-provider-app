@@ -6,7 +6,8 @@ export const ProviderStore = types
     appointment: types.boolean,
     readyProviders: types.boolean,
     outstandingAppointment: types.boolean,
-    completeApplication: types.boolean
+    completeApplication: types.boolean,
+    arrived: types.boolean
   })
   .actions(self => ({
     setAppointment(value) {
@@ -20,5 +21,8 @@ export const ProviderStore = types
     },
     setCompleteApplication(value) {
       self.completeApplication = value;
+    },
+    setArrived(value) {
+      self.arrived = value;
     }
   }));
