@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AccountNavigator from "./account.navigator";
 import DashboardNavigator from "./dashboard.navigator";
-import AvailabilityScreen from "../screens/availability";
+import AvailabilityNavigator from "./availability.navigator";
 import HistoryNavigator from "./history.navigator";
 import { colors } from "../utils/constants";
 
@@ -19,7 +19,7 @@ const TabNavigator = createBottomTabNavigator(
       })
     },
     TabAvailability: {
-      screen: AvailabilityScreen,
+      screen: AvailabilityNavigator,
       navigationOptions: () => ({
         title: "Availability",
         tabBarLabel: "Availability"
