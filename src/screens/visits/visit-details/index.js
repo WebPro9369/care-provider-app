@@ -113,7 +113,7 @@ class VisitDetailsScreen extends React.Component {
               {arrived ? (
                 <ServiceButton
                   title="Arrived"
-                  onPress={() => navigate("HistoryVisitInProgress")}
+                  onPress={() => navigate("VisitsVisitInProgress")}
                 />
               ) : (
                 <ServiceButton title="Navigate" />

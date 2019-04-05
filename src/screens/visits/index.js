@@ -12,7 +12,7 @@ const imgTiger = require("../../../assets/images/Tiger.png");
 
 @inject("store")
 @observer
-class HistoryScreen extends React.Component {
+class VisitsScreen extends React.Component {
   // static propTypes = {
   //   ProviderState: PropTypes.observableObject.isRequired
   // };
@@ -86,7 +86,7 @@ class HistoryScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
-                      onPress={() => navigate("HistoryVisitDetails")}
+                      onPress={() => navigate("VisitsVisitDetails")}
                     />
                   </View>
                 ))}
@@ -105,7 +105,7 @@ class HistoryScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
-                      onPress={() => navigate("HistoryVisitDetails")}
+                      onPress={() => navigate("VisitsVisitDetails")}
                     />
                   </View>
                 ))}
@@ -117,4 +117,4 @@ class HistoryScreen extends React.Component {
     );
   }
 }
-export default HistoryScreen;
+export default VisitsScreen;
