@@ -6,7 +6,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AccountNavigator from "./account.navigator";
 import DashboardNavigator from "./dashboard.navigator";
 import AvailabilityNavigator from "./availability.navigator";
-import HistoryNavigator from "./history.navigator";
+import VisitsNavigator from "./visits.navigator";
 import { colors } from "../utils/constants";
 
 const TabNavigator = createBottomTabNavigator(
@@ -25,11 +25,11 @@ const TabNavigator = createBottomTabNavigator(
         tabBarLabel: "Availability"
       })
     },
-    TabHistory: {
-      screen: HistoryNavigator,
+    TabVisits: {
+      screen: VisitsNavigator,
       navigationOptions: () => ({
-        title: "History",
-        tabBarLabel: "History"
+        title: "Visits",
+        tabBarLabel: "Visits"
       })
     },
     TabAccount: {
@@ -55,7 +55,7 @@ const TabNavigator = createBottomTabNavigator(
             IconComponent = Ionicons;
             iconName = "ios-briefcase";
             break;
-          case "TabHistory":
+          case "TabVisits":
             iconName = "history";
             break;
           case "TabAccount":
