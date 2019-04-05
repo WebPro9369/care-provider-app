@@ -1,120 +1,92 @@
+/* eslint-disable react/no-unused-state */
 import React from "react";
-import { inject, observer } from "mobx-react";
-
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Animated from "react-native-reanimated";
+import { TabView, SceneMap } from "react-native-tab-view";
 import { StyledText } from "../../components/text";
-import { ContainerView, View, ContentWrapper } from "../../components/views";
-import { ScrollView } from "../../components/views/scroll-view";
-import { VisitDetailCard } from "../../components/cards";
+import { View, FlexView } from "../../components/views";
+import { tabViewStyles, TabItem } from "./styles";
+import { colors } from "../../utils/constants";
+import UpcomingVisitsScreen from "./upcoming-visits";
+import PastVisitsScreen from "./past-visits";
 
-const imgDog = require("../../../assets/images/Dog.png");
-const imgFox = require("../../../assets/images/Fox.png");
-const imgTiger = require("../../../assets/images/Tiger.png");
+const FirstRoute = () => <UpcomingVisitsScreen />;
+const SecondRoute = () => <PastVisitsScreen />;
 
-@inject("store")
-@observer
-class VisitsScreen extends React.Component {
-  // static propTypes = {
-  //   ProviderState: PropTypes.observableObject.isRequired
-  // };
+class ManageVisitsScreen extends React.Component {
+  state = {
+    index: 0,
+    routes: [
+      { key: "upcoming", title: "UPCOMING" },
+      { key: "past", title: "PAST" }
+    ]
+  };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      bookingList: [
-        {
-          key: "1",
-          avatarImg: imgDog,
-          name: "Benjamin",
-          illness: "Flu Shot",
-          time: "6PM",
-          address: "Bushwick, NY",
-          color: "#f9b44d"
-        },
-        {
-          key: "2",
-          avatarImg: imgFox,
-          name: "Audrey",
-          illness: "Coxsackie Virus",
-          time: "6PM",
-          address: "Bushwick, NY",
-          color: "#f9b44d"
-        },
-        {
-          key: "3",
-          avatarImg: imgTiger,
-          name: "Tommy",
-          illness: "Vital Signs",
-          time: "6PM",
-          address: "Bushwick, NY",
-          color: "#f9b44d"
-        }
-      ]
-    };
-  }
-
-  render() {
-    const {
-      navigation: { navigate }
-    } = this.props;
-    // const { providerData } = ProviderState;
-
-    // if (appointment) {
-    //   setTimeout(() => {
-    //     ProviderState.setOutstandingAppointment(true);
-    //   }, 3000);
-    // }
-    const { bookingList } = this.state;
+  renderTabBar = props => {
+    const { index } = this.state;
+    const inputRange = props.navigationState.routes.map((x, i) => i);
 
     return (
-      <ContainerView style={{ marginTop: 44 }}>
-        <ScrollView padding={0}>
-          <ContentWrapper style={{ marginBottom: 48 }}>
-            <StyledText fontSize={28} fontFamily="FlamaMedium">
-              Upcoming Visits
-            </StyledText>
-          </ContentWrapper>
-          <View>
-            <ContentWrapper>
-              <StyledText>Today</StyledText>
-              <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {bookingList.map(item => (
-                  <View key={item.key} style={{ marginBottom: 9 }}>
-                    <VisitDetailCard
-                      avatarImg={item.avatarImg}
-                      name={item.name}
-                      illness={item.illness}
-                      time={item.time}
-                      address={item.address}
-                      onPress={() => navigate("VisitsVisitDetails")}
-                    />
-                  </View>
-                ))}
-              </View>
-            </ContentWrapper>
-          </View>
-          <View>
-            <ContentWrapper>
-              <StyledText>Jan 9</StyledText>
-              <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {bookingList.map(item => (
-                  <View key={item.key} style={{ marginBottom: 9 }}>
-                    <VisitDetailCard
-                      avatarImg={item.avatarImg}
-                      name={item.name}
-                      illness={item.illness}
-                      time={item.time}
-                      address={item.address}
-                      onPress={() => navigate("VisitsVisitDetails")}
-                    />
-                  </View>
-                ))}
-              </View>
-            </ContentWrapper>
-          </View>
-        </ScrollView>
-      </ContainerView>
+      <View style={tabViewStyles.tabBar}>
+        <View style={{ paddingTop: 24, paddingBottom: 16, paddingLeft: 16 }}>
+          <StyledText fontSize={28} fontFamily="FlamaMedium" lineHeight={36}>
+            {index === 0 ? "Upcoming Visits" : "Past Visits"}
+          </StyledText>
+        </View>
+        <FlexView>
+          {props.navigationState.routes.map((route, i) => {
+            const color = Animated.color(
+              35,
+              140,
+              Animated.round(
+                Animated.interpolate(props.position, {
+                  inputRange,
+                  outputRange: inputRange.map(inputIndex =>
+                    inputIndex === i ? 229 : 0
+                  )
+                })
+              )
+            );
+            const active = index === i;
+
+            return (
+              <TabItem
+                // eslint-disable-next-line react/no-array-index-key
+                key={i}
+                active={active}
+                onPress={() => this.setState({ index: i })}
+              >
+                <Animated.Text
+                  style={{
+                    color: active ? color : colors.MIDGREY,
+                    fontSize: 14,
+                    fontFamily: active ? "FlamaMedium" : "Flama"
+                  }}
+                >
+                  {route.title}
+                </Animated.Text>
+              </TabItem>
+            );
+          })}
+        </FlexView>
+      </View>
+    );
+  };
+
+  render() {
+    return (
+      <TabView
+        navigationState={this.state}
+        renderScene={SceneMap({
+          upcoming: FirstRoute,
+          past: SecondRoute
+        })}
+        renderTabBar={this.renderTabBar}
+        onIndexChange={index => this.setState({ index })}
+        // initialLayout={{ width: Dimensions.get('window').width }}
+      />
     );
   }
 }
-export default VisitsScreen;
+
+export default ManageVisitsScreen;
