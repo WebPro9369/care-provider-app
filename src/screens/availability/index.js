@@ -24,10 +24,10 @@ class AvailabilityScreen extends React.Component {
       { key: "mon", label: "M", start: 12, end: 18, disabled: false },
       { key: "tue", label: "T", start: 12, end: 18, disabled: false },
       { key: "wed", label: "W", start: 12, end: 18, disabled: false },
-      { key: "thu", label: "T", start: 12, end: 18, disabled: false },
+      { key: "thu", label: "Th", start: 12, end: 18, disabled: false },
       { key: "fri", label: "F", start: 12, end: 18, disabled: false },
       { key: "sat", label: "S", start: 12, end: 18, disabled: false },
-      { key: "sun", label: "S", start: 12, end: 18, disabled: false }
+      { key: "sun", label: "Su", start: 12, end: 18, disabled: false }
     ]
   };
 
@@ -45,7 +45,13 @@ class AvailabilityScreen extends React.Component {
       });
     }
     const { timeSlots } = this.state;
-    const newTimeSlots = timeSlots.map(t => ({ ...t, disabled: false }));
+    const { start, end } = timeSlots[0];
+    const newTimeSlots = timeSlots.map(t => ({
+      ...t,
+      start,
+      end,
+      disabled: false
+    }));
     return this.setState({
       sameEveryDay: value,
       timeSlots: newTimeSlots
