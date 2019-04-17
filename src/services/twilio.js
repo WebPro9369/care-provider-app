@@ -13,6 +13,7 @@ const axios = Axios.create({
 const bindDevice = (token, bindingType = "apn") => {
   axios
     .post("/binding", {
+      serviceName: "provider",
       identity: `user_${token}`,
       address: token,
       tag: "reo",
@@ -30,6 +31,7 @@ const sendNotification = (title, body, identity, tag) => {
   console.tron.log("Sending Twilio Notification: ", title, body, tag);
   axios
     .post("/send-notification", {
+      serviceName: "provider",
       title,
       body,
       identity,
