@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { types } from "mobx-state-tree";
+import { OnboardingData } from "./onboarding";
 
 export const ProviderStore = types
   .model("ProviderStore", {
@@ -7,7 +8,15 @@ export const ProviderStore = types
     readyProviders: types.boolean,
     outstandingAppointment: types.boolean,
     completeApplication: types.boolean,
-    arrived: types.boolean
+    arrived: types.boolean,
+    onboardingData: types.optional(OnboardingData, {
+      email: "",
+      first_name: "",
+      last_name: "",
+      date_of_birth: "",
+      password: ""
+      // facebook_uid: ""
+    })
   })
   .actions(self => ({
     setAppointment(value) {
