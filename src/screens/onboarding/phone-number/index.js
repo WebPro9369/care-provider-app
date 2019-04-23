@@ -15,9 +15,9 @@ class PhoneNumberScreen extends Component {
     };
   }
 
-  handleInputChange = event => {
+  handleInputChange = text => {
     this.setState({
-      phone: event.target.value
+      phone: text
     });
   };
 
@@ -47,7 +47,7 @@ class PhoneNumberScreen extends Component {
               autoFocus
               placeholder="(123) 456 - 7890"
               value={phone}
-              onChange={this.handleInputChange}
+              onChangeText={this.handleInputChange}
             />
           </View>
         </View>

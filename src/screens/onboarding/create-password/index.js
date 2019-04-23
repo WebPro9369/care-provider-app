@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Image, View } from "react-native";
+import { Alert, Image, View } from "react-native";
+import { inject, observer, PropTypes } from "mobx-react";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { ServiceButton } from "../../../components/service-button";
 import { StyledText, StyledTextInput } from "../../../components/text";
@@ -7,7 +8,13 @@ import { NavHeader } from "../../../components/nav-header";
 
 const imgProgressbar = require("../../../../assets/images/ProgressBar4.png");
 
+@inject("store")
+@observer
 class CreatePasswordScreen extends Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -15,15 +22,30 @@ class CreatePasswordScreen extends Component {
     };
   }
 
-  handleInputChange = event => {
+  handleInputChange = text => {
     this.setState({
-      password: event.target.value
+      password: text
     });
+  };
+
+  onSubmit = () => {
+    const {
+      navigation: { navigate },
+      store: {
+        providerStore: { onboardingData }
+      }
+    } = this.props;
+    const { password } = this.state;
+    if (!password) {
+      return Alert.alert("Please input valid password.");
+    }
+    onboardingData.setPassword(password);
+    return navigate("PhoneNumber");
   };
 
   render() {
     const {
-      navigation: { navigate, goBack }
+      navigation: { goBack }
     } = this.props;
     const { password } = this.state;
     return (
@@ -47,7 +69,7 @@ class CreatePasswordScreen extends Component {
               placeholder="Enter password"
               secureTextEntry
               value={password}
-              onChange={this.handleInputChange}
+              onChangeText={this.handleInputChange}
             />
           </View>
         </View>
@@ -56,7 +78,7 @@ class CreatePasswordScreen extends Component {
           <ServiceButton
             title="Next"
             style={{ marginBottom: 20 }}
-            onPress={() => navigate("PhoneNumber")}
+            onPress={this.onSubmit}
           />
         </View>
       </KeyboardAvoidingView>

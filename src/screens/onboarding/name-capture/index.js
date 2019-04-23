@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Image, View } from "react-native";
+import { Image, View, Alert } from "react-native";
+import { inject, observer, PropTypes } from "mobx-react";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { ServiceButton } from "../../../components/service-button";
 import { StyledText, StyledTextInput } from "../../../components/text";
@@ -7,7 +8,13 @@ import { NavHeader } from "../../../components/nav-header";
 
 const imgProgressbar = require("../../../../assets/images/ProgressBar2.png");
 
+@inject("store")
+@observer
 class NameCaptureScreen extends Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -15,15 +22,32 @@ class NameCaptureScreen extends Component {
     };
   }
 
-  handleInputChange = event => {
+  handleInputChange = text => {
     this.setState({
-      name: event.target.value
+      name: text
     });
+  };
+
+  onSubmit = () => {
+    const {
+      navigation: { navigate },
+      store: {
+        providerStore: { onboardingData }
+      }
+    } = this.props;
+    const { name } = this.state;
+    if (!name) {
+      return Alert.alert("Please input your full name.");
+    }
+    const names = name.split(" ");
+    onboardingData.setFirstName(names[0]);
+    onboardingData.setLastName(names[1]);
+    return navigate("EmailCapture");
   };
 
   render() {
     const {
-      navigation: { navigate, goBack }
+      navigation: { goBack }
     } = this.props;
     const { name } = this.state;
 
@@ -47,7 +71,7 @@ class NameCaptureScreen extends Component {
               autoFocus
               placeholder="Full name"
               value={name}
-              onChange={this.handleInputChange}
+              onChangeText={this.handleInputChange}
             />
           </View>
         </View>
@@ -56,7 +80,7 @@ class NameCaptureScreen extends Component {
           <ServiceButton
             title="Next"
             style={{ marginBottom: 20 }}
-            onPress={() => navigate("EmailCapture")}
+            onPress={this.onSubmit}
           />
         </View>
       </KeyboardAvoidingView>

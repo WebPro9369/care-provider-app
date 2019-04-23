@@ -1,5 +1,8 @@
 import React from "react";
+import { Alert } from "react-native";
 import { Avatar, ButtonGroup } from "react-native-elements";
+import { inject, observer, PropTypes } from "mobx-react";
+import axios from "axios";
 import { FormTextInput, StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
@@ -13,7 +16,13 @@ import {
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
 
+@inject("store")
+@observer
 class ApplicationScreen extends React.Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -33,13 +42,39 @@ class ApplicationScreen extends React.Component {
     this.updateIndex = this.updateIndex.bind(this);
   }
 
+  onSubmit = () => {
+    const {
+      navigation: { navigate },
+      store: {
+        providerStore: { onboardingData }
+      }
+    } = this.props;
+    onboardingData.setDOB("01/01/1970");
+    console.tron.log("Onboarding data: ", onboardingData.toJSON());
+    axios
+      .post(
+        "http://localhost:3000/api/v2/care_provider/registrations",
+        onboardingData.toJSON()
+      )
+      .then(res => {
+        console.tron.log("Registration response: ", res);
+        navigate("TabDashboard");
+      })
+      .catch(err => {
+        console.tron.log("Registration error: ", err);
+        Alert("Registration failed.");
+      });
+
+    // navigate("TabDashboard");
+  };
+
   updateIndex(selectedIndexes) {
     this.setState({ selectedIndexes });
   }
 
   render() {
     const {
-      navigation: { goBack, navigate }
+      navigation: { goBack }
     } = this.props;
     const buttons = ["MD", "NP", "PA", "APRN"];
     const {
@@ -181,7 +216,7 @@ class ApplicationScreen extends React.Component {
           <FormInputWrapper style={{ marginBottom: 20 }}>
             <ServiceButton
               title="Submit Application"
-              onPress={() => navigate("TabDashboard")}
+              onPress={this.onSubmit}
             />
           </FormInputWrapper>
         </ScrollView>
