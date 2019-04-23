@@ -11,7 +11,7 @@ class AuthLoadingScreen extends Component {
     const {
       navigation: { navigate }
     } = this.props;
-    const userAuthenticated = true;
+    const userAuthenticated = false;
     navigate(userAuthenticated ? "Tabs" : "Onboarding");
   };
 
