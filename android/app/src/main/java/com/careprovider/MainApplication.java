@@ -3,6 +3,8 @@ package com.careprovider;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.devfd.RNGeocoder.RNGeocoderPackage;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
@@ -29,6 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGeocoderPackage(),
+            new RNFusedLocationPackage(),
             new ReactNativePushNotificationPackage(),
             new VectorIconsPackage(),
             new ReanimatedPackage(),
