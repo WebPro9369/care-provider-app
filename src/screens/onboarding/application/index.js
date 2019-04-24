@@ -14,6 +14,7 @@ import {
   ViewCentered
 } from "../../../components/views";
 import { ScrollView } from "../../../components/views/scroll-view";
+import { registerCareProvider } from "../../../services/opear-api";
 import { colors } from "../../../utils/constants";
 
 @inject("store")
@@ -51,19 +52,24 @@ class ApplicationScreen extends React.Component {
     } = this.props;
     onboardingData.setDOB("01/01/1970");
     console.tron.log("Onboarding data: ", onboardingData.toJSON());
-    axios
-      .post(
-        "http://localhost:3000/api/v2/care_provider/registrations",
-        onboardingData.toJSON()
-      )
-      .then(res => {
-        console.tron.log("Registration response: ", res);
-        navigate("TabDashboard");
-      })
-      .catch(err => {
-        console.tron.log("Registration error: ", err);
-        Alert("Registration failed.");
-      });
+    registerCareProvider(
+      onboardingData.toJSON(),
+      () => navigate("TabDashboard"),
+      () => Alert.alert("Registration failed.")
+    );
+    // axios
+    //   .post(
+    //     "http://localhost:3000/api/v2/care_provider/registrations",
+    //     onboardingData.toJSON()
+    //   )
+    //   .then(res => {
+    //     console.tron.log("Registration response: ", res);
+    //     navigate("TabDashboard");
+    //   })
+    //   .catch(err => {
+    //     console.tron.log("Registration error: ", err);
+    //     Alert.alert("Registration failed.");
+    //   });
 
     // navigate("TabDashboard");
   };
