@@ -214,10 +214,7 @@ class ApplicationScreen extends React.Component {
             )}
           </FormWrapper>
           <FormInputWrapper style={{ marginBottom: 20 }}>
-            <ServiceButton
-              title="Submit Application"
-              onPress={this.onSubmit}
-            />
+            <ServiceButton title="Submit Application" onPress={this.onSubmit} />
           </FormInputWrapper>
         </ScrollView>
       </ContainerView>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View } from "react-native";
+import { Image, View, Alert } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import axios from "axios";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -37,6 +37,14 @@ class AskLocationScreen extends Component {
     } = this.props;
     Geolocation.getCurrentPosition(
       position => {
+        if (
+          !position ||
+          !position.coords ||
+          !position.coords.latitude ||
+          !position.coords.longitude
+        ) {
+          return Alert.alert("Failed to get your location.");
+        }
         console.tron.log(
           "Current position: ",
           position.coords.latitude,
@@ -64,7 +72,7 @@ class AskLocationScreen extends Component {
         //     console.tron.log("Error geocode: ", err);
         // https://maps.googleapis.com/maps/api/js?key=AIzaSyBu1rXRtcQVBHRHotogui7F2FWT9WpfcNw
         //   });
-        axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + ny.lat + "," + ny.lng + "&key=" + key)
+        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + pos.lat + "," + pos.lng + "&key=" + key)
           .then(res => {
             const addressComponents =
               res.data &&
@@ -80,7 +88,7 @@ class AskLocationScreen extends Component {
               res.data.results[0].address_components
             );
             if (addressComponents) {
-              addressComponents.forEach((item, index) => {
+              addressComponents.forEach(item => {
                 switch (item.types[0]) {
                   case "street_number":
                     address.setApartmentNumber(item.long_name);
@@ -139,7 +147,6 @@ class AskLocationScreen extends Component {
       }
     } = this.props;
     const { zipcode } = this.state;
-    console.tron.log("Location onsubmit");
     if (zipcode) address.setZipCode(zipcode);
     navigate("NameCapture");
   };
