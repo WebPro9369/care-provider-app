@@ -1,6 +1,8 @@
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
+import { Platform, Linking } from "react-native";
 import MapView from "react-native-maps";
+import haversine from "haversine";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { NavHeader } from "../../../components/nav-header";
 import {
@@ -13,6 +15,7 @@ import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
 
 const imgDog = require("../../../../assets/images/Dog.png");
+const threshold = 1000;
 
 @inject("store")
 @observer
@@ -39,7 +42,11 @@ class VisitDetailsScreen extends React.Component {
       latitude: 37.78825,
       longitude: -122.4324,
       latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421
+      longitudeDelta: 0.0421,
+
+      currentLatitude: 37.78925,
+      currentLongitude: -122.4924,
+      distance: 0,
     }
   };
 
@@ -47,7 +54,53 @@ class VisitDetailsScreen extends React.Component {
     const {
       store: { providerStore }
     } = this.props;
-    setTimeout(() => providerStore.setArrived(true), 5000);
+    this.watchID = navigator.geolocation.watchPosition(
+      position => {
+        const { map } = this.state;
+        const { latitude, longitude } = position.coords;
+        const visitCoordinate = {
+          latitude: map.latitude,
+          longitude: map.longitude,
+        };
+        const newCoordinate = {
+          latitude,
+          longitude,
+        };
+        const distance = haversine(visitCoordinate, newCoordinate, {unit: 'meter'}) || 0;
+        providerStore.setArrived(distance < threshold);
+
+        this.setState({
+          map: {
+            ...map,
+            currentLatitude: latitude,
+            currentLongitude: longitude,
+            distance,
+          }
+        });
+      },
+      error => console.log(error),
+      {
+        enableHighAccuracy: true,
+        timeout: 2000,
+        maximumAge: 1000,
+        distanceFilter: 10
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  navigateHandler = () => {
+    const { map } = this.state;
+    const from = `${map.currentLatitude},${map.currentLongitude}`;
+    const to = `${map.latitude},${map.longitude}`;
+    const url = Platform.select({
+      ios: `maps:0, 0?saddr=${from}&daddr=${to}`,
+      android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
+    });
+    Linking.openURL(url);
   }
 
   render() {
@@ -116,7 +169,10 @@ class VisitDetailsScreen extends React.Component {
                   onPress={() => navigate("VisitsVisitInProgress")}
                 />
               ) : (
-                <ServiceButton title="Navigate" />
+                <ServiceButton
+                  title="Navigate"
+                  onPress={this.navigateHandler}
+                />
               )}
             </View>
             <View style={{ paddingTop: 6, paddingBottom: 6 }}>
