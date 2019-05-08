@@ -3,6 +3,7 @@ package com.careprovider;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.hoxfon.react.RNTwilioVoice.TwilioVoicePackage;
 import com.devfd.RNGeocoder.RNGeocoderPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new TwilioVoicePackage(),
             new RNGeocoderPackage(),
             new RNFusedLocationPackage(),
             new ReactNativePushNotificationPackage(),
