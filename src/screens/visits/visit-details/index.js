@@ -2,6 +2,8 @@ import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
 import MapView from "react-native-maps";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import TwilioVoice from "react-native-twilio-programmable-voice";
+import TwilioServices from "../../../services/twilio";
 import { NavHeader } from "../../../components/nav-header";
 import {
   LargeBookedDetailCard,
@@ -40,7 +42,8 @@ class VisitDetailsScreen extends React.Component {
       longitude: -122.4324,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421
-    }
+    },
+    twilioInited: false,
   };
 
   componentDidMount() {
@@ -48,6 +51,25 @@ class VisitDetailsScreen extends React.Component {
       store: { providerStore }
     } = this.props;
     setTimeout(() => providerStore.setArrived(true), 5000);
+    TwilioServices.getToken()
+      .then(token => {
+        console.tron.log("TwilioVoice init: ", token);
+        return TwilioVoice.initWithToken(token);
+      })
+      .then(() => {
+        console.tron.log("TwilioVoice adding event listeners");
+        TwilioVoice.addEventListener("deviceReady", () => {
+          console.tron.log("Twilio device ready");
+          this.setState({ twilioInited: true });
+        });
+        TwilioVoice.addEventListener("deviceNotReady", () => {
+          console.tron.log("Twilio device not ready");
+          this.setState({ twilioInited: false });
+        });        
+        TwilioVoice.configureCallKit({
+          appName: "careprovider"
+        });
+      });
   }
 
   render() {
@@ -102,6 +124,10 @@ class VisitDetailsScreen extends React.Component {
                     }}
                   />
                 }
+                onPress={() => {
+                  console.tron.log("Clicking phone");
+                  TwilioVoice.connect({ To: "+19085008863" });
+                }}
               />
               <LargeBookedDetailCard type="Visit Reason" text={visitReason} />
               <LargeBookedDetailCard type="Allergies" text={allergies} />
@@ -116,8 +142,8 @@ class VisitDetailsScreen extends React.Component {
                   onPress={() => navigate("VisitsVisitInProgress")}
                 />
               ) : (
-                <ServiceButton title="Navigate" />
-              )}
+                  <ServiceButton title="Navigate" />
+                )}
             </View>
             <View style={{ paddingTop: 6, paddingBottom: 6 }}>
               <ServiceButton

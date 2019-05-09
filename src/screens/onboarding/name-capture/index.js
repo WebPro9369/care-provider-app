@@ -41,7 +41,9 @@ class NameCaptureScreen extends Component {
     }
     const names = name.split(" ");
     onboardingData.setFirstName(names[0]);
-    onboardingData.setLastName(names[1]);
+    if (names.length > 1) {
+      onboardingData.setLastName(names[1]);
+    }
     return navigate("EmailCapture");
   };
 

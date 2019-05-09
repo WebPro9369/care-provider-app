@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Image, View } from "react-native";
+import { Alert, Image, View } from "react-native";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { ServiceButton } from "../../../components/service-button";
 import { StyledText, StyledTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
+import TwilioService from "../../../services/twilio";
 
 const imgProgressbar = require("../../../../assets/images/ProgressBar5.png");
 
@@ -21,9 +22,24 @@ class PhoneNumberScreen extends Component {
     });
   };
 
+  onSubmit = () => {
+    const { phone } = this.state;
+    const {
+      navigation: { navigate }
+    } = this.props;
+    console.tron.log("Phone number: ", phone);
+    TwilioService.sendSMS(
+      "Test SMS from Twilio",
+      null,
+      phone,
+      () => navigate("Application"),
+      () => Alert.alert("Authentication failed.")
+    );
+  };
+
   render() {
     const {
-      navigation: { navigate, goBack }
+      navigation: { goBack }
     } = this.props;
     const { phone } = this.state;
 
@@ -56,7 +72,7 @@ class PhoneNumberScreen extends Component {
           <ServiceButton
             title="Authenticate"
             style={{ marginBottom: 20 }}
-            onPress={() => navigate("Application")}
+            onPress={this.onSubmit}
           />
         </View>
       </KeyboardAvoidingView>
