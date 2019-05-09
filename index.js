@@ -17,6 +17,7 @@ PushNotification.configure({
       console.tron.log("Push notification device token: ", token);
     }
     TwilioService.bindDevice(token);
+    // TwilioService.getToken();
   },
   onNotification(notification) {
     if (console.tron) console.tron.log("NOTIFICATION:", notification);

@@ -48,7 +48,7 @@ export default class App extends React.Component {
 
       TwilioService.sendNotification(
         "Test Notification",
-        "This is a notification from my device!!!",
+        "This is a notification from Twilio!!!",
         null,
         "reo"
       );
