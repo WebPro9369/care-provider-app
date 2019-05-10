@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Image, View, Alert } from "react-native";
+import { Image, View, Alert, NativeModules } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import axios from "axios";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Geolocation from "react-native-geolocation-service";
+import TouchID from "react-native-touch-id";
 import Geocoder from "react-native-geocoder";
 import { ServiceButton } from "../../../components/service-button";
 import { StyledText, StyledTextInput } from "../../../components/text";
@@ -129,6 +130,18 @@ class AskLocationScreen extends Component {
       },
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
     );
+
+    // check what types of biometrics are supported
+    TouchID.isSupported()
+      .then(biometryType => {
+        // this.setState({ biometryType });
+        console.tron && console.tron.log("Supported biometry: ", biometryType);
+      })
+      .catch(error => {
+        console.tron &&
+          console.tron.log("Error checking Touch id support: ", error);
+        // console.tron.log("NativeModules: ", NativeModules);
+      });
   }
 
   handleInputChange = text => {
@@ -148,7 +161,22 @@ class AskLocationScreen extends Component {
     } = this.props;
     const { zipcode } = this.state;
     if (zipcode) address.setZipCode(zipcode);
-    navigate("NameCapture");
+    // navigate("NameCapture");
+    return TouchID.isSupported()
+      .then(biometryType => {
+        console.tron.log("BiometryType: ", biometryType);
+        TouchID.authenticate()
+          .then(success => {
+            Alert.alert("Authenticated Successfully");
+          })
+          .catch(error => {
+            console.tron.log(error);
+            Alert.alert("Authentication failed.");
+          });
+      })
+      .catch(error => {
+        console.tron.log("TouchID not supported: ", error);
+      });
   };
 
   render() {
