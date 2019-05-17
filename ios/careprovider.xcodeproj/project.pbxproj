@@ -1028,7 +1028,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = U524V9D5T3;
+						DevelopmentTeam = 9YPJMYZZXT;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1051,6 +1051,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1854,7 +1855,7 @@
 				CODE_SIGN_ENTITLEMENTS = careprovider/careprovider.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = U524V9D5T3;
+				DEVELOPMENT_TEAM = 9YPJMYZZXT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1875,7 +1876,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.matter.opear-md-provider";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.opear.opear-md-provider";
 				PRODUCT_NAME = careprovider;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1888,7 +1889,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = careprovider/careprovider.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U524V9D5T3;
+				DEVELOPMENT_TEAM = 9YPJMYZZXT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1909,7 +1910,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.matter.opear-md-provider";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.opear.opear-md-provider";
 				PRODUCT_NAME = careprovider;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
