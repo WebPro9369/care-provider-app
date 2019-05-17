@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		05C5FBC2A185AF0FBB8CC612A6974A07 /* Pods-careprovider-tvOSTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CE918EAEF875BE0D647F07616B86C0 /* Pods-careprovider-tvOSTests-dummy.m */; };
 		1F19ADF1B8B7956782B1B31B47CBEA8A /* Pods-careprovider-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B0CE85FBC52E442907A2C3E6D81EF /* Pods-careprovider-dummy.m */; };
+		840E2EA3228E71E50077F7D2 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E2EA1228E71E40077F7D2 /* Crashlytics.framework */; };
+		840E2EA4228E71E50077F7D2 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E2EA2228E71E50077F7D2 /* Fabric.framework */; };
 		91BF9B0C6253BBF90056AE62D041B3E9 /* Pods-careprovider-tvOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0F60A312D149FEAFD5D5F1C4080454 /* Pods-careprovider-tvOS-dummy.m */; };
 		CE1F9390EFB9BD05C6DC34B434969B7F /* Pods-careproviderTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6AF1F8E8F711BBC6E256DC5CFF4DA3 /* Pods-careproviderTests-dummy.m */; };
 /* End PBXBuildFile section */
@@ -34,15 +36,15 @@
 		0DF34D10CC88D3CD94877B4083CFCF6C /* Pods-careprovider-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-careprovider-acknowledgements.markdown"; sourceTree = "<group>"; };
 		102B496AC289B35B2809C8F52D629F2C /* TwilioVoice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwilioVoice.framework; sourceTree = "<group>"; };
 		17EEE1090975B44BA49A0AFE0BAE04F6 /* Pods-careprovider-tvOS-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-careprovider-tvOS-resources.sh"; sourceTree = "<group>"; };
-		24390EFD555DD124430DFF9724065945 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		24390EFD555DD124430DFF9724065945 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		3247AA70E68F03AFE57C4C42DB2716DF /* Pods-careprovider-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-careprovider-acknowledgements.plist"; sourceTree = "<group>"; };
 		344C3D2B63FC15D73B312DEE269E4F65 /* Pods-careprovider-tvOSTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-careprovider-tvOSTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		393BAF6AB233600AB40F70D4E8CBD929 /* Pods-careprovider-tvOS-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-careprovider-tvOS-frameworks.sh"; sourceTree = "<group>"; };
 		471D63AB499AF6F1A3A5E07989B13EF9 /* Pods-careproviderTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-careproviderTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		4794407A66803067F59C97CAE77B3A51 /* libPods-careproviderTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-careproviderTests.a"; path = "libPods-careproviderTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4794407A66803067F59C97CAE77B3A51 /* libPods-careproviderTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-careproviderTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47F4B80DD9C6C470A43AAFFB455F5F6D /* Pods-careprovider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-careprovider.debug.xcconfig"; sourceTree = "<group>"; };
 		4ED0C6505F9E13BE3581AC971641824B /* Pods-careprovider-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-careprovider-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		51BF5077246A8D402D71745DDBCC101C /* libPods-careprovider-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-careprovider-tvOS.a"; path = "libPods-careprovider-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		51BF5077246A8D402D71745DDBCC101C /* libPods-careprovider-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-careprovider-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3B831357B230D5677E67104528C12E /* Pods-careprovider-tvOSTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-careprovider-tvOSTests-frameworks.sh"; sourceTree = "<group>"; };
 		64FB50E5D917BE764025A468D430A27B /* Pods-careproviderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-careproviderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6CE21ACD5E8AFD834916EDE06240F01F /* Pods-careprovider-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-careprovider-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -51,12 +53,14 @@
 		7523D35A69C16F8246C8D45DD92E3063 /* Pods-careprovider-tvOS-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-careprovider-tvOS-acknowledgements.markdown"; sourceTree = "<group>"; };
 		7F4B0CE85FBC52E442907A2C3E6D81EF /* Pods-careprovider-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-careprovider-dummy.m"; sourceTree = "<group>"; };
 		81B60B36601F09CDA3F52BC9481DDD0B /* Pods-careprovider-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-careprovider-frameworks.sh"; sourceTree = "<group>"; };
+		840E2EA1228E71E40077F7D2 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = ../Crashlytics.framework; sourceTree = "<group>"; };
+		840E2EA2228E71E50077F7D2 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = ../Fabric.framework; sourceTree = "<group>"; };
 		990F6D0B0BD66AC910A45EA6B7C43FE4 /* Pods-careprovider-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-careprovider-resources.sh"; sourceTree = "<group>"; };
 		AAA1C239C2CD7661CD85558F2870554D /* Pods-careprovider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-careprovider.release.xcconfig"; sourceTree = "<group>"; };
-		B3BABF9FD630628C8B0F09E372A361D5 /* libPods-careprovider-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-careprovider-tvOSTests.a"; path = "libPods-careprovider-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3BABF9FD630628C8B0F09E372A361D5 /* libPods-careprovider-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-careprovider-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5CE918EAEF875BE0D647F07616B86C0 /* Pods-careprovider-tvOSTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-careprovider-tvOSTests-dummy.m"; sourceTree = "<group>"; };
 		BC0F60A312D149FEAFD5D5F1C4080454 /* Pods-careprovider-tvOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-careprovider-tvOS-dummy.m"; sourceTree = "<group>"; };
-		BDE74D1E45319C9BB29B448C285C6FC3 /* libPods-careprovider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-careprovider.a"; path = "libPods-careprovider.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDE74D1E45319C9BB29B448C285C6FC3 /* libPods-careprovider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-careprovider.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C257CCBFAC980C4AF5A111E513349B55 /* Pods-careproviderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-careproviderTests.release.xcconfig"; sourceTree = "<group>"; };
 		CC6AF1F8E8F711BBC6E256DC5CFF4DA3 /* Pods-careproviderTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-careproviderTests-dummy.m"; sourceTree = "<group>"; };
 		D19760077DBD4352814109CEE9A05EA8 /* Pods-careproviderTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-careproviderTests-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -86,6 +90,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840E2EA3228E71E50077F7D2 /* Crashlytics.framework in Frameworks */,
+				840E2EA4228E71E50077F7D2 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,13 +141,14 @@
 			children = (
 				206E8BC12BA1FBB1CCE1F2AED1DFF2D7 /* Frameworks */,
 			);
-			name = TwilioVoice;
 			path = TwilioVoice;
 			sourceTree = "<group>";
 		};
 		384351BA31C7CCAA6FAEBDF6607313A0 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				840E2EA1228E71E40077F7D2 /* Crashlytics.framework */,
+				840E2EA2228E71E50077F7D2 /* Fabric.framework */,
 				062A05894D543ABB653C35EE43A9804C /* Pods-careprovider */,
 				9586A83EE0EA40527326684A752FE99D /* Pods-careprovider-tvOS */,
 				510B7FF359D8D92F9B7949A5A922C9EE /* Pods-careprovider-tvOSTests */,
@@ -484,8 +491,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 				TVOS_DEPLOYMENT_TARGET = 9.2;

@@ -1,9 +1,8 @@
 import Reactotron from "reactotron-react-native";
 import { mst } from "reactotron-mst";
 import { mainStore } from "./src/store";
-import debugConfig from "./config/debug-config";
 
-if (debugConfig.useReactotron) {
+if (__DEV__) {
   Reactotron.configure({ host: "localhost" })
     .useReactNative()
     .use(mst())
@@ -11,4 +10,8 @@ if (debugConfig.useReactotron) {
 
   console.tron = Reactotron;
   console.tron.trackMstNode(mainStore);
+} else {
+  console.tron = {
+    log: () => {}
+  };
 }

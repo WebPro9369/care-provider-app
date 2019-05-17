@@ -3,6 +3,8 @@ import { Dimensions } from "react-native";
 const DEVICE_WIDTH = Dimensions.get("window").width;
 const DEVICE_HEIGHT = Dimensions.get("window").height;
 
+const GOOGLE_API_KEY = "AIzaSyBte8wMJ5Lic5CnLK8JRA8TniNwiCRpw7Q";
+
 const colors = {
   WHITE: "#FFFFFF",
   PINK_50: "#FCE4EC",
@@ -41,4 +43,4 @@ const colors = {
 
 const MAX_STARS = 5;
 
-export { DEVICE_WIDTH, DEVICE_HEIGHT, MAX_STARS, colors };
+export { DEVICE_WIDTH, DEVICE_HEIGHT, GOOGLE_API_KEY, MAX_STARS, colors };

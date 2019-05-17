@@ -60,7 +60,7 @@ class AskLocationScreen extends Component {
           lng: -73.9637594
         };
 
-        const key = "AIzaSyBu1rXRtcQVBHRHotogui7F2FWT9WpfcNw";
+        // const key = "AIzaSyBu1rXRtcQVBHRHotogui7F2FWT9WpfcNw";
         // Geocoder.geocodePosition({
         //   lat: position.coords.latitude,
         //   lng: position.coords.longitude
@@ -73,7 +73,7 @@ class AskLocationScreen extends Component {
         //     console.tron.log("Error geocode: ", err);
         // https://maps.googleapis.com/maps/api/js?key=AIzaSyBu1rXRtcQVBHRHotogui7F2FWT9WpfcNw
         //   });
-        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + pos.lat + "," + pos.lng + "&key=" + key)
+        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + pos.lat + "," + pos.lng + "&key=" + GOOGLE_API_KEY)
           .then(res => {
             const addressComponents =
               res.data &&
@@ -161,22 +161,23 @@ class AskLocationScreen extends Component {
     } = this.props;
     const { zipcode } = this.state;
     if (zipcode) address.setZipCode(zipcode);
-    // navigate("NameCapture");
-    return TouchID.isSupported()
-      .then(biometryType => {
-        console.tron.log("BiometryType: ", biometryType);
-        TouchID.authenticate()
-          .then(success => {
-            Alert.alert("Authenticated Successfully");
-          })
-          .catch(error => {
-            console.tron.log(error);
-            Alert.alert("Authentication failed.");
-          });
-      })
-      .catch(error => {
-        console.tron.log("TouchID not supported: ", error);
-      });
+    return navigate("NameCapture");
+    // return TouchID.isSupported()
+    //   .then(biometryType => {
+    //     console.tron.log("BiometryType: ", biometryType);
+    //     TouchID.authenticate()
+    //       .then(success => {
+    //         Alert.alert("Authenticated Successfully");
+    //       })
+    //       .catch(error => {
+    //         console.tron.log(error);
+    //         Alert.alert("Authentication failed.");
+    //       });
+    //   })
+    //   .catch(error => {
+    //     console.tron.log("TouchID not supported: ", error);
+    //     Alert.alert("Touch ID is not supported.");
+    //   });
   };
 
   render() {

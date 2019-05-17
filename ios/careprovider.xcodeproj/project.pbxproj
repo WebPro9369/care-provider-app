@@ -54,6 +54,8 @@
 		7C61FCAA8A12405DB14298B8 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 898CDBE6CC20465C82E4FA05 /* libRNVectorIcons.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8377C518B94342E48A31EDA4 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DC373636F11420194B3678B /* Octicons.ttf */; };
+		840E2EA7228E730C0077F7D2 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E2EA5228E730C0077F7D2 /* Crashlytics.framework */; };
+		840E2EA8228E730C0077F7D2 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840E2EA6228E730C0077F7D2 /* Fabric.framework */; };
 		848D8833226E237F002CD5F0 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8467F15C22677A0100080380 /* libRCTPushNotification.a */; };
 		84B1805F2284D4CA00633C17 /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B1805E2284D47200633C17 /* libTouchID.a */; };
 		99E08E461D5D4F5AAF966C93 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E42A972082A64CA8A7853E02 /* AntDesign.ttf */; };
@@ -476,6 +478,8 @@
 		7CD1D676B5ECDABB19EE5F03 /* Pods-careprovider-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-careprovider-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-careprovider-tvOS/Pods-careprovider-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		7FD79BD545DF4595B42F09A4 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		840E2EA5228E730C0077F7D2 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		840E2EA6228E730C0077F7D2 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		8467F14922677A0000080380 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		847E7AF12260E62B0066C169 /* careprovider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = careprovider.entitlements; path = careprovider/careprovider.entitlements; sourceTree = "<group>"; };
 		848D885F226E3A95002CD5F0 /* RNGeocoder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGeocoder.xcodeproj; path = "../node_modules/react-native-geocoder/ios/RNGeocoder.xcodeproj"; sourceTree = "<group>"; };
@@ -522,12 +526,14 @@
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
+				840E2EA7228E730C0077F7D2 /* Crashlytics.framework in Frameworks */,
 				84B1805F2284D4CA00633C17 /* libTouchID.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				848D8833226E237F002CD5F0 /* libRCTPushNotification.a in Frameworks */,
+				840E2EA8228E730C0077F7D2 /* Fabric.framework in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
@@ -762,6 +768,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				840E2EA5228E730C0077F7D2 /* Crashlytics.framework */,
+				840E2EA6228E730C0077F7D2 /* Fabric.framework */,
 				13B07FAE1A68108700A75B9A /* careprovider */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* careproviderTests */,
@@ -956,6 +964,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				72CCAEF811E8625090CE1987 /* [CP] Embed Pods Frameworks */,
+				840E2E6C228E679B0077F7D2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1608,6 +1617,23 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-careprovider/Pods-careprovider-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		840E2E6C228E679B0077F7D2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run b1c9c477fdfc03043dea637292cced3fcdfe9e27 5ca7d33140968da3120595501bce6fbbf2999f52bacbbf17dc5995738c7fe636\n";
+		};
 		8A646D08D54336930EB3E8C2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1829,6 +1855,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = U524V9D5T3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
@@ -1859,6 +1889,10 @@
 				CODE_SIGN_ENTITLEMENTS = careprovider/careprovider.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U524V9D5T3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
