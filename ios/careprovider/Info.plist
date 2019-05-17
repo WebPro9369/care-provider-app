@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>8</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -53,18 +53,18 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Care Provider app uses camera to scan your cards etc.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Enabling Face ID allows you quick and secure access to your account.</string>
-  <key>NSPhotoLibraryUsageDescription</key>
-  <string>Enabling Photo library</string>
-  <key>NSMicrophoneUsageDescription</key>
-  <string>Enabling Microphone usage</string>
-  <key>NSCameraUsageDescription</key>
-  <string>Enabling Camera usage</string>
-  <key>NSLocationAlwaysUsageDescription</key>
-  <string>Always enabling Location usage</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>Enabling location when in use</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Care Provider app uses your location info</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Care Provider app uses your location info</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Care Provider app uses your microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Care Provider app uses photo library</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Flama.otf</string>
