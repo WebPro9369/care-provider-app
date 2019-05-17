@@ -161,23 +161,23 @@ class AskLocationScreen extends Component {
     } = this.props;
     const { zipcode } = this.state;
     if (zipcode) address.setZipCode(zipcode);
-    // navigate("NameCapture");
-    return TouchID.isSupported()
-      .then(biometryType => {
-        console.tron.log("BiometryType: ", biometryType);
-        TouchID.authenticate()
-          .then(success => {
-            Alert.alert("Authenticated Successfully");
-          })
-          .catch(error => {
-            console.tron.log(error);
-            Alert.alert("Authentication failed.");
-          });
-      })
-      .catch(error => {
-        console.tron.log("TouchID not supported: ", error);
-        Alert.alert("Touch ID is not supported.");
-      });
+    return navigate("NameCapture");
+    // return TouchID.isSupported()
+    //   .then(biometryType => {
+    //     console.tron.log("BiometryType: ", biometryType);
+    //     TouchID.authenticate()
+    //       .then(success => {
+    //         Alert.alert("Authenticated Successfully");
+    //       })
+    //       .catch(error => {
+    //         console.tron.log(error);
+    //         Alert.alert("Authentication failed.");
+    //       });
+    //   })
+    //   .catch(error => {
+    //     console.tron.log("TouchID not supported: ", error);
+    //     Alert.alert("Touch ID is not supported.");
+    //   });
   };
 
   render() {
