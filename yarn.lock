@@ -6228,6 +6228,16 @@ react-native-tab-view@^2.0.2:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.2.0.tgz#30d015b8f33f497d82419b56df7d43ecfcc3f9b1"
   integrity sha512-mhFDRvPH/kmvqfAzTwNptbOM/xXmpqYRsD0PSMJX1nP0LzhU4uRI1QmSW6sWZGLyOwKgVw0ZYkwZ54N8AmoO1A==
 
+react-native-touch-id@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-touch-id/-/react-native-touch-id-4.4.1.tgz#8b1bb2d04c30bac36bb9696d2d723e719c4a8b08"
+  integrity sha512-1jTl8fC+0fxvqegy/XXTyo6vMvPhjzkoDdaqoYZx0OH8AT250NuXnNPyKktvigIcys3+2acciqOeaCall7lrvg==
+
+react-native-twilio-programmable-voice@^3.21.1:
+  version "3.21.1"
+  resolved "https://registry.yarnpkg.com/react-native-twilio-programmable-voice/-/react-native-twilio-programmable-voice-3.21.1.tgz#4a870021237c671bbc46e4b75d4ce14095fed3ca"
+  integrity sha512-Eyk71S0BpDVS2jQLkEE3UUiw/Bje8e65fUuTLh2xQ91U3dDT1yZXbsGEGaQbkr6yMdc/L8OYpjy4suhq8eYWYA==
+
 react-native-vector-icons@^6.4.2:
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-6.4.2.tgz#ee0b097e783387544ed160a3192a437c097e551d"

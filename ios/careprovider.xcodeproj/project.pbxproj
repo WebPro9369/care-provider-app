@@ -48,6 +48,7 @@
 		452356267C9243FCA4906F91 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C35D0C0D68422D903576AB /* libAirMaps.a */; };
 		47946EAAE00B44FA80C5150C /* FlamaMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 026C6B824DD14781AD8F9842 /* FlamaMedium.otf */; };
 		4D7C3E9943A9459EAE7DF962 /* libRNTwilioVoice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C01320D70D649608652A238 /* libRNTwilioVoice.a */; };
+		53CBCD7B228F003900EDCC7A /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		5C34ED6B2278493CAF1CD893 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CA44A0999DE43B886593455 /* SimpleLineIcons.ttf */; };
 		6200E919754D458D92653C37 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 38321D9386C845FEB26C628F /* EvilIcons.ttf */; };
 		6D3342B99A9C30412CB1E401 /* libPods-careproviderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAACE6FD7911ECD74AEDBBBE /* libPods-careproviderTests.a */; };
@@ -1505,6 +1506,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53CBCD7B228F003900EDCC7A /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				AA1CE8A47F84478C8903CF69 /* Flama.otf in Resources */,
