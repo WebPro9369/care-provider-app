@@ -55,8 +55,16 @@
 	</dict>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Enabling Face ID allows you quick and secure access to your account.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Enabling Photo library</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Enabling Microphone usage</string>
+  <key>NSCameraUsageDescription</key>
+  <string>Enabling Camera usage</string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>Always enabling Location usage</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Enabling location when in use</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Flama.otf</string>
