@@ -60,7 +60,7 @@ class AskLocationScreen extends Component {
           lng: -73.9637594
         };
 
-        const key = "AIzaSyBu1rXRtcQVBHRHotogui7F2FWT9WpfcNw";
+        // const key = "AIzaSyBu1rXRtcQVBHRHotogui7F2FWT9WpfcNw";
         // Geocoder.geocodePosition({
         //   lat: position.coords.latitude,
         //   lng: position.coords.longitude
@@ -73,7 +73,7 @@ class AskLocationScreen extends Component {
         //     console.tron.log("Error geocode: ", err);
         // https://maps.googleapis.com/maps/api/js?key=AIzaSyBu1rXRtcQVBHRHotogui7F2FWT9WpfcNw
         //   });
-        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + pos.lat + "," + pos.lng + "&key=" + key)
+        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + pos.lat + "," + pos.lng + "&key=" + GOOGLE_API_KEY)
           .then(res => {
             const addressComponents =
               res.data &&
@@ -176,6 +176,7 @@ class AskLocationScreen extends Component {
       })
       .catch(error => {
         console.tron.log("TouchID not supported: ", error);
+        Alert.alert("Touch ID is not supported.");
       });
   };
 
