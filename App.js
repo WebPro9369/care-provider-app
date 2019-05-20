@@ -11,12 +11,10 @@ export default class App extends React.Component {
     super(props);
 
     // eslint-disable-next-line no-undef
-    if (__DEV__) {
-      import("./ReactotronConfig").then(() =>
-        // eslint-disable-next-line no-console
-        console.log("Reactotron Configured")
-      );
-    }
+    import("./ReactotronConfig").then(() =>
+      // eslint-disable-next-line no-console
+      console.log("Reactotron Configured")
+    );
   }
 
   componentWillMount() {}
