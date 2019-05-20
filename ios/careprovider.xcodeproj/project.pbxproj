@@ -1025,7 +1025,7 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = U524V9D5T3;
+						DevelopmentTeam = 9YPJMYZZXT;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
@@ -1774,7 +1774,7 @@
 			baseConfigurationReference = 8641F6CE2CD95F82A6EAAE71 /* Pods-careproviderTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = U524V9D5T3;
+				DEVELOPMENT_TEAM = 9YPJMYZZXT;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1817,7 +1817,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = U524V9D5T3;
+				DEVELOPMENT_TEAM = 9YPJMYZZXT;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
