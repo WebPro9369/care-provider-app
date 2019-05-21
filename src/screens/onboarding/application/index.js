@@ -52,11 +52,12 @@ class ApplicationScreen extends React.Component {
     } = this.props;
     onboardingData.setDOB("01/01/1970");
     console.tron.log("Onboarding data: ", onboardingData.toJSON());
-    registerCareProvider(
-      onboardingData.toJSON(),
-      () => navigate("TabDashboard"),
-      () => Alert.alert("Registration failed.")
-    );
+    // registerCareProvider(
+    //   onboardingData.toJSON(),
+    //   () => navigate("TabDashboard"),
+    //   () => Alert.alert("Registration failed.")
+    // );
+    return navigate("TabDashboard");
     // axios
     //   .post(
     //     "http://localhost:3000/api/v2/care_provider/registrations",
