@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { StyledText } from "../../../components/text";
+import { StyledText, FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { InputButton } from "../../../components/input-button";
 import { ServiceButton } from "../../../components/service-button";
@@ -9,7 +9,8 @@ import {
   ContainerView,
   HeaderWrapper,
   ViewCentered,
-  View
+  View,
+  FormInputWrapper
 } from "../../../components/views";
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
@@ -25,7 +26,8 @@ class SettingsScreen extends React.Component {
       name: "Michael Brown",
       address: "22341 Justice Ave APT 725",
       email: "michaelbrown@gmail.com",
-      phone: "(415) 123 - 4567"
+      phone: "(415) 123 - 4567",
+      biography: ""
     };
   }
 
@@ -33,7 +35,7 @@ class SettingsScreen extends React.Component {
     const {
       navigation: { navigate }
     } = this.props;
-    const { name, address, email, phone } = this.state;
+    const { name, address, email, phone, biography } = this.state;
     return (
       <ContainerView>
         <HeaderWrapper>
@@ -101,6 +103,15 @@ class SettingsScreen extends React.Component {
                 }
                 onPress={() => navigate("AccountEditPhoneNumber")}
               />
+            </View>
+            <View style={{ padding: 16 }}>
+              <FormInputWrapper>
+                <FormTextInput
+                  label="Short Biography"
+                  value={biography}
+                  placeholder="Short Biography"
+                />
+              </FormInputWrapper>
             </View>
           </View>
           <View style={{ marginTop: 32, marginBottom: 32 }}>
