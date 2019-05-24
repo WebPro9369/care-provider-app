@@ -30,7 +30,7 @@ class AddBankScreen extends React.Component {
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
         <NavHeader
-          title="Edit bank"
+          title="Add Payment Method"
           size="medium"
           hasBackButton
           onPressBackButton={() => goBack()}
