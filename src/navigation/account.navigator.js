@@ -12,6 +12,8 @@ import AddBankScreen from "../screens/account/add-bank";
 import UpdateApplicationScreen from "../screens/account/update-application";
 import ScanCardScreen from "../screens/account/scan-card";
 import SignInScreen from "../screens/auth/signin";
+import ForgotPwdScreen from "../screens/auth/forgotPwd";
+import NewPwdScreen from "../screens/auth/enterNewPwd";
 
 const AccountNavigator = createStackNavigator(
   {
@@ -53,6 +55,12 @@ const AccountNavigator = createStackNavigator(
     },
     AccountSignIn: {
       screen: SignInScreen
+    },
+    AccountForgotPwd: {
+      screen: ForgotPwdScreen
+    },
+    AccountNewPwd: {
+      screen: NewPwdScreen
     }
   },
   {
