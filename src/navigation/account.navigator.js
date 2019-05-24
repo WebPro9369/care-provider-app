@@ -10,6 +10,7 @@ import EditCardScreen from "../screens/account/edit-card";
 import EditBankScreen from "../screens/account/edit-bank";
 import AddBankScreen from "../screens/account/add-bank";
 import UpdateApplicationScreen from "../screens/account/update-application";
+import ScanCardScreen from "../screens/account/scan-card";
 
 const AccountNavigator = createStackNavigator(
   {
@@ -45,6 +46,9 @@ const AccountNavigator = createStackNavigator(
     },
     AccountUpdateApplication: {
       screen: UpdateApplicationScreen
+    },
+    AccountScanCard: {
+      screen: ScanCardScreen
     }
   },
   {

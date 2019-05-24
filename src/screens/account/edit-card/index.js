@@ -1,9 +1,14 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import React from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
-import { FlexView, FormWrapper } from "../../../components/views";
+import {
+  FlexView,
+  FormWrapper,
+  TouchableView
+} from "../../../components/views";
 import {
   KeyboardAvoidingView,
   FormInputView
@@ -26,7 +31,7 @@ class EditCardScreen extends React.Component {
 
   render() {
     const {
-      navigation: { goBack }
+      navigation: { goBack, navigate }
     } = this.props;
     const { cardNumber, expDate, cvv, fullName } = this.state;
     return (
@@ -43,7 +48,9 @@ class EditCardScreen extends React.Component {
               label="Card Number"
               leftIcon={<FontAwesome name="cc-visa" size={30} color={BLUE} />}
               rightIcon={
-                <FontAwesome name="camera" size={30} color={DARKSKYBLUE} />
+                <TouchableView onPress={() => navigate("AccountScanCard")}>
+                  <FontAwesome name="camera" size={30} color={DARKSKYBLUE} />
+                </TouchableView>
               }
               value={cardNumber}
             />
