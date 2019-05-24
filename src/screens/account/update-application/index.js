@@ -1,4 +1,5 @@
 import React from "react";
+import { Alert } from "react-native";
 import { Avatar, ButtonGroup } from "react-native-elements";
 import { FormTextInput, StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
@@ -19,6 +20,7 @@ class UpdateApplicationScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      dateOfBirth: null,
       licenseNumber: "1234567",
       boardCertification: "My board certification",
       malpracticeInsurance: "My malpractice insurance",
@@ -33,6 +35,23 @@ class UpdateApplicationScreen extends React.Component {
       selectedIndexes: [0]
     };
     this.updateIndex = this.updateIndex.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onSubmit() {
+    const {
+      navigation: { navigate }
+    } = this.props;
+    const { dateOfBirth } = this.state;
+    // onboardingData.setDOB("01/01/1970");
+    console.tron.log("Onboarding data: ", onboardingData.toJSON());
+    const dateRegex1 = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
+    const dateRegex2 = /^(0[1-9]|1[0-2])(0[1-9]|1\d|2\d|3[01])(19|20)\d{2}$/;
+
+    if (!dateRegex1.test(dateOfBirth) && !dateRegex2.test(dateOfBirth)) {
+      return Alert.alert("Please enter DoB in mm/dd/yyyy format");
+    }
+    return navigate("AccountDefault");
   }
 
   updateIndex(selectedIndexes) {
@@ -45,6 +64,7 @@ class UpdateApplicationScreen extends React.Component {
     } = this.props;
     const buttons = ["MD", "NP", "PA", "APRN"];
     const {
+      dateOfBirth,
       licenseNumber,
       boardCertification,
       malpracticeInsurance,
@@ -85,6 +105,13 @@ class UpdateApplicationScreen extends React.Component {
             />
           </ViewCentered>
           <FormWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                label="Date of Birth"
+                value={dateOfBirth}
+                placeholder="mm/dd/yyyy"
+              />
+            </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
                 label="License Number"
@@ -178,10 +205,7 @@ class UpdateApplicationScreen extends React.Component {
             )}
           </FormWrapper>
           <FormInputWrapper style={{ marginBottom: 20 }}>
-            <ServiceButton
-              title="Save Changes"
-              onPress={() => navigate("AccountDefault")}
-            />
+            <ServiceButton title="Save Changes" onPress={this.onSubmit} />
           </FormInputWrapper>
         </ScrollView>
       </ContainerView>
