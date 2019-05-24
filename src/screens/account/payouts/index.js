@@ -16,7 +16,7 @@ class PayoutsScreen extends React.Component {
     super(props);
     this.state = {
       paymentMethods: [
-        { id: 1, type: "Paypal" },
+        // { id: 1, type: "Paypal" },
         { id: 2, type: "Card", number: "****4985" },
         { id: 3, type: "Bank", number: "****5827" }
       ]
