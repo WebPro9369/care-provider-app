@@ -46,11 +46,13 @@ export const FormWrapper = styled.View`
   flex: 1;
   justify-content: ${props => (props.centered ? "center" : "flex-start")};
   padding: ${props => `${props.padding}px`};
+  padding-top: ${props => `${props.paddingTop}px`};
   padding-bottom: ${props => `${props.paddingBottom}px`};
 `;
 
 FormWrapper.defaultProps = {
   padding: 16,
+  paddingTop: 16,
   paddingBottom: 40
 };
 

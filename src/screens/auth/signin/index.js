@@ -56,7 +56,7 @@ class SignInScreen extends React.Component {
           hasBackButton={false}
           serviceTextStyle={{ color: "#ffffff" }}
         />
-        <FormWrapper centered padding={0}>
+        <FormWrapper centered padding={0} style={{ marginTop: 32 }}>
           <FormInputWrapper paddingLeft={16} paddingRight={16}>
             <FormTextInput
               label="Email"
