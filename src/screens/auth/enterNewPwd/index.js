@@ -9,11 +9,11 @@ import { FormInputWrapper, FormWrapper } from "../../../components/views";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { colors } from "../../../utils/constants";
 
-class SignInScreen extends React.Component {
+class NewPwdScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: null,
+      confirm: null,
       password: null
     };
   }
@@ -30,9 +30,9 @@ class SignInScreen extends React.Component {
     return true;
   };
 
-  handleEmailChange = text => {
+  handleConfirmChange = text => {
     this.setState({
-      email: text
+      confirm: text
     });
   };
 
@@ -43,7 +43,7 @@ class SignInScreen extends React.Component {
   };
 
   render() {
-    const { email, password } = this.state;
+    const { confirm, password } = this.state;
     return (
       <KeyboardAvoidingView
         behavior="padding"
@@ -59,21 +59,22 @@ class SignInScreen extends React.Component {
         <FormWrapper centered padding={0}>
           <FormInputWrapper paddingLeft={16} paddingRight={16}>
             <FormTextInput
-              label="Email"
-              value={email}
-              placeholder="name@domain.com"
-              color="#ffffff"
-              onChangeText={this.handleEmailChange}
-            />
-          </FormInputWrapper>
-          <FormInputWrapper paddingLeft={16} paddingRight={16}>
-            <FormTextInput
               label="Password"
               value={password}
               placeholder="Enter password"
               type="password"
               color="#ffffff"
               onChangeText={this.handlePwdChange}
+            />
+          </FormInputWrapper>
+          <FormInputWrapper paddingLeft={16} paddingRight={16}>
+            <FormTextInput
+              label="Confirm Password"
+              value={confirm}
+              placeholder="Confirm Password"
+              type="password"
+              color="#ffffff"
+              onChangeText={this.handleConfirmChange}
             />
           </FormInputWrapper>
           <FormInputWrapper paddingBottom={6} style={{ marginBottom: 0 }}>
@@ -103,4 +104,4 @@ class SignInScreen extends React.Component {
   }
 }
 
-export default SignInScreen;
+export default NewPwdScreen;
