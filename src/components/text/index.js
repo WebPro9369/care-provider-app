@@ -11,25 +11,28 @@ import {
 const FormTextInput = ({
   label,
   value,
+  color,
   leftIcon,
   rightIcon,
   placeholder,
   ...rest
 }) => (
   <Wrapper {...rest}>
-    <StyledText fontSize={14} lineHeight={18}>
+    <StyledText fontSize={14} lineHeight={18} color={color}>
       {label}
     </StyledText>
-    <FlexView>
+    <FlexView color={color}>
       <LeftFlexView>
         {leftIcon ? (
           <Wrapper style={{ marginRight: 16 }}>{leftIcon}</Wrapper>
         ) : null}
         <StyledTextInput
           placeholder={placeholder}
+          placeholderTextColor={color}
           fontSize={20}
           lineHeight={24}
           value={value}
+          color={color}
         />
       </LeftFlexView>
       {rightIcon}
@@ -40,6 +43,7 @@ const FormTextInput = ({
 FormTextInput.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
+  color: PropTypes.string,
   leftIcon: PropTypes.element,
   rightIcon: PropTypes.element,
   placeholder: PropTypes.string
@@ -48,6 +52,7 @@ FormTextInput.propTypes = {
 FormTextInput.defaultProps = {
   label: "",
   value: null,
+  color: null,
   leftIcon: null,
   rightIcon: null,
   placeholder: ""

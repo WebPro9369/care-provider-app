@@ -11,6 +11,7 @@ import {
 export const NavHeader = ({
   title,
   size,
+  serviceTextStyle,
   hasBackButton,
   backButtonIcon,
   onPressBackButton,
@@ -22,13 +23,16 @@ export const NavHeader = ({
         <StyledBackButtonIcon />
       </StyledTouchableButtonWrapper>
     ) : null}
-    <ServiceText size={size}>{title}</ServiceText>
+    <ServiceText size={size} {...serviceTextStyle}>
+      {title}
+    </ServiceText>
   </Wrapper>
 );
 
 NavHeader.propTypes = {
   title: PropTypes.string,
   size: PropTypes.oneOf(["small", "medium", "large"]),
+  serviceTextStyle: PropTypes.instanceOf(Object),
   hasBackButton: PropTypes.bool,
   backButtonIcon: PropTypes.element,
   onPressBackButton: PropTypes.func
@@ -37,6 +41,7 @@ NavHeader.propTypes = {
 NavHeader.defaultProps = {
   title: "",
   size: "small",
+  serviceTextStyle: {},
   hasBackButton: false,
   backButtonIcon: null,
   onPressBackButton: null

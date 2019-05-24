@@ -8,7 +8,7 @@ export const Wrapper = styled.View`
 
 export const ServiceTouchableButtonWrapper = styled.TouchableOpacity`
   background-color: ${props =>
-    props.grey ? "transparent" : colors.LIGHTGREEN};
+    props.grey ? "transparent" : props.backgroundColor || colors.LIGHTGREEN};
   display: flex;
   justify-content: center;
   align-items: center;
