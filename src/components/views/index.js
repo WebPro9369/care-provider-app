@@ -44,7 +44,7 @@ export const FlexView = styled.View`
 export const FormWrapper = styled.View`
   display: flex;
   flex: 1;
-  justify-content: flex-start;
+  justify-content: ${props => (props.centered ? "center" : "flex-start")};
   padding: ${props => `${props.padding}px`};
   padding-bottom: ${props => `${props.paddingBottom}px`};
 `;
