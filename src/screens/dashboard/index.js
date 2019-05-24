@@ -114,7 +114,7 @@ class DashboardScreen extends React.Component {
             </StyledText>
           </ContentWrapper>
           {!completeApplication ? (
-            <TouchableOpacity onPress={() => navigate("Application")}>
+            <TouchableOpacity onPress={() => navigate("DashboardApplication")}>
               <MatchingMessageWrapper>
                 <FlexView style={{ paddingTop: 10, paddingBottom: 10 }}>
                   <StyledText
@@ -158,6 +158,7 @@ class DashboardScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
+                      onPress={() => navigate("DashboardVisitDetails")}
                     />
                   </View>
                 ))}
