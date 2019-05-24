@@ -72,6 +72,10 @@ class AccountScreen extends React.Component {
             <ListButtonText>Support</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
+          <ListTouchableButtonWrapper onPress={() => navigate("AccountSignIn")}>
+            <ListButtonText>Log Out</ListButtonText>
+            <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
+          </ListTouchableButtonWrapper>
         </View>
       </ContainerView>
     );

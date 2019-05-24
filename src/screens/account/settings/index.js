@@ -117,7 +117,7 @@ class SettingsScreen extends React.Component {
           <View style={{ marginTop: 32, marginBottom: 32 }}>
             <ServiceButton
               title="Log Out"
-              onPress={() => console.tron.log("Logout clicked")}
+              onPress={() => navigate("AccountSignIn")}
             />
           </View>
           {/* <View>
