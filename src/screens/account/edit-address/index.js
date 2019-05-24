@@ -52,7 +52,7 @@ class EditAddressScreen extends React.Component {
                 label="City"
                 style={{
                   width: 120,
-                  marginRight: 40
+                  marginRight: 0
                 }}
                 value={city}
               />
