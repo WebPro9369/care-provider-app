@@ -5,7 +5,7 @@ import MapView from "react-native-maps";
 import haversine from "haversine";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import TwilioVoice from "react-native-twilio-programmable-voice";
-import TwilioServices from "../../../services/twilio";
+// import TwilioServices from "../../../services/twilio";
 import { NavHeader } from "../../../components/nav-header";
 import {
   LargeBookedDetailCard,
@@ -17,6 +17,7 @@ import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
 
 const imgDog = require("../../../../assets/images/Dog.png");
+
 const threshold = 1000;
 
 @inject("store")
@@ -48,7 +49,7 @@ class VisitDetailsScreen extends React.Component {
 
       currentLatitude: 37.78925,
       currentLongitude: -122.4924,
-      distance: 0,
+      distance: 0
     }
   };
 
@@ -62,13 +63,14 @@ class VisitDetailsScreen extends React.Component {
         const { latitude, longitude } = position.coords;
         const visitCoordinate = {
           latitude: map.latitude,
-          longitude: map.longitude,
+          longitude: map.longitude
         };
         const newCoordinate = {
           latitude,
-          longitude,
+          longitude
         };
-        const distance = haversine(visitCoordinate, newCoordinate, {unit: 'meter'}) || 0;
+        const distance =
+          haversine(visitCoordinate, newCoordinate, { unit: "meter" }) || 0;
         providerStore.setArrived(distance < threshold);
 
         this.setState({
@@ -76,7 +78,7 @@ class VisitDetailsScreen extends React.Component {
             ...map,
             currentLatitude: latitude,
             currentLongitude: longitude,
-            distance,
+            distance
           }
         });
       },
@@ -103,7 +105,7 @@ class VisitDetailsScreen extends React.Component {
       android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
     });
     Linking.openURL(url);
-  }
+  };
 
   render() {
     const {
@@ -141,6 +143,7 @@ class VisitDetailsScreen extends React.Component {
               illness={child.illness}
               time={child.time}
               address={child.address}
+              disabled
             />
             <View style={{ marginTop: 32 }}>
               <LargeBookedDetailCard
@@ -157,14 +160,27 @@ class VisitDetailsScreen extends React.Component {
                     }}
                   />
                 }
+                disabled
                 onPress={() => {
                   console.tron.log("Clicking phone");
                   TwilioVoice.connect({ To: "+19085008863" });
                 }}
               />
-              <LargeBookedDetailCard type="Visit Reason" text={visitReason} />
-              <LargeBookedDetailCard type="Allergies" text={allergies} />
-              <LargeBookedDetailCard type="Parent Notes" text={parentNotes} />
+              <LargeBookedDetailCard
+                type="Visit Reason"
+                text={visitReason}
+                disabled
+              />
+              <LargeBookedDetailCard
+                type="Allergies"
+                text={allergies}
+                disabled
+              />
+              <LargeBookedDetailCard
+                type="Parent Notes"
+                text={parentNotes}
+                disabled
+              />
             </View>
           </View>
           <View style={{ marginTop: 48, paddingLeft: 16, paddingRight: 16 }}>
