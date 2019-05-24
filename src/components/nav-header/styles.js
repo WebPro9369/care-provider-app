@@ -14,10 +14,11 @@ export const Wrapper = styled.View`
 `;
 
 export const StyledTouchableButtonWrapper = styled.TouchableOpacity`
-  background-color: ${colors.WHITE};
+  background-color: ${props => props.backgroundColor || colors.WHITE};
   height: 24px;
   padding-top: 4px;
   padding-bottom: 4px;
+  min-width: 30px;
 `;
 
 export const ServiceText = styled.Text`

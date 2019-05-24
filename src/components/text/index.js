@@ -15,6 +15,7 @@ const FormTextInput = ({
   leftIcon,
   rightIcon,
   placeholder,
+  type,
   ...rest
 }) => (
   <Wrapper {...rest}>
@@ -29,6 +30,7 @@ const FormTextInput = ({
         <StyledTextInput
           placeholder={placeholder}
           placeholderTextColor={color}
+          secureTextEntry={type === "password"}
           fontSize={20}
           lineHeight={24}
           value={value}
@@ -44,6 +46,7 @@ FormTextInput.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
   color: PropTypes.string,
+  type: PropTypes.string,
   leftIcon: PropTypes.element,
   rightIcon: PropTypes.element,
   placeholder: PropTypes.string
@@ -53,6 +56,7 @@ FormTextInput.defaultProps = {
   label: "",
   value: null,
   color: null,
+  type: "text",
   leftIcon: null,
   rightIcon: null,
   placeholder: ""

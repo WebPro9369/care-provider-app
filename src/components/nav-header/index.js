@@ -14,13 +14,17 @@ export const NavHeader = ({
   serviceTextStyle,
   hasBackButton,
   backButtonIcon,
+  backgroundColor,
   onPressBackButton,
   ...rest
 }) => (
   <Wrapper size={size} {...rest}>
     {hasBackButton ? (
-      <StyledTouchableButtonWrapper onPress={onPressBackButton}>
-        <StyledBackButtonIcon />
+      <StyledTouchableButtonWrapper
+        backgroundColor={backgroundColor}
+        onPress={onPressBackButton}
+      >
+        {backButtonIcon || <StyledBackButtonIcon />}
       </StyledTouchableButtonWrapper>
     ) : null}
     <ServiceText size={size} {...serviceTextStyle}>
@@ -35,6 +39,7 @@ NavHeader.propTypes = {
   serviceTextStyle: PropTypes.instanceOf(Object),
   hasBackButton: PropTypes.bool,
   backButtonIcon: PropTypes.element,
+  backgroundColor: PropTypes.string,
   onPressBackButton: PropTypes.func
 };
 
@@ -44,6 +49,7 @@ NavHeader.defaultProps = {
   serviceTextStyle: {},
   hasBackButton: false,
   backButtonIcon: null,
+  backgroundColor: "#ffffff",
   onPressBackButton: null
 };
 
