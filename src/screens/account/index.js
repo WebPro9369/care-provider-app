@@ -1,4 +1,5 @@
 import React from "react";
+import { Linking } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { StyledText } from "../../components/text";
 import { ProviderCard } from "../../components/cards";
@@ -65,7 +66,9 @@ class AccountScreen extends React.Component {
             <ListButtonText>Update Application</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
-          <ListTouchableButtonWrapper>
+          <ListTouchableButtonWrapper
+            onPress={() => Linking.openURL("mailto:help@opear.com")}
+          >
             <ListButtonText>Support</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
