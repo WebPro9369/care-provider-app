@@ -22,6 +22,7 @@ export const FlexView = styled.View`
 `;
 
 export const LeftFlexView = styled.View`
+  flex: 1;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -45,6 +46,7 @@ StyledText.defaultProps = {
 };
 
 export const StyledTextInput = styled.TextInput`
+  flex: 1;
   color: ${props => props.color};
   font-family: ${props => props.fontFamily};
   font-size: ${props => props.fontSize};
