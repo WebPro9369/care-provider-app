@@ -13,7 +13,8 @@ import {
   FormWrapper,
   ViewCentered
 } from "../../../components/views";
-import { ScrollView } from "../../../components/views/scroll-view";
+// import { ScrollView } from "../../../components/views/scroll-view";
+import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
 import { registerCareProvider } from "../../../services/opear-api";
 import { colors } from "../../../utils/constants";
 
@@ -27,6 +28,7 @@ class ApplicationScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      dateOfBirth: null,
       licenseNumber: "1234567",
       boardCertification: null,
       malpracticeInsurance: null,
@@ -50,8 +52,16 @@ class ApplicationScreen extends React.Component {
         providerStore: { onboardingData }
       }
     } = this.props;
-    onboardingData.setDOB("01/01/1970");
+    const { dateOfBirth } = this.state;
+    // onboardingData.setDOB("01/01/1970");
     console.tron.log("Onboarding data: ", onboardingData.toJSON());
+    const dateRegex1 = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
+    const dateRegex2 = /^(0[1-9]|1[0-2])(0[1-9]|1\d|2\d|3[01])(19|20)\d{2}$/;
+
+    if (!dateRegex1.test(dateOfBirth) && !dateRegex2.test(dateOfBirth)) {
+      return Alert.alert("Please enter DoB in mm/dd/yyyy format");
+    }
+
     // registerCareProvider(
     //   onboardingData.toJSON(),
     //   () => navigate("TabDashboard"),
@@ -85,6 +95,7 @@ class ApplicationScreen extends React.Component {
     } = this.props;
     const buttons = ["MD", "NP", "PA", "APRN"];
     const {
+      dateOfBirth,
       licenseNumber,
       boardCertification,
       malpracticeInsurance,
@@ -108,7 +119,7 @@ class ApplicationScreen extends React.Component {
             onPressBackButton={() => goBack()}
           />
         </HeaderWrapper>
-        <ScrollView>
+        <KeyboardScrollView>
           <ViewCentered paddingBottom={24}>
             <Avatar
               size="xlarge"
@@ -128,6 +139,13 @@ class ApplicationScreen extends React.Component {
             />
           </ViewCentered>
           <FormWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                label="Date of Birth"
+                value={dateOfBirth}
+                placeholder="mm/dd/yyyy"
+              />
+            </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
                 label="License Number"
@@ -223,7 +241,7 @@ class ApplicationScreen extends React.Component {
           <FormInputWrapper style={{ marginBottom: 20 }}>
             <ServiceButton title="Submit Application" onPress={this.onSubmit} />
           </FormInputWrapper>
-        </ScrollView>
+        </KeyboardScrollView>
       </ContainerView>
     );
   }
