@@ -1,18 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Alert, View } from "react-native";
-import { Avatar, ButtonGroup } from "react-native-elements";
-import { inject, observer } from "mobx-react";
-import axios from "axios";
+// import { Alert, View } from "react-native";
+// import { inject, observer } from "mobx-react";
+// import axios from "axios";
 import { FormTextInput, StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
-import {
-  ContainerView,
-  FormInputWrapper,
-  HeaderWrapper,
-  FormWrapper
-} from "../../../components/views";
+import { FormInputWrapper, FormWrapper } from "../../../components/views";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 
 class SignInScreen extends React.Component {
