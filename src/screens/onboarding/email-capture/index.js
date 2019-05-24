@@ -36,8 +36,9 @@ class EmailCaptureScreen extends Component {
       }
     } = this.props;
     const { email } = this.state;
-    if (!email) {
-      return Alert.alert("Please input your email address.");
+    const regEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!email || !regEmail.test(email)) {
+      return Alert.alert("Please enter a valid email address.");
     }
     onboardingData.setEmail(email);
     return navigate("CreatePassword");
