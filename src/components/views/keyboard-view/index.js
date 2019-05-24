@@ -5,7 +5,7 @@ export const KeyboardAvoidingView = styled.KeyboardAvoidingView`
   justify-content: ${props =>
     props.startFromTop ? "flex-start" : "space-between"};
   padding: ${props => `${props.padding}px`};
-  margin-bottom: 30px;
+  padding-bottom: 30px;
 `;
 
 KeyboardAvoidingView.defaultProps = {
