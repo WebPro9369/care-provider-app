@@ -1,5 +1,6 @@
 import React from "react";
-import { inject, observer, PropTypes } from "mobx-react";
+import PropTypes from "prop-types";
+import { inject, observer, PropTypes as MobXPropTypes } from "mobx-react";
 import { Platform, Linking } from "react-native";
 import MapView from "react-native-maps";
 import haversine from "haversine";
@@ -24,7 +25,12 @@ const threshold = 1000;
 @observer
 class VisitDetailsScreen extends React.Component {
   static propTypes = {
-    store: PropTypes.observableObject.isRequired
+    past: PropTypes.bool,
+    store: MobXPropTypes.observableObject.isRequired
+  };
+
+  static defaultProps = {
+    past: false
   };
 
   state = {
@@ -41,6 +47,7 @@ class VisitDetailsScreen extends React.Component {
     visitReason: "Precautionary",
     allergies: "Crustaceans, gluten",
     parentNotes: "Benjamin wears contact lenses",
+    visitNotes: "Tommy is doing well",
     map: {
       latitude: 37.78825,
       longitude: -122.4324,
@@ -109,6 +116,7 @@ class VisitDetailsScreen extends React.Component {
 
   render() {
     const {
+      past,
       navigation: { goBack, navigate },
       store: { providerStore }
     } = this.props;
@@ -119,6 +127,7 @@ class VisitDetailsScreen extends React.Component {
       visitReason,
       allergies,
       parentNotes,
+      visitNotes,
       map
     } = this.state;
     return (
@@ -181,30 +190,39 @@ class VisitDetailsScreen extends React.Component {
                 text={parentNotes}
                 disabled
               />
+              {past ? (
+                <LargeBookedDetailCard
+                  type="Visit Notes"
+                  text={visitNotes}
+                  disabled
+                />
+              ) : null}
             </View>
           </View>
-          <View style={{ marginTop: 48, paddingLeft: 16, paddingRight: 16 }}>
-            <View style={{ paddingTop: 6, paddingBottom: 6 }}>
-              {arrived ? (
+          {!past ? (
+            <View style={{ marginTop: 48, paddingLeft: 16, paddingRight: 16 }}>
+              <View style={{ paddingTop: 6, paddingBottom: 6 }}>
+                {arrived ? (
+                  <ServiceButton
+                    title="Arrived"
+                    onPress={() => navigate("VisitsVisitInProgress")}
+                  />
+                ) : (
+                  <ServiceButton
+                    title="Navigate"
+                    onPress={this.navigateHandler}
+                  />
+                )}
+              </View>
+              <View style={{ paddingTop: 6, paddingBottom: 6 }}>
                 <ServiceButton
-                  title="Arrived"
-                  onPress={() => navigate("VisitsVisitInProgress")}
+                  grey
+                  title="Cancel Visit"
+                  onPress={() => goBack()}
                 />
-              ) : (
-                <ServiceButton
-                  title="Navigate"
-                  onPress={this.navigateHandler}
-                />
-              )}
+              </View>
             </View>
-            <View style={{ paddingTop: 6, paddingBottom: 6 }}>
-              <ServiceButton
-                grey
-                title="Cancel Visit"
-                onPress={() => goBack()}
-              />
-            </View>
-          </View>
+          ) : null}
         </ScrollView>
       </ContainerView>
     );

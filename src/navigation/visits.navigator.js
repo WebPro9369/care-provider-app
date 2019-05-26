@@ -1,3 +1,4 @@
+import React from "react";
 import { createStackNavigator } from "react-navigation";
 import VisitsScreen from "../screens/visits";
 import VisitDetailsScreen from "../screens/visits/visit-details";
@@ -10,6 +11,9 @@ const VisitsNavigator = createStackNavigator(
     },
     VisitsVisitDetails: {
       screen: VisitDetailsScreen
+    },
+    VisitsPastVisitDetails: {
+      screen: props => <VisitDetailsScreen {...props} past />
     },
     VisitsVisitInProgress: {
       screen: VisitInProgressScreen

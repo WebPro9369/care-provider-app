@@ -66,7 +66,7 @@ class PastVisitsScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
-                      onPress={() => navigate("VisitsVisitDetails")}
+                      onPress={() => navigate("VisitsPastVisitDetails")}
                     />
                   </View>
                 ))}
@@ -85,7 +85,7 @@ class PastVisitsScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
-                      onPress={() => navigate("VisitsVisitDetails")}
+                      onPress={() => navigate("VisitsPastVisitDetails")}
                     />
                   </View>
                 ))}
