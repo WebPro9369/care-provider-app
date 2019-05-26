@@ -122,7 +122,8 @@ class DashboardScreen extends React.Component {
                     lineHeight={24}
                     style={{ maxWidth: 270 }}
                   >
-                    You must complete your application before seeing patients!
+                    Your application must be approved before you can see
+                    patients!
                   </StyledText>
                   <Image source={imgRightArrow} width={25} />
                 </FlexView>
