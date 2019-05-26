@@ -1,8 +1,9 @@
 import React from "react";
+// import axios from "axios";
 import { Alert } from "react-native";
 import { Avatar, ButtonGroup } from "react-native-elements";
 import { inject, observer, PropTypes } from "mobx-react";
-// import axios from "axios";
+import ImagePicker from "react-native-image-picker";
 import { FormTextInput, StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
@@ -28,6 +29,7 @@ class ApplicationScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      avatarSource: null,
       dateOfBirth: null,
       licenseNumber: "1234567",
       boardCertification: null,
@@ -43,7 +45,35 @@ class ApplicationScreen extends React.Component {
       selectedIndexes: []
     };
     this.updateIndex = this.updateIndex.bind(this);
+    this.onAddAvatar = this.onAddAvatar.bind(this);
   }
+
+  onAddAvatar = () => {
+    const options = {
+      title: "Select Profile Picture"
+    };
+
+    ImagePicker.showImagePicker(options, response => {
+      console.tron.log("Response = ", response);
+
+      if (response.didCancel) {
+        console.tron.log("User cancelled image picker");
+      } else if (response.error) {
+        console.tron.log("ImagePicker Error: ", response.error);
+      } else if (response.customButton) {
+        console.tron.log("User tapped custom button: ", response.customButton);
+      } else {
+        const source = { uri: response.uri };
+
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        this.setState({
+          avatarSource: source
+        });
+      }
+    });
+  };
 
   onSubmit = () => {
     const {
@@ -95,6 +125,7 @@ class ApplicationScreen extends React.Component {
     } = this.props;
     const buttons = ["MD", "NP", "PA", "APRN"];
     const {
+      avatarSource,
       dateOfBirth,
       licenseNumber,
       boardCertification,
@@ -109,6 +140,14 @@ class ApplicationScreen extends React.Component {
       supervisingPhysician,
       selectedIndexes
     } = this.state;
+
+    const avatarOptions = avatarSource
+      ? {
+          source: { uri: avatarSource.uri }
+        }
+      : {
+          icon: { name: "user", type: "font-awesome" }
+        };
     return (
       <ContainerView>
         <HeaderWrapper>
@@ -122,9 +161,9 @@ class ApplicationScreen extends React.Component {
         <KeyboardScrollView>
           <ViewCentered paddingBottom={24}>
             <Avatar
+              {...avatarOptions}
               size="xlarge"
               rounded
-              icon={{ name: "user", type: "font-awesome" }}
               editButton={{
                 name: "pluscircle",
                 type: "antdesign",
@@ -133,7 +172,8 @@ class ApplicationScreen extends React.Component {
                 containerStyle: {
                   backgroundColor: colors.WHITE,
                   borderRadius: 15
-                }
+                },
+                onPress: this.onAddAvatar
               }}
               showEditButton
             />
