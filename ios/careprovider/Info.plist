@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>8</string>
+	<string>10</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -65,6 +65,8 @@
 	<string>Care Provider app uses your microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Care Provider app uses photo library</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Care Proivder app would like to save photos to your photo gallery</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Flama.otf</string>
