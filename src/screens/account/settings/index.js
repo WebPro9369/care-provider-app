@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import ImagePicker from "react-native-image-picker";
 import { StyledText, FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { InputButton } from "../../../components/input-button";
@@ -23,6 +24,7 @@ class SettingsScreen extends React.Component {
     super(props);
 
     this.state = {
+      avatarSource: null,
       name: "Michael Brown",
       address: "22341 Justice Ave APT 725",
       email: "michaelbrown@gmail.com",
@@ -31,11 +33,46 @@ class SettingsScreen extends React.Component {
     };
   }
 
+  onAddAvatar = () => {
+    const options = {
+      title: "Select Profile Picture"
+    };
+
+    ImagePicker.showImagePicker(options, response => {
+      console.tron.log("Response = ", response);
+
+      if (response.didCancel) {
+        console.tron.log("User cancelled image picker");
+      } else if (response.error) {
+        console.tron.log("ImagePicker Error: ", response.error);
+      } else if (response.customButton) {
+        console.tron.log("User tapped custom button: ", response.customButton);
+      } else {
+        const source = { uri: response.uri };
+
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        this.setState({
+          avatarSource: source
+        });
+      }
+    });
+  };
+
   render() {
     const {
       navigation: { navigate }
     } = this.props;
-    const { name, address, email, phone, biography } = this.state;
+    const { avatarSource, name, address, email, phone, biography } = this.state;
+    const avatarOptions = avatarSource
+      ? {
+          source: { uri: avatarSource.uri }
+        }
+      : {
+          // icon: { name: "user", type: "font-awesome" }
+          source: imgDoctor
+        };
     return (
       <ContainerView>
         <HeaderWrapper>
@@ -49,16 +86,17 @@ class SettingsScreen extends React.Component {
         <ScrollView>
           <ViewCentered paddingTop={0}>
             <Avatar
+              {...avatarOptions}
               rounded
               size={120}
-              source={imgDoctor}
               showEditButton
               editButton={{
                 containerStyle: {
                   backgroundColor: GREEN,
                   borderRadius: 12
                 },
-                size: 24
+                size: 24,
+                onPress: this.onAddAvatar
               }}
             />
           </ViewCentered>
