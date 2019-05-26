@@ -44,7 +44,7 @@ class UpdateApplicationScreen extends React.Component {
     } = this.props;
     const { dateOfBirth } = this.state;
     // onboardingData.setDOB("01/01/1970");
-    console.tron.log("Onboarding data: ", onboardingData.toJSON());
+
     const dateRegex1 = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
     const dateRegex2 = /^(0[1-9]|1[0-2])(0[1-9]|1\d|2\d|3[01])(19|20)\d{2}$/;
 
@@ -60,7 +60,7 @@ class UpdateApplicationScreen extends React.Component {
 
   render() {
     const {
-      navigation: { goBack, navigate }
+      navigation: { goBack }
     } = this.props;
     const buttons = ["MD", "NP", "PA", "APRN"];
     const {
@@ -163,7 +163,7 @@ class UpdateApplicationScreen extends React.Component {
               <FormTextInput
                 label="Specialties"
                 value={specialties}
-                placeholder="Specialties"
+                placeholder="Specialty 1, specialty 2, etc."
               />
             </FormInputWrapper>
             <FormInputWrapper>

@@ -2,7 +2,7 @@ import React from "react";
 import { Alert } from "react-native";
 import { Avatar, ButtonGroup } from "react-native-elements";
 import { inject, observer, PropTypes } from "mobx-react";
-import axios from "axios";
+// import axios from "axios";
 import { FormTextInput, StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
@@ -15,7 +15,7 @@ import {
 } from "../../../components/views";
 // import { ScrollView } from "../../../components/views/scroll-view";
 import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
-import { registerCareProvider } from "../../../services/opear-api";
+// import { registerCareProvider } from "../../../services/opear-api";
 import { colors } from "../../../utils/constants";
 
 @inject("store")
@@ -110,7 +110,7 @@ class ApplicationScreen extends React.Component {
       selectedIndexes
     } = this.state;
     return (
-      <ContainerView behavior="padding" enabled>
+      <ContainerView>
         <HeaderWrapper>
           <NavHeader
             title="Your application"
@@ -197,7 +197,7 @@ class ApplicationScreen extends React.Component {
               <FormTextInput
                 label="Specialties"
                 value={specialties}
-                placeholder="Specialties"
+                placeholder="Specialty 1, specialty 2, etc."
               />
             </FormInputWrapper>
             <FormInputWrapper>
