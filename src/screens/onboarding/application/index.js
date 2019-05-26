@@ -204,7 +204,7 @@ class ApplicationScreen extends React.Component {
               <FormTextInput
                 label="Offered Services"
                 value={offeredServices}
-                placeholder="Offered Services"
+                placeholder="Service 1, service 2, etc."
               />
             </FormInputWrapper>
             <FormInputWrapper>
