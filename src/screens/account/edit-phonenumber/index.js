@@ -1,17 +1,63 @@
 import React from "react";
+import { inject, observer, PropTypes } from "mobx-react";
 import PhoneInput from "react-native-phone-input";
 import { StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
 import { View } from "../../../components/views";
+import { updateCareProvider } from "../../../services/opear-api";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { colors } from "../../../utils/constants";
 
+@inject("store")
+@observer
 class EditPhoneNumberScreen extends React.Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+
+  constructor(props) {
+    super(props);
+
+    const { store: { currentUserStore: { phone } } }  = props; 
+
+    this.state = {
+      phone,
+    };
+  }
+
+  handleChange = (phone) => {
+    this.setState({ phone });
+  };
+
+  onSubmit = () => {
+    const {
+      navigation: { goBack },
+      store: { currentUserStore }
+    } = this.props;
+
+    const { id } = currentUserStore;
+    const { phone } = this.state;
+    const data = { phone };
+
+    const successHandler = () => {
+      currentUserStore.setPhone(phone);
+      goBack();
+    };
+
+    updateCareProvider(
+      id,
+      data,
+      { successHandler }
+    );
+  }
+
   render() {
     const {
       navigation: { goBack }
     } = this.props;
+    const { phone } = this.state;
+    
     return (
       <KeyboardAvoidingView startFromTop behavior="padding" enabled>
         <NavHeader
@@ -34,6 +80,8 @@ class EditPhoneNumberScreen extends React.Component {
               ref={phone => {
                 this.phone = phone;
               }}
+              value={phone}
+              onChangePhoneNumber={this.handleChange}
             />
           </View>
         </View>
@@ -43,7 +91,7 @@ class EditPhoneNumberScreen extends React.Component {
           </StyledText>
         </View>
         <View style={{ marginTop: 250 }}>
-          <ServiceButton title="Update Phone" onPress={() => goBack()} />
+          <ServiceButton title="Update Phone" onPress={this.onSubmit} />
         </View>
       </KeyboardAvoidingView>
     );

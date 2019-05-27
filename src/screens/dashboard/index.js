@@ -34,9 +34,6 @@ class DashboardScreen extends React.Component {
 
     this.state = {
       // selectedIllness: null,
-      user: {
-        name: "John"
-      },
       bookingList: [
         {
           key: "1",
@@ -90,15 +87,17 @@ class DashboardScreen extends React.Component {
       navigation: { navigate },
       store
     } = this.props;
-    const { providerStore } = store;
-    const { completeApplication, appointment } = providerStore;
+    const { 
+      providerStore: { completeApplication, appointment },
+      currentUserStore: { firstName }
+   } = store;
 
     // if (appointment) {
     //   setTimeout(() => {
     //     ProviderState.setOutstandingAppointment(true);
     //   }, 3000);
     // }
-    const { user, bookingList, reviewAllergyModalVisible } = this.state;
+    const { bookingList, reviewAllergyModalVisible } = this.state;
 
     return (
       <ContainerView>
@@ -109,7 +108,7 @@ class DashboardScreen extends React.Component {
           <ContentWrapper>
             <StyledText fontSize={28} fontFamily="FlamaMedium">
               {"Hi, "}
-              {user.name}
+              {firstName}
               {"!"}
             </StyledText>
           </ContentWrapper>

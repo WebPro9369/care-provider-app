@@ -1,6 +1,7 @@
 import React from "react";
 import { Linking } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { inject, observer, PropTypes } from "mobx-react";
 import { StyledText } from "../../components/text";
 import { ProviderCard } from "../../components/cards";
 import { ListTouchableButtonWrapper, ListButtonText } from "./styles";
@@ -9,11 +10,16 @@ import { colors } from "../../utils/constants";
 
 const imgDoctor = require("../../../assets/images/Doctor.png");
 
+@inject("store")
+@observer
 class AccountScreen extends React.Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+  
   constructor(props) {
     super(props);
     this.state = {
-      name: "Dr. John Smith",
       avatarImg: imgDoctor,
       rating: "4.5",
       bio: "Hi, this is my bio",
@@ -24,9 +30,11 @@ class AccountScreen extends React.Component {
 
   render() {
     const {
+      store,
       navigation: { navigate }
     } = this.props;
-    const { name, avatarImg, rating, bio, history, badges } = this.state;
+    const { avatarImg, rating, bio, history, badges } = this.state;
+    const { currentUserStore: { firstName, lastName } } = store;
     return (
       <ContainerView padding={16}>
         <View style={{ paddingTop: 24, paddingBottom: 24 }}>
@@ -41,7 +49,7 @@ class AccountScreen extends React.Component {
         </View>
         <ProviderCard
           avatarImg={avatarImg}
-          name={name}
+          name={`${firstName} ${lastName}`}
           bio={bio}
           history={history}
           rating={rating}

@@ -31,16 +31,14 @@ class EmailCaptureScreen extends Component {
   onSubmit = () => {
     const {
       navigation: { navigate },
-      store: {
-        providerStore: { onboardingData }
-      }
+      store: { currentUserStore }
     } = this.props;
     const { email } = this.state;
     const regEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!email || !regEmail.test(email)) {
       return Alert.alert("Please enter a valid email address.");
     }
-    onboardingData.setEmail(email);
+    currentUserStore.setEmail(email);
     return navigate("CreatePassword");
   };
 

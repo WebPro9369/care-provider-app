@@ -5,20 +5,20 @@ import { Alert } from "react-native";
 import { Avatar, ButtonGroup } from "react-native-elements";
 import { inject, observer, PropTypes } from "mobx-react";
 import ImagePicker from "react-native-image-picker";
-import { FormTextInput, StyledText } from "../../../components/text";
-import { NavHeader } from "../../../components/nav-header";
-import { ServiceButton } from "../../../components/service-button";
+import { FormTextInput, StyledText } from "@components/text";
+import { NavHeader } from "@components/nav-header";
+import { ServiceButton } from "@components/service-button";
 import {
   ContainerView,
   FormInputWrapper,
   HeaderWrapper,
   FormWrapper,
   ViewCentered
-} from "../../../components/views";
-// import { ScrollView } from "../../../components/views/scroll-view";
-import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
-// import { registerCareProvider } from "../../../services/opear-api";
-import { colors } from "../../../utils/constants";
+} from "@components/views";
+import { KeyboardScrollView } from "@components/views/keyboard-scroll-view";
+import { registerCareProvider } from "@services/opear-api";
+import { colors, TITLES } from "@utils/constants";
+import { commaStringToArray } from "@utils/helpers";
 
 @inject("store")
 @observer
@@ -32,30 +32,30 @@ class ApplicationScreen extends React.Component {
     this.state = {
       avatarSource: null,
       dateOfBirth: null,
-      licenseNumber: "1234567",
       ssn: null,
       maskedSsn: null,
-      boardCertification: null,
-      malpracticeInsurance: null,
-      educationHistory: null,
-      workHistory: null,
-      specialties: null,
-      offeredServices: null,
-      legalHistory: null,
-      references: null,
-      whereHeard: null,
-      supervisingPhysician: null,
+      licenseNumber: '',
+      boardCertification: '',
+      malpracticeInsurance: '',
+      educationHistory: '',
+      workHistory: '',
+      specialties: '',
+      offeredServices: '',
+      legalHistory: '',
+      references: '',
+      whereHeard: '',
+      supervisingPhysician: '',
       selectedIndexes: []
     };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.updateIndex = this.updateIndex.bind(this);
     this.onAddAvatar = this.onAddAvatar.bind(this);
-    this.onInpuTextChange = this.onInpuTextChange.bind(this);
-    this.onSumbit = this.onSubmit.bind(this);
 
     this.inputRefs = {};
   }
 
-  onAddAvatar = () => {
+  onAddAvatar = _ => {
     const options = {
       title: "Select Profile Picture"
     };
@@ -82,33 +82,73 @@ class ApplicationScreen extends React.Component {
     });
   };
 
-  onInpuTextChange = name => text => {
+  handleInputChange = name => value => {
     if (name === "ssn") {
       const ssnPattern = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
-      if (ssnPattern.test(text)) {
+      if (ssnPattern.test(value)) {
         return this.setState({
-          ssn: text,
-          maskedSsn: `XXX-XX-${text.substr(7, 4)}`
+          ssn: value,
+          maskedSsn: `XXX-XX-${value.substr(7, 4)}`
         });
       }
     }
-    return this.setState({
-      [name]: text
+
+    this.setState({
+      [name]: value
     });
   };
 
-  onSubmit = () => {
+  updateStore = _ => {
+    const {
+      store: { currentUserStore : { application }}
+    } = this.props;
+
+    const {
+      licenseNumber,
+      boardCertification,
+      malpracticeInsurance,
+      legalHistory,
+      educationHistory,
+      workHistory,
+      specialties,
+      offeredServices,
+      references,
+      whereHeard,
+      supervisingPhysician,
+      selectedIndexes,
+    } = this.state;
+
+    application
+      .setLicenseNumber(licenseNumber)
+      .setBoardCertification(boardCertification)
+      .setMalpracticeInsurance(malpracticeInsurance)
+      .setLegalHistory(legalHistory)
+      .setEducationHistory(commaStringToArray(educationHistory))
+      .setWorkHistory(commaStringToArray(workHistory))
+      .setSpecialties(commaStringToArray(specialties))
+      .setOfferedServices(commaStringToArray(offeredServices))
+      .setReferences(references)
+      .setWhereHeard(whereHeard)
+      .setSupervisingPhysician(supervisingPhysician)
+      .setTitles(selectedIndexes.map(index => TITLES[index]));
+  }
+
+  onSubmit = _ => {
+    this.updateStore();
+
     const {
       navigation: { navigate },
       store: {
-        providerStore: { onboardingData }
+        currentUserStore,
       }
     } = this.props;
     const { dateOfBirth, ssn } = this.state;
+
+    console.tron.log("User data: ", currentUserStore.toJSON());
+
     const dateRegex1 = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
     const dateRegex2 = /^(0[1-9]|1[0-2])(0[1-9]|1\d|2\d|3[01])(19|20)\d{2}$/;
 
-    console.tron.log("Onboarding data: ", onboardingData);
     if (!dateRegex1.test(dateOfBirth) && !dateRegex2.test(dateOfBirth)) {
       return Alert.alert("Please enter DoB in mm/dd/yyyy format");
     }
@@ -120,30 +160,65 @@ class ApplicationScreen extends React.Component {
       );
     }
 
-    // registerCareProvider(
-    //   onboardingData.toJSON(),
-    //   () => navigate("TabDashboard"),
-    //   () => Alert.alert("Registration failed.")
-    // );
-    return navigate("TabDashboard");
-    // axios
-    //   .post(
-    //     "http://localhost:3000/api/v2/care_provider/registrations",
-    //     onboardingData.toJSON()
-    //   )
-    //   .then(res => {
-    //     console.tron.log("Registration response: ", res);
-    //     navigate("TabDashboard");
-    //   })
-    //   .catch(err => {
-    //     console.tron.log("Registration error: ", err);
-    //     Alert.alert("Registration failed.");
-    //   });
+    let {
+       firstName,
+       lastName,
+       email,
+       password,
+       phone,
+       address: {
+         zip_code: zip,
+       },
+       application: {
+        licenseNumber: license,
+        boardCertification: certification,
+        malpracticeInsurance: malpractice,
+        legalHistory: legal_history,
+        educationHistory: education,
+        workHistory: work_history,
+        specialties,
+        references,
+        offeredServices: offered_services,
+        whereHeard: source,
+        titles: title,
+       }
+    } = currentUserStore;
 
-    // navigate("TabDashboard");
+    const data = {
+      care_provider: {
+        name: `${firstName} ${lastName}`,
+        email,
+        password,
+        phone,
+        zip, 
+        license,
+        certification,
+        malpractice,
+        legal_history,
+        references,
+        education,
+        work_history,
+        specialties,
+        offered_services,
+        source,
+        title,
+      }
+    };
+
+    const successHandler = (response) => {
+      const { id, api_key: apiKey } = response.data;
+
+      currentUserStore.setAuthentication({ id, apiKey });
+
+      navigate("TabDashboard");
+    };
+
+    const errorHandler = () => Alert.alert("Registration failed.");
+
+    registerCareProvider(data, { successHandler, errorHandler });
   };
 
-  updateIndex(selectedIndexes) {
+  updateIndex = (selectedIndexes) => {
     this.setState({ selectedIndexes });
   }
 
@@ -151,7 +226,7 @@ class ApplicationScreen extends React.Component {
     const {
       navigation: { goBack }
     } = this.props;
-    const buttons = ["MD", "NP", "PA", "APRN"];
+    const buttons = TITLES;
     const {
       avatarSource,
       dateOfBirth,
@@ -216,7 +291,7 @@ class ApplicationScreen extends React.Component {
                 value={dateOfBirth}
                 placeholder="mm/dd/yyyy"
                 returnKeyType="next"
-                onChangeText={this.onInpuTextChange("dateOfBirth")}
+                onChangeText={this.handleInputChange("dateOfBirth")}
                 onSubmitEditing={() =>
                   this.inputRefs.licenseNumber.getInnerRef().focus()
                 }
@@ -229,9 +304,10 @@ class ApplicationScreen extends React.Component {
                 label="License Number"
                 value={licenseNumber}
                 placeholder="License Number"
+                name="licenseNumber"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseNumber = input)}
-                onChangeText={this.onInpuTextChange("licenseNumber")}
+                onChangeText={this.handleInputChange("licenseNumber")}
                 onSubmitEditing={() => this.inputRefs.ssn.getInnerRef().focus()}
                 blurOnSubmit={false}
               />
@@ -244,7 +320,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="123-45-6789"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.ssn = input)}
-                onChangeText={this.onInpuTextChange("ssn")}
+                onChangeText={this.handleInputChange("ssn")}
                 onSubmitEditing={() =>
                   this.inputRefs.boardCertification.getInnerRef().focus()
                 }
@@ -259,7 +335,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="Board Certification"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.boardCertification = input)}
-                onChangeText={this.onInpuTextChange("boardCertification")}
+                onChangeText={this.handleInputChange("boardCertification")}
                 onSubmitEditing={() =>
                   this.inputRefs.malpracticeInsurance.getInnerRef().focus()
                 }
@@ -286,7 +362,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="Malpractice Insurance"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.malpracticeInsurance = input)}
-                onChangeText={this.onInpuTextChange("malpracticeInsurance")}
+                onChangeText={this.handleInputChange("malpracticeInsurance")}
                 onSubmitEditing={() =>
                   this.inputRefs.educationHistory.getInnerRef().focus()
                 }
@@ -301,7 +377,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="Education History"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.educationHistory = input)}
-                onChangeText={this.onInpuTextChange("educationHistory")}
+                onChangeText={this.handleInputChange("educationHistory")}
                 onSubmitEditing={() =>
                   this.inputRefs.workHistory.getInnerRef().focus()
                 }
@@ -316,7 +392,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="Work History"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.workHistory = input)}
-                onChangeText={this.onInpuTextChange("workHistory")}
+                onChangeText={this.handleInputChange("workHistory")}
                 onSubmitEditing={() =>
                   this.inputRefs.specialties.getInnerRef().focus()
                 }
@@ -331,7 +407,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="Specialty 1, specialty 2, etc."
                 returnKeyType="next"
                 ref={input => (this.inputRefs.specialties = input)}
-                onChangeText={this.onInpuTextChange("specialties")}
+                onChangeText={this.handleInputChange("specialties")}
                 onSubmitEditing={() =>
                   this.inputRefs.offeredServices.getInnerRef().focus()
                 }
@@ -346,7 +422,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="Service 1, service 2, etc."
                 returnKeyType="next"
                 ref={input => (this.inputRefs.offeredServices = input)}
-                onChangeText={this.onInpuTextChange("offeredServices")}
+                onChangeText={this.handleInputChange("offeredServices")}
                 onSubmitEditing={() =>
                   this.inputRefs.legalHistory.getInnerRef().focus()
                 }
@@ -361,7 +437,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="Legal History"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.legalHistory = input)}
-                onChangeText={this.onInpuTextChange("legalHistory")}
+                onChangeText={this.handleInputChange("legalHistory")}
                 onSubmitEditing={() =>
                   this.inputRefs.references.getInnerRef().focus()
                 }
@@ -376,7 +452,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="References"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.references = input)}
-                onChangeText={this.onInpuTextChange("references")}
+                onChangeText={this.handleInputChange("references")}
                 onSubmitEditing={() =>
                   this.inputRefs.whereHeard.getInnerRef().focus()
                 }
@@ -391,7 +467,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="Where did you hear about us?"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.whereHeard = input)}
-                onChangeText={this.onInpuTextChange("whereHeard")}
+                onChangeText={this.handleInputChange("whereHeard")}
                 onSubmitEditing={() =>
                   this.inputRefs.supervisingPhysician &&
                   this.inputRefs.supervisingPhysician.getInnerRef().focus()
@@ -408,7 +484,7 @@ class ApplicationScreen extends React.Component {
                   placeholder="Supervising Physician"
                   returnKeyType="next"
                   ref={input => (this.inputRefs.supervisingPhysician = input)}
-                  onChangeText={this.onInpuTextChange("supervisingPhysician")}
+                  onChangeText={this.handleInputChange("supervisingPhysician")}
                 />
               </FormInputWrapper>
             )}
