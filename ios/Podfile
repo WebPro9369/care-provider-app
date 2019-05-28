@@ -1,0 +1,38 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'careprovider' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for careprovider
+  pod 'TwilioVoice', '~> 2.0.0'
+
+  # target 'careprovider-tvOSTests' do
+  #   inherit! :search_paths
+  #   # Pods for testing
+  # end
+
+  pod 'TouchID', :path => '../node_modules/react-native-touch-id'
+
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
+  target 'careproviderTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+
+target 'careprovider-tvOS' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for careprovider-tvOS
+
+  target 'careprovider-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
