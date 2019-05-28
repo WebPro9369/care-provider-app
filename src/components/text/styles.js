@@ -48,7 +48,8 @@ StyledText.defaultProps = {
 };
 
 export const StyledTextInput = styled.TextInput`
-  flex: 1;
+  width: ${props => props.width};
+  height: ${props => props.height};
   color: ${props => props.color || colors.BLACK};
   font-family: ${props => props.fontFamily};
   font-size: ${props => props.fontSize};
@@ -57,6 +58,8 @@ export const StyledTextInput = styled.TextInput`
 `;
 
 StyledTextInput.defaultProps = {
+  width: "100%",
+  height: 36,
   color: colors.BLACK,
   fontSize: 20,
   fontFamily: "Flama",
