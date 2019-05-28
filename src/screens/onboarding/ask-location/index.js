@@ -218,7 +218,11 @@ class AskLocationScreen extends Component {
           </View>
         </View>
         <View>
-          <Image source={imgProgressbar} style={{ marginBottom: 16 }} />
+          <Image
+            source={imgProgressbar}
+            resizeMode="contain"
+            style={{ width: "100%", marginBottom: 16 }}
+          />
           <ServiceButton
             title="Check Availability"
             style={{ marginBottom: 20 }}
