@@ -168,7 +168,7 @@ class UpdateApplicationScreen extends React.Component {
 
     let {
       dateOfBirth,
-      sss,
+      ssn,
       licenseNumber: license,
       boardCertification: certification,
       malpracticeInsurance: malpractice,
