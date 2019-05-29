@@ -3,7 +3,8 @@ import { Dimensions } from "react-native";
 const DEVICE_WIDTH = Dimensions.get("window").width;
 const DEVICE_HEIGHT = Dimensions.get("window").height;
 
-const GOOGLE_API_KEY = "AIzaSyBte8wMJ5Lic5CnLK8JRA8TniNwiCRpw7Q";
+// const GOOGLE_API_KEY = "AIzaSyBte8wMJ5Lic5CnLK8JRA8TniNwiCRpw7Q";
+const GOOGLE_API_KEY = "AIzaSyBu1rXRtcQVBHRHotogui7F2FWT9WpfcNw";
 
 const colors = {
   WHITE: "#FFFFFF",
