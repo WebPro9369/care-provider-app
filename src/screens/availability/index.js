@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable prefer-destructuring */
 import React from "react";
-import { FlatList, Switch } from "react-native";
+import { FlatList, Switch, DatePickerIOS } from "react-native";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { StyledText } from "../../components/text";
 import {
@@ -28,14 +28,39 @@ class AvailabilityScreen extends React.Component {
       { key: "fri", label: "F", start: 12, end: 18, disabled: false },
       { key: "sat", label: "S", start: 12, end: 18, disabled: false },
       { key: "sun", label: "Su", start: 12, end: 18, disabled: false }
-    ]
+    ],
+    showDateTimePicker: false,
+    chosenDate: new Date()
+  };
+
+  setDate = newDate => {
+    console.tron.log("Availability new date: ", newDate);
+    this.setState({
+      chosenDate: newDate
+    });
+  };
+
+  showDateTimePicker = () => {
+    this.setState({
+      showDateTimePicker: true
+    });
+  };
+
+  hideDateTimePicker = () => {
+    this.setState({
+      showDateTimePicker: false
+    });
   };
 
   handleSetAvailability = () => {
     const {
       navigation: { navigate }
     } = this.props;
-    navigate("TabDashboard");
+    const { showDateTimePicker } = this.state;
+    if (showDateTimePicker) {
+      return this.hideDateTimePicker();
+    }
+    return navigate("TabDashboard");
   };
 
   onChangeSwitchSED = value => {
@@ -60,7 +85,8 @@ class AvailabilityScreen extends React.Component {
 
   onChangeSwitchSN = value => {
     this.setState({
-      snoozed: value
+      snoozed: value,
+      showDateTimePicker: value
     });
   };
 
@@ -122,7 +148,13 @@ class AvailabilityScreen extends React.Component {
   };
 
   render() {
-    const { snoozed, sameEveryDay, timeSlots } = this.state;
+    const {
+      snoozed,
+      sameEveryDay,
+      timeSlots,
+      chosenDate,
+      showDateTimePicker
+    } = this.state;
     return (
       <ContainerView style={{ paddingTop: 16, paddingBottom: 16 }}>
         <View
@@ -166,60 +198,72 @@ class AvailabilityScreen extends React.Component {
             </FlexView>
           </FlexView>
         </View>
-        <View style={{ flex: 1, marginTop: 20, paddingLeft: 16 }}>
-          <FlatList
-            data={timeSlots}
-            renderItem={({ item }) => (
-              <View
-                style={{ marginTop: 12, marginBottom: 12, paddingRight: 12 }}
-              >
-                <FlexView>
-                  <TouchableView
-                    justifyContent="center"
-                    style={{
-                      width: 48,
-                      height: 48,
-                      borderRadius: 24,
-                      backgroundColor: item.disabled
-                        ? colors.BLACK38
-                        : colors.DARKSKYBLUE
-                    }}
-                    onPress={() => this.toggleDisabled(item.key)}
-                  >
-                    <StyledText
-                      fontSize={14}
-                      fontFamily="FlamaMedium"
-                      color={colors.WHITE}
+        {showDateTimePicker && (
+          <View
+            style={{
+              flex: 1,
+              paddingTop: 32
+            }}
+          >
+            <DatePickerIOS date={chosenDate} onDateChange={this.setDate} />
+          </View>
+        )}
+        {!showDateTimePicker && (
+          <View style={{ flex: 1, marginTop: 20, paddingLeft: 16 }}>
+            <FlatList
+              data={timeSlots}
+              renderItem={({ item }) => (
+                <View
+                  style={{ marginTop: 12, marginBottom: 12, paddingRight: 12 }}
+                >
+                  <FlexView>
+                    <TouchableView
+                      justifyContent="center"
+                      style={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: 24,
+                        backgroundColor: item.disabled
+                          ? colors.BLACK38
+                          : colors.DARKSKYBLUE
+                      }}
+                      onPress={() => this.toggleDisabled(item.key)}
                     >
-                      {item.label}
-                    </StyledText>
-                  </TouchableView>
-                  <View style={{ paddingLeft: 24, paddingRight: 12 }}>
-                    <MultiSlider
-                      values={[item.start, item.end]}
-                      sliderLength={280}
-                      min={0}
-                      max={47}
-                      step={1}
-                      enabledOne={!item.disabled}
-                      enabledTwo={!item.disabled}
-                      snapped
-                      allowOverlap={false}
-                      onValuesChangeStart={this.sliderOneValuesChangeStart}
-                      onValuesChange={this.sliderOneValuesChange}
-                      onValuesChangeFinish={values =>
-                        this.sliderOneValuesChangeFinish(item.key, values)
-                      }
-                      customMarker={props => (
-                        <SliderMarker disabled={item.disabled} {...props} />
-                      )}
-                    />
-                  </View>
-                </FlexView>
-              </View>
-            )}
-          />
-        </View>
+                      <StyledText
+                        fontSize={14}
+                        fontFamily="FlamaMedium"
+                        color={colors.WHITE}
+                      >
+                        {item.label}
+                      </StyledText>
+                    </TouchableView>
+                    <View style={{ paddingLeft: 24, paddingRight: 12 }}>
+                      <MultiSlider
+                        values={[item.start, item.end]}
+                        sliderLength={280}
+                        min={0}
+                        max={47}
+                        step={1}
+                        enabledOne={!item.disabled}
+                        enabledTwo={!item.disabled}
+                        snapped
+                        allowOverlap={false}
+                        onValuesChangeStart={this.sliderOneValuesChangeStart}
+                        onValuesChange={this.sliderOneValuesChange}
+                        onValuesChangeFinish={values =>
+                          this.sliderOneValuesChangeFinish(item.key, values)
+                        }
+                        customMarker={props => (
+                          <SliderMarker disabled={item.disabled} {...props} />
+                        )}
+                      />
+                    </View>
+                  </FlexView>
+                </View>
+              )}
+            />
+          </View>
+        )}
         <View
           style={{
             marginTop: 16,
@@ -229,7 +273,7 @@ class AvailabilityScreen extends React.Component {
           }}
         >
           <ServiceButton
-            title="Set Availability"
+            title={showDateTimePicker ? "Set Date" : "Set Availability"}
             onPress={this.handleSetAvailability}
           />
         </View>
