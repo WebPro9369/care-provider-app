@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import React from "react";
 import { Alert } from "react-native";
 import { Avatar, ButtonGroup } from "react-native-elements";
@@ -42,6 +43,8 @@ class UpdateApplicationScreen extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onAddAvatar = this.onAddAvatar.bind(this);
     this.onInpuTextChange = this.onInpuTextChange.bind(this);
+
+    this.inputRefs = {};
   }
 
   onAddAvatar = () => {
@@ -180,7 +183,12 @@ class UpdateApplicationScreen extends React.Component {
                 label="Date of Birth"
                 value={dateOfBirth}
                 placeholder="mm/dd/yyyy"
+                returnKeyType="next"
                 onChangeText={this.onInpuTextChange("dateOfBirth")}
+                onSubmitEditing={() =>
+                  this.inputRefs.licenseNumber.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -190,11 +198,10 @@ class UpdateApplicationScreen extends React.Component {
                 value={licenseNumber}
                 placeholder="License Number"
                 returnKeyType="next"
-                onSubmitEditing={() =>
-                  console.tron.log("Second input: ", this.secondTextInput)
-                }
-                blurOnSubmit={false}
+                ref={input => (this.inputRefs.licenseNumber = input)}
                 onChangeText={this.onInpuTextChange("licenseNumber")}
+                onSubmitEditing={() => this.inputRefs.ssn.getInnerRef().focus()}
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -204,11 +211,12 @@ class UpdateApplicationScreen extends React.Component {
                 value={maskedSsn || ssn}
                 placeholder="123-45-6789"
                 returnKeyType="next"
+                ref={input => (this.inputRefs.ssn = input)}
+                onChangeText={this.onInpuTextChange("ssn")}
                 onSubmitEditing={() =>
-                  console.tron.log("Second input: ", this.secondTextInput)
+                  this.inputRefs.boardCertification.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
-                onChangeText={this.onInpuTextChange("ssn")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -217,10 +225,13 @@ class UpdateApplicationScreen extends React.Component {
                 label="Board Certification"
                 value={boardCertification}
                 placeholder="Board Certification"
-                ref={input => {
-                  this.secondTextInput = input;
-                }}
+                returnKeyType="next"
+                ref={input => (this.inputRefs.boardCertification = input)}
                 onChangeText={this.onInpuTextChange("boardCertification")}
+                onSubmitEditing={() =>
+                  this.inputRefs.malpracticeInsurance.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -241,7 +252,13 @@ class UpdateApplicationScreen extends React.Component {
                 label="Malpractice Insurance"
                 value={malpracticeInsurance}
                 placeholder="Malpractice Insurance"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.malpracticeInsurance = input)}
                 onChangeText={this.onInpuTextChange("malpracticeInsurance")}
+                onSubmitEditing={() =>
+                  this.inputRefs.educationHistory.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -250,7 +267,13 @@ class UpdateApplicationScreen extends React.Component {
                 label="Education History"
                 value={educationHistory}
                 placeholder="Education History"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.educationHistory = input)}
                 onChangeText={this.onInpuTextChange("educationHistory")}
+                onSubmitEditing={() =>
+                  this.inputRefs.workHistory.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -259,7 +282,13 @@ class UpdateApplicationScreen extends React.Component {
                 label="Work History"
                 value={workHistory}
                 placeholder="Work History"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.workHistory = input)}
                 onChangeText={this.onInpuTextChange("workHistory")}
+                onSubmitEditing={() =>
+                  this.inputRefs.specialties.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -268,7 +297,13 @@ class UpdateApplicationScreen extends React.Component {
                 label="Specialties"
                 value={specialties}
                 placeholder="Specialty 1, specialty 2, etc."
+                returnKeyType="next"
+                ref={input => (this.inputRefs.specialties = input)}
                 onChangeText={this.onInpuTextChange("specialties")}
+                onSubmitEditing={() =>
+                  this.inputRefs.offeredServices.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -277,7 +312,13 @@ class UpdateApplicationScreen extends React.Component {
                 label="Offered Services"
                 value={offeredServices}
                 placeholder="Service 1, service 2, etc."
+                returnKeyType="next"
+                ref={input => (this.inputRefs.offeredServices = input)}
                 onChangeText={this.onInpuTextChange("offeredServices")}
+                onSubmitEditing={() =>
+                  this.inputRefs.legalHistory.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -286,7 +327,13 @@ class UpdateApplicationScreen extends React.Component {
                 label="Legal History"
                 value={legalHistory}
                 placeholder="Legal History"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.legalHistory = input)}
                 onChangeText={this.onInpuTextChange("legalHistory")}
+                onSubmitEditing={() =>
+                  this.inputRefs.references.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -295,7 +342,13 @@ class UpdateApplicationScreen extends React.Component {
                 label="References"
                 value={references}
                 placeholder="References"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.references = input)}
                 onChangeText={this.onInpuTextChange("references")}
+                onSubmitEditing={() =>
+                  this.inputRefs.whereHeard.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -304,7 +357,14 @@ class UpdateApplicationScreen extends React.Component {
                 label="Where did you hear about us?"
                 value={whereHeard}
                 placeholder="Where did you hear about us?"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.whereHeard = input)}
                 onChangeText={this.onInpuTextChange("whereHeard")}
+                onSubmitEditing={() =>
+                  this.inputRefs.supervisingPhysician &&
+                  this.inputRefs.supervisingPhysician.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
               />
             </FormInputWrapper>
             {selectedIndexes.includes(0) ? null : (
@@ -314,6 +374,8 @@ class UpdateApplicationScreen extends React.Component {
                   label="Supervising Physician"
                   value={supervisingPhysician}
                   placeholder="Supervising Physician"
+                  returnKeyType="next"
+                  ref={input => (this.inputRefs.supervisingPhysician = input)}
                   onChangeText={this.onInpuTextChange("supervisingPhysician")}
                 />
               </FormInputWrapper>

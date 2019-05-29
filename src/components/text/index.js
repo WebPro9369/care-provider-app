@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import React from "react";
 import PropTypes from "prop-types";
 import {
@@ -8,39 +9,52 @@ import {
   LeftFlexView
 } from "./styles";
 
-const FormTextInput = ({
-  label,
-  value,
-  color,
-  leftIcon,
-  rightIcon,
-  placeholder,
-  type,
-  ...rest
-}) => (
-  <Wrapper {...rest}>
-    <StyledText fontSize={14} lineHeight={18} color={color}>
-      {label}
-    </StyledText>
-    <FlexView color={color}>
-      <LeftFlexView>
-        {leftIcon ? (
-          <Wrapper style={{ marginRight: 16 }}>{leftIcon}</Wrapper>
-        ) : null}
-        <StyledTextInput
-          placeholder={placeholder}
-          placeholderTextColor={color}
-          secureTextEntry={type === "password"}
-          fontSize={20}
-          lineHeight={24}
-          value={value}
-          color={color}
-        />
-      </LeftFlexView>
-      {rightIcon}
-    </FlexView>
-  </Wrapper>
-);
+class FormTextInput extends React.Component {
+  getInnerRef = () => this.refInput;
+
+  render() {
+    const {
+      label,
+      value,
+      color,
+      leftIcon,
+      rightIcon,
+      placeholder,
+      type,
+      ref,
+      onChangeText,
+      ...rest
+    } = this.props;
+
+    return (
+      <Wrapper>
+        <StyledText fontSize={14} lineHeight={18} color={color}>
+          {label}
+        </StyledText>
+        <FlexView color={color}>
+          <LeftFlexView>
+            {leftIcon ? (
+              <Wrapper style={{ marginRight: 16 }}>{leftIcon}</Wrapper>
+            ) : null}
+            <StyledTextInput
+              placeholder={placeholder}
+              placeholderTextColor={color}
+              secureTextEntry={type === "password"}
+              fontSize={20}
+              lineHeight={24}
+              value={value}
+              color={color}
+              ref={input => (this.refInput = input)}
+              onChangeText={onChangeText}
+              {...rest}
+            />
+          </LeftFlexView>
+          {rightIcon}
+        </FlexView>
+      </Wrapper>
+    );
+  }
+}
 
 FormTextInput.propTypes = {
   label: PropTypes.string,
@@ -49,7 +63,8 @@ FormTextInput.propTypes = {
   type: PropTypes.string,
   leftIcon: PropTypes.element,
   rightIcon: PropTypes.element,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  onChangeText: PropTypes.func
 };
 
 FormTextInput.defaultProps = {
@@ -59,7 +74,8 @@ FormTextInput.defaultProps = {
   type: "text",
   leftIcon: null,
   rightIcon: null,
-  placeholder: ""
+  placeholder: "",
+  onChangeText: () => {}
 };
 
 export { StyledText, StyledTextInput, FormTextInput };
