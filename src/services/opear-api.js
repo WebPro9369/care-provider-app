@@ -2,7 +2,7 @@ import Axios from "axios";
 
 export const API_SETTINGS = {
   apiKey: null,
-  endpoint: 'http://localhost:3000/',
+  endpoint: 'http://localhost:3000/' // 'http://ec2-18-191-228-16.us-east-2.compute.amazonaws.com',
 };
 
 const axios = Axios.create({
@@ -29,6 +29,19 @@ export const registerCareProvider = (data, { successHandler, errorHandler } = {}
     })
     .catch(err => {
       console.tron.log("Opear registration error: ", err);
+      if (errorHandler) errorHandler(err);
+    });
+};
+
+export const getCareProvider = (userID, { successHandler, errorHandler } = {}) => {
+  axios
+    .get(`/v1/care_providers/${userID}`)
+    .then(res => {
+      console.tron.log("Get care provider done: ", res);
+      if (successHandler) successHandler(res);
+    })
+    .catch(err => {
+      console.tron.log("Get care provider error: ", err);
       if (errorHandler) errorHandler(err);
     });
 };

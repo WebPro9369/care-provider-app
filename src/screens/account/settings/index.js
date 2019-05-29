@@ -1,4 +1,5 @@
 import React from "react";
+import { AsyncStorage } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { Avatar } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -68,6 +69,16 @@ class SettingsScreen extends React.Component {
         });
       }
     });
+  };
+
+  logOut = () => {
+    const {
+      navigation: { navigate }
+    } = this.props;
+
+    AsyncStorage.removeItem('currentUser');
+
+    navigate("AccountSignIn")
   };
 
   render() {
@@ -165,7 +176,7 @@ class SettingsScreen extends React.Component {
           <View style={{ marginTop: 32, marginBottom: 32 }}>
             <ServiceButton
               title="Log Out"
-              onPress={() => navigate("AccountSignIn")}
+              onPress={this.logOut}
             />
           </View>
           {/* <View>

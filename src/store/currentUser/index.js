@@ -1,10 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { types } from "mobx-state-tree";
-import { API_SETTINGS } from '../../services/opear-api';
+import { AsyncStorage } from "react-native";
+import { API_SETTINGS } from '@services/opear-api';
 import AddressStore from "../address";
 
 const ApplicationStore = types
   .model("ApplicationStore", {
+      dateOfBirth: types.string,
+      biography: types.string,
       licenseNumber: types.string,
       boardCertification: types.string,
       malpracticeInsurance: types.string,
@@ -19,6 +22,14 @@ const ApplicationStore = types
       titles: types.array(types.string),
   })
   .actions(self => ({
+    setDateOfBirth(value) {
+      self.dateOfBirth = value;
+      return self;
+    },
+    setBiography(value) {
+      self.biography = value;
+      return self;
+    },
     setLicenseNumber(value) {
       self.licenseNumber = value;
       return self;
@@ -79,6 +90,8 @@ export const CurrentUserStore = types
     lastName: types.string,
     phone: types.string,
     application: types.optional(ApplicationStore, {
+      dateOfBirth: '',
+      biography: '',
       licenseNumber: '',
       boardCertification: '',
       malpracticeInsurance: '',
@@ -113,6 +126,7 @@ export const CurrentUserStore = types
       return self;
     },
     setAuthentication({ id, apiKey}) {
+      AsyncStorage.setItem('currentUser', JSON.stringify({ id, apiKey }));
       self.setID(id).setAPIKey(apiKey);
       API_SETTINGS.apiKey = apiKey;
 
@@ -137,5 +151,5 @@ export const CurrentUserStore = types
     setPhone(value) {
       self.phone = value;
       return self;
-    }
+    },
   }));

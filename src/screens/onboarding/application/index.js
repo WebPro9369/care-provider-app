@@ -30,10 +30,10 @@ class ApplicationScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      avatarSource: null,
-      dateOfBirth: null,
-      ssn: null,
-      maskedSsn: null,
+      ssn: '',
+      maskedSsn: '',
+      avatarSource: '',
+      dateOfBirth: '',
       licenseNumber: '',
       boardCertification: '',
       malpracticeInsurance: '',
@@ -116,9 +116,11 @@ class ApplicationScreen extends React.Component {
       whereHeard,
       supervisingPhysician,
       selectedIndexes,
+      dateOfBirth,
     } = this.state;
 
     application
+      .setDateOfBirth(dateOfBirth)
       .setLicenseNumber(licenseNumber)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
@@ -150,7 +152,7 @@ class ApplicationScreen extends React.Component {
     const dateRegex2 = /^(0[1-9]|1[0-2])(0[1-9]|1\d|2\d|3[01])(19|20)\d{2}$/;
 
     if (!dateRegex1.test(dateOfBirth) && !dateRegex2.test(dateOfBirth)) {
-      return Alert.alert("Please enter DoB in mm/dd/yyyy format");
+      return Alert.alert(`Please enter DoB in \n mm/dd/yyyy format`);
     }
 
     const ssnPattern = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
@@ -189,6 +191,7 @@ class ApplicationScreen extends React.Component {
         name: `${firstName} ${lastName}`,
         email,
         password,
+        dob: dateOfBirth,
         phone,
         zip, 
         license,
@@ -289,6 +292,7 @@ class ApplicationScreen extends React.Component {
                 name="dateOfBirth"
                 label="Date of Birth"
                 value={dateOfBirth}
+                onChangeText={this.handleInputChange('dateOfBirth')}
                 placeholder="mm/dd/yyyy"
                 returnKeyType="next"
                 onChangeText={this.handleInputChange("dateOfBirth")}

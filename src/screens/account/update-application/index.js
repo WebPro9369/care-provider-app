@@ -51,9 +51,10 @@ class UpdateApplicationScreen extends React.Component {
     }} = currentUserStore;
 
     this.state = {
-      ssn: null,
-      maskedSsn: null,
-      dateOfBirth: null,
+      ssn: '',
+      maskedSsn: '',
+      dateOfBirth: '',
+      dateOfBirth: '',
       licenseNumber,
       boardCertification,
       malpracticeInsurance,
