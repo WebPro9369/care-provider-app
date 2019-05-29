@@ -1,6 +1,7 @@
 import React from "react";
-import { Linking } from "react-native";
+import { AsyncStorage, Linking } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { inject, observer, PropTypes } from "mobx-react";
 import { StyledText } from "../../components/text";
 import { ProviderCard } from "../../components/cards";
 import { ListTouchableButtonWrapper, ListButtonText } from "./styles";
@@ -9,24 +10,45 @@ import { colors } from "../../utils/constants";
 
 const imgDoctor = require("../../../assets/images/Doctor.png");
 
+@inject("store")
+@observer
 class AccountScreen extends React.Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+  
   constructor(props) {
     super(props);
     this.state = {
-      name: "Dr. John Smith",
       avatarImg: imgDoctor,
       rating: "4.5",
-      bio: "Hi, this is my bio",
-      history: "Hi, this is my work history, line two of my work history",
-      badges: ["Specialty", "Credentials", "Experience"]
     };
   }
 
-  render() {
+  logOut = () => {
     const {
       navigation: { navigate }
     } = this.props;
-    const { name, avatarImg, rating, bio, history, badges } = this.state;
+
+    AsyncStorage.removeItem('currentUser');
+
+    navigate("AccountSignIn")
+  };
+
+  render() {
+    const {
+      store,
+      navigation: { navigate }
+    } = this.props;
+    const { avatarImg, rating } = this.state;
+    const { currentUserStore: { 
+      firstName, lastName,
+      application: {
+        biography,
+        workHistory,
+        specialties,
+      }
+    } } = store;
     return (
       <ContainerView padding={16}>
         <View style={{ paddingTop: 24, paddingBottom: 24 }}>
@@ -41,11 +63,11 @@ class AccountScreen extends React.Component {
         </View>
         <ProviderCard
           avatarImg={avatarImg}
-          name={name}
-          bio={bio}
-          history={history}
+          name={`${firstName} ${lastName}`}
+          bio={biography}
+          history={workHistory.join(', ')}
           rating={rating}
-          badges={badges}
+          badges={specialties}
         />
         <View style={{ paddingTop: 16, paddingBottom: 16 }}>
           <ListTouchableButtonWrapper
@@ -72,7 +94,7 @@ class AccountScreen extends React.Component {
             <ListButtonText>Support</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
-          <ListTouchableButtonWrapper onPress={() => navigate("AccountSignIn")}>
+          <ListTouchableButtonWrapper onPress={this.logOut}>
             <ListButtonText>Log Out</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>

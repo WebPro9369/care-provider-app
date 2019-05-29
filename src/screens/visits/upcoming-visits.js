@@ -1,50 +1,74 @@
 import React from "react";
 import { withNavigation } from "react-navigation";
-import { StyledText } from "../../components/text";
-import { ContainerView, View, ContentWrapper } from "../../components/views";
-import { ScrollView } from "../../components/views/scroll-view";
-import { VisitDetailCard } from "../../components/cards";
-import { colors } from "../../utils/constants";
+import { inject, observer, PropTypes } from "mobx-react";
+import { StyledText } from "@components/text";
+import { ContainerView, View, ContentWrapper } from "@components/views";
+import { ScrollView } from "@components/views/scroll-view";
+import { VisitDetailCard } from "@components/cards";
+import { colors } from "@utils/constants";
+import { formatAMPM  } from "@utils/helpers";
+import { getVisits } from "@services/opear-api";
+
 
 const imgFox = require("../../../assets/images/Fox.png");
 const imgDog = require("../../../assets/images/Dog.png");
 const imgTiger = require("../../../assets/images/Tiger.png");
 
+
+@inject("store")
+@observer
 class UpcomingVisitsScreen extends React.Component {
-  state = {
-    visitList: [
-      {
-        key: "1",
-        avatarImg: imgDog,
-        name: "Benjamin",
-        illness: "Flu Shot",
-        time: "6PM",
-        address: "Bushwick, NY",
-        color: "#f9b44d"
-      },
-      {
-        key: "2",
-        avatarImg: imgFox,
-        name: "Audrey",
-        illness: "Coxsackie Virus",
-        time: "6PM",
-        address: "Bushwick, NY",
-        color: "#f9b44d"
-      },
-      {
-        key: "3",
-        avatarImg: imgTiger,
-        name: "Tommy",
-        illness: "Vital Signs",
-        time: "6PM",
-        address: "Bushwick, NY",
-        color: "#f9b44d"
-      }
-    ]
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
   };
+  
+  constructor(props ){
+    super(props);
+
+    this.state = {
+      visits: []
+    };
+  }
+
+  componentDidMount() {
+    const { store: { currentUserStore: { id }}} = this.props;
+
+    getVisits(id, {
+      successHandler: (res) => {
+        const visits = res.data.map(visitData => {
+          const { 
+            id, 
+            reason: illness,
+            appointment_time: appointmentTime,
+            address: {
+              city,
+              state,
+            },
+            child: {
+              first_name: childFirstName,
+              last_name: childLastName,
+            }
+          } = visitData;
+
+          return {
+            key: id,
+            id,
+            avatarImg: [imgDog, imgTiger, imgFox][Math.floor(Math.random() * 3)], // TODO: add actual avatar
+            name: `${childFirstName} ${childLastName}`,
+            illness,
+            time: formatAMPM(new Date(appointmentTime)),
+            address: `${city}, ${state}`,
+            color: "#f9b44d"
+          }
+        });
+
+        this.setState({ visits })
+      }
+    });
+  }
 
   render() {
-    const { visitList } = this.state;
+    const { visits } = this.state;
     const {
       navigation: { navigate }
     } = this.props;
@@ -58,7 +82,7 @@ class UpcomingVisitsScreen extends React.Component {
                 Today
               </StyledText>
               <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {visitList.map(item => (
+                {visits.map(item => (
                   <View key={item.key} style={{ marginBottom: 9 }}>
                     <VisitDetailCard
                       avatarImg={item.avatarImg}
@@ -66,7 +90,9 @@ class UpcomingVisitsScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
-                      onPress={() => navigate("VisitsVisitDetails")}
+                      onPress={() => navigate("VisitsVisitDetails", {
+                        visitID: item.id
+                      })}
                     />
                   </View>
                 ))}
@@ -77,7 +103,7 @@ class UpcomingVisitsScreen extends React.Component {
             <ContentWrapper>
               <StyledText>Jan 9</StyledText>
               <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {visitList.map(item => (
+                {visits.map(item => (
                   <View key={item.key} style={{ marginBottom: 9 }}>
                     <VisitDetailCard
                       avatarImg={item.avatarImg}
@@ -85,7 +111,9 @@ class UpcomingVisitsScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
-                      onPress={() => navigate("VisitsVisitDetails")}
+                      onPress={() => navigate("VisitsVisitDetails", {
+                        visitID: item.id
+                      })}
                     />
                   </View>
                 ))}

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Alert, Image, View } from "react-native";
+import { inject, observer, PropTypes } from "mobx-react";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { ServiceButton } from "../../../components/service-button";
 import { StyledText, StyledTextInput } from "../../../components/text";
@@ -8,7 +9,13 @@ import TwilioService from "../../../services/twilio";
 
 const imgProgressbar = require("../../../../assets/images/ProgressBar5.png");
 
+@inject("store")
+@observer
 class PhoneNumberScreen extends Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -23,16 +30,22 @@ class PhoneNumberScreen extends Component {
   };
 
   onSubmit = () => {
-    const { phone } = this.state;
+    const { phone} = this.state;
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      store: { currentUserStore }
     } = this.props;
+
     console.tron.log("Phone number: ", phone);
+
     TwilioService.sendSMS(
       "Test SMS from Twilio",
       null,
       phone,
-      () => navigate("Application"),
+      () => {
+        currentUserStore.setPhone(phone);
+        navigate("Application");
+      },
       () => Alert.alert("Authentication failed.")
     );
   };

@@ -2,20 +2,22 @@ import React from "react";
 import { Image, TouchableOpacity } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 
-import { StyledText } from "../../components/text";
-import { NavHeader } from "../../components/nav-header";
+import { StyledText } from "@components/text";
+import { NavHeader } from "@components/nav-header";
 import {
   ContainerView,
   View,
   HeaderWrapper,
   FlexView
-} from "../../components/views";
-import { ScrollView } from "../../components/views/scroll-view";
-import { VisitDetailCard } from "../../components/cards";
+} from "@components/views";
+import { ScrollView } from "@components/views/scroll-view";
+import { VisitDetailCard } from "@components/cards";
 import { ContentWrapper, MatchingMessageWrapper } from "./styles";
 import RequestVisitModalComponent from "../modals/request-visit";
 import ReviewAllergiesModalComponent from "../modals/review-allergies";
-import { colors } from "../../utils/constants";
+import { colors } from "@utils/constants";
+import { getVisits } from "@services/opear-api";
+import { formatAMPM } from "@utils/helpers";
 
 const imgRightArrow = require("../../../assets/images/Right_arrow.png");
 const imgDog = require("../../../assets/images/Dog.png");
@@ -33,46 +35,45 @@ class DashboardScreen extends React.Component {
     super(props);
 
     this.state = {
-      // selectedIllness: null,
-      user: {
-        name: "John"
-      },
-      bookingList: [
-        {
-          key: "1",
-          avatarImg: imgDog,
-          name: "Benjamin",
-          illness: "Flu Shot",
-          time: "6PM",
-          address: "Bushwick, NY",
-          color: "#f9b44d"
-        },
-        {
-          key: "2",
-          avatarImg: imgFox,
-          name: "Audrey",
-          illness: "Coxsackie Virus",
-          time: "6PM",
-          address: "Bushwick, NY",
-          color: "#f9b44d"
-        },
-        {
-          key: "3",
-          avatarImg: imgTiger,
-          name: "Tommy",
-          illness: "Vital Signs",
-          time: "6PM",
-          address: "Bushwick, NY",
-          color: "#f9b44d"
-        }
-      ],
+      visits: [],
       reviewAllergyModalVisible: false
     };
   }
 
   componentDidMount() {
-    // const { store } = this.props;
-    // setTimeout(() => store.providerStore.setAppointment(true), 3000);
+    const { store: { currentUserStore: { id }}} = this.props;
+
+    getVisits(id, {
+      successHandler: (res) => {
+        const visits = res.data.map(visitData => {
+          const { 
+            id, 
+            reason: illness,
+            appointment_time: appointmentTime,
+            address: {
+              city,
+              state,
+            },
+            child: {
+              first_name: childFirstName,
+              last_name: childLastName,
+            }
+          } = visitData;
+
+          return {
+            key: id,
+            id,
+            avatarImg: [imgDog, imgTiger, imgFox][Math.floor(Math.random() * 3)], // TODO: add actual avatar
+            name: `${childFirstName} ${childLastName}`,
+            illness,
+            time: formatAMPM(new Date(appointmentTime)),
+            address: `${city}, ${state}`,
+          };
+        });
+
+        this.setState({ visits })
+      }
+    });
   }
 
   showReviewAllergyModal = () => {
@@ -90,15 +91,12 @@ class DashboardScreen extends React.Component {
       navigation: { navigate },
       store
     } = this.props;
-    const { providerStore } = store;
-    const { completeApplication, appointment } = providerStore;
+    const { 
+      providerStore: { completeApplication, appointment },
+      currentUserStore: { firstName }
+   } = store;
 
-    // if (appointment) {
-    //   setTimeout(() => {
-    //     ProviderState.setOutstandingAppointment(true);
-    //   }, 3000);
-    // }
-    const { user, bookingList, reviewAllergyModalVisible } = this.state;
+    const { visits, reviewAllergyModalVisible } = this.state;
 
     return (
       <ContainerView>
@@ -109,7 +107,7 @@ class DashboardScreen extends React.Component {
           <ContentWrapper>
             <StyledText fontSize={28} fontFamily="FlamaMedium">
               {"Hi, "}
-              {user.name}
+              {firstName}
               {"!"}
             </StyledText>
           </ContentWrapper>
@@ -151,7 +149,7 @@ class DashboardScreen extends React.Component {
             <ContentWrapper>
               <StyledText>Upcoming bookings</StyledText>
               <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {bookingList.map(item => (
+                {visits.map(item => (
                   <View key={item.key} style={{ marginBottom: 9 }}>
                     <VisitDetailCard
                       avatarImg={item.avatarImg}

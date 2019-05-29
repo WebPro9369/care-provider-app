@@ -3,24 +3,28 @@ import React from "react";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Animated from "react-native-reanimated";
 import { TabView, SceneMap } from "react-native-tab-view";
-import { StyledText } from "../../components/text";
-import { View, FlexView } from "../../components/views";
 import { tabViewStyles, TabItem } from "./styles";
-import { colors } from "../../utils/constants";
 import UpcomingVisitsScreen from "./upcoming-visits";
 import PastVisitsScreen from "./past-visits";
+import { StyledText } from "@components/text";
+import { View, FlexView } from "@components/views";
+import { colors } from "@utils/constants";
 
 const FirstRoute = () => <UpcomingVisitsScreen />;
 const SecondRoute = () => <PastVisitsScreen />;
 
 class ManageVisitsScreen extends React.Component {
-  state = {
-    index: 0,
-    routes: [
-      { key: "upcoming", title: "UPCOMING" },
-      { key: "past", title: "PAST" }
-    ]
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      index: 0,
+      routes: [
+        { key: "upcoming", title: "UPCOMING" },
+        { key: "past", title: "PAST" }
+      ]
+    };
+  }
 
   renderTabBar = props => {
     const { index } = this.state;

@@ -30,11 +30,7 @@ class AskLocationScreen extends Component {
 
   componentDidMount() {
     const {
-      store: {
-        providerStore: {
-          onboardingData: { address }
-        }
-      }
+      store: { currentUserStore: { address } }
     } = this.props;
     Geolocation.getCurrentPosition(
       position => {
@@ -153,11 +149,7 @@ class AskLocationScreen extends Component {
   onSubmit = () => {
     const {
       navigation: { navigate },
-      store: {
-        providerStore: {
-          onboardingData: { address }
-        }
-      }
+      store: { currentUserStore: { address } }
     } = this.props;
     const { zipcode } = this.state;
     if (zipcode) address.setZipCode(zipcode);
