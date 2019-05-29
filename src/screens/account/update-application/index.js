@@ -1,6 +1,7 @@
 import React from "react";
 import { Alert } from "react-native";
 import { Avatar, ButtonGroup } from "react-native-elements";
+import ImagePicker from "react-native-image-picker";
 import { FormTextInput, StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
@@ -11,7 +12,7 @@ import {
   FormWrapper,
   ViewCentered
 } from "../../../components/views";
-import { ScrollView } from "../../../components/views/scroll-view";
+import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
 import { colors } from "../../../utils/constants";
 
 const imgDoctor = require("../../../../assets/images/Doctor.png");
@@ -22,6 +23,8 @@ class UpdateApplicationScreen extends React.Component {
     this.state = {
       dateOfBirth: null,
       licenseNumber: "1234567",
+      ssn: null,
+      maskedSsn: null,
       boardCertification: "My board certification",
       malpracticeInsurance: "My malpractice insurance",
       educationHistory: "My education history",
@@ -34,23 +37,74 @@ class UpdateApplicationScreen extends React.Component {
       supervisingPhysician: null,
       selectedIndexes: [0]
     };
+
     this.updateIndex = this.updateIndex.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onAddAvatar = this.onAddAvatar.bind(this);
+    this.onInpuTextChange = this.onInpuTextChange.bind(this);
   }
+
+  onAddAvatar = () => {
+    const options = {
+      title: "Select Profile Picture"
+    };
+
+    ImagePicker.showImagePicker(options, response => {
+      console.tron.log("Response = ", response);
+
+      if (response.didCancel) {
+        console.tron.log("User cancelled image picker");
+      } else if (response.error) {
+        console.tron.log("ImagePicker Error: ", response.error);
+      } else if (response.customButton) {
+        console.tron.log("User tapped custom button: ", response.customButton);
+      } else {
+        const source = { uri: response.uri };
+
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        this.setState({
+          avatarSource: source
+        });
+      }
+    });
+  };
+
+  onInpuTextChange = name => text => {
+    if (name === "ssn") {
+      const ssnPattern = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
+      if (ssnPattern.test(text)) {
+        return this.setState({
+          ssn: text,
+          maskedSsn: `XXX-XX-${text.substr(7, 4)}`
+        });
+      }
+    }
+    return this.setState({
+      [name]: text
+    });
+  };
 
   onSubmit() {
     const {
       navigation: { navigate }
     } = this.props;
-    const { dateOfBirth } = this.state;
-    // onboardingData.setDOB("01/01/1970");
-
+    const { dateOfBirth, ssn } = this.state;
     const dateRegex1 = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
     const dateRegex2 = /^(0[1-9]|1[0-2])(0[1-9]|1\d|2\d|3[01])(19|20)\d{2}$/;
 
     if (!dateRegex1.test(dateOfBirth) && !dateRegex2.test(dateOfBirth)) {
       return Alert.alert("Please enter DoB in mm/dd/yyyy format");
     }
+
+    const ssnPattern = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
+    if (!ssnPattern.test(ssn)) {
+      return Alert.alert(
+        "Please enter Social Security Number in 'XXX-XX-XXXX' format"
+      );
+    }
+
     return navigate("AccountDefault");
   }
 
@@ -64,8 +118,11 @@ class UpdateApplicationScreen extends React.Component {
     } = this.props;
     const buttons = ["MD", "NP", "PA", "APRN"];
     const {
+      avatarSource,
       dateOfBirth,
       licenseNumber,
+      ssn,
+      maskedSsn,
       boardCertification,
       malpracticeInsurance,
       educationHistory,
@@ -78,8 +135,16 @@ class UpdateApplicationScreen extends React.Component {
       supervisingPhysician,
       selectedIndexes
     } = this.state;
+
+    const avatarOptions = avatarSource
+      ? {
+          source: { uri: avatarSource.uri }
+        }
+      : {
+          source: imgDoctor
+        };
     return (
-      <ContainerView behavior="padding" enabled>
+      <ContainerView>
         <HeaderWrapper>
           <NavHeader
             title="Your application"
@@ -88,42 +153,74 @@ class UpdateApplicationScreen extends React.Component {
             onPressBackButton={() => goBack()}
           />
         </HeaderWrapper>
-        <ScrollView>
+        <KeyboardScrollView>
           <ViewCentered paddingBottom={24}>
             <Avatar
+              {...avatarOptions}
+              size="xlarge"
               rounded
-              size={120}
-              source={imgDoctor}
-              showEditButton
               editButton={{
+                name: "pluscircle",
+                type: "antdesign",
+                color: colors.BLUE,
+                size: 30,
                 containerStyle: {
-                  backgroundColor: colors.DARKSKYBLUE,
-                  borderRadius: 12
+                  backgroundColor: colors.WHITE,
+                  borderRadius: 15
                 },
-                size: 24
+                onPress: this.onAddAvatar
               }}
+              showEditButton
             />
           </ViewCentered>
           <FormWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="dateOfBirth"
                 label="Date of Birth"
                 value={dateOfBirth}
                 placeholder="mm/dd/yyyy"
+                onChangeText={this.onInpuTextChange("dateOfBirth")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="licenseNumber"
                 label="License Number"
                 value={licenseNumber}
                 placeholder="License Number"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  console.tron.log("Second input: ", this.secondTextInput)
+                }
+                blurOnSubmit={false}
+                onChangeText={this.onInpuTextChange("licenseNumber")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="ssn"
+                label="Social Security Number"
+                value={maskedSsn || ssn}
+                placeholder="123-45-6789"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  console.tron.log("Second input: ", this.secondTextInput)
+                }
+                blurOnSubmit={false}
+                onChangeText={this.onInpuTextChange("ssn")}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="boardCertification"
                 label="Board Certification"
                 value={boardCertification}
                 placeholder="Board Certification"
+                ref={input => {
+                  this.secondTextInput = input;
+                }}
+                onChangeText={this.onInpuTextChange("boardCertification")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -140,74 +237,92 @@ class UpdateApplicationScreen extends React.Component {
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="malpracticeInsurance"
                 label="Malpractice Insurance"
                 value={malpracticeInsurance}
                 placeholder="Malpractice Insurance"
+                onChangeText={this.onInpuTextChange("malpracticeInsurance")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="educationHistory"
                 label="Education History"
                 value={educationHistory}
                 placeholder="Education History"
+                onChangeText={this.onInpuTextChange("educationHistory")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="workHistory"
                 label="Work History"
                 value={workHistory}
                 placeholder="Work History"
+                onChangeText={this.onInpuTextChange("workHistory")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="specialties"
                 label="Specialties"
                 value={specialties}
                 placeholder="Specialty 1, specialty 2, etc."
+                onChangeText={this.onInpuTextChange("specialties")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="offeredServices"
                 label="Offered Services"
                 value={offeredServices}
                 placeholder="Service 1, service 2, etc."
+                onChangeText={this.onInpuTextChange("offeredServices")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="legalHistory"
                 label="Legal History"
                 value={legalHistory}
                 placeholder="Legal History"
+                onChangeText={this.onInpuTextChange("legalHistory")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="references"
                 label="References"
                 value={references}
                 placeholder="References"
+                onChangeText={this.onInpuTextChange("references")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="whereHeard"
                 label="Where did you hear about us?"
                 value={whereHeard}
                 placeholder="Where did you hear about us?"
+                onChangeText={this.onInpuTextChange("whereHeard")}
               />
             </FormInputWrapper>
             {selectedIndexes.includes(0) ? null : (
               <FormInputWrapper>
                 <FormTextInput
+                  name="supervisingPhysician"
                   label="Supervising Physician"
                   value={supervisingPhysician}
                   placeholder="Supervising Physician"
+                  onChangeText={this.onInpuTextChange("supervisingPhysician")}
                 />
               </FormInputWrapper>
             )}
           </FormWrapper>
           <FormInputWrapper style={{ marginBottom: 20 }}>
-            <ServiceButton title="Save Changes" onPress={this.onSubmit} />
+            <ServiceButton title="Submit Application" onPress={this.onSubmit} />
           </FormInputWrapper>
-        </ScrollView>
+        </KeyboardScrollView>
       </ContainerView>
     );
   }

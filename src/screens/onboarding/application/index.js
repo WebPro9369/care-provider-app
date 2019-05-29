@@ -32,6 +32,8 @@ class ApplicationScreen extends React.Component {
       avatarSource: null,
       dateOfBirth: null,
       licenseNumber: "1234567",
+      ssn: null,
+      maskedSsn: null,
       boardCertification: null,
       malpracticeInsurance: null,
       educationHistory: null,
@@ -46,6 +48,8 @@ class ApplicationScreen extends React.Component {
     };
     this.updateIndex = this.updateIndex.bind(this);
     this.onAddAvatar = this.onAddAvatar.bind(this);
+    this.onInpuTextChange = this.onInpuTextChange.bind(this);
+    this.onSumbit = this.onSubmit.bind(this);
   }
 
   onAddAvatar = () => {
@@ -75,6 +79,21 @@ class ApplicationScreen extends React.Component {
     });
   };
 
+  onInpuTextChange = name => text => {
+    if (name === "ssn") {
+      const ssnPattern = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
+      if (ssnPattern.test(text)) {
+        return this.setState({
+          ssn: text,
+          maskedSsn: `XXX-XX-${text.substr(7, 4)}`
+        });
+      }
+    }
+    return this.setState({
+      [name]: text
+    });
+  };
+
   onSubmit = () => {
     const {
       navigation: { navigate },
@@ -82,14 +101,20 @@ class ApplicationScreen extends React.Component {
         providerStore: { onboardingData }
       }
     } = this.props;
-    const { dateOfBirth } = this.state;
-    // onboardingData.setDOB("01/01/1970");
-    console.tron.log("Onboarding data: ", onboardingData.toJSON());
+    const { dateOfBirth, ssn } = this.state;
     const dateRegex1 = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
     const dateRegex2 = /^(0[1-9]|1[0-2])(0[1-9]|1\d|2\d|3[01])(19|20)\d{2}$/;
 
+    console.tron.log("Onboarding data: ", onboardingData);
     if (!dateRegex1.test(dateOfBirth) && !dateRegex2.test(dateOfBirth)) {
       return Alert.alert("Please enter DoB in mm/dd/yyyy format");
+    }
+
+    const ssnPattern = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
+    if (!ssnPattern.test(ssn)) {
+      return Alert.alert(
+        "Please enter Social Security Number in 'XXX-XX-XXXX' format"
+      );
     }
 
     // registerCareProvider(
@@ -128,6 +153,8 @@ class ApplicationScreen extends React.Component {
       avatarSource,
       dateOfBirth,
       licenseNumber,
+      ssn,
+      maskedSsn,
       boardCertification,
       malpracticeInsurance,
       educationHistory,
@@ -181,23 +208,51 @@ class ApplicationScreen extends React.Component {
           <FormWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="dateOfBirth"
                 label="Date of Birth"
                 value={dateOfBirth}
                 placeholder="mm/dd/yyyy"
+                onChangeText={this.onInpuTextChange("dateOfBirth")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="licenseNumber"
                 label="License Number"
                 value={licenseNumber}
                 placeholder="License Number"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  console.tron.log("Second input: ", this.secondTextInput)
+                }
+                blurOnSubmit={false}
+                onChangeText={this.onInpuTextChange("licenseNumber")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="ssn"
+                label="Social Security Number"
+                value={maskedSsn || ssn}
+                placeholder="123-45-6789"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  console.tron.log("Second input: ", this.secondTextInput)
+                }
+                blurOnSubmit={false}
+                onChangeText={this.onInpuTextChange("ssn")}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="boardCertification"
                 label="Board Certification"
                 value={boardCertification}
                 placeholder="Board Certification"
+                ref={input => {
+                  this.secondTextInput = input;
+                }}
+                onChangeText={this.onInpuTextChange("boardCertification")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
@@ -214,66 +269,84 @@ class ApplicationScreen extends React.Component {
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="malpracticeInsurance"
                 label="Malpractice Insurance"
                 value={malpracticeInsurance}
                 placeholder="Malpractice Insurance"
+                onChangeText={this.onInpuTextChange("malpracticeInsurance")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="educationHistory"
                 label="Education History"
                 value={educationHistory}
                 placeholder="Education History"
+                onChangeText={this.onInpuTextChange("educationHistory")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="workHistory"
                 label="Work History"
                 value={workHistory}
                 placeholder="Work History"
+                onChangeText={this.onInpuTextChange("workHistory")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="specialties"
                 label="Specialties"
                 value={specialties}
                 placeholder="Specialty 1, specialty 2, etc."
+                onChangeText={this.onInpuTextChange("specialties")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="offeredServices"
                 label="Offered Services"
                 value={offeredServices}
                 placeholder="Service 1, service 2, etc."
+                onChangeText={this.onInpuTextChange("offeredServices")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="legalHistory"
                 label="Legal History"
                 value={legalHistory}
                 placeholder="Legal History"
+                onChangeText={this.onInpuTextChange("legalHistory")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="references"
                 label="References"
                 value={references}
                 placeholder="References"
+                onChangeText={this.onInpuTextChange("references")}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
+                name="whereHeard"
                 label="Where did you hear about us?"
                 value={whereHeard}
                 placeholder="Where did you hear about us?"
+                onChangeText={this.onInpuTextChange("whereHeard")}
               />
             </FormInputWrapper>
             {selectedIndexes.includes(0) ? null : (
               <FormInputWrapper>
                 <FormTextInput
+                  name="supervisingPhysician"
                   label="Supervising Physician"
                   value={supervisingPhysician}
                   placeholder="Supervising Physician"
+                  onChangeText={this.onInpuTextChange("supervisingPhysician")}
                 />
               </FormInputWrapper>
             )}
