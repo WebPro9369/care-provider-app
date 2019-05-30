@@ -1,4 +1,6 @@
 import React from "react";
+import { AsyncStorage } from "react-native";
+import { inject, observer, PropTypes } from "mobx-react";
 import { Avatar } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ImagePicker from "react-native-image-picker";
@@ -19,17 +21,26 @@ import { colors } from "../../../utils/constants";
 const { GREEN, MIDGREY } = colors;
 const imgDoctor = require("../../../../assets/images/Doctor.png");
 
+@inject("store")
+@observer
 class SettingsScreen extends React.Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+
   constructor(props) {
     super(props);
 
+    const { store: { currentUserStore: { firstName, lastName, email, phone } } }  = props; 
+    const name = `${firstName} ${lastName}`;
+
     this.state = {
       avatarSource: null,
-      name: "Michael Brown",
-      address: "22341 Justice Ave APT 725",
-      email: "michaelbrown@gmail.com",
-      phone: "(415) 123 - 4567",
-      biography: ""
+      name,
+      address: "22341 Justice Ave APT 725", // TODO: pending
+      biography: "", // TODO: pending
+      email,
+      phone,
     };
   }
 
@@ -58,6 +69,16 @@ class SettingsScreen extends React.Component {
         });
       }
     });
+  };
+
+  logOut = () => {
+    const {
+      navigation: { navigate }
+    } = this.props;
+
+    AsyncStorage.removeItem('currentUser');
+
+    navigate("AccountSignIn")
   };
 
   render() {
@@ -155,7 +176,7 @@ class SettingsScreen extends React.Component {
           <View style={{ marginTop: 32, marginBottom: 32 }}>
             <ServiceButton
               title="Log Out"
-              onPress={() => navigate("AccountSignIn")}
+              onPress={this.logOut}
             />
           </View>
           {/* <View>

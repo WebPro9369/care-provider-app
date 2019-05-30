@@ -28,6 +28,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		21360BC0229D590E008FBE75 /* RNImagePicker.xcodeproj in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EF4667229AFC6600DF5ADA /* RNImagePicker.xcodeproj */; };
 		22280F966B014B9997D2F645 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC9A6E566230497E813CDC1A /* FontAwesome5_Solid.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -532,6 +533,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21360BC0229D590E008FBE75 /* RNImagePicker.xcodeproj in Frameworks */,
 				84EF469D229AFC7A00DF5ADA /* libRNImagePicker.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,

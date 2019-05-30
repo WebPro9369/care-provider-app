@@ -5,6 +5,8 @@ const DEVICE_HEIGHT = Dimensions.get("window").height;
 
 const GOOGLE_API_KEY = "AIzaSyBte8wMJ5Lic5CnLK8JRA8TniNwiCRpw7Q";
 
+const TITLES = ["MD", "NP", "PA", "APRN"];
+
 const colors = {
   WHITE: "#FFFFFF",
   PINK_50: "#FCE4EC",
@@ -43,4 +45,35 @@ const colors = {
 
 const MAX_STARS = 5;
 
-export { DEVICE_WIDTH, DEVICE_HEIGHT, GOOGLE_API_KEY, MAX_STARS, colors };
+const WEEKDAYS = [
+  {
+    key: "mon",
+    label: "M"
+  },
+  {
+    key: "tue",
+    label: "T"
+  },
+  {
+    key: "wed",
+    label: "W"
+  },
+  {
+    key: "thur",
+    label: "Th"
+  },
+  {
+    key: "fri",
+    label: "F"
+  },
+  {
+    key: "sat",
+    label: "S"
+  },
+  {
+    key: "sun",
+    label: "Su"
+  },
+];
+
+export { DEVICE_WIDTH, DEVICE_HEIGHT, GOOGLE_API_KEY, MAX_STARS, TITLES, WEEKDAYS, colors };

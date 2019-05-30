@@ -6,16 +6,17 @@ import MapView from "react-native-maps";
 import haversine from "haversine";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import TwilioVoice from "react-native-twilio-programmable-voice";
-// import TwilioServices from "../../../services/twilio";
-import { NavHeader } from "../../../components/nav-header";
+import { NavHeader } from "@components/nav-header";
 import {
   LargeBookedDetailCard,
   VisitDetailCard
-} from "../../../components/cards";
-import { ServiceButton } from "../../../components/service-button";
-import { ContainerView, HeaderWrapper, View } from "../../../components/views";
-import { ScrollView } from "../../../components/views/scroll-view";
-import { colors } from "../../../utils/constants";
+} from "@components/cards";
+import { ServiceButton } from "@components/service-button";
+import { ContainerView, HeaderWrapper, View } from "@components/views";
+import { ScrollView } from "@components/views/scroll-view";
+import { colors } from "@utils/constants";
+import { getVisit } from "@services/opear-api";
+import { formatAMPM } from "@utils/helpers";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -33,34 +34,81 @@ class VisitDetailsScreen extends React.Component {
     past: false
   };
 
-  state = {
-    child: {
-      key: "1",
-      avatarImg: imgDog,
-      name: "Benjamin",
-      illness: "Flu Shot",
-      time: "6PM",
-      address: "Bushwick, NY",
-      color: "#f9b44d"
-    },
-    parentName: "Michael Smith",
-    visitReason: "Precautionary",
-    allergies: "Crustaceans, gluten",
-    parentNotes: "Benjamin wears contact lenses",
-    visitNotes: "Tommy is doing well",
-    map: {
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+  constructor(props) {
+    super(props);
 
-      currentLatitude: 37.78925,
-      currentLongitude: -122.4924,
-      distance: 0
-    }
-  };
+    const { navigation } = props;
+    const visitID = navigation.getParam('visitID', false);
+    // TODO: if (!visitID) error!
+
+    this.state = {
+      visitID,
+      map: {
+        latitude: 37.78825,
+        longitude: -122.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+  
+        currentLatitude: 37.78925,
+        currentLongitude: -122.4924,
+        distance: 0,
+      },
+      loaded: false,
+      data: {},
+    };
+  }
 
   componentDidMount() {
+    const { store: { currentUserStore: { id: userID } } } = this.props;
+    const { visitID } = this.state;
+
+    this.navigatorWatch();
+
+    const successHandler = (res) => {
+      const {
+        reason,
+        symptoms: illness,
+        parent_notes: parentNotes,
+        visit_notes: visitNotes,
+        appointment_time: appointmentTime,
+        child: {
+          id: childID,
+          first_name: childFirstName,
+          last_name: childLastName,
+          allergies,
+        },
+        address: {
+          city, 
+          state, 
+        }
+      } = res.data;
+
+      const data = { 
+        child: {
+          key: childID,
+          avatarImg: imgDog,
+          name: `${childFirstName} ${childLastName}`,
+          illness,
+          time: formatAMPM(new Date(appointmentTime)),
+          address: `${city}, ${state}`,
+          color: "#f9b44d",
+        },
+        parentName: "Michael Smith", // TODO: missing
+        reason,
+        allergies: allergies.join(', '),
+        parentNotes: parentNotes, 
+      };
+
+      this.setState({ data, loaded: true });
+    };
+
+    getVisit(
+      userID,
+      visitID,
+      { successHandler });
+  }
+
+  navigatorWatch() {
     const {
       store: { providerStore }
     } = this.props;
@@ -122,14 +170,29 @@ class VisitDetailsScreen extends React.Component {
     } = this.props;
     const { arrived } = providerStore;
     const {
-      child,
-      parentName,
-      visitReason,
-      allergies,
-      parentNotes,
-      visitNotes,
-      map
+      loaded,
+      map,
+      data: {
+        child,
+        parentName,
+        reason,
+        allergies,
+        parentNotes,
+        visitNotes,
+      }
     } = this.state;
+
+    if (!loaded) {
+      return (<ContainerView>
+        <HeaderWrapper>
+          <NavHeader
+            title="Loading..."
+            size="medium"
+          />
+        </HeaderWrapper>
+      </ContainerView>);
+    }
+
     return (
       <ContainerView>
         <HeaderWrapper>
@@ -177,7 +240,7 @@ class VisitDetailsScreen extends React.Component {
               />
               <LargeBookedDetailCard
                 type="Visit Reason"
-                text={visitReason}
+                text={reason}
                 disabled
               />
               <LargeBookedDetailCard

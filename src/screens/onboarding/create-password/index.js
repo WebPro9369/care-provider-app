@@ -31,9 +31,7 @@ class CreatePasswordScreen extends Component {
   onSubmit = () => {
     const {
       navigation: { navigate },
-      store: {
-        providerStore: { onboardingData }
-      }
+      store: { currentUserStore }
     } = this.props;
     const { password } = this.state;
     const regEx = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
@@ -42,7 +40,7 @@ class CreatePasswordScreen extends Component {
         "Please input a valid password.\nPasswords must be between 8 and 20 characters, must include a combination of numbers and letters (upper or lower case), and/or special characters."
       );
     }
-    onboardingData.setPassword(password);
+    currentUserStore.setPassword(password);
     return navigate("PhoneNumber");
   };
 

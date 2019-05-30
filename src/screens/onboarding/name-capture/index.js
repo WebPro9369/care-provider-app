@@ -31,18 +31,16 @@ class NameCaptureScreen extends Component {
   onSubmit = () => {
     const {
       navigation: { navigate },
-      store: {
-        providerStore: { onboardingData }
-      }
+      store: { currentUserStore }
     } = this.props;
     const { name } = this.state;
     if (!name) {
       return Alert.alert("Please input your full name.");
     }
     const names = name.split(" ");
-    onboardingData.setFirstName(names[0]);
+    currentUserStore.setFirstName(names[0]);
     if (names.length > 1) {
-      onboardingData.setLastName(names[1]);
+      currentUserStore.setLastName(names[1]);
     }
     return navigate("EmailCapture");
   };
