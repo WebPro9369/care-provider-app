@@ -142,7 +142,7 @@ class AskLocationScreen extends Component {
 
   handleInputChange = text => {
     this.setState({
-      zipcode: text
+      zipcode: text.replace(/\D/, "")
     });
   };
 
@@ -201,6 +201,7 @@ class AskLocationScreen extends Component {
               placeholder="Zip code"
               value={zipcode}
               onChangeText={this.handleInputChange}
+              maxLength={5}
             />
             <FontAwesome
               name="map-marker"
