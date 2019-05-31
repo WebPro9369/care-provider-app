@@ -7,9 +7,11 @@ export const KeyboardScrollView = ({ padding, ...rest }) => (
 );
 
 KeyboardScrollView.propTypes = {
-  padding: PropTypes.number
+  padding: PropTypes.number,
+  extraScrollHeight: PropTypes.number
 };
 
 KeyboardScrollView.defaultProps = {
-  padding: 16
+  padding: 16,
+  extraScrollHeight: 45
 };

@@ -266,7 +266,7 @@ class ApplicationScreen extends React.Component {
             onPressBackButton={() => goBack()}
           />
         </HeaderWrapper>
-        <KeyboardScrollView>
+        <KeyboardScrollView keyboardShouldPersistTaps="handled">
           <ViewCentered paddingBottom={24}>
             <Avatar
               {...avatarOptions}

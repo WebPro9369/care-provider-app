@@ -72,6 +72,8 @@ FormInputWrapper.defaultProps = {
 
 export const HeaderWrapper = styled.View`
   padding: 16px;
+  padding-top: 26px;
+  padding-bottom: 0px;
 `;
 
 export const ViewCentered = styled.View`
