@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AsyncStorage, ActivityIndicator, View } from "react-native";
+import { AsyncStorage, ActivityIndicator, View, Text } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
 
@@ -27,7 +27,7 @@ class AuthLoadingScreen extends Component {
 
       const { store: { currentUserStore } } = this.props; 
       const { address, application } = currentUserStore;
-      currentUserStore.setAuthentication({ id, apiKey });
+      // currentUserStore.setAuthentication({ id, apiKey });
 
       const successHandler = (res) => {
         const {
@@ -83,6 +83,7 @@ class AuthLoadingScreen extends Component {
       };
 
       getCareProvider(id, { successHandler });
+      navigate("Tabs");
     });
   };
 
