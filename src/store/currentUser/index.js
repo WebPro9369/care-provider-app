@@ -82,8 +82,8 @@ const ApplicationStore = types
 
   const PayoutAccountStore = types
   .model("PayoutAccountStore", {
-      token_id: types.string,
-      last4: types.string
+      token_id: types.maybeNull(types.string),
+      last4: types.maybeNull(types.string)
   })
   .actions(self => ({
     setTokenId(value) {
@@ -131,10 +131,8 @@ export const CurrentUserStore = types
       latitude: '',
       longitude: '',
     }),
-    payout_account: types.optional(PayoutAccountStore, {
-      balance: 0
-    }),
-    stripe_balance: types.number
+    payout_account: types.optional(PayoutAccountStore, {}),
+    stripe_balance: types.maybeNull(types.number)
   })
   .actions(self => ({
 		setID(value) {
