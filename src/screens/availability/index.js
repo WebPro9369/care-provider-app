@@ -1,8 +1,9 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable prefer-destructuring */
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
-import { FlatList, Switch, DatePickerIOS } from "react-native";
+import { FlatList, Switch, DatePickerIOS, Dimensions } from "react-native";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { StyledText } from "@components/text";
 import {
@@ -228,6 +229,10 @@ class AvailabilityScreen extends React.Component {
       chosenDate,
       showDateTimePicker
     } = this.state;
+
+    const screenWidth = Dimensions.get("window").width;
+    const sliderWidth = screenWidth - 84 - 32;
+
     return (
       <ContainerView style={{ paddingTop: 16, paddingBottom: 16 }}>
         <View
@@ -313,7 +318,7 @@ class AvailabilityScreen extends React.Component {
                     <View style={{ paddingLeft: 24, paddingRight: 12 }}>
                       <MultiSlider
                         values={[item.start, item.end]}
-                        sliderLength={280}
+                        sliderLength={sliderWidth}
                         min={0}
                         max={47}
                         step={1}
