@@ -8,14 +8,14 @@ import { FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
 import {
+  View,
+  ContainerView,
   FlexView,
   FormWrapper,
   TouchableView
 } from "../../../components/views";
-import {
-  KeyboardAvoidingView,
-  FormInputView
-} from "../../../components/views/keyboard-view";
+import { FormInputView } from "../../../components/views/keyboard-view";
+import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
 import { colors, GOOGLE_API_KEY } from "../../../utils/constants";
 
 const { DARKSKYBLUE } = colors;
@@ -103,54 +103,59 @@ class EditAddressScreen extends React.Component {
     } = this.props;
     const { address, city, zip, locationName } = this.state;
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
+      <ContainerView style={{ paddingTop: 16 }}>
         <NavHeader
           title="Edit Address"
           size="medium"
           hasBackButton
+          style={{ paddingLeft: 16 }}
           onPressBackButton={() => goBack()}
         />
-        <FormWrapper>
-          <FormInputView>
-            <FormTextInput
-              label="Address"
-              value={address}
-              rightIcon={
-                <TouchableView onPress={this.setCurrentLocation}>
-                  <FontAwesome
-                    name="map-marker"
-                    size={30}
-                    color={DARKSKYBLUE}
-                  />
-                </TouchableView>
-              }
-            />
-          </FormInputView>
-          <FormInputView>
-            <FlexView>
+        <KeyboardScrollView>
+          <FormWrapper>
+            <FormInputView>
               <FormTextInput
-                label="City"
-                style={{
-                  width: 120,
-                  marginRight: 0
-                }}
-                value={city}
+                label="Address"
+                value={address}
+                rightIcon={
+                  <TouchableView onPress={this.setCurrentLocation}>
+                    <FontAwesome
+                      name="map-marker"
+                      size={30}
+                      color={DARKSKYBLUE}
+                    />
+                  </TouchableView>
+                }
               />
-              <FormTextInput
-                label="Zip"
-                style={{
-                  width: 120
-                }}
-                value={zip}
-              />
-            </FlexView>
-          </FormInputView>
-          <FormInputView>
-            <FormTextInput label="Location Name" value={locationName} />
-          </FormInputView>
-        </FormWrapper>
-        <ServiceButton title="Update Address" onPress={() => goBack()} />
-      </KeyboardAvoidingView>
+            </FormInputView>
+            <FormInputView>
+              <FlexView>
+                <FormTextInput
+                  label="City"
+                  wrapperStyle={{
+                    flex: 1,
+                    marginRight: 20
+                  }}
+                  value={city}
+                />
+                <FormTextInput
+                  label="Zip"
+                  wrapperStyle={{
+                    flex: 1
+                  }}
+                  value={zip}
+                />
+              </FlexView>
+            </FormInputView>
+            <FormInputView>
+              <FormTextInput label="Location Name" value={locationName} />
+            </FormInputView>
+          </FormWrapper>
+          <View style={{ paddingBottom: 32 }}>
+            <ServiceButton title="Update Address" onPress={() => goBack()} />
+          </View>
+        </KeyboardScrollView>
+      </ContainerView>
     );
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React, { Component } from "react";
 import { AsyncStorage, ActivityIndicator, View } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
@@ -33,7 +34,7 @@ class AuthLoadingScreen extends Component {
       const { address, application } = currentUserStore;
       currentUserStore.setAuthentication({ id, apiKey });
 
-      const successHandler = (res) => {
+      const successHandler = res => {
         const {
           name,
           email,
@@ -44,7 +45,6 @@ class AuthLoadingScreen extends Component {
           title: titles,
           malpractice,
           legal_history: legalHistory,
-          biography,
           education,
           work_history: workHistory,
           references,
@@ -90,6 +90,7 @@ class AuthLoadingScreen extends Component {
       };
 
       getCareProvider(id, { successHandler });
+      return navigate("Tabs");
     });
   };
 
