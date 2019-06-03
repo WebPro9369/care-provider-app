@@ -22,12 +22,13 @@ class FormTextInput extends React.Component {
       placeholder,
       type,
       ref,
+      wrapperStyle,
       onChangeText,
       ...rest
     } = this.props;
 
     return (
-      <Wrapper>
+      <Wrapper style={wrapperStyle}>
         <StyledText fontSize={14} lineHeight={18} color={color}>
           {label}
         </StyledText>
@@ -64,6 +65,7 @@ FormTextInput.propTypes = {
   leftIcon: PropTypes.element,
   rightIcon: PropTypes.element,
   placeholder: PropTypes.string,
+  wrapperStyle: PropTypes.instanceOf(Object),
   onChangeText: PropTypes.func
 };
 
@@ -75,6 +77,7 @@ FormTextInput.defaultProps = {
   leftIcon: null,
   rightIcon: null,
   placeholder: "",
+  wrapperStyle: null,
   onChangeText: () => {}
 };
 
