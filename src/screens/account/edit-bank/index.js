@@ -49,13 +49,14 @@ class EditBankScreen extends React.Component {
     };
     this.setState({ loading: true });
     try {
-      const token = await stripe.createTokenWithBankAccount(params);
-      onboardingData.setBankToken(token);
+      const { bankAccount } = await stripe.createTokenWithBankAccount(params);
+      debugger;
+      onboardingData.setBankToken(bankAccount.bankAccountId);
 
       createBankAccountProvider(
         id,
         {
-          token_id: token
+          token_id: bankAccount.bankAccountId
         },
         res => {
           currentUserStore.setPayoutAccount(res.data.payout_account);
@@ -69,6 +70,7 @@ class EditBankScreen extends React.Component {
       );
 
     } catch (e) {
+      console.log(e);
       this.setState({ loading: false });
     }
   };
@@ -107,7 +109,9 @@ class EditBankScreen extends React.Component {
         </FormWrapper>
         <ServiceButton
           title="Save Bank"
-          onPress={this.saveBankHandler}
+          onPress={async () => {
+            await this.saveBankHandler();
+          }}
           loading={loading}
         />
       </KeyboardAvoidingView>

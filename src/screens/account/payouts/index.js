@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
-import { ListTouchableButtonWrapper } from "./styles";
+import { ListTouchableButtonWrapper, ListButtonText } from "./styles";
 import { ContainerView, View, FlexView } from "../../../components/views";
 import { colors } from "../../../utils/constants";
 import { getCareProvider } from "../../../services/opear-api";
@@ -90,7 +90,7 @@ class PayoutsScreen extends React.Component {
               ? <ActivityIndicator size="small" color={colors.SEAFOAMBLUE} />
               : (
                 <StyledText fontSize={24} color={colors.SEAFOAMBLUE}>
-                  {stripe_balance}$
+                  {stripe_balance || "0"}$
                 </StyledText>
             )}
           </FlexView>
