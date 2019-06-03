@@ -130,16 +130,16 @@ class EditAddressScreen extends React.Component {
             <FlexView>
               <FormTextInput
                 label="City"
-                style={{
-                  width: 120,
-                  marginRight: 0
+                wrapperStyle={{
+                  flex: 1,
+                  marginRight: 20
                 }}
                 value={city}
               />
               <FormTextInput
                 label="Zip"
-                style={{
-                  width: 120
+                wrapperStyle={{
+                  flex: 1
                 }}
                 value={zip}
               />
