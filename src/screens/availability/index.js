@@ -16,7 +16,6 @@ import { ServiceButton } from "@components/service-button";
 import { WEEKDAYS, colors } from "@utils/constants";
 import { getAvailabilities, updateAvailabilities } from "@services/opear-api";
 
-
 @inject("store")
 @observer
 class AvailabilityScreen extends React.Component {
@@ -37,6 +36,43 @@ class AvailabilityScreen extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const {
+      store: {
+        currentUserStore: { id: userID }
+      }
+    } = this.props;
+
+    const successHandler = res => {
+      const { available_days: availableDays } = res.data;
+
+      const timeSlots = availableDays.map(entry => {
+        const {
+          id,
+          weekday: weekdayIndex,
+          on,
+          start_hour: startFloat,
+          end_hour: endFloat
+        } = entry;
+
+        const { key, label } = WEEKDAYS[weekdayIndex];
+
+        return {
+          key,
+          id,
+          label,
+          start: startFloat * 2,
+          end: endFloat * 2,
+          disabled: !on
+        };
+      });
+
+      this.setState({ timeSlots });
+    };
+
+    getAvailabilities(userID, { successHandler });
+  }
+
   setDate = newDate => {
     console.tron.log("Availability new date: ", newDate);
     this.setState({
@@ -54,49 +90,14 @@ class AvailabilityScreen extends React.Component {
     this.setState({
       showDateTimePicker: false
     });
-  }
-
-  componentDidMount() {
-    const { store: { currentUserStore: { id: userID }}} = this.props; 
-
-    const successHandler = (res) => {
-      const { 
-        snooze_notifications: snoozed,
-        all_same: sameEveryDay,
-        available_days: availableDays
-      } = res.data;
-
-      const timeSlots = availableDays.map(entry => {
-        const {
-          id,
-          weekday: weekdayIndex,
-          on,
-          start_hour: startFloat,
-          end_hour: endFloat,
-        } = entry;
-
-        const { key, label } = WEEKDAYS[weekdayIndex];
-
-        return { 
-          key,
-          id,
-          label,
-          start: startFloat * 2,
-          end: endFloat * 2,
-          disabled: !on
-        };
-      });
-
-      this.setState({ timeSlots })
-    };
-
-    getAvailabilities(userID, { successHandler });
-  }
+  };
 
   handleSetAvailability = () => {
     const {
       navigation: { navigate },
-      store: { currentUserStore: { id: userID }}
+      store: {
+        currentUserStore: { id: userID }
+      }
     } = this.props;
     const { showDateTimePicker } = this.state;
     if (showDateTimePicker) {
@@ -104,40 +105,35 @@ class AvailabilityScreen extends React.Component {
     }
 
     const {
-      sameEveryDay: all_same,
-      snoozed: snooze_notifications,
+      sameEveryDay: allSame,
+      snoozed: snoozeNotifications,
       timeSlots
     } = this.state;
-    
+
     const availableDays = timeSlots.map(slot => {
-      const {
-        id,
-        disabled,
-        start,
-        end,
-      } = slot;
+      const { id, disabled, start, end } = slot;
 
       return {
         id,
-        on: !disabled, 
+        on: !disabled,
         start_hour: start / 2,
-        end_hour: end / 2,
-      }
+        end_hour: end / 2
+      };
     });
 
     const data = {
       availability: {
-        all_same,
-        snooze_notifications,
+        allSame,
+        snoozeNotifications,
         available_days_attributes: availableDays
       }
-    }
+    };
 
-    const successHandler = (res) => {
+    const successHandler = () => {
       navigate("TabDashboard");
     };
 
-    updateAvailabilities(userID, data, { successHandler });
+    return updateAvailabilities(userID, data, { successHandler });
   };
 
   onChangeSwitchSED = value => {
@@ -174,7 +170,6 @@ class AvailabilityScreen extends React.Component {
   };
 
   sliderOneValuesChange = values => {
-    console.tron.log(values);
     const newValues = [0];
     newValues[0] = values[0];
     this.setState({
