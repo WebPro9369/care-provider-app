@@ -1,5 +1,6 @@
+/* eslint-disable import/no-unresolved */
 import React, { Component } from "react";
-import { AsyncStorage, ActivityIndicator, View, Text } from "react-native";
+import { AsyncStorage, ActivityIndicator, View } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
 
@@ -20,16 +21,18 @@ class AuthLoadingScreen extends Component {
       navigation: { navigate }
     } = this.props;
 
-    AsyncStorage.getItem('currentUser').then(data => {
+    AsyncStorage.getItem("currentUser").then(data => {
       if (!data) return navigate("Onboarding");
 
       const { id, apiKey } = JSON.parse(data);
 
-      const { store: { currentUserStore } } = this.props; 
+      const {
+        store: { currentUserStore }
+      } = this.props;
       const { address, application } = currentUserStore;
-      // currentUserStore.setAuthentication({ id, apiKey });
+      currentUserStore.setAuthentication({ id, apiKey });
 
-      const successHandler = (res) => {
+      const successHandler = res => {
         const {
           name,
           email,
@@ -40,19 +43,16 @@ class AuthLoadingScreen extends Component {
           title: titles,
           malpractice,
           legal_history: legalHistory,
-          biography,
           education,
           work_history: workHistory,
           references,
           specialties,
           offered_services: offeredServices,
           source,
-          supervisor,
-          dob: dateOfBirth,
+          dob: dateOfBirth
         } = res.data;
 
-        const [firstName, lastName] = name.split(' ');
-
+        const [firstName, lastName] = name.split(" ");
 
         currentUserStore
           .setFirstName(firstName)
@@ -83,7 +83,7 @@ class AuthLoadingScreen extends Component {
       };
 
       getCareProvider(id, { successHandler });
-      navigate("Tabs");
+      return navigate("Tabs");
     });
   };
 
