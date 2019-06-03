@@ -80,6 +80,22 @@ const ApplicationStore = types
     }
   }));
 
+  const PayoutAccountStore = types
+  .model("PayoutAccountStore", {
+      token_id: types.string,
+      last4: types.string
+  })
+  .actions(self => ({
+    setTokenId(value) {
+      self.token_id = value;
+      return self;
+    },
+    setLast4(value) {
+      self.last4 = value;
+      return self;
+    }
+  }));
+
 export const CurrentUserStore = types
   .model("CurrentUserStore", {
 		id: types.number,
@@ -114,7 +130,11 @@ export const CurrentUserStore = types
       apartment_number: '',
       latitude: '',
       longitude: '',
-    })
+    }),
+    payout_account: types.optional(PayoutAccountStore, {
+      balance: 0
+    }),
+    stripe_balance: types.number
   })
   .actions(self => ({
 		setID(value) {
@@ -152,4 +172,12 @@ export const CurrentUserStore = types
       self.phone = value;
       return self;
     },
+    setPayoutAccount(value) {
+      self.payout_account = value;
+      return self;
+    },
+    setStripeBalance(value) {
+      self.stripe_balance = value;
+      return self;
+    }
   }));

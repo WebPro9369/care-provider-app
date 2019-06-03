@@ -20,12 +20,16 @@ class AuthLoadingScreen extends Component {
       navigation: { navigate }
     } = this.props;
 
-    AsyncStorage.getItem('currentUser').then(data => {
+    AsyncStorage.getItem("currentUser").then(data => {
       if (!data) return navigate("Onboarding");
 
       const { id, apiKey } = JSON.parse(data);
 
-      const { store: { currentUserStore } } = this.props; 
+      const {
+        store: {
+          currentUserStore
+        }
+      } = this.props;
       const { address, application } = currentUserStore;
       currentUserStore.setAuthentication({ id, apiKey });
 
@@ -48,17 +52,20 @@ class AuthLoadingScreen extends Component {
           offered_services: offeredServices,
           source,
           supervisor,
-          dob: dateOfBirth,
+          stripe_balance,
+          payout_account,
+          dob: dateOfBirth
         } = res.data;
 
-        const [firstName, lastName] = name.split(' ');
-
+        const [firstName, lastName] = name.split(" ");
 
         currentUserStore
           .setFirstName(firstName)
           .setLastName(lastName)
           .setEmail(email)
-          .setPhone(phone);
+          .setPhone(phone)
+          .setStripeBalance(stripe_balance)
+          .setPayoutAccount(payout_account);
 
         address.setZipCode(zip);
 
