@@ -14,7 +14,8 @@ export const ProviderStore = types
       first_name: "",
       last_name: "",
       date_of_birth: "",
-      password: ""
+      password: "",
+      bankToken: ""
       // facebook_uid: ""
     })
   })

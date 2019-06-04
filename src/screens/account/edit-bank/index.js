@@ -1,5 +1,7 @@
 import React from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import stripe from "tipsi-stripe";
+import { inject, observer } from "mobx-react";
 import { FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
@@ -9,24 +11,75 @@ import {
   FormInputView
 } from "../../../components/views/keyboard-view";
 import { colors } from "../../../utils/constants";
+import { createBankAccountProvider } from "../../../services/opear-api";
 
 const { BLUE } = colors;
 
+@inject("store")
+@observer
 class EditBankScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      accountNumber: "1234 5678 3456 2456",
-      routingNumber: "1234 5678 3456 2456"
+      accountNumber: "",
+      routingNumber: "",
+      loading: false
     };
   }
+
+  saveBankHandler = async () => {
+    const {
+      navigation: { goBack },
+      store: {
+        providerStore: { onboardingData },
+        currentUserStore
+      }
+    } = this.props;
+    const { id } = currentUserStore;
+    const { accountNumber, routingNumber } = this.state;
+
+    const params = {
+      accountNumber,
+      routingNumber,
+      countryCode: "us",
+      currency: "usd",
+      accountHolderType: "individual",
+      accountHolderName: `${currentUserStore.first_name} ${currentUserStore.last_name}`
+    };
+    this.setState({ loading: true });
+    try {
+      const { bankAccount } = await stripe.createTokenWithBankAccount(params);
+      debugger;
+      onboardingData.setBankToken(bankAccount.bankAccountId);
+
+      createBankAccountProvider(
+        id,
+        {
+          token_id: bankAccount.bankAccountId
+        },
+        res => {
+          currentUserStore.setPayoutAccount(res.data.payout_account);
+          this.setState({ loading: false });
+
+          goBack();
+        },
+        () => {
+          this.setState({ loading: false });
+        }
+      );
+
+    } catch (e) {
+      console.log(e);
+      this.setState({ loading: false });
+    }
+  };
 
   render() {
     const {
       navigation: { goBack }
     } = this.props;
-    const { accountNumber, routingNumber } = this.state;
+    const { accountNumber, routingNumber, loading } = this.state;
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
         <NavHeader
@@ -38,16 +91,29 @@ class EditBankScreen extends React.Component {
         <FormWrapper>
           <FormInputView>
             <FormTextInput
-              label="Account Number"
-              leftIcon={<FontAwesome name="cc-visa" size={30} color={BLUE} />}
-              value={accountNumber}
+              label="Routing Number"
+              placeholder="110000000"
+              value={routingNumber}
+              onChangeText={value => this.setState({ routingNumber: value })}
             />
           </FormInputView>
           <FormInputView>
-            <FormTextInput label="Routing Number" value={routingNumber} />
+            <FormTextInput
+              label="Account Number"
+              leftIcon={<FontAwesome name="bank" size={30} color={BLUE} />}
+              placeholder="000123456789"
+              value={accountNumber}
+              onChangeText={value => this.setState({ accountNumber: value })}
+            />
           </FormInputView>
         </FormWrapper>
-        <ServiceButton title="Save Bank" onPress={() => goBack()} />
+        <ServiceButton
+          title="Save Bank"
+          onPress={async () => {
+            await this.saveBankHandler();
+          }}
+          loading={loading}
+        />
       </KeyboardAvoidingView>
     );
   }

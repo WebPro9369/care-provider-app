@@ -3,6 +3,7 @@ package com.careprovider;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.gettipsi.stripe.StripeReactPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.hoxfon.react.RNTwilioVoice.TwilioVoicePackage;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new StripeReactPackage(),
             new ImagePickerPackage(),
             new FingerprintAuthPackage(),
             new TwilioVoicePackage(),

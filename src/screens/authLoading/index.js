@@ -27,7 +27,9 @@ class AuthLoadingScreen extends Component {
       const { id, apiKey } = JSON.parse(data);
 
       const {
-        store: { currentUserStore }
+        store: {
+          currentUserStore
+        }
       } = this.props;
       const { address, application } = currentUserStore;
       currentUserStore.setAuthentication({ id, apiKey });
@@ -49,6 +51,9 @@ class AuthLoadingScreen extends Component {
           specialties,
           offered_services: offeredServices,
           source,
+          supervisor,
+          stripe_balance,
+          payout_account,
           dob: dateOfBirth
         } = res.data;
 
@@ -58,7 +63,9 @@ class AuthLoadingScreen extends Component {
           .setFirstName(firstName)
           .setLastName(lastName)
           .setEmail(email)
-          .setPhone(phone);
+          .setPhone(phone)
+          .setStripeBalance(stripe_balance)
+          .setPayoutAccount(payout_account);
 
         address.setZipCode(zip);
 

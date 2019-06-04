@@ -56,7 +56,8 @@ export const OnboardingData = types
       apartment_number: "",
       latitude: "",
       longitude: ""
-    })
+    }),
+    bankToken: types.string
   })
   .actions(self => ({
     setEmail(value) {
@@ -76,5 +77,8 @@ export const OnboardingData = types
     },
     setFBUid(value) {
       self.facebook_uid = value;
+    },
+    setBankToken(token) {
+      self.bankToken = token;
     }
   }));

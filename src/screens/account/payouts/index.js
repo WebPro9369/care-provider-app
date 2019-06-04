@@ -1,33 +1,71 @@
 import React from "react";
-import AntDesign from "react-native-vector-icons/AntDesign";
+import { ActivityIndicator } from "react-native";
+import { inject, observer } from "mobx-react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
-import {
-  TouchableWrapper,
-  ListTouchableButtonWrapper,
-  ListButtonText
-} from "./styles";
+import { ListTouchableButtonWrapper, ListButtonText } from "./styles";
 import { ContainerView, View, FlexView } from "../../../components/views";
 import { colors } from "../../../utils/constants";
+import { getCareProvider } from "../../../services/opear-api";
 
+@inject("store")
+@observer
 class PayoutsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      paymentMethods: [
-        // { id: 1, type: "Paypal" },
-        { id: 2, type: "Card", number: "****4985" },
-        { id: 3, type: "Bank", number: "****5827" }
-      ]
+      loading: false
     };
+  }
+
+  componentDidMount() {
+    this.getProviderInfo();
+  }
+
+  getProviderInfo() {
+    this.setState({ loading: true });
+    const { 
+      store: {
+        currentUserStore
+      }
+    } = this.props;
+    getCareProvider(
+      currentUserStore.id,
+      res => {
+        if (res.status === 200) {
+          currentUserStore
+            .setStripeBalance(res.data.stripe_balance)
+            .setPayoutAccount(res.data.payout_account);
+          this.setState({
+            loading: false
+          });
+        } else {
+          this.setState({
+            loading: false
+          });
+        }
+      },
+      () => {
+        this.setState({
+          loading: false
+        });
+      }
+    );
   }
 
   render() {
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      store: {
+        currentUserStore: { payout_account, stripe_balance }
+      }
     } = this.props;
-    const { paymentMethods } = this.state;
+    const { loading } = this.state;
+    const bankLast4 = payout_account.last4
+      ? `****${payout_account.last4}`
+      : "Please setup bank";
+
     return (
       <ContainerView padding={16}>
         <NavHeader
@@ -48,98 +86,33 @@ class PayoutsScreen extends React.Component {
             >
               {"Total Earnings: "}
             </StyledText>
-            <StyledText fontSize={24} color={colors.SEAFOAMBLUE}>
-              $1200
-            </StyledText>
+            {loading 
+              ? <ActivityIndicator size="small" color={colors.SEAFOAMBLUE} />
+              : (
+                <StyledText fontSize={24} color={colors.SEAFOAMBLUE}>
+                  {stripe_balance || "0"}$
+                </StyledText>
+            )}
           </FlexView>
           <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-            {paymentMethods.map(pm => {
-              if (pm.type === "Card") {
-                return (
-                  <ListTouchableButtonWrapper
-                    key={pm.id}
-                    onPress={() => navigate("AccountEditCard")}
-                  >
-                    <FlexView justifyContent="start">
-                      <FontAwesome
-                        name="cc-visa"
-                        size={30}
-                        color={colors.BLUE}
-                        style={{ marginRight: 16 }}
-                      />
-                      <ListButtonText>{pm.number}</ListButtonText>
-                    </FlexView>
-                    <FontAwesome
-                      name="angle-right"
-                      color={colors.MIDGREY}
-                      size={24}
-                    />
-                  </ListTouchableButtonWrapper>
-                );
-              }
-              if (pm.type === "Bank") {
-                return (
-                  <ListTouchableButtonWrapper
-                    key={pm.id}
-                    onPress={() => navigate("AccountEditBank")}
-                  >
-                    <FlexView justifyContent="start">
-                      <FontAwesome
-                        name="bank"
-                        size={30}
-                        color={colors.BLUE}
-                        style={{ marginRight: 16 }}
-                      />
-                      <ListButtonText>{pm.number}</ListButtonText>
-                    </FlexView>
-                    <FontAwesome
-                      name="angle-right"
-                      color={colors.MIDGREY}
-                      size={24}
-                    />
-                  </ListTouchableButtonWrapper>
-                );
-              }
-              if (pm.type === "Paypal") {
-                return (
-                  <ListTouchableButtonWrapper key={pm.id}>
-                    <FlexView justifyContent="start">
-                      <FontAwesome
-                        name="paypal"
-                        size={30}
-                        color={colors.BLUE}
-                        style={{ marginRight: 16 }}
-                      />
-                      <ListButtonText>Paypal</ListButtonText>
-                    </FlexView>
-                    <FontAwesome
-                      name="angle-right"
-                      color={colors.MIDGREY}
-                      size={24}
-                    />
-                  </ListTouchableButtonWrapper>
-                );
-              }
-
-              return null;
-            })}
-          </View>
-          <View style={{ marginTop: 8, marginLeft: 28 }}>
-            <TouchableWrapper onPress={() => navigate("AccountAddBank")}>
+            <ListTouchableButtonWrapper
+              onPress={() => navigate("AccountEditBank")}
+            >
               <FlexView justifyContent="start">
-                <AntDesign
-                  name="pluscircleo"
-                  size={24}
-                  color={colors.DARKSKYBLUE}
-                  style={{
-                    marginRight: 24
-                  }}
+                <FontAwesome
+                  name="bank"
+                  size={30}
+                  color={colors.BLUE}
+                  style={{ marginRight: 16 }}
                 />
-                <StyledText fontFamily="FlamaMedium" fontSize={16}>
-                  Add payment method
-                </StyledText>
+                <ListButtonText>{bankLast4}</ListButtonText>
               </FlexView>
-            </TouchableWrapper>
+              <FontAwesome
+                name="angle-right"
+                color={colors.MIDGREY}
+                size={24}
+              />
+            </ListTouchableButtonWrapper>
           </View>
         </View>
       </ContainerView>
