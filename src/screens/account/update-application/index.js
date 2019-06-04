@@ -34,8 +34,6 @@ class UpdateApplicationScreen extends React.Component {
     const { store: { currentUserStore }} = props;
 
     const { application: {
-      ssn,
-      maskedSsn,
       licenseNumber,
       boardCertification,
       malpracticeInsurance,
@@ -51,8 +49,6 @@ class UpdateApplicationScreen extends React.Component {
     }} = currentUserStore;
 
     this.state = {
-      ssn: '',
-      maskedSsn: '',
       dateOfBirth: '',
       dateOfBirth: '',
       licenseNumber,
@@ -104,16 +100,6 @@ class UpdateApplicationScreen extends React.Component {
   };
 
   handleInputChange = name => value => {
-    if (name === "ssn") {
-      const ssnPattern = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
-      if (ssnPattern.test(value)) {
-        return this.setState({
-          ssn: value,
-          maskedSsn: `XXX-XX-${value.substr(7, 4)}`
-        });
-      }
-    }
-
     this.setState({
       [name]: value
     });
@@ -168,7 +154,6 @@ class UpdateApplicationScreen extends React.Component {
 
     let {
       dateOfBirth,
-      ssn,
       licenseNumber: license,
       boardCertification: certification,
       malpracticeInsurance: malpractice,
@@ -189,12 +174,6 @@ class UpdateApplicationScreen extends React.Component {
       return Alert.alert("Please enter DoB in \n mm/dd/yyyy format");
     }
 
-    const ssnPattern = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
-    if (!ssnPattern.test(ssn)) {
-      return Alert.alert(
-        "Please enter Social Security Number in \n 'XXX-XX-XXXX' format"
-      );
-    }
     const title = selectedIndexes.map(index => TITLES[index]);
 
     const data = {
@@ -233,8 +212,6 @@ class UpdateApplicationScreen extends React.Component {
       avatarSource,
       dateOfBirth,
       licenseNumber,
-      ssn,
-      maskedSsn,
       boardCertification,
       malpracticeInsurance,
       educationHistory,
@@ -311,21 +288,6 @@ class UpdateApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.licenseNumber = input)}
                 onChangeText={this.handleInputChange("licenseNumber")}
                 onSubmitEditing={() => this.inputRefs.ssn.getInnerRef().focus()}
-                blurOnSubmit={false}
-              />
-            </FormInputWrapper>
-            <FormInputWrapper>
-              <FormTextInput
-                name="ssn"
-                label="Social Security Number"
-                value={maskedSsn || ssn}
-                placeholder="123-45-6789"
-                returnKeyType="next"
-                ref={input => (this.inputRefs.ssn = input)}
-                onChangeText={this.handleInputChange("ssn")}
-                onSubmitEditing={() =>
-                  this.inputRefs.boardCertification.getInnerRef().focus()
-                }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>

@@ -53,6 +53,7 @@ ReactAndroid-temp.aar
 jarjar-rules.txt
 
 # Dynamic Macros
+/ios/Index
 /ios/Exponent/Supporting/EXBuildConstants.plist.bak
 /ios/Exponent/Supporting/EXBuildConstants.plist.json
 /ios/Exponent/Supporting/EXBuildConstants.plist
