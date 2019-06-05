@@ -110,7 +110,10 @@ class RootContainer extends React.Component {
 
   render() {
     return (
-      <UserInactivity timeForInactivity={3500000} onAction={this.onAction}>
+      <UserInactivity
+        timeForInactivity={15 * 60 * 1000}
+        onAction={this.onAction}
+      >
         <ThemeProvider theme={colors}>
           <Root>
             <StatusBar />
