@@ -31,7 +31,11 @@ class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { store: { currentUserStore: { firstName, lastName, email, phone } } }  = props; 
+    const {
+      store: {
+        currentUserStore: { firstName, lastName, email, phone }
+      }
+    } = props;
     const name = `${firstName} ${lastName}`;
 
     this.state = {
@@ -40,7 +44,7 @@ class SettingsScreen extends React.Component {
       address: "22341 Justice Ave APT 725", // TODO: pending
       biography: "", // TODO: pending
       email,
-      phone,
+      phone
     };
   }
 
@@ -76,16 +80,20 @@ class SettingsScreen extends React.Component {
       navigation: { navigate }
     } = this.props;
 
-    AsyncStorage.removeItem('currentUser');
+    AsyncStorage.removeItem("currentUser");
 
-    navigate("AccountSignIn")
+    navigate("AccountSignIn");
   };
 
   render() {
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      store: {
+        currentUserStore: { firstName, lastName, email, phone }
+      }
     } = this.props;
-    const { avatarSource, name, address, email, phone, biography } = this.state;
+    const name = `${firstName} ${lastName}`;
+    const { avatarSource, address, biography } = this.state;
     const avatarOptions = avatarSource
       ? {
           source: { uri: avatarSource.uri }
@@ -174,10 +182,7 @@ class SettingsScreen extends React.Component {
             </View>
           </View>
           <View style={{ marginTop: 32, marginBottom: 32 }}>
-            <ServiceButton
-              title="Log Out"
-              onPress={this.logOut}
-            />
+            <ServiceButton title="Log Out" onPress={this.logOut} />
           </View>
           {/* <View>
             <StyledText
