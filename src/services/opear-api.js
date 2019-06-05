@@ -60,7 +60,7 @@ export const updateCareProvider = (userID, data, { successHandler, errorHandler 
 };
 
 export const getVisits = (userID, { past, successHandler, errorHandler } = {}) => {
-  const url = `/v1/users/${userID}/visits` + (past ? '?past=true' : '');
+  const url = `/v1/visits` + (past ? '?past=true' : '');
 
   axios
     .get(url)
@@ -76,7 +76,7 @@ export const getVisits = (userID, { past, successHandler, errorHandler } = {}) =
 
 export const getVisit = (userID, visitID, { successHandler, errorHandler } = {}) => {
   axios
-    .get(`/v1/users/${userID}/visits/${visitID}`)
+    .get(`/v1/visits/${visitID}`)
     .then(res => {
       console.tron.log("Get visit done: ", res);
       if (successHandler) successHandler(res);
@@ -132,5 +132,21 @@ export const createBankAccountProvider = (userID, data, successHandler, errorHan
       if (errorHandler) {
         errorHandler(err);
       }
+    });
+};
+
+
+export const getApiToken = (email, password, { successHandler, errorHandler } = {}) => {
+  const url = `/v1/authentications`;
+
+  axios
+    .post(url, { email, password })
+    .then(res => {
+      console.tron.log("Authentication done: ", res);
+      if (successHandler) successHandler(res);
+    })
+    .catch(err => {
+      console.tron.log("Authentication error: ", err);
+      if (errorHandler) errorHandler(err);
     });
 };
