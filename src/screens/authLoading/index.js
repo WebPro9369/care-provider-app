@@ -24,6 +24,14 @@ class AuthLoadingScreen extends Component {
     AsyncStorage.getItem("currentUser").then(data => {
       if (!data) return navigate("Onboarding");
 
+
+      const { store } = this.props;
+
+      if (!store.providerStore.active && store.providerStore.completeApplication)
+      {
+        return navigate("ApplicationPending");
+      }
+
       const { id, apiKey } = JSON.parse(data);
 
       const {
