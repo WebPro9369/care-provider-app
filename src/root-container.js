@@ -31,7 +31,8 @@ class RootContainer extends React.Component {
     super(props);
 
     this.state = {
-      firstTime: true
+      firstTime: true,
+      active: true
     };
   }
 
@@ -88,22 +89,31 @@ class RootContainer extends React.Component {
     }
   };
 
-  onAction = active => {
+  onAction = value => {
     const {
       store: {
         currentUserStore: { apiKey }
       }
     } = this.props;
+    const { active } = this.state;
 
     if (console.tron) {
-      console.tron.log("Active now!", active, apiKey);
+      console.tron.log("Active now!", value, apiKey);
+    }
+
+    this.setState({
+      active: value
+    });
+
+    if (active) {
+      return false;
     }
 
     if (!apiKey) {
       return false;
     }
 
-    this.showTouchId(active);
+    this.showTouchId(value);
 
     return true;
   };
