@@ -1,15 +1,20 @@
 import React from "react";
-// import { Alert, View } from "react-native";
-// import { inject, observer } from "mobx-react";
-// import axios from "axios";
-import { FormTextInput, StyledText } from "../../../components/text";
-import { NavHeader } from "../../../components/nav-header";
-import { ServiceButton } from "../../../components/service-button";
-import { FormInputWrapper, FormWrapper } from "../../../components/views";
-import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
-import { colors } from "../../../utils/constants";
+import { Alert } from "react-native";
+import { inject, observer, PropTypes } from "mobx-react";
+import { FormTextInput, StyledText } from "@components/text";
+import { NavHeader } from "@components/nav-header";
+import { ServiceButton } from "@components/service-button";
+import { ViewCentered, FormInputWrapper, FormWrapper } from "@components/views";
+import { KeyboardAvoidingView } from "@components/views/keyboard-view";
+import { colors } from "@utils/constants";
+import { getCareProvider, getApiToken } from "@services/opear-api";
 
+@inject("store")
 class SignInScreen extends React.Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +24,79 @@ class SignInScreen extends React.Component {
   }
 
   onSubmit = () => {
-    return true;
+    const { email, password } = this.state;
+    const {
+      navigation: { navigate },
+      store: { currentUserStore }
+    } = this.props;
+
+    const successHandler = res => {
+      if (res.data.message) {
+        return Alert.alert(`Incorrect credentials. Please try again.`);
+      } 
+      
+      const { id, api_key: apiKey } = res.data;
+      currentUserStore.setAuthentication({ id, apiKey });
+
+      const successHandler = res => {
+        const { address, application } = currentUserStore;
+
+        const {
+          name,
+          email,
+          phone,
+          zip,
+          certification,
+          title: titles,
+          malpractice,
+          legal_history: legalHistory,
+          education,
+          work_history: workHistory,
+          references,
+          specialties,
+          offered_services: offeredServices,
+          source,
+          supervisor,
+          stripe_balance,
+          payout_account,
+          dob: dateOfBirth
+        } = res.data;
+  
+        const [firstName, lastName] = name.split(" ");
+  
+        currentUserStore
+          .setFirstName(firstName)
+          .setLastName(lastName)
+          .setEmail(email)
+          .setPhone(phone)
+          .setStripeBalance(stripe_balance)
+          .setPayoutAccount(payout_account);
+  
+        address.setZipCode(zip);
+  
+        application
+          .setBoardCertification(certification)
+          .setTitles(titles)
+          .setMalpracticeInsurance(malpractice)
+          .setLegalHistory(legalHistory)
+          // TODO: handle nulls
+          // .setBiography(biography)
+          // .setSupervisingPhysician(supervisor)
+          .setEducationHistory(education)
+          .setWorkHistory(workHistory)
+          .setReferences(references)
+          .setSpecialties(specialties)
+          .setOfferedServices(offeredServices)
+          .setWhereHeard(source)
+          .setDateOfBirth(dateOfBirth);
+  
+        navigate("Tabs");
+      };
+  
+      getCareProvider(id, { successHandler });
+    };
+
+    getApiToken(email, password, { successHandler });
   };
 
   onPressForgotPassword = () => {
@@ -27,6 +104,14 @@ class SignInScreen extends React.Component {
       navigation: { navigate }
     } = this.props;
     navigate("AccountForgotPwd");
+    return true;
+  };
+
+  onPressSignUp = () => {
+    const {
+      navigation: { navigate }
+    } = this.props;
+    navigate("Onboarding");
     return true;
   };
 
@@ -85,17 +170,23 @@ class SignInScreen extends React.Component {
             />
           </FormInputWrapper>
           <FormInputWrapper paddingTop={6}>
-            <StyledText
-              textAlign="center"
-              style={{
-                color: "#ffffff"
-                // borderBottomWidth: 1,
-                // borderBottomColor: "#ffffff"
-              }}
-              onPress={this.onPressForgotPassword}
+            <ViewCentered
+              style={{ flexDirection: "row" }}
             >
-              forgot password?
-            </StyledText>
+              <StyledText
+                style={{ color: "#ffffff" }}
+                onPress={this.onPressSignUp}
+              >
+                sign up
+              </StyledText>              
+              <StyledText style={{ color: "#ffffff" }}>  |  </StyledText>
+              <StyledText
+                style={{ color: "#ffffff" }}
+                onPress={this.onPressForgotPassword}
+              >
+                forgot password?
+              </StyledText>
+            </ViewCentered>
           </FormInputWrapper>
         </FormWrapper>
       </KeyboardAvoidingView>

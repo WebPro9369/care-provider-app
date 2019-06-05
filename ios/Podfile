@@ -24,6 +24,8 @@ target 'careprovider' do
 
   pod 'tipsi-stripe', :path => '../node_modules/tipsi-stripe'
 
+  pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
+
   target 'careproviderTests' do
     inherit! :search_paths
     # Pods for testing
