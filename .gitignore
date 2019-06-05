@@ -30,6 +30,7 @@ yarn-error.log
 *.xcscmblueprint
 xcuserdata
 
+
 # Android Studio
 *.iml
 .gradle
@@ -52,6 +53,7 @@ ReactAndroid-temp.aar
 # Tools
 jarjar-rules.txt
 
+/ios/Index
 # Dynamic Macros
 /ios/Exponent/Supporting/EXBuildConstants.plist.bak
 /ios/Exponent/Supporting/EXBuildConstants.plist.json
