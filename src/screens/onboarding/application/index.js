@@ -134,10 +134,13 @@ class ApplicationScreen extends React.Component {
 
   updateStore = _ => {
     const {
-      store: { currentUserStore : { application }}
+      store: { currentUserStore : { application, address }}
     } = this.props;
 
     const {
+      street,
+      city,
+      state,
       licenseNumber,
       licenseType,
       licenseIssuer,
@@ -160,6 +163,11 @@ class ApplicationScreen extends React.Component {
       selectedIndexes,
       dateOfBirth,
     } = this.state;
+
+    address
+      .setStreet(street)
+      .setCity(city)
+      .setState(state);
 
     application
       .setDateOfBirth(dateOfBirth)
@@ -219,6 +227,9 @@ class ApplicationScreen extends React.Component {
        password,
        phone,
        address: {
+         street:street,
+         city:city,
+         state:state,
          zip_code: zip,
        },
        application: {
@@ -253,7 +264,10 @@ class ApplicationScreen extends React.Component {
         password,
         dob: new Date(dob),
         phone,
-        zip, 
+        street,
+        city,
+        state,
+        zip,
         license_number,
         license_type,
         license_issuer,
@@ -372,7 +386,49 @@ class ApplicationScreen extends React.Component {
                 onChangeText={this.handleInputChange('dateOfBirth')}
                 placeholder="mm/dd/yyyy"
                 returnKeyType="next"
-                onChangeText={this.handleInputChange("dateOfBirth")}
+                onSubmitEditing={() =>
+                  this.inputRefs.street.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="street"
+                label="Street Address"
+                value={street}
+                onChangeText={this.handleInputChange('street')}
+                placeholder="Street Address"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  this.inputRefs.city.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+
+            <FormInputWrapper>
+              <FormTextInput
+                name="city"
+                label="City"
+                value={city}
+                onChangeText={this.handleInputChange('city')}
+                placeholder="City"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  this.inputRefs.state.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="state"
+                label="State"
+                value={state}
+                onChangeText={this.handleInputChange('state')}
+                placeholder="State"
+                returnKeyType="next"
                 onSubmitEditing={() =>
                   this.inputRefs.licenseNumber.getInnerRef().focus()
                 }

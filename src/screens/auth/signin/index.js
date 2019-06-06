@@ -46,7 +46,9 @@ class SignInScreen extends React.Component {
           name,
           email,
           phone,
-          zip,
+          street,
+          city,
+          state,
           certification,
           title: titles,
           malpractice,
@@ -83,9 +85,12 @@ class SignInScreen extends React.Component {
           .setPhone(phone)
           .setStripeBalance(stripe_balance)
           .setPayoutAccount(payout_account);
-  
-        address.setZipCode(zip);
-  
+
+        address
+          .setStreet(street)
+          .setCity(city)
+          .setState(state);
+
         application
           .setBoardCertification(certification)
           .setTitles(titles)

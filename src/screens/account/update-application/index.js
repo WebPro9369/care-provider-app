@@ -186,6 +186,12 @@ class UpdateApplicationScreen extends React.Component {
 
     let {
       dateOfBirth,
+      address: {
+        street:street,
+        city:city,
+        state:state,
+        zip_code: zip,
+      },
       licenseNumber: license_number,
       licenseType: license_type,
       licenseIssuer: license_issuer,
@@ -220,6 +226,10 @@ class UpdateApplicationScreen extends React.Component {
     const data = {
       care_provider: {
         dob: new Date(dateOfBirth),
+        street,
+        city,
+        state,
+        zip,
         license_number,
         license_type,
         license_issuer,
