@@ -35,6 +35,11 @@ class UpdateApplicationScreen extends React.Component {
 
     const { application: {
       licenseNumber,
+      licenseType,
+      licenseIssuer,
+      licenseCountry,
+      licenseState,
+      licenseCity,
       boardCertification,
       malpracticeInsurance,
       educationHistory,
@@ -52,6 +57,11 @@ class UpdateApplicationScreen extends React.Component {
       dateOfBirth: '',
       dateOfBirth: '',
       licenseNumber,
+      licenseType,
+      licenseIssuer,
+      licenseCountry,
+      licenseState,
+      licenseCity,
       boardCertification,
       malpracticeInsurance,
       educationHistory: educationHistory.join(', '),
@@ -113,6 +123,11 @@ class UpdateApplicationScreen extends React.Component {
     const {
       dateOfBirth,
       licenseNumber,
+      licenseType,
+      licenseIssuer,
+      licenseCountry,
+      licenseState,
+      licenseCity,
       boardCertification,
       malpracticeInsurance,
       legalHistory,
@@ -129,6 +144,11 @@ class UpdateApplicationScreen extends React.Component {
     application
       .setDateOfBirth(dateOfBirth)
       .setLicenseNumber(licenseNumber)
+      .setLicenseType(licenseType)
+      .setLicenseIssuer(licenseIssuer)
+      .setLicenseCountry(licenseCountry)
+      .setLicenseState(licenseState)
+      .setLicenseCity(licenseCity)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
       .setLegalHistory(legalHistory)
@@ -154,7 +174,12 @@ class UpdateApplicationScreen extends React.Component {
 
     let {
       dateOfBirth,
-      licenseNumber: license,
+      licenseNumber: license_number,
+      licenseType: license_type,
+      licenseIssuer: license_issuer,
+      licenseCountry: license_country,
+      licenseState: license_state,
+      licenseCity: license_city,
       boardCertification: certification,
       malpracticeInsurance: malpractice,
       legalHistory: legal_history,
@@ -179,7 +204,12 @@ class UpdateApplicationScreen extends React.Component {
     const data = {
       care_provider: {
         dob: dateOfBirth,
-        license,
+        license_number,
+        license_type,
+        license_issuer,
+        license_country,
+        license_state,
+        license_city,
         certification,
         malpractice,
         legal_history,
@@ -212,6 +242,11 @@ class UpdateApplicationScreen extends React.Component {
       avatarSource,
       dateOfBirth,
       licenseNumber,
+      licenseType,
+      licenseIssuer,
+      licenseCountry,
+      licenseState,
+      licenseCity,
       boardCertification,
       malpracticeInsurance,
       educationHistory,
@@ -287,7 +322,84 @@ class UpdateApplicationScreen extends React.Component {
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseNumber = input)}
                 onChangeText={this.handleInputChange("licenseNumber")}
-                onSubmitEditing={() => this.inputRefs.ssn.getInnerRef().focus()}
+                onSubmitEditing={() =>
+                  this.inputRefs.licenseType.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="licenseType"
+                label="License Type"
+                value={licenseType}
+                placeholder="License Type"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.licenseType = input)}
+                onChangeText={this.handleInputChange("licenseType")}
+                onSubmitEditing={() =>
+                  this.inputRefs.licenseIssuer.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="licenseIssuer"
+                label="License Issuer"
+                value={licenseIssuer}
+                placeholder="License Issuer"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.licenseIssuer = input)}
+                onChangeText={this.handleInputChange("licenseIssuer")}
+                onSubmitEditing={() =>
+                  this.inputRefs.licenseCity.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="licenseCity"
+                label="License City"
+                value={licenseCity}
+                placeholder="License City"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.licenseCity = input)}
+                onChangeText={this.handleInputChange("licenseCity")}
+                onSubmitEditing={() =>
+                  this.inputRefs.licenseState.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="licenseState"
+                label="License State"
+                value={licenseState}
+                placeholder="License State"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.licenseState = input)}
+                onChangeText={this.handleInputChange("licenseState")}
+                onSubmitEditing={() =>
+                  this.inputRefs.licenseCountry.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="licenseCountry"
+                label="License Country"
+                value={licenseCountry}
+                placeholder="License Country"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.licenseCountry = input)}
+                onChangeText={this.handleInputChange("licenseCountry")}
+                onSubmitEditing={() =>
+                  this.inputRefs.boardCertification.getInnerRef().focus()
+                }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
