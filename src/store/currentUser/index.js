@@ -8,6 +8,11 @@ const ApplicationStore = types
       dateOfBirth: types.string,
       biography: types.string,
       licenseNumber: types.string,
+      licenseType: types.string,
+      licenseIssuer: types.string,
+      licenseCountry: types.string,
+      licenseState: types.string,
+      licenseCity: types.string,
       boardCertification: types.string,
       malpracticeInsurance: types.string,
       educationHistory: types.array(types.string),
@@ -31,6 +36,26 @@ const ApplicationStore = types
     },
     setLicenseNumber(value) {
       self.licenseNumber = value;
+      return self;
+    },
+    setLicenseType(value) {
+      self.licenseType = value;
+      return self;
+    },
+    setLicenseIssuer(value) {
+      self.licenseIssuer = value;
+      return self;
+    },
+    setLicenseCountry(value) {
+      self.licenseCountry = value;
+      return self;
+    },
+    setLicenseState(value) {
+      self.licenseState = value;
+      return self;
+    },
+    setLicenseCity(value) {
+      self.licenseCity = value;
       return self;
     },
     setBoardCertification(value) {
@@ -108,6 +133,11 @@ export const CurrentUserStore = types
       dateOfBirth: '',
       biography: '',
       licenseNumber: '',
+      licenseType: '',
+      licenseIssuer: '',
+      licenseCountry: '',
+      licenseState: '',
+      licenseCity: '',
       boardCertification: '',
       malpracticeInsurance: '',
       educationHistory: [],
