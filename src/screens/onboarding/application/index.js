@@ -316,6 +316,9 @@ class ApplicationScreen extends React.Component {
     const {
       avatarSource,
       dateOfBirth,
+      street,
+      city,
+      state,
       licenseNumber,
       licenseType,
       licenseIssuer,

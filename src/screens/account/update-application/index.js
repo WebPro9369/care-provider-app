@@ -271,6 +271,9 @@ class UpdateApplicationScreen extends React.Component {
     const {
       avatarSource,
       dateOfBirth,
+      street,
+      city,
+      state,
       licenseNumber,
       licenseType,
       licenseIssuer,
@@ -340,6 +343,49 @@ class UpdateApplicationScreen extends React.Component {
                 placeholder="mm/dd/yyyy"
                 returnKeyType="next"
                 onChangeText={this.handleInputChange("dateOfBirth")}
+                onSubmitEditing={() =>
+                  this.inputRefs.licenseNumber.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="street"
+                label="Street Address"
+                value={street}
+                onChangeText={this.handleInputChange('street')}
+                placeholder="Street Address"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  this.inputRefs.city.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+
+            <FormInputWrapper>
+              <FormTextInput
+                name="city"
+                label="City"
+                value={city}
+                onChangeText={this.handleInputChange('city')}
+                placeholder="City"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  this.inputRefs.state.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="state"
+                label="State"
+                value={state}
+                onChangeText={this.handleInputChange('state')}
+                placeholder="State"
+                returnKeyType="next"
                 onSubmitEditing={() =>
                   this.inputRefs.licenseNumber.getInnerRef().focus()
                 }
