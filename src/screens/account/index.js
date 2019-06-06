@@ -1,7 +1,8 @@
 import React from "react";
-import { AsyncStorage, Linking } from "react-native";
+import { Linking } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { inject, observer, PropTypes } from "mobx-react";
+import { removeAuthentication } from "@services/authentication";
 import { StyledText } from "../../components/text";
 import { ProviderCard } from "../../components/cards";
 import { ListTouchableButtonWrapper, ListButtonText } from "./styles";
@@ -30,7 +31,7 @@ class AccountScreen extends React.Component {
       navigation: { navigate }
     } = this.props;
 
-    AsyncStorage.removeItem('currentUser');
+    removeAuthentication();
 
     navigate("AccountSignIn")
   };

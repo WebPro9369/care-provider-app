@@ -1,9 +1,9 @@
 import React from "react";
-import { AsyncStorage } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { Avatar } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ImagePicker from "react-native-image-picker";
+import { removeAuthentication } from "@services/authentication";
 import { StyledText, FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { InputButton } from "../../../components/input-button";
@@ -76,8 +76,8 @@ class SettingsScreen extends React.Component {
       navigation: { navigate }
     } = this.props;
 
-    AsyncStorage.removeItem('currentUser');
-
+    removeAuthentication();
+    
     navigate("AccountSignIn")
   };
 

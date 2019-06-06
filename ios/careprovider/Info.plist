@@ -53,14 +53,19 @@
 			</dict>
 		</dict>
 	</dict>
+
+
+
 	<key>NSCameraUsageDescription</key>
 	<string>Care Provider app uses camera to scan your cards etc.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Enabling Face ID allows you quick and secure access to your account.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Care Provider app uses your location info</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Care Provider app uses your location info</string>
+    <string>Care Provider app uses your location info</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Care Provider app uses your location info</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Care Provider app uses your location info</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Care Provider app uses your microphone</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

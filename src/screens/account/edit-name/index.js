@@ -16,17 +16,21 @@ class EditNameScreen extends React.Component {
   static propTypes = {
     store: PropTypes.observableObject.isRequired
   };
-  
+
   constructor(props) {
     super(props);
 
-    const { store: { currentUserStore: { firstName, lastName } } } = props;
+    const {
+      store: {
+        currentUserStore: { firstName, lastName }
+      }
+    } = props;
     this.state = {
-      name: `${firstName} ${lastName}`,
+      name: `${firstName} ${lastName}`
     };
   }
 
-  handleChange = (name) => {
+  handleChange = name => {
     this.setState({ name });
   };
 
@@ -41,16 +45,12 @@ class EditNameScreen extends React.Component {
     const data = { name };
 
     const successHandler = () => {
-      const [firstName, lastName] = name.split(' ');
+      const [firstName, lastName] = name.split(" ");
       currentUserStore.setFirstName(firstName).setLastName(lastName);
       goBack();
     };
 
-    updateCareProvider(
-      id,
-      data,
-      { successHandler }
-    );
+    updateCareProvider(id, data, { successHandler });
   };
 
   render() {
@@ -70,7 +70,11 @@ class EditNameScreen extends React.Component {
         />
         <FormWrapper>
           <FormInputView>
-            <FormTextInput label="Name" value={name} onChangeText={this.handleChange} />
+            <FormTextInput
+              label="Name"
+              value={name}
+              onChangeText={this.handleChange}
+            />
           </FormInputView>
         </FormWrapper>
         <FormInputView>

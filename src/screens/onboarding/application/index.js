@@ -84,17 +84,43 @@ class ApplicationScreen extends React.Component {
 
   handleInputChange = name => value => {
     if (name === "ssn") {
-      const ssnPattern = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
-      if (ssnPattern.test(value)) {
-        return this.setState({
-          ssn: value,
-          maskedSsn: `XXX-XX-${value.substr(7, 4)}`
-        });
+      let val = value.replace(/\D/g, "");
+      let newVal = "";
+      let maskedSsn = "";
+      if (val.length > 4) {
+        maskedSsn = val;
       }
+      if (val.length > 3 && val.length < 6) {
+        newVal += `${val.substr(0, 3)}-`;
+        val = val.substr(3);
+      }
+      if (val.length > 5) {
+        newVal += `${val.substr(0, 3)}-`;
+        newVal += `${val.substr(3, 2)}-`;
+        val = val.substr(5);
+      }
+      newVal += val;
+      maskedSsn = newVal.substring(0, 11);
+
+      return this.setState({
+        ssn: value,
+        maskedSsn
+      });
     }
 
     this.setState({
       [name]: value
+    });
+  };
+
+  hideSsnDigits = () => {
+    const { maskedSsn } = this.state;
+    let hiddenSss="";
+    if (maskedSsn.length > 10) {
+      hiddenSss = `XXX-XX-${maskedSsn.substr(7, 4)}`;
+    }
+    this.setState({
+      maskedSsn:hiddenSss
     });
   };
 
@@ -325,9 +351,10 @@ class ApplicationScreen extends React.Component {
                 returnKeyType="next"
                 ref={input => (this.inputRefs.ssn = input)}
                 onChangeText={this.handleInputChange("ssn")}
-                onSubmitEditing={() =>
-                  this.inputRefs.boardCertification.getInnerRef().focus()
-                }
+                onSubmitEditing={() => {
+                  this.hideSsnDigits();
+                  this.inputRefs.boardCertification.getInnerRef().focus();
+                }}
                 blurOnSubmit={false}
               />
             </FormInputWrapper>

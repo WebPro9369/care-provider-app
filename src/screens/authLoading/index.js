@@ -1,8 +1,9 @@
 /* eslint-disable import/no-unresolved */
 import React, { Component } from "react";
-import { AsyncStorage, ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
+import { getAuthentication } from "@services/authentication";
 
 @inject("store")
 @observer
@@ -18,88 +19,78 @@ class AuthLoadingScreen extends Component {
 
   bootstrapAsync = async () => {
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      store
     } = this.props;
 
-    AsyncStorage.getItem("currentUser").then(data => {
-      if (!data) return navigate("Onboarding");
-
-
-      const { store } = this.props;
-
-      if (!store.providerStore.active && store.providerStore.completeApplication)
-      {
-        return navigate("ApplicationPending");
-      }
-
-      const { id, apiKey } = JSON.parse(data);
-
-      const {
-        store: {
-          currentUserStore
-        }
-      } = this.props;
-      const { address, application } = currentUserStore;
-      currentUserStore.setAuthentication({ id, apiKey });
-
-      const successHandler = res => {
-        const {
-          name,
-          email,
-          phone,
-          zip,
-          license,
-          certification,
-          title: titles,
-          malpractice,
-          legal_history: legalHistory,
-          education,
-          work_history: workHistory,
-          references,
-          specialties,
-          offered_services: offeredServices,
-          source,
-          supervisor,
-          stripe_balance,
-          payout_account,
-          dob: dateOfBirth
-        } = res.data;
-
-        const [firstName, lastName] = name.split(" ");
-
+    const { id, apiKey, isAuthenticated, wasAuthenticated } = await getAuthentication();
+  
+    if (!isAuthenticated && wasAuthenticated) return navigate("AccountSignIn");
+    if (!store.providerStore.active && store.providerStore.completeApplication) return navigate("ApplicationPending");
+    if (!isAuthenticated) return navigate("Onboarding");
+  
+    const {
+      store: {
         currentUserStore
-          .setFirstName(firstName)
-          .setLastName(lastName)
-          .setEmail(email)
-          .setPhone(phone)
-          .setStripeBalance(stripe_balance)
-          .setPayoutAccount(payout_account);
+      }
+    } = this.props;
+    const { address, application } = currentUserStore;
+    currentUserStore.setAuthentication({ id, apiKey });
 
-        address.setZipCode(zip);
+    const successHandler = res => {
+      const {
+        name,
+        email,
+        phone,
+        zip,
+        certification,
+        title: titles,
+        malpractice,
+        legal_history: legalHistory,
+        education,
+        work_history: workHistory,
+        references,
+        specialties,
+        offered_services: offeredServices,
+        source,
+        supervisor,
+        stripe_balance,
+        payout_account,
+        dob: dateOfBirth
+      } = res.data;
 
-        application
-          .setLicenseNumber(license)
-          .setBoardCertification(certification)
-          .setTitles(titles)
-          .setMalpracticeInsurance(malpractice)
-          .setLegalHistory(legalHistory)
-          // TODO: handle nulls
-          // .setBiography(biography)
-          // .setSupervisingPhysician(supervisor)
-          .setEducationHistory(education)
-          .setWorkHistory(workHistory)
-          .setReferences(references)
-          .setSpecialties(specialties)
-          .setOfferedServices(offeredServices)
-          .setWhereHeard(source)
-          .setDateOfBirth(dateOfBirth);
+      const [firstName, lastName] = name.split(" ");
 
-        navigate("Tabs");
-      };
+      currentUserStore
+        .setFirstName(firstName)
+        .setLastName(lastName)
+        .setEmail(email)
+        .setPhone(phone)
+        .setStripeBalance(stripe_balance)
+        .setPayoutAccount(payout_account);
 
-      getCareProvider(id, { successHandler });
-      return navigate("Tabs");
-    });
+      address.setZipCode(zip);
+
+      application
+        .setBoardCertification(certification)
+        .setTitles(titles)
+        .setMalpracticeInsurance(malpractice)
+        .setLegalHistory(legalHistory)
+        // TODO: handle nulls
+        // .setBiography(biography)
+        // .setSupervisingPhysician(supervisor)
+        .setEducationHistory(education)
+        .setWorkHistory(workHistory)
+        .setReferences(references)
+        .setSpecialties(specialties)
+        .setOfferedServices(offeredServices)
+        .setWhereHeard(source)
+        .setDateOfBirth(dateOfBirth);
+
+      navigate("Tabs");
+    };
+
+    getCareProvider(id, { successHandler });
   };
 
   render() {

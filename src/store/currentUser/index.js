@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { types } from "mobx-state-tree";
-import { AsyncStorage } from "react-native";
-import { API_SETTINGS } from '@services/opear-api';
+import { setAuthentication } from "@services/authentication";
 import AddressStore from "../address";
 
 const ApplicationStore = types
@@ -144,9 +143,8 @@ export const CurrentUserStore = types
       return self;
     },
     setAuthentication({ id, apiKey}) {
-      AsyncStorage.setItem('currentUser', JSON.stringify({ id, apiKey }));
       self.setID(id).setAPIKey(apiKey);
-      API_SETTINGS.apiKey = apiKey;
+      setAuthentication({ id, apiKey});
 
       return self;
     },
