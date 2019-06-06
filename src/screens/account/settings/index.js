@@ -72,8 +72,8 @@ class SettingsScreen extends React.Component {
     } = this.props;
 
     removeAuthentication();
-
-    navigate("AccountSignIn");
+    
+    navigate("AccountSignIn")
   };
 
   render() {
