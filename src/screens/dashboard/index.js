@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from "react";
 import { Image, TouchableOpacity } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
@@ -12,12 +13,12 @@ import {
 } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { VisitDetailCard } from "@components/cards";
-import { ContentWrapper, MatchingMessageWrapper } from "./styles";
-import RequestVisitModalComponent from "../modals/request-visit";
-import ReviewAllergiesModalComponent from "../modals/review-allergies";
 import { colors } from "@utils/constants";
 import { getVisits } from "@services/opear-api";
 import { formatAMPM } from "@utils/helpers";
+import ReviewAllergiesModalComponent from "../modals/review-allergies";
+import RequestVisitModalComponent from "../modals/request-visit";
+import { ContentWrapper, MatchingMessageWrapper } from "./styles";
 
 const imgRightArrow = require("../../../assets/images/Right_arrow.png");
 const imgDog = require("../../../assets/images/Dog.png");
@@ -41,37 +42,37 @@ class DashboardScreen extends React.Component {
   }
 
   componentDidMount() {
-    const { store: { currentUserStore: { id }}} = this.props;
+    const {
+      store: {
+        currentUserStore: { id }
+      }
+    } = this.props;
 
     getVisits(id, {
-      successHandler: (res) => {
+      successHandler: res => {
         const visits = res.data.map(visitData => {
-          const { 
-            id, 
+          const {
+            id,
             reason: illness,
             appointment_time: appointmentTime,
-            address: {
-              city,
-              state,
-            },
-            child: {
-              first_name: childFirstName,
-              last_name: childLastName,
-            }
+            address: { city, state },
+            child: { first_name: childFirstName, last_name: childLastName }
           } = visitData;
 
           return {
             key: id,
             id,
-            avatarImg: [imgDog, imgTiger, imgFox][Math.floor(Math.random() * 3)], // TODO: add actual avatar
+            avatarImg: [imgDog, imgTiger, imgFox][
+              Math.floor(Math.random() * 3)
+            ], // TODO: add actual avatar
             name: `${childFirstName} ${childLastName}`,
             illness,
             time: formatAMPM(new Date(appointmentTime)),
-            address: `${city}, ${state}`,
+            address: `${city}, ${state}`
           };
         });
 
-        this.setState({ visits })
+        this.setState({ visits });
       }
     });
   }
@@ -91,10 +92,10 @@ class DashboardScreen extends React.Component {
       navigation: { navigate },
       store
     } = this.props;
-    const { 
+    const {
       providerStore: { completeApplication, appointment },
       currentUserStore: { firstName }
-   } = store;
+    } = store;
 
     const { visits, reviewAllergyModalVisible } = this.state;
 
