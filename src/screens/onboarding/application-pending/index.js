@@ -3,10 +3,10 @@ import { Image, View, Alert, NativeModules } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import axios from "axios";
 import TouchID from "react-native-touch-id";
-import { StyledText, StyledTextInput } from "../../../components/text";
-import { NavHeader } from "../../../components/nav-header";
-import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
-import { AccentBar } from "../../../components/accent-bar"
+import { StyledText, StyledTextInput } from "@components/text";
+import { NavHeader } from "@components/nav-header";
+import { KeyboardAvoidingView } from "@components/views/keyboard-view";
+import { AccentBar } from "@components/accent-bar"
 
 @inject("store")
 @observer
