@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
 import { Avatar } from "react-native-elements";
@@ -31,16 +32,10 @@ class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { store: { currentUserStore: { firstName, lastName, email, phone } } }  = props; 
-    const name = `${firstName} ${lastName}`;
-
     this.state = {
       avatarSource: null,
-      name,
       address: "22341 Justice Ave APT 725", // TODO: pending
-      biography: "", // TODO: pending
-      email,
-      phone,
+      biography: "" // TODO: pending
     };
   }
 
@@ -83,9 +78,13 @@ class SettingsScreen extends React.Component {
 
   render() {
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      store: {
+        currentUserStore: { firstName, lastName, email, phone }
+      }
     } = this.props;
-    const { avatarSource, name, address, email, phone, biography } = this.state;
+    const name = `${firstName} ${lastName}`;
+    const { avatarSource, address, biography } = this.state;
     const avatarOptions = avatarSource
       ? {
           source: { uri: avatarSource.uri }
@@ -174,65 +173,8 @@ class SettingsScreen extends React.Component {
             </View>
           </View>
           <View style={{ marginTop: 32, marginBottom: 32 }}>
-            <ServiceButton
-              title="Log Out"
-              onPress={this.logOut}
-            />
+            <ServiceButton title="Log Out" onPress={this.logOut} />
           </View>
-          {/* <View>
-            <StyledText
-              fontFamily="FlamaMedium"
-              fontSize={24}
-              style={{ paddingTop: 24, paddingBottom: 16 }}
-            >
-              Edit Children
-            </StyledText>
-            <ContentButton>
-              <FlexView>
-                <Avatar rounded size={40} source={imgFoxLarge} />
-                <StyledText
-                  fontFamily="Flama"
-                  fontSize={16}
-                  style={{ marginLeft: 12 }}
-                >
-                  Benjamin
-                </StyledText>
-              </FlexView>
-              <StyledText fontFamily="Flama" fontSize={16}>
-                6 yrs
-              </StyledText>
-            </ContentButton>
-            <ContentButton>
-              <FlexView>
-                <Avatar rounded size={40} source={imgFoxLarge} />
-                <StyledText
-                  fontFamily="Flama"
-                  fontSize={16}
-                  style={{ marginLeft: 12 }}
-                >
-                  Audrey
-                </StyledText>
-              </FlexView>
-              <StyledText fontFamily="Flama" fontSize={16}>
-                8 yrs
-              </StyledText>
-            </ContentButton>
-            <ContentButton onPress={() => navigate("SettingsEditChild")}>
-              <FlexView>
-                <Avatar rounded size={40} source={imgFoxLarge} />
-                <StyledText
-                  fontFamily="Flama"
-                  fontSize={16}
-                  style={{ marginLeft: 12 }}
-                >
-                  Tara
-                </StyledText>
-              </FlexView>
-              <StyledText fontFamily="Flama" fontSize={16}>
-                12 yrs
-              </StyledText>
-            </ContentButton>
-          </View> */}
         </ScrollView>
       </ContainerView>
     );

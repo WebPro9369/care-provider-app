@@ -105,11 +105,7 @@ class RootContainer extends React.Component {
       active: value
     });
 
-    if (active) {
-      return false;
-    }
-
-    if (!apiKey) {
+    if (active || !apiKey) {
       return false;
     }
 
