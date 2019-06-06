@@ -103,7 +103,7 @@ class ApplicationScreen extends React.Component {
       maskedSsn = newVal.substring(0, 11);
 
       return this.setState({
-        ssn: value,
+        ssn: maskedSsn,
         maskedSsn
       });
     }
@@ -120,7 +120,7 @@ class ApplicationScreen extends React.Component {
       hiddenSss = `XXX-XX-${maskedSsn.substr(7, 4)}`;
     }
     this.setState({
-      maskedSsn:hiddenSss
+      maskedSsn: hiddenSss
     });
   };
 
