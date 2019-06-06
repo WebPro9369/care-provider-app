@@ -5,7 +5,6 @@ import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { ServiceButton } from "../../../components/service-button";
 import { StyledText, StyledTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
-import TwilioService from "../../../services/twilio";
 
 const imgProgressbar = require("../../../../assets/images/ProgressBar5.png");
 
@@ -38,16 +37,14 @@ class PhoneNumberScreen extends Component {
 
     console.tron.log("Phone number: ", phone);
 
-    TwilioService.sendSMS(
-      "Test SMS from Twilio",
-      null,
-      phone,
-      () => {
-        currentUserStore.setPhone(phone);
-        navigate("Application");
-      },
-      () => Alert.alert("Authentication failed.")
-    );
+    if(!phone)
+    {
+      return Alert.alert("Please enter a phone number.");
+    }
+
+    currentUserStore.setPhone(phone);
+
+    return navigate("ApplicationPending");
   };
 
   render() {
@@ -87,7 +84,7 @@ class PhoneNumberScreen extends Component {
             style={{ width: "100%", marginBottom: 16 }}
           />
           <ServiceButton
-            title="Authenticate"
+            title="Next"
             style={{ marginBottom: 20 }}
             onPress={this.onSubmit}
           />
