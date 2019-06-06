@@ -125,7 +125,7 @@ class ApplicationScreen extends React.Component {
       hiddenSss = `XXX-XX-${maskedSsn.substr(7, 4)}`;
     }
     this.setState({
-      maskedSsn:hiddenSss
+      maskedSsn: hiddenSss
     });
   };
 

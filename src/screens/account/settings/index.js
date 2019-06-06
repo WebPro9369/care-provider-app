@@ -9,8 +9,9 @@ import { StyledText, FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { InputButton } from "../../../components/input-button";
 import { ServiceButton } from "../../../components/service-button";
+import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
+
 import {
-  ContainerView,
   HeaderWrapper,
   ViewCentered,
   View,
@@ -32,10 +33,20 @@ class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    const {
+      store: {
+        currentUserStore: { firstName, lastName, email, phone }
+      }
+    } = props;
+    const name = `${firstName} ${lastName}`;
+
+
     this.state = {
       avatarSource: null,
       address: "22341 Justice Ave APT 725", // TODO: pending
-      biography: "" // TODO: pending
+      biography: "", // TODO: pending
+      email,
+      phone
     };
   }
 
@@ -72,8 +83,8 @@ class SettingsScreen extends React.Component {
     } = this.props;
 
     removeAuthentication();
-    
-    navigate("AccountSignIn")
+
+    navigate("AccountSignIn");
   };
 
   render() {
@@ -94,7 +105,7 @@ class SettingsScreen extends React.Component {
           source: imgDoctor
         };
     return (
-      <ContainerView>
+      <KeyboardAvoidingView behavior="padding" enabled>
         <HeaderWrapper>
           <NavHeader
             title="Settings"
@@ -176,7 +187,7 @@ class SettingsScreen extends React.Component {
             <ServiceButton title="Log Out" onPress={this.logOut} />
           </View>
         </ScrollView>
-      </ContainerView>
+      </KeyboardAvoidingView>
     );
   }
 }
