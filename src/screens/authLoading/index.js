@@ -4,6 +4,7 @@ import { ActivityIndicator, View } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
 import { getAuthentication } from "@services/authentication";
+import { getFormattedDate } from "@utils/helpers";
 
 @inject("store")
 @observer
@@ -50,6 +51,9 @@ class AuthLoadingScreen extends Component {
         license_country: licenseCountry,
         license_state: licenseState,
         license_city: licenseCity,
+        government_id_country: govermentIdCountry,
+        government_id_type: govermentIdType,
+        government_id_number: govermentIdNumber,
         legal_history: legalHistory,
         education,
         work_history: workHistory,
@@ -62,6 +66,8 @@ class AuthLoadingScreen extends Component {
         payout_account,
         dob: dateOfBirth
       } = res.data;
+
+      const dob = getFormattedDate(new Date(dateOfBirth));
 
       const [firstName, lastName] = name.split(" ");
 
@@ -80,16 +86,23 @@ class AuthLoadingScreen extends Component {
         .setTitles(titles)
         .setMalpracticeInsurance(malpractice)
         .setLegalHistory(legalHistory)
-        // TODO: handle nulls
-        // .setBiography(biography)
-        // .setSupervisingPhysician(supervisor)
+        .setSupervisingPhysician(supervisor)
         .setEducationHistory(education)
         .setWorkHistory(workHistory)
         .setReferences(references)
         .setSpecialties(specialties)
         .setOfferedServices(offeredServices)
         .setWhereHeard(source)
-        .setDateOfBirth(dateOfBirth);
+        .setDateOfBirth(dob)
+        .setLicenseNumber(licenseNumber)
+        .setLicenseType(licenseType)
+        .setLicenseIssuer(licenseIssuer)
+        .setLicenseCountry(licenseCountry)
+        .setLicenseState(licenseState)
+        .setLicenseCity(licenseCity)
+        .setGovermentIdType(govermentIdType)
+        .setGovermentIdCountry(govermentIdCountry)
+        .setGovermentIdNumber(govermentIdNumber);
 
       navigate("Tabs");
     };

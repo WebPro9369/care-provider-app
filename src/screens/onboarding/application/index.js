@@ -40,6 +40,9 @@ class ApplicationScreen extends React.Component {
       licenseCountry: '',
       licenseState: '',
       licenseCity: '',
+      govermentIdNumber: '',
+      govermentIdCountry: '',
+      govermentIdType: '',
       boardCertification: '',
       malpracticeInsurance: '',
       educationHistory: '',
@@ -141,6 +144,9 @@ class ApplicationScreen extends React.Component {
       licenseCountry,
       licenseState,
       licenseCity,
+      govermentIdNumber,
+      govermentIdCountry,
+      govermentIdType,
       boardCertification,
       malpracticeInsurance,
       legalHistory,
@@ -163,6 +169,9 @@ class ApplicationScreen extends React.Component {
       .setLicenseCountry(licenseCountry)
       .setLicenseState(licenseState)
       .setLicenseCity(licenseCity)
+      .setGovermentIdCountry(govermentIdCountry)
+      .setGovermentIdType(govermentIdType)
+      .setGovermentIdNumber(govermentIdNumber)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
       .setLegalHistory(legalHistory)
@@ -213,12 +222,16 @@ class ApplicationScreen extends React.Component {
          zip_code: zip,
        },
        application: {
+        dateOfBirth: dob,
         licenseNumber: license_number,
         licenseType: license_type,
         licenseIssuer: license_issuer,
         licenseCountry: license_country,
         licenseState: license_state,
         licenseCity: license_city,
+        govermentIdNumber: government_id_number,
+        govermentIdCountry: government_id_country,
+        govermentIdType: government_id_type,
         boardCertification: certification,
         malpracticeInsurance: malpractice,
         legalHistory: legal_history,
@@ -229,6 +242,7 @@ class ApplicationScreen extends React.Component {
         offeredServices: offered_services,
         whereHeard: source,
         titles: title,
+        supervisingPhysician: supervisor,
        }
     } = currentUserStore;
 
@@ -237,7 +251,7 @@ class ApplicationScreen extends React.Component {
         name: `${firstName} ${lastName}`,
         email,
         password,
-        dob: dateOfBirth,
+        dob: new Date(dob),
         phone,
         zip, 
         license_number,
@@ -246,6 +260,9 @@ class ApplicationScreen extends React.Component {
         license_country,
         license_state,
         license_city,
+        government_id_number,
+        government_id_country,
+        government_id_type,
         certification,
         malpractice,
         legal_history,
@@ -256,6 +273,7 @@ class ApplicationScreen extends React.Component {
         offered_services,
         source,
         title,
+        supervisor,
       }
     };
 
@@ -290,6 +308,9 @@ class ApplicationScreen extends React.Component {
       licenseCountry,
       licenseState,
       licenseCity,
+      govermentIdNumber,
+      govermentIdCountry,
+      govermentIdType,
       ssn,
       maskedSsn,
       boardCertification,
@@ -444,6 +465,51 @@ class ApplicationScreen extends React.Component {
                 onChangeText={this.handleInputChange("licenseCountry")}
                 onSubmitEditing={() =>
                   this.inputRefs.ssn.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="govermentIdCountry"
+                label="Goverment ID Country"
+                value={govermentIdCountry}
+                placeholder="Goverment ID Country"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.govermentIdCountry = input)}
+                onChangeText={this.handleInputChange("govermentIdCountry")}
+                onSubmitEditing={() =>
+                  this.inputRefs.govermentIdType.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="govermentIdType"
+                label="Goverment ID Type"
+                value={govermentIdType}
+                placeholder="Goverment ID Type"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.govermentIdType = input)}
+                onChangeText={this.handleInputChange("govermentIdType")}
+                onSubmitEditing={() =>
+                  this.inputRefs.govermentIdNumber.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="govermentIdNumber"
+                label="Goverment ID Number"
+                value={govermentIdNumber}
+                placeholder="Goverment ID Number"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.govermentIdNumber = input)}
+                onChangeText={this.handleInputChange("govermentIdNumber")}
+                onSubmitEditing={() =>
+                  this.inputRefs.boardCertification.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />

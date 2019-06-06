@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Image, View, Alert, NativeModules } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import axios from "axios";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Geolocation from "react-native-geolocation-service";
 import TouchID from "react-native-touch-id";
 import Geocoder from "react-native-geocoder";
@@ -24,7 +23,7 @@ class AskLocationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      zipcode: null
+      zipcode: ''
     };
   }
 
@@ -152,6 +151,9 @@ class AskLocationScreen extends Component {
       store: { currentUserStore: { address } }
     } = this.props;
     const { zipcode } = this.state;
+
+    if (zipcode.length !== 5) return Alert.alert("Please enter a \n valid US zip code.");
+
     if (zipcode) address.setZipCode(zipcode);
     return navigate("NameCapture");
     // return TouchID.isSupported()
@@ -202,11 +204,6 @@ class AskLocationScreen extends Component {
               value={zipcode}
               onChangeText={this.handleInputChange}
               maxLength={5}
-            />
-            <FontAwesome
-              name="map-marker"
-              size={30}
-              color={colors.DARKSKYBLUE}
             />
           </View>
         </View>
