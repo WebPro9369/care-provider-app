@@ -587,9 +587,9 @@ class UpdateApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="workHistory"
-                label="Work History"
+                label="Current Employer"
                 value={workHistory}
-                placeholder="Work History"
+                placeholder="Current Employer"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.workHistory = input)}
                 onChangeText={this.handleInputChange("workHistory")}
