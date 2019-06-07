@@ -502,7 +502,7 @@ class UpdateApplicationScreen extends React.Component {
                 name="govermentIdType"
                 label="Goverment ID Type"
                 value={govermentIdType}
-                placeholder="Goverment ID Type"
+                placeholder="Driver's License, U.S. Passport, State ID, etc."
                 returnKeyType="next"
                 ref={input => (this.inputRefs.govermentIdType = input)}
                 onChangeText={this.handleInputChange("govermentIdType")}
