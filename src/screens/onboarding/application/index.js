@@ -37,11 +37,11 @@ class ApplicationScreen extends React.Component {
       licenseNumber: '',
       licenseType: '',
       licenseIssuer: '',
-      licenseCountry: '',
+      /* licenseCountry: '', */
       licenseState: '',
       licenseCity: '',
       govermentIdNumber: '',
-      govermentIdCountry: '',
+      /* govermentIdCountry: '', */
       govermentIdType: '',
       boardCertification: '',
       malpracticeInsurance: '',
@@ -144,11 +144,11 @@ class ApplicationScreen extends React.Component {
       licenseNumber,
       licenseType,
       licenseIssuer,
-      licenseCountry,
+      /* licenseCountry, */
       licenseState,
       licenseCity,
       govermentIdNumber,
-      govermentIdCountry,
+      /* govermentIdCountry, */
       govermentIdType,
       boardCertification,
       malpracticeInsurance,
@@ -174,10 +174,10 @@ class ApplicationScreen extends React.Component {
       .setLicenseNumber(licenseNumber)
       .setLicenseType(licenseType)
       .setLicenseIssuer(licenseIssuer)
-      .setLicenseCountry(licenseCountry)
+      /* .setLicenseCountry(licenseCountry) */
       .setLicenseState(licenseState)
       .setLicenseCity(licenseCity)
-      .setGovermentIdCountry(govermentIdCountry)
+      /* }.setGovermentIdCountry(govermentIdCountry) */
       .setGovermentIdType(govermentIdType)
       .setGovermentIdNumber(govermentIdNumber)
       .setBoardCertification(boardCertification)
@@ -237,11 +237,11 @@ class ApplicationScreen extends React.Component {
         licenseNumber: license_number,
         licenseType: license_type,
         licenseIssuer: license_issuer,
-        licenseCountry: license_country,
+        /* licenseCountry: license_country, */
         licenseState: license_state,
         licenseCity: license_city,
         govermentIdNumber: government_id_number,
-        govermentIdCountry: government_id_country,
+        /* govermentIdCountry: government_id_country, */
         govermentIdType: government_id_type,
         boardCertification: certification,
         malpracticeInsurance: malpractice,
@@ -271,11 +271,11 @@ class ApplicationScreen extends React.Component {
         license_number,
         license_type,
         license_issuer,
-        license_country,
+        /* license_country, */
         license_state,
         license_city,
         government_id_number,
-        government_id_country,
+        /* government_id_country, */
         government_id_type,
         certification,
         malpractice,
@@ -322,11 +322,11 @@ class ApplicationScreen extends React.Component {
       licenseNumber,
       licenseType,
       licenseIssuer,
-      licenseCountry,
+      /* licenseCountry, */
       licenseState,
       licenseCity,
       govermentIdNumber,
-      govermentIdCountry,
+      /* govermentIdCountry, */
       govermentIdType,
       ssn,
       maskedSsn,
@@ -508,12 +508,12 @@ class ApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.licenseState = input)}
                 onChangeText={this.handleInputChange("licenseState")}
                 onSubmitEditing={() =>
-                  this.inputRefs.licenseCountry.getInnerRef().focus()
+                  this.inputRefs.governmentIdType.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
-            <FormInputWrapper>
+            {/* <FormInputWrapper>
               <FormTextInput
                 name="licenseCountry"
                 label="License Country"
@@ -527,8 +527,8 @@ class ApplicationScreen extends React.Component {
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
-            <FormInputWrapper>
+            </FormInputWrapper> */}
+            {/* <FormInputWrapper>
               <FormTextInput
                 name="govermentIdCountry"
                 label="Goverment ID Country"
@@ -542,7 +542,7 @@ class ApplicationScreen extends React.Component {
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
+            </FormInputWrapper> */}
             <FormInputWrapper>
               <FormTextInput
                 name="govermentIdType"
