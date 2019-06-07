@@ -27,7 +27,7 @@ class AuthLoadingScreen extends Component {
     const { id, apiKey, isAuthenticated, wasAuthenticated } = await getAuthentication();
   
     if (!isAuthenticated && wasAuthenticated) return navigate("AccountSignIn");
-    if (!store.providerStore.active && store.providerStore.dateOfBirth != '') return navigate("ApplicationPending");
+    if (!store.providerStore.active) return navigate("ApplicationPending");
     if (!isAuthenticated) return navigate("Onboarding");
   
     const {
