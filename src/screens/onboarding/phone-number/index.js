@@ -44,7 +44,7 @@ class PhoneNumberScreen extends Component {
 
     currentUserStore.setPhone(phone);
 
-    return navigate("ApplicationPending");
+    return navigate("Application");
   };
 
   render() {
