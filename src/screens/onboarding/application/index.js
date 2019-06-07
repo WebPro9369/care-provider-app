@@ -50,7 +50,7 @@ class ApplicationScreen extends React.Component {
       specialties: '',
       /* offeredServices: '', */
       legalHistory: '',
-      references: '',
+      /*references: '',*/
       whereHeard: '',
       supervisingPhysician: '',
       selectedIndexes: []
@@ -157,7 +157,7 @@ class ApplicationScreen extends React.Component {
       workHistory,
       specialties,
       /*offeredServices,*/
-      references,
+      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes,
@@ -187,7 +187,7 @@ class ApplicationScreen extends React.Component {
       .setWorkHistory(commaStringToArray(workHistory))
       .setSpecialties(commaStringToArray(specialties))
       /*.setOfferedServices(commaStringToArray(offeredServices))*/
-      .setReferences(references)
+      /*.setReferences(references)*/
       .setWhereHeard(whereHeard)
       .setSupervisingPhysician(supervisingPhysician)
       .setTitles(selectedIndexes.map(index => TITLES[index]));
@@ -249,7 +249,7 @@ class ApplicationScreen extends React.Component {
         educationHistory: education,
         workHistory: work_history,
         specialties,
-        references,
+        /*references,*/
         /*offeredServices: offered_services,*/
         whereHeard: source,
         titles: title,
@@ -280,7 +280,7 @@ class ApplicationScreen extends React.Component {
         certification,
         malpractice,
         legal_history,
-        references,
+        /*references,*/
         education,
         work_history,
         specialties,
@@ -337,7 +337,7 @@ class ApplicationScreen extends React.Component {
       specialties,
       /*offeredServices,*/
       legalHistory,
-      references,
+      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes
@@ -701,12 +701,12 @@ class ApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.legalHistory = input)}
                 onChangeText={this.handleInputChange("legalHistory")}
                 onSubmitEditing={() =>
-                  this.inputRefs.references.getInnerRef().focus()
+                  this.inputRefs.whereHeard.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
-            <FormInputWrapper>
+            {/*}<FormInputWrapper>
               <FormTextInput
                 name="references"
                 label="References"
@@ -720,7 +720,7 @@ class ApplicationScreen extends React.Component {
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
+            </FormInputWrapper>*/}
             <FormInputWrapper>
               <FormTextInput
                 name="whereHeard"

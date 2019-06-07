@@ -51,7 +51,7 @@ class UpdateApplicationScreen extends React.Component {
       specialties,
       /*offeredServices,*/
       legalHistory,
-      references,
+      /*references,*/
       whereHeard,
       supervisingPhysician,
       titles,
@@ -75,7 +75,7 @@ class UpdateApplicationScreen extends React.Component {
       specialties: specialties.join(', '),
       /*offeredServices: offeredServices.join(', '),*/
       legalHistory,
-      references,
+      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes: titles.map(title => TITLES.indexOf(title)),
@@ -144,7 +144,7 @@ class UpdateApplicationScreen extends React.Component {
       workHistory,
       specialties,
       /*offeredServices,*/
-      references,
+      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes,
@@ -168,7 +168,7 @@ class UpdateApplicationScreen extends React.Component {
       .setWorkHistory(commaStringToArray(workHistory))
       .setSpecialties(commaStringToArray(specialties))
       /*.setOfferedServices(commaStringToArray(offeredServices))*/
-      .setReferences(references)
+      /*.setReferences(references)*/
       .setWhereHeard(whereHeard)
       .setSupervisingPhysician(supervisingPhysician)
       .setTitles(selectedIndexes.map(index => TITLES[index]));
@@ -207,7 +207,7 @@ class UpdateApplicationScreen extends React.Component {
       educationHistory: education,
       workHistory: work_history,
       specialties,
-      references,
+      /*references,*/
       /*offeredServices: offered_services,*/
       whereHeard: source,
       selectedIndexes,
@@ -242,7 +242,7 @@ class UpdateApplicationScreen extends React.Component {
         certification,
         malpractice,
         legal_history,
-        references,
+        /*references,*/
         education: commaStringToArray(education),
         work_history: commaStringToArray(work_history),
         specialties: commaStringToArray(specialties),
@@ -290,7 +290,7 @@ class UpdateApplicationScreen extends React.Component {
       specialties,
       /*offeredServices,*/
       legalHistory,
-      references,
+      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes
@@ -639,12 +639,12 @@ class UpdateApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.legalHistory = input)}
                 onChangeText={this.handleInputChange("legalHistory")}
                 onSubmitEditing={() =>
-                  this.inputRefs.references.getInnerRef().focus()
+                  this.inputRefs.whereHeard.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
-            <FormInputWrapper>
+            {/*}<FormInputWrapper>
               <FormTextInput
                 name="references"
                 label="References"
@@ -658,7 +658,7 @@ class UpdateApplicationScreen extends React.Component {
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
+            </FormInputWrapper>*/}
             <FormInputWrapper>
               <FormTextInput
                 name="whereHeard"
