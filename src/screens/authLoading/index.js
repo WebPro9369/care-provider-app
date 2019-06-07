@@ -20,12 +20,14 @@ class AuthLoadingScreen extends Component {
 
   bootstrapAsync = async () => {
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      store
     } = this.props;
 
     const { id, apiKey, isAuthenticated, wasAuthenticated } = await getAuthentication();
-
+  
     if (!isAuthenticated && wasAuthenticated) return navigate("AccountSignIn");
+    if (!store.providerStore.active && store.providerStore.completeApplication) return navigate("ApplicationPending");
     if (!isAuthenticated) return navigate("Onboarding");
   
     const {

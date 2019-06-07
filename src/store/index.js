@@ -12,7 +12,8 @@ const MainStore = types.model("MainStore", {
     readyProviders: false,
     outstandingAppointment: false,
     completeApplication: false,
-    arrived: false
+    arrived: false,
+    active: false
   }),
   currentUserStore: types.optional(CurrentUserStore, {
     id: 0,
