@@ -253,6 +253,7 @@ class ApplicationScreen extends React.Component {
         password,
         dob: new Date(dob),
         phone,
+        zip,
         license_number,
         license_type,
         license_issuer,
