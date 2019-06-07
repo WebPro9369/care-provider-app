@@ -1,7 +1,7 @@
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
 import PhoneInput from "react-native-phone-input";
-import { StyledText } from "../../../components/text";
+import { StyledText, StyledTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
 import { View } from "../../../components/views";
@@ -19,14 +19,14 @@ class EditPhoneNumberScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { store: { currentUserStore: { phone } } }  = props; 
+    const { store: { currentUserStore: { phone } } }  = props;
 
     this.state = {
       phone,
     };
   }
 
-  handleChange = (phone) => {
+  handleInputChange = (phone) => {
     this.setState({ phone });
   };
 
@@ -57,7 +57,7 @@ class EditPhoneNumberScreen extends React.Component {
       navigation: { goBack }
     } = this.props;
     const { phone } = this.state;
-    
+
     return (
       <KeyboardAvoidingView startFromTop behavior="padding" enabled>
         <NavHeader
@@ -68,7 +68,17 @@ class EditPhoneNumberScreen extends React.Component {
         />
         <View style={{ padding: 16 }}>
           <StyledText fontSize={14}>Phone number</StyledText>
-          <View
+          <View>
+            <StyledTextInput
+              fontSize={28}
+              autoFocus
+              placeholder="(123) 456 - 7890"
+              value={phone}
+              onChangeText={this.handleInputChange}
+            />
+          </View>
+          {/* TODO: Reimplement PhoneInput if possible */}
+          {/*<View
             style={{
               paddingTop: 16,
               paddingBottom: 16,
@@ -83,7 +93,7 @@ class EditPhoneNumberScreen extends React.Component {
               value={phone}
               onChangePhoneNumber={this.handleChange}
             />
-          </View>
+          </View>*/}
         </View>
         <View style={{ paddingLeft: 16 }}>
           <StyledText fontSize={16} color={colors.BLACK38}>

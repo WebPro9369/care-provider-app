@@ -24,7 +24,7 @@ class PhoneNumberScreen extends Component {
     };
   }
 
-  handleChange = (phone) => {
+  handleInputChange = (phone) => {
     this.setState({ phone });
   };
 
@@ -37,10 +37,12 @@ class PhoneNumberScreen extends Component {
 
     console.tron.log("Phone number: ", phone);
 
-    if(!this.phone.isValidNumber())
+    {/*if(!this.phone.isValidNumber())
     {
       return Alert.alert("Please enter a valid phone number.");
-    }
+    }*/}
+
+    //TODO: Change back to PhoneInput if possible for validation later
 
     currentUserStore.setPhone(phone);
 
@@ -67,7 +69,16 @@ class PhoneNumberScreen extends Component {
           >
             What is your phone number?
           </StyledText>
-          <View
+          <View>
+            <StyledTextInput
+              fontSize={28}
+              autoFocus
+              placeholder="(123) 456 - 7890"
+              value={phone}
+              onChangeText={this.handleInputChange}
+            />
+          </View>
+          {/*}<View
             style={{
               paddingTop: 16,
               paddingBottom: 16,
@@ -83,7 +94,7 @@ class PhoneNumberScreen extends Component {
               onChangePhoneNumber={this.handleChange}
               autoFormat="true"
             />
-          </View>
+          </View>*/}
         </View>
         <View>
           <Image
