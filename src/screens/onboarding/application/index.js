@@ -253,7 +253,7 @@ class ApplicationScreen extends React.Component {
         password,
         dob: new Date(dob),
         phone,
-        zip, 
+        zip,
         license_number,
         license_type,
         license_issuer,
@@ -282,7 +282,7 @@ class ApplicationScreen extends React.Component {
 
       currentUserStore.setAuthentication({ id, apiKey });
 
-      navigate("TabDashboard");
+      navigate("ApplicationPending");
     };
 
     const errorHandler = () => Alert.alert("Registration failed.");
