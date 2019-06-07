@@ -619,9 +619,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="malpracticeInsurance"
-                label="Malpractice Insurance"
+                label="Insurance Policy Number"
                 value={malpracticeInsurance}
-                placeholder="Malpractice Insurance"
+                placeholder="Insurance Policy Number"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.malpracticeInsurance = input)}
                 onChangeText={this.handleInputChange("malpracticeInsurance")}
