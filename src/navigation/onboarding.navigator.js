@@ -35,7 +35,8 @@ const OnboardingNavigator = createStackNavigator(
     initialRouteName: "AskLocation",
     headerMode: "none",
     defaultNavigationOptions: {
-      headerBackTitle: null
+      headerBackTitle: null,
+      gesturesEnabled: false
     }
   }
 );
