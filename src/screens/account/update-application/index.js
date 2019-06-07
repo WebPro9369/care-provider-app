@@ -49,7 +49,7 @@ class UpdateApplicationScreen extends React.Component {
       educationHistory,
       workHistory,
       specialties,
-      offeredServices,
+      /*offeredServices,*/
       legalHistory,
       references,
       whereHeard,
@@ -73,7 +73,7 @@ class UpdateApplicationScreen extends React.Component {
       educationHistory: educationHistory.join(', '),
       workHistory: workHistory.join(', '),
       specialties: specialties.join(', '),
-      offeredServices: offeredServices.join(', '),
+      /*offeredServices: offeredServices.join(', '),*/
       legalHistory,
       references,
       whereHeard,
@@ -143,7 +143,7 @@ class UpdateApplicationScreen extends React.Component {
       educationHistory,
       workHistory,
       specialties,
-      offeredServices,
+      /*offeredServices,*/
       references,
       whereHeard,
       supervisingPhysician,
@@ -167,7 +167,7 @@ class UpdateApplicationScreen extends React.Component {
       .setEducationHistory(commaStringToArray(educationHistory))
       .setWorkHistory(commaStringToArray(workHistory))
       .setSpecialties(commaStringToArray(specialties))
-      .setOfferedServices(commaStringToArray(offeredServices))
+      /*.setOfferedServices(commaStringToArray(offeredServices))*/
       .setReferences(references)
       .setWhereHeard(whereHeard)
       .setSupervisingPhysician(supervisingPhysician)
@@ -208,7 +208,7 @@ class UpdateApplicationScreen extends React.Component {
       workHistory: work_history,
       specialties,
       references,
-      offeredServices: offered_services,
+      /*offeredServices: offered_services,*/
       whereHeard: source,
       selectedIndexes,
       supervisingPhysician: supervisor
@@ -246,7 +246,7 @@ class UpdateApplicationScreen extends React.Component {
         education: commaStringToArray(education),
         work_history: commaStringToArray(work_history),
         specialties: commaStringToArray(specialties),
-        offered_services: commaStringToArray(offered_services),
+        /*offered_services: commaStringToArray(offered_services),*/
         source,
         title,
         supervisor,
@@ -288,7 +288,7 @@ class UpdateApplicationScreen extends React.Component {
       educationHistory,
       workHistory,
       specialties,
-      offeredServices,
+      /*offeredServices,*/
       legalHistory,
       references,
       whereHeard,
@@ -609,12 +609,12 @@ class UpdateApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.specialties = input)}
                 onChangeText={this.handleInputChange("specialties")}
                 onSubmitEditing={() =>
-                  this.inputRefs.offeredServices.getInnerRef().focus()
+                  this.inputRefs.legalHistory.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
-            <FormInputWrapper>
+            {/*}<FormInputWrapper>
               <FormTextInput
                 name="offeredServices"
                 label="Offered Services"
@@ -628,7 +628,7 @@ class UpdateApplicationScreen extends React.Component {
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
+            </FormInputWrapper> */}
             <FormInputWrapper>
               <FormTextInput
                 name="legalHistory"
