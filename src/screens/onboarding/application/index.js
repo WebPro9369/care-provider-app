@@ -49,7 +49,7 @@ class ApplicationScreen extends React.Component {
       workHistory: '',
       specialties: '',
       /* offeredServices: '', */
-      legalHistory: '',
+      /*legalHistory: '',*/
       /*references: '',*/
       whereHeard: '',
       supervisingPhysician: '',
@@ -152,7 +152,7 @@ class ApplicationScreen extends React.Component {
       govermentIdType,
       boardCertification,
       malpracticeInsurance,
-      legalHistory,
+      /*legalHistory,*/
       educationHistory,
       workHistory,
       specialties,
@@ -182,7 +182,7 @@ class ApplicationScreen extends React.Component {
       .setGovermentIdNumber(govermentIdNumber)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
-      .setLegalHistory(legalHistory)
+      /*.setLegalHistory(legalHistory)*/
       .setEducationHistory(commaStringToArray(educationHistory))
       .setWorkHistory(commaStringToArray(workHistory))
       .setSpecialties(commaStringToArray(specialties))
@@ -245,7 +245,7 @@ class ApplicationScreen extends React.Component {
         govermentIdType: government_id_type,
         boardCertification: certification,
         malpracticeInsurance: malpractice,
-        legalHistory: legal_history,
+        /*legalHistory: legal_history,*/
         educationHistory: education,
         workHistory: work_history,
         specialties,
@@ -279,7 +279,7 @@ class ApplicationScreen extends React.Component {
         government_id_type,
         certification,
         malpractice,
-        legal_history,
+        /*legal_history,*/
         /*references,*/
         education,
         work_history,
@@ -336,7 +336,7 @@ class ApplicationScreen extends React.Component {
       workHistory,
       specialties,
       /*offeredServices,*/
-      legalHistory,
+      /*legalHistory,*/
       /*references,*/
       whereHeard,
       supervisingPhysician,
@@ -671,7 +671,7 @@ class ApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.specialties = input)}
                 onChangeText={this.handleInputChange("specialties")}
                 onSubmitEditing={() =>
-                  this.inputRefs.legalHistory.getInnerRef().focus()
+                  this.inputRefs.whereHeard.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
@@ -691,7 +691,7 @@ class ApplicationScreen extends React.Component {
                 blurOnSubmit={false}
               />
             </FormInputWrapper> */}
-            <FormInputWrapper>
+            {/*<FormInputWrapper>
               <FormTextInput
                 name="legalHistory"
                 label="Legal History"
@@ -705,7 +705,7 @@ class ApplicationScreen extends React.Component {
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
+            </FormInputWrapper>*/}
             {/*}<FormInputWrapper>
               <FormTextInput
                 name="references"
