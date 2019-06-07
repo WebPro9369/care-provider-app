@@ -37,20 +37,20 @@ class ApplicationScreen extends React.Component {
       licenseNumber: '',
       licenseType: '',
       licenseIssuer: '',
-      licenseCountry: '',
+      /* licenseCountry: '', */
       licenseState: '',
       licenseCity: '',
       govermentIdNumber: '',
-      govermentIdCountry: '',
+      /* govermentIdCountry: '', */
       govermentIdType: '',
       boardCertification: '',
       malpracticeInsurance: '',
       educationHistory: '',
       workHistory: '',
       specialties: '',
-      offeredServices: '',
-      legalHistory: '',
-      references: '',
+      /* offeredServices: '', */
+      /*legalHistory: '',*/
+      /*references: '',*/
       whereHeard: '',
       supervisingPhysician: '',
       selectedIndexes: []
@@ -144,20 +144,20 @@ class ApplicationScreen extends React.Component {
       licenseNumber,
       licenseType,
       licenseIssuer,
-      licenseCountry,
+      /* licenseCountry, */
       licenseState,
       licenseCity,
       govermentIdNumber,
-      govermentIdCountry,
+      /* govermentIdCountry, */
       govermentIdType,
       boardCertification,
       malpracticeInsurance,
-      legalHistory,
+      /*legalHistory,*/
       educationHistory,
       workHistory,
       specialties,
-      offeredServices,
-      references,
+      /*offeredServices,*/
+      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes,
@@ -174,20 +174,20 @@ class ApplicationScreen extends React.Component {
       .setLicenseNumber(licenseNumber)
       .setLicenseType(licenseType)
       .setLicenseIssuer(licenseIssuer)
-      .setLicenseCountry(licenseCountry)
+      /* .setLicenseCountry(licenseCountry) */
       .setLicenseState(licenseState)
       .setLicenseCity(licenseCity)
-      .setGovermentIdCountry(govermentIdCountry)
+      /* }.setGovermentIdCountry(govermentIdCountry) */
       .setGovermentIdType(govermentIdType)
       .setGovermentIdNumber(govermentIdNumber)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
-      .setLegalHistory(legalHistory)
+      /*.setLegalHistory(legalHistory)*/
       .setEducationHistory(commaStringToArray(educationHistory))
       .setWorkHistory(commaStringToArray(workHistory))
       .setSpecialties(commaStringToArray(specialties))
-      .setOfferedServices(commaStringToArray(offeredServices))
-      .setReferences(references)
+      /*.setOfferedServices(commaStringToArray(offeredServices))*/
+      /*.setReferences(references)*/
       .setWhereHeard(whereHeard)
       .setSupervisingPhysician(supervisingPhysician)
       .setTitles(selectedIndexes.map(index => TITLES[index]));
@@ -237,20 +237,20 @@ class ApplicationScreen extends React.Component {
         licenseNumber: license_number,
         licenseType: license_type,
         licenseIssuer: license_issuer,
-        licenseCountry: license_country,
+        /* licenseCountry: license_country, */
         licenseState: license_state,
         licenseCity: license_city,
         govermentIdNumber: government_id_number,
-        govermentIdCountry: government_id_country,
+        /* govermentIdCountry: government_id_country, */
         govermentIdType: government_id_type,
         boardCertification: certification,
         malpracticeInsurance: malpractice,
-        legalHistory: legal_history,
+        /*legalHistory: legal_history,*/
         educationHistory: education,
         workHistory: work_history,
         specialties,
-        references,
-        offeredServices: offered_services,
+        /*references,*/
+        /*offeredServices: offered_services,*/
         whereHeard: source,
         titles: title,
         supervisingPhysician: supervisor,
@@ -271,20 +271,20 @@ class ApplicationScreen extends React.Component {
         license_number,
         license_type,
         license_issuer,
-        license_country,
+        /* license_country, */
         license_state,
         license_city,
         government_id_number,
-        government_id_country,
+        /* government_id_country, */
         government_id_type,
         certification,
         malpractice,
-        legal_history,
-        references,
+        /*legal_history,*/
+        /*references,*/
         education,
         work_history,
         specialties,
-        offered_services,
+        /*offered_services,*/
         source,
         title,
         supervisor,
@@ -322,11 +322,11 @@ class ApplicationScreen extends React.Component {
       licenseNumber,
       licenseType,
       licenseIssuer,
-      licenseCountry,
+      /* licenseCountry, */
       licenseState,
       licenseCity,
       govermentIdNumber,
-      govermentIdCountry,
+      /* govermentIdCountry, */
       govermentIdType,
       ssn,
       maskedSsn,
@@ -335,9 +335,9 @@ class ApplicationScreen extends React.Component {
       educationHistory,
       workHistory,
       specialties,
-      offeredServices,
-      legalHistory,
-      references,
+      /*offeredServices,*/
+      /*legalHistory,*/
+      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes
@@ -441,9 +441,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="licenseNumber"
-                label="License Number"
+                label="Medical License Number"
                 value={licenseNumber}
-                placeholder="License Number"
+                placeholder="Medical License Number"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseNumber = input)}
                 onChangeText={this.handleInputChange("licenseNumber")}
@@ -456,9 +456,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="licenseType"
-                label="License Type"
+                label="Medical License Type"
                 value={licenseType}
-                placeholder="License Type"
+                placeholder="Medical License Type"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseType = input)}
                 onChangeText={this.handleInputChange("licenseType")}
@@ -471,9 +471,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="licenseIssuer"
-                label="License Issuer"
+                label="Medical License Issuer"
                 value={licenseIssuer}
-                placeholder="License Issuer"
+                placeholder="Medical License Issuer"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseIssuer = input)}
                 onChangeText={this.handleInputChange("licenseIssuer")}
@@ -486,9 +486,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="licenseCity"
-                label="License City"
+                label="Medical License City"
                 value={licenseCity}
-                placeholder="License City"
+                placeholder="Medical License City"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseCity = input)}
                 onChangeText={this.handleInputChange("licenseCity")}
@@ -501,19 +501,19 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="licenseState"
-                label="License State"
+                label="Medical License State"
                 value={licenseState}
-                placeholder="License State"
+                placeholder="Medical License State"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseState = input)}
                 onChangeText={this.handleInputChange("licenseState")}
                 onSubmitEditing={() =>
-                  this.inputRefs.licenseCountry.getInnerRef().focus()
+                  this.inputRefs.governmentIdType.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
-            <FormInputWrapper>
+            {/* <FormInputWrapper>
               <FormTextInput
                 name="licenseCountry"
                 label="License Country"
@@ -527,8 +527,8 @@ class ApplicationScreen extends React.Component {
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
-            <FormInputWrapper>
+            </FormInputWrapper> */}
+            {/* <FormInputWrapper>
               <FormTextInput
                 name="govermentIdCountry"
                 label="Goverment ID Country"
@@ -542,13 +542,13 @@ class ApplicationScreen extends React.Component {
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
+            </FormInputWrapper> */}
             <FormInputWrapper>
               <FormTextInput
                 name="govermentIdType"
                 label="Goverment ID Type"
                 value={govermentIdType}
-                placeholder="Goverment ID Type"
+                placeholder="Driver's License, U.S. Passport, State ID, etc."
                 returnKeyType="next"
                 ref={input => (this.inputRefs.govermentIdType = input)}
                 onChangeText={this.handleInputChange("govermentIdType")}
@@ -619,9 +619,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="malpracticeInsurance"
-                label="Malpractice Insurance"
+                label="Insurance Policy Number"
                 value={malpracticeInsurance}
-                placeholder="Malpractice Insurance"
+                placeholder="Insurance Policy Number"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.malpracticeInsurance = input)}
                 onChangeText={this.handleInputChange("malpracticeInsurance")}
@@ -649,9 +649,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="workHistory"
-                label="Work History"
+                label="Current Employer"
                 value={workHistory}
-                placeholder="Work History"
+                placeholder="Current Employer"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.workHistory = input)}
                 onChangeText={this.handleInputChange("workHistory")}
@@ -671,12 +671,12 @@ class ApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.specialties = input)}
                 onChangeText={this.handleInputChange("specialties")}
                 onSubmitEditing={() =>
-                  this.inputRefs.offeredServices.getInnerRef().focus()
+                  this.inputRefs.whereHeard.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
-            <FormInputWrapper>
+            {/* }<FormInputWrapper>
               <FormTextInput
                 name="offeredServices"
                 label="Offered Services"
@@ -690,8 +690,8 @@ class ApplicationScreen extends React.Component {
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
-            <FormInputWrapper>
+            </FormInputWrapper> */}
+            {/*<FormInputWrapper>
               <FormTextInput
                 name="legalHistory"
                 label="Legal History"
@@ -701,12 +701,12 @@ class ApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.legalHistory = input)}
                 onChangeText={this.handleInputChange("legalHistory")}
                 onSubmitEditing={() =>
-                  this.inputRefs.references.getInnerRef().focus()
+                  this.inputRefs.whereHeard.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
-            <FormInputWrapper>
+            </FormInputWrapper>*/}
+            {/*}<FormInputWrapper>
               <FormTextInput
                 name="references"
                 label="References"
@@ -720,7 +720,7 @@ class ApplicationScreen extends React.Component {
                 }
                 blurOnSubmit={false}
               />
-            </FormInputWrapper>
+            </FormInputWrapper>*/}
             <FormInputWrapper>
               <FormTextInput
                 name="whereHeard"
