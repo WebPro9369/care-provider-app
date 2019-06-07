@@ -441,9 +441,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="licenseNumber"
-                label="License Number"
+                label="Medical License Number"
                 value={licenseNumber}
-                placeholder="License Number"
+                placeholder="Medical License Number"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseNumber = input)}
                 onChangeText={this.handleInputChange("licenseNumber")}
@@ -456,9 +456,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="licenseType"
-                label="License Type"
+                label="Medical License Type"
                 value={licenseType}
-                placeholder="License Type"
+                placeholder="Medical License Type"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseType = input)}
                 onChangeText={this.handleInputChange("licenseType")}
@@ -471,9 +471,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="licenseIssuer"
-                label="License Issuer"
+                label="Medical License Issuer"
                 value={licenseIssuer}
-                placeholder="License Issuer"
+                placeholder="Medical License Issuer"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseIssuer = input)}
                 onChangeText={this.handleInputChange("licenseIssuer")}
@@ -486,9 +486,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="licenseCity"
-                label="License City"
+                label="Medical License City"
                 value={licenseCity}
-                placeholder="License City"
+                placeholder="Medical License City"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseCity = input)}
                 onChangeText={this.handleInputChange("licenseCity")}
@@ -501,9 +501,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="licenseState"
-                label="License State"
+                label="Medical License State"
                 value={licenseState}
-                placeholder="License State"
+                placeholder="Medical License State"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseState = input)}
                 onChangeText={this.handleInputChange("licenseState")}
