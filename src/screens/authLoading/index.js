@@ -43,6 +43,9 @@ class AuthLoadingScreen extends Component {
         name,
         email,
         phone,
+        street,
+        city,
+        state,
         zip,
         certification,
         title: titles,
@@ -81,7 +84,11 @@ class AuthLoadingScreen extends Component {
         .setStripeBalance(stripe_balance)
         .setPayoutAccount(payout_account);
 
-      address.setZipCode(zip);
+      address
+        .setStreet(street)
+        .setCity(city)
+        .setState(state)
+        .setZipCode(zip);
 
       application
         .setBoardCertification(certification)
