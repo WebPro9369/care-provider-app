@@ -9,6 +9,7 @@ export const ProviderStore = types
     outstandingAppointment: types.boolean,
     completeApplication: types.boolean,
     arrived: types.boolean,
+    active: types.boolean,
     onboardingData: types.optional(OnboardingData, {
       email: "",
       first_name: "",
@@ -34,5 +35,8 @@ export const ProviderStore = types
     },
     setArrived(value) {
       self.arrived = value;
+    },
+    setActive(value) {
+      self.active = value;
     }
   }));

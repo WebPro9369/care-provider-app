@@ -8,6 +8,7 @@ import { ViewCentered, FormInputWrapper, FormWrapper } from "@components/views";
 import { KeyboardAvoidingView } from "@components/views/keyboard-view";
 import { colors } from "@utils/constants";
 import { getCareProvider, getApiToken } from "@services/opear-api";
+import { getFormattedDate } from "@utils/helpers";
 
 @inject("store")
 class SignInScreen extends React.Component {
@@ -45,7 +46,9 @@ class SignInScreen extends React.Component {
           name,
           email,
           phone,
-          zip,
+          street,
+          city,
+          state,
           certification,
           title: titles,
           malpractice,
@@ -55,6 +58,9 @@ class SignInScreen extends React.Component {
           license_country: licenseCountry,
           license_state: licenseState,
           license_city: licenseCity,
+          government_id_country: govermentIdCountry,
+          government_id_type: govermentIdType,
+          government_id_number: govermentIdNumber,
           legal_history: legalHistory,
           education,
           work_history: workHistory,
@@ -67,6 +73,8 @@ class SignInScreen extends React.Component {
           payout_account,
           dob: dateOfBirth
         } = res.data;
+
+        const dob = getFormattedDate(new Date(dateOfBirth));
   
         const [firstName, lastName] = name.split(" ");
   
@@ -77,24 +85,34 @@ class SignInScreen extends React.Component {
           .setPhone(phone)
           .setStripeBalance(stripe_balance)
           .setPayoutAccount(payout_account);
-  
-        address.setZipCode(zip);
-  
+
+        address
+          .setStreet(street)
+          .setCity(city)
+          .setState(state);
+
         application
           .setBoardCertification(certification)
           .setTitles(titles)
           .setMalpracticeInsurance(malpractice)
           .setLegalHistory(legalHistory)
-          // TODO: handle nulls
-          // .setBiography(biography)
-          // .setSupervisingPhysician(supervisor)
+          .setSupervisingPhysician(supervisor)
           .setEducationHistory(education)
           .setWorkHistory(workHistory)
           .setReferences(references)
           .setSpecialties(specialties)
           .setOfferedServices(offeredServices)
           .setWhereHeard(source)
-          .setDateOfBirth(dateOfBirth);
+          .setDateOfBirth(dob)
+          .setLicenseNumber(licenseNumber)
+          .setLicenseType(licenseType)
+          .setLicenseIssuer(licenseIssuer)
+          .setLicenseCountry(licenseCountry)
+          .setLicenseState(licenseState)
+          .setLicenseCity(licenseCity)
+          .setGovermentIdType(govermentIdType)
+          .setGovermentIdCountry(govermentIdCountry)
+          .setGovermentIdNumber(govermentIdNumber);
   
         navigate("Tabs");
       };

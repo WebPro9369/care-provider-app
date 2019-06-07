@@ -42,6 +42,9 @@ class ApplicationScreen extends React.Component {
       licenseCountry: "",
       licenseState: "",
       licenseCity: "",
+      govermentIdNumber: "",
+      govermentIdCountry: "",
+      govermentIdType: "",
       boardCertification: "",
       malpracticeInsurance: "",
       educationHistory: "",
@@ -139,12 +142,18 @@ class ApplicationScreen extends React.Component {
     } = this.props;
 
     const {
+      street,
+      city,
+      state,
       licenseNumber,
       licenseType,
       licenseIssuer,
       licenseCountry,
       licenseState,
       licenseCity,
+      govermentIdNumber,
+      govermentIdCountry,
+      govermentIdType,
       boardCertification,
       malpracticeInsurance,
       legalHistory,
@@ -160,6 +169,11 @@ class ApplicationScreen extends React.Component {
       maskedSsn
     } = this.state;
 
+    address
+      .setStreet(street)
+      .setCity(city)
+      .setState(state);
+
     application
       .setDateOfBirth(dateOfBirth)
       .setLicenseNumber(licenseNumber)
@@ -169,6 +183,9 @@ class ApplicationScreen extends React.Component {
       .setLicenseState(licenseState)
       .setLicenseCity(licenseCity)
       .setSSNLast4(maskedSsn.substr(7, 4))
+      .setGovermentIdCountry(govermentIdCountry)
+      .setGovermentIdType(govermentIdType)
+      .setGovermentIdNumber(govermentIdNumber)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
       .setLegalHistory(legalHistory)
@@ -213,8 +230,9 @@ class ApplicationScreen extends React.Component {
       email,
       password,
       phone,
-      address: { zip_code: zip },
+      address: { street, city, state, zip_code: zip },
       application: {
+        dateOfBirth: dob,
         licenseNumber: license_number,
         licenseType: license_type,
         licenseIssuer: license_issuer,
@@ -222,6 +240,9 @@ class ApplicationScreen extends React.Component {
         licenseState: license_state,
         licenseCity: license_city,
         ssnLast4: ssn_last4,
+        govermentIdNumber: government_id_number,
+        govermentIdCountry: government_id_country,
+        govermentIdType: government_id_type,
         boardCertification: certification,
         malpracticeInsurance: malpractice,
         legalHistory: legal_history,
@@ -231,7 +252,8 @@ class ApplicationScreen extends React.Component {
         references,
         offeredServices: offered_services,
         whereHeard: source,
-        titles: title
+        titles: title,
+        supervisingPhysician: supervisor
       }
     } = currentUserStore;
 
@@ -240,8 +262,11 @@ class ApplicationScreen extends React.Component {
         name: `${firstName} ${lastName}`,
         email,
         password,
-        dob: dateOfBirth,
+        dob: new Date(dob),
         phone,
+        street,
+        city,
+        state,
         zip,
         license_number,
         license_type,
@@ -250,6 +275,9 @@ class ApplicationScreen extends React.Component {
         license_state,
         license_city,
         ssn_last4,
+        government_id_number,
+        government_id_country,
+        government_id_type,
         certification,
         malpractice,
         legal_history,
@@ -259,7 +287,8 @@ class ApplicationScreen extends React.Component {
         specialties,
         offered_services,
         source,
-        title
+        title,
+        supervisor
       }
     };
 
@@ -268,7 +297,7 @@ class ApplicationScreen extends React.Component {
 
       currentUserStore.setAuthentication({ id, apiKey });
 
-      navigate("TabDashboard");
+      navigate("ApplicationPending");
     };
 
     const errorHandler = () => Alert.alert("Registration failed.");
@@ -288,12 +317,18 @@ class ApplicationScreen extends React.Component {
     const {
       avatarSource,
       dateOfBirth,
+      street,
+      city,
+      state,
       licenseNumber,
       licenseType,
       licenseIssuer,
       licenseCountry,
       licenseState,
       licenseCity,
+      govermentIdNumber,
+      govermentIdCountry,
+      govermentIdType,
       ssn,
       maskedSsn,
       boardCertification,
@@ -354,6 +389,49 @@ class ApplicationScreen extends React.Component {
                 value={dateOfBirth}
                 onChangeText={this.handleInputChange("dateOfBirth")}
                 placeholder="mm/dd/yyyy"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  this.inputRefs.street.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="street"
+                label="Street Address"
+                value={street}
+                onChangeText={this.handleInputChange("street")}
+                placeholder="Street Address"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  this.inputRefs.city.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+
+            <FormInputWrapper>
+              <FormTextInput
+                name="city"
+                label="City"
+                value={city}
+                onChangeText={this.handleInputChange("city")}
+                placeholder="City"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  this.inputRefs.state.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="state"
+                label="State"
+                value={state}
+                onChangeText={this.handleInputChange("state")}
+                placeholder="State"
                 returnKeyType="next"
                 onSubmitEditing={() =>
                   this.inputRefs.licenseNumber.getInnerRef().focus()
@@ -446,6 +524,51 @@ class ApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.licenseCountry = input)}
                 onChangeText={this.handleInputChange("licenseCountry")}
                 onSubmitEditing={() => this.inputRefs.ssn.getInnerRef().focus()}
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="govermentIdCountry"
+                label="Goverment ID Country"
+                value={govermentIdCountry}
+                placeholder="Goverment ID Country"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.govermentIdCountry = input)}
+                onChangeText={this.handleInputChange("govermentIdCountry")}
+                onSubmitEditing={() =>
+                  this.inputRefs.govermentIdType.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="govermentIdType"
+                label="Goverment ID Type"
+                value={govermentIdType}
+                placeholder="Goverment ID Type"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.govermentIdType = input)}
+                onChangeText={this.handleInputChange("govermentIdType")}
+                onSubmitEditing={() =>
+                  this.inputRefs.govermentIdNumber.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="govermentIdNumber"
+                label="Goverment ID Number"
+                value={govermentIdNumber}
+                placeholder="Goverment ID Number"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.govermentIdNumber = input)}
+                onChangeText={this.handleInputChange("govermentIdNumber")}
+                onSubmitEditing={() =>
+                  this.inputRefs.boardCertification.getInnerRef().focus()
+                }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>

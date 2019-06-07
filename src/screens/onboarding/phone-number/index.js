@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Alert, Image, View } from "react-native";
+import PhoneInput from "react-native-phone-input";
 import { inject, observer, PropTypes } from "mobx-react";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { ServiceButton } from "../../../components/service-button";
 import { StyledText, StyledTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
-import TwilioService from "../../../services/twilio";
+import { colors } from "../../../utils/constants";
 
 const imgProgressbar = require("../../../../assets/images/ProgressBar5.png");
 
@@ -23,10 +24,8 @@ class PhoneNumberScreen extends Component {
     };
   }
 
-  handleInputChange = text => {
-    this.setState({
-      phone: text
-    });
+  handleChange = (phone) => {
+    this.setState({ phone });
   };
 
   onSubmit = () => {
@@ -38,16 +37,14 @@ class PhoneNumberScreen extends Component {
 
     console.tron.log("Phone number: ", phone);
 
-    TwilioService.sendSMS(
-      "Test SMS from Twilio",
-      null,
-      phone,
-      () => {
-        currentUserStore.setPhone(phone);
-        navigate("Application");
-      },
-      () => Alert.alert("Authentication failed.")
-    );
+    if(!this.phone.isValidNumber())
+    {
+      return Alert.alert("Please enter a valid phone number.");
+    }
+
+    currentUserStore.setPhone(phone);
+
+    return navigate("Application");
   };
 
   render() {
@@ -70,13 +67,21 @@ class PhoneNumberScreen extends Component {
           >
             What is your phone number?
           </StyledText>
-          <View>
-            <StyledTextInput
-              fontSize={28}
-              autoFocus
-              placeholder="(123) 456 - 7890"
+          <View
+            style={{
+              paddingTop: 16,
+              paddingBottom: 16,
+              borderBottomColor: colors.BLACK38,
+              borderBottomWidth: 1
+            }}
+          >
+            <PhoneInput
+              ref={phone => {
+                this.phone = phone;
+              }}
               value={phone}
-              onChangeText={this.handleInputChange}
+              onChangePhoneNumber={this.handleChange}
+              autoFormat="true"
             />
           </View>
         </View>
@@ -87,7 +92,7 @@ class PhoneNumberScreen extends Component {
             style={{ width: "100%", marginBottom: 16 }}
           />
           <ServiceButton
-            title="Authenticate"
+            title="Next"
             style={{ marginBottom: 20 }}
             onPress={this.onSubmit}
           />

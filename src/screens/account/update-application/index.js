@@ -34,12 +34,16 @@ class UpdateApplicationScreen extends React.Component {
     const { store: { currentUserStore }} = props;
 
     const { application: {
+      dateOfBirth,
       licenseNumber,
       licenseType,
       licenseIssuer,
       licenseCountry,
       licenseState,
       licenseCity,
+      govermentIdNumber,
+      govermentIdCountry,
+      govermentIdType,
       boardCertification,
       malpracticeInsurance,
       educationHistory,
@@ -54,14 +58,16 @@ class UpdateApplicationScreen extends React.Component {
     }} = currentUserStore;
 
     this.state = {
-      dateOfBirth: '',
-      dateOfBirth: '',
+      dateOfBirth,
       licenseNumber,
       licenseType,
       licenseIssuer,
       licenseCountry,
       licenseState,
       licenseCity,
+      govermentIdNumber,
+      govermentIdCountry,
+      govermentIdType,
       boardCertification,
       malpracticeInsurance,
       educationHistory: educationHistory.join(', '),
@@ -128,6 +134,9 @@ class UpdateApplicationScreen extends React.Component {
       licenseCountry,
       licenseState,
       licenseCity,
+      govermentIdNumber,
+      govermentIdCountry,
+      govermentIdType,
       boardCertification,
       malpracticeInsurance,
       legalHistory,
@@ -149,6 +158,9 @@ class UpdateApplicationScreen extends React.Component {
       .setLicenseCountry(licenseCountry)
       .setLicenseState(licenseState)
       .setLicenseCity(licenseCity)
+      .setGovermentIdCountry(govermentIdCountry)
+      .setGovermentIdType(govermentIdType)
+      .setGovermentIdNumber(govermentIdNumber)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
       .setLegalHistory(legalHistory)
@@ -174,12 +186,21 @@ class UpdateApplicationScreen extends React.Component {
 
     let {
       dateOfBirth,
+      address: {
+        street:street,
+        city:city,
+        state:state,
+        zip_code: zip,
+      },
       licenseNumber: license_number,
       licenseType: license_type,
       licenseIssuer: license_issuer,
       licenseCountry: license_country,
       licenseState: license_state,
       licenseCity: license_city,
+      govermentIdNumber: government_id_number,
+      govermentIdCountry: government_id_country,
+      govermentIdType: government_id_type,
       boardCertification: certification,
       malpracticeInsurance: malpractice,
       legalHistory: legal_history,
@@ -190,6 +211,7 @@ class UpdateApplicationScreen extends React.Component {
       offeredServices: offered_services,
       whereHeard: source,
       selectedIndexes,
+      supervisingPhysician: supervisor
     } = this.state;
     
     const dateRegex1 = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
@@ -203,13 +225,20 @@ class UpdateApplicationScreen extends React.Component {
 
     const data = {
       care_provider: {
-        dob: dateOfBirth,
+        dob: new Date(dateOfBirth),
+        street,
+        city,
+        state,
+        zip,
         license_number,
         license_type,
         license_issuer,
         license_country,
         license_state,
         license_city,
+        government_id_number,
+        government_id_country,
+        government_id_type,
         certification,
         malpractice,
         legal_history,
@@ -220,6 +249,7 @@ class UpdateApplicationScreen extends React.Component {
         offered_services: commaStringToArray(offered_services),
         source,
         title,
+        supervisor,
       }
     };
 
@@ -241,12 +271,18 @@ class UpdateApplicationScreen extends React.Component {
     const {
       avatarSource,
       dateOfBirth,
+      street,
+      city,
+      state,
       licenseNumber,
       licenseType,
       licenseIssuer,
       licenseCountry,
       licenseState,
       licenseCity,
+      govermentIdNumber,
+      govermentIdCountry,
+      govermentIdType,
       boardCertification,
       malpracticeInsurance,
       educationHistory,
@@ -307,6 +343,49 @@ class UpdateApplicationScreen extends React.Component {
                 placeholder="mm/dd/yyyy"
                 returnKeyType="next"
                 onChangeText={this.handleInputChange("dateOfBirth")}
+                onSubmitEditing={() =>
+                  this.inputRefs.licenseNumber.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="street"
+                label="Street Address"
+                value={street}
+                onChangeText={this.handleInputChange('street')}
+                placeholder="Street Address"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  this.inputRefs.city.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+
+            <FormInputWrapper>
+              <FormTextInput
+                name="city"
+                label="City"
+                value={city}
+                onChangeText={this.handleInputChange('city')}
+                placeholder="City"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  this.inputRefs.state.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="state"
+                label="State"
+                value={state}
+                onChangeText={this.handleInputChange('state')}
+                placeholder="State"
+                returnKeyType="next"
                 onSubmitEditing={() =>
                   this.inputRefs.licenseNumber.getInnerRef().focus()
                 }
@@ -397,6 +476,51 @@ class UpdateApplicationScreen extends React.Component {
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseCountry = input)}
                 onChangeText={this.handleInputChange("licenseCountry")}
+                onSubmitEditing={() =>
+                  this.inputRefs.govermentIdCountry.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="govermentIdCountry"
+                label="Goverment ID Country"
+                value={govermentIdCountry}
+                placeholder="Goverment ID Country"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.govermentIdCountry = input)}
+                onChangeText={this.handleInputChange("govermentIdCountry")}
+                onSubmitEditing={() =>
+                  this.inputRefs.govermentIdType.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="govermentIdType"
+                label="Goverment ID Type"
+                value={govermentIdType}
+                placeholder="Goverment ID Type"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.govermentIdType = input)}
+                onChangeText={this.handleInputChange("govermentIdType")}
+                onSubmitEditing={() =>
+                  this.inputRefs.govermentIdNumber.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+            <FormInputWrapper>
+              <FormTextInput
+                name="govermentIdNumber"
+                label="Goverment ID Number"
+                value={govermentIdNumber}
+                placeholder="Goverment ID Number"
+                returnKeyType="next"
+                ref={input => (this.inputRefs.govermentIdNumber = input)}
+                onChangeText={this.handleInputChange("govermentIdNumber")}
                 onSubmitEditing={() =>
                   this.inputRefs.boardCertification.getInnerRef().focus()
                 }

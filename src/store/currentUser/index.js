@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-param-reassign */
 import { types } from "mobx-state-tree";
 import { setAuthentication } from "@services/authentication";
@@ -7,13 +8,16 @@ const ApplicationStore = types
   .model("ApplicationStore", {
     dateOfBirth: types.string,
     biography: types.string,
+    ssnLast4: types.string,
     licenseNumber: types.string,
     licenseType: types.string,
     licenseIssuer: types.string,
     licenseCountry: types.string,
     licenseState: types.string,
     licenseCity: types.string,
-    ssnLast4: types.string,
+    govermentIdType: types.string,
+    govermentIdCountry: types.string,
+    govermentIdNumber: types.string,
     boardCertification: types.string,
     malpracticeInsurance: types.string,
     educationHistory: types.array(types.string),
@@ -29,6 +33,10 @@ const ApplicationStore = types
   .actions(self => ({
     setDateOfBirth(value) {
       self.dateOfBirth = value;
+      return self;
+    },
+    setBoardCertification(value) {
+      self.boardCertification = value;
       return self;
     },
     setBiography(value) {
@@ -63,8 +71,16 @@ const ApplicationStore = types
       self.licenseCity = value;
       return self;
     },
-    setBoardCertification(value) {
-      self.boardCertification = value;
+    setGovermentIdType(value) {
+      self.govermentIdType = value;
+      return self;
+    },
+    setGovermentIdCountry(value) {
+      self.govermentIdCountry = value;
+      return self;
+    },
+    setGovermentIdNumber(value) {
+      self.govermentIdNumber = value;
       return self;
     },
     setMalpracticeInsurance(value) {
@@ -143,6 +159,9 @@ export const CurrentUserStore = types
       licenseCountry: "",
       licenseState: "",
       licenseCity: "",
+      govermentIdType: "",
+      govermentIdCountry: "",
+      govermentIdNumber: "",
       boardCertification: "",
       malpracticeInsurance: "",
       educationHistory: [],

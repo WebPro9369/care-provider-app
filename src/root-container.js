@@ -98,7 +98,7 @@ class RootContainer extends React.Component {
     const { active } = this.state;
 
     if (console.tron) {
-      console.tron.log("Active now!", value, apiKey);
+      // console.tron.log("Active now!", value, apiKey);
     }
 
     this.setState({
