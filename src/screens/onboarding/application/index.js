@@ -31,6 +31,9 @@ class ApplicationScreen extends React.Component {
     super(props);
     this.state = {
       ssn: '',
+      street: '',
+      city: '',
+      state: '',
       maskedSsn: '',
       avatarSource: '',
       dateOfBirth: '',
@@ -123,12 +126,12 @@ class ApplicationScreen extends React.Component {
 
   hideSsnDigits = () => {
     const { maskedSsn } = this.state;
-    let hiddenSss="";
+    let hiddenSsn="";
     if (maskedSsn.length > 10) {
-      hiddenSss = `XXX-XX-${maskedSsn.substr(7, 4)}`;
+      hiddenSsn = `XXX-XX-${maskedSsn.substr(7, 4)}`;
     }
     this.setState({
-      maskedSsn: hiddenSss
+      maskedSsn: hiddenSsn
     });
   };
 
@@ -227,9 +230,9 @@ class ApplicationScreen extends React.Component {
        password,
        phone,
        address: {
-         street:street,
-         city:city,
-         state:state,
+         street,
+         city,
+         state,
          zip_code: zip,
        },
        application: {
@@ -264,9 +267,6 @@ class ApplicationScreen extends React.Component {
         password,
         dob: new Date(dob),
         phone,
-        street,
-        city,
-        state,
         zip,
         license_number,
         license_type,
@@ -288,6 +288,14 @@ class ApplicationScreen extends React.Component {
         source,
         title,
         supervisor,
+        addresses_attributes: [
+          {
+            street,
+            city,
+            state,
+            zip
+          }
+        ]
       }
     };
 
