@@ -19,5 +19,7 @@ StyledMaskedTextInput.defaultProps = {
   fontSize: 20,
   fontFamily: "Flama",
   lineHeight: 30,
-  textAlign: "left"
+  textAlign: "left",
+  type: "custom",
+  
 };
