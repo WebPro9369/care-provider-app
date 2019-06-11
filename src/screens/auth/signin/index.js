@@ -46,9 +46,7 @@ class SignInScreen extends React.Component {
           name,
           email,
           phone,
-          street,
-          city,
-          state,
+          zip,
           certification,
           title: titles,
           malpractice,
@@ -61,10 +59,8 @@ class SignInScreen extends React.Component {
           government_id_country: govermentIdCountry,
           government_id_type: govermentIdType,
           government_id_number: govermentIdNumber,
-          legal_history: legalHistory,
           education,
           work_history: workHistory,
-          references,
           specialties,
           offered_services: offeredServices,
           source,
@@ -87,19 +83,15 @@ class SignInScreen extends React.Component {
           .setPayoutAccount(payout_account);
 
         address
-          .setStreet(street)
-          .setCity(city)
-          .setState(state);
+          .setZipCode(zip);
 
         application
           .setBoardCertification(certification)
           .setTitles(titles)
           .setMalpracticeInsurance(malpractice)
-          .setLegalHistory(legalHistory)
           .setSupervisingPhysician(supervisor)
           .setEducationHistory(education)
           .setWorkHistory(workHistory)
-          .setReferences(references)
           .setSpecialties(specialties)
           .setOfferedServices(offeredServices)
           .setWhereHeard(source)
