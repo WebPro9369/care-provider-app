@@ -57,6 +57,7 @@ class ApplicationScreen extends React.Component {
       /* references: '', */
       whereHeard: "",
       supervisingPhysician: "",
+
       selectedIndexes: []
     };
 
@@ -698,37 +699,7 @@ class ApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.offeredServices = input)}
                 onChangeText={this.handleInputChange("offeredServices")}
                 onSubmitEditing={() =>
-                  this.inputRefs.legalHistory.getInnerRef().focus()
-                }
-                blurOnSubmit={false}
-              />
-            </FormInputWrapper> */}
-            {/* <FormInputWrapper>
-              <FormTextInput
-                name="legalHistory"
-                label="Legal History"
-                value={legalHistory}
-                placeholder="Legal History"
-                returnKeyType="next"
-                ref={input => (this.inputRefs.legalHistory = input)}
-                onChangeText={this.handleInputChange("legalHistory")}
-                onSubmitEditing={() =>
-                  this.inputRefs.whereHeard.getInnerRef().focus()
-                }
-                blurOnSubmit={false}
-              />
-            </FormInputWrapper> */}
-            {/* }<FormInputWrapper>
-              <FormTextInput
-                name="references"
-                label="References"
-                value={references}
-                placeholder="References"
-                returnKeyType="next"
-                ref={input => (this.inputRefs.references = input)}
-                onChangeText={this.handleInputChange("references")}
-                onSubmitEditing={() =>
-                  this.inputRefs.whereHeard.getInnerRef().focus()
+                  this.inputRefs.supervisingPhysician.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />

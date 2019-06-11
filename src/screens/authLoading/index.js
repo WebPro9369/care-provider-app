@@ -25,9 +25,8 @@ class AuthLoadingScreen extends Component {
     } = this.props;
 
     const { id, apiKey, isAuthenticated, wasAuthenticated } = await getAuthentication();
-  
+
     if (!isAuthenticated && wasAuthenticated) return navigate("AccountSignIn");
-    if (isAuthenticated && !store.providerStore.active) return navigate("ApplicationPending");
     if (!isAuthenticated) return navigate("Onboarding");
   
     const {
@@ -35,7 +34,6 @@ class AuthLoadingScreen extends Component {
         currentUserStore
       }
     } = this.props;
-    const { address, application } = currentUserStore;
     currentUserStore.setAuthentication({ id, apiKey });
 
     const successHandler = res => {
@@ -43,9 +41,7 @@ class AuthLoadingScreen extends Component {
         name,
         email,
         phone,
-        street,
-        city,
-        state,
+
         zip,
         certification,
         title: titles,
@@ -59,22 +55,24 @@ class AuthLoadingScreen extends Component {
         government_id_country: govermentIdCountry,
         government_id_type: govermentIdType,
         government_id_number: govermentIdNumber,
-        legal_history: legalHistory,
         education,
         work_history: workHistory,
-        references,
         specialties,
         offered_services: offeredServices,
         source,
         supervisor,
         stripe_balance,
         payout_account,
-        dob: dateOfBirth
+        dob: dateOfBirth,
+        active,
       } = res.data;
+
+      if (!active) return navigate("ApplicationPending");
 
       const dob = getFormattedDate(new Date(dateOfBirth));
 
       const [firstName, lastName] = name.split(" ");
+      const { address, application } = currentUserStore;
 
       currentUserStore
         .setFirstName(firstName)
@@ -85,20 +83,15 @@ class AuthLoadingScreen extends Component {
         .setPayoutAccount(payout_account);
 
       address
-        .setStreet(street)
-        .setCity(city)
-        .setState(state)
         .setZipCode(zip);
 
       application
         .setBoardCertification(certification)
         .setTitles(titles)
         .setMalpracticeInsurance(malpractice)
-        .setLegalHistory(legalHistory)
         .setSupervisingPhysician(supervisor)
         .setEducationHistory(education)
         .setWorkHistory(workHistory)
-        .setReferences(references)
         .setSpecialties(specialties)
         .setOfferedServices(offeredServices)
         .setWhereHeard(source)
