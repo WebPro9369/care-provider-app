@@ -56,9 +56,9 @@ class ApplicationScreen extends React.Component {
       /*references: '',*/
       whereHeard: '',
       supervisingPhysician: '',
-      selectedIndexes: []/*,
+      selectedIndexes: [],
       acceptedTermsOfService: false,
-      acceptedPrivacy: false*/
+      acceptedPrivacy: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -166,9 +166,9 @@ class ApplicationScreen extends React.Component {
       whereHeard,
       supervisingPhysician,
       selectedIndexes,
-      dateOfBirth/*,
+      dateOfBirth,
       acceptedTermsOfService,
-      acceptedPrivacy*/
+      acceptedPrivacy
     } = this.state;
 
     address
@@ -197,9 +197,9 @@ class ApplicationScreen extends React.Component {
       /*.setReferences(references)*/
       .setWhereHeard(whereHeard)
       .setSupervisingPhysician(supervisingPhysician)
-      .setTitles(selectedIndexes.map(index => TITLES[index]))
-      /*.setAcceptedPrivacy(acceptedPrivacy)
-      .setAcceptedTermsOfService(acceptedTermsOfService);*/
+      .setAcceptedTermsOfService(acceptedTermsOfService)
+      .setAcceptedPrivacy(acceptedPrivacy)
+      .setTitles(selectedIndexes.map(index => TITLES[index]));
   }
 
   onSubmit = _ => {
@@ -278,9 +278,9 @@ class ApplicationScreen extends React.Component {
         /*offeredServices: offered_services,*/
         whereHeard: source,
         titles: title,
-        supervisingPhysician: supervisor/*,
+        supervisingPhysician: supervisor,
         acceptedPrivacy: accepted_privacy,
-        acceptedTermsOfService: accepted_terms_of_service*/
+        acceptedTermsOfService: accepted_terms_of_service
        }
     } = currentUserStore;
 
@@ -312,8 +312,8 @@ class ApplicationScreen extends React.Component {
         source,
         title,
         supervisor,
-        /*accepted_terms_of_service,
-        accepted_privacy,*/
+        accepted_terms_of_service,
+        accepted_privacy,
         addresses_attributes: [
           {
             street,
@@ -375,8 +375,8 @@ class ApplicationScreen extends React.Component {
       whereHeard,
       supervisingPhysician,
       selectedIndexes,
-      /*acceptedTermsOfService,
-      acceptedPrivacy*/
+      acceptedTermsOfService,
+      acceptedPrivacy
     } = this.state;
 
     const avatarOptions = avatarSource
@@ -819,8 +819,8 @@ class ApplicationScreen extends React.Component {
               </StyledText>
               <CheckBox
                 title="I have read and accept"
-                checked={this.state.acceptedTermsOfService}
-                onPress={() => this.setState({acceptedTermsOfService: !this.state.acceptedTermsOfService})}
+                checked={this.state.acceptedPrivacy}
+                onPress={() => this.setState({acceptedPrivacy: !this.state.acceptedPrivacy})}
                 size={36}
                 textStyle={{fontSize:18}}
                 containerStyle={{
@@ -847,8 +847,8 @@ class ApplicationScreen extends React.Component {
                 </StyledText>
                 <CheckBox
                   title="I have read and accept"
-                  checked={this.state.acceptedPrivacy}
-                  onPress={() => this.setState({acceptedPrivacy: !this.state.acceptedPrivacy})}
+                  checked={this.state.acceptedTermsOfService}
+                  onPress={() => this.setState({acceptedTermsOfService: !this.state.acceptedTermsOfService})}
                   size={36}
                   textStyle={{fontSize:18}}
                   containerStyle={{
