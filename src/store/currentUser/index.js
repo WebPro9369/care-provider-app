@@ -153,6 +153,7 @@ export const CurrentUserStore = types
     application: types.optional(ApplicationStore, {
       dateOfBirth: "",
       biography: "",
+      ssnLast4: "",
       licenseNumber: "",
       licenseType: "",
       licenseIssuer: "",
