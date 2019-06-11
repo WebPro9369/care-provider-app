@@ -32,32 +32,7 @@ class ApplicationScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-<<<<<<< HEAD
-      ssn: "",
-      avatarSource: "",
-      dateOfBirth: "",
-      licenseNumber: "",
-      licenseType: "",
-      licenseIssuer: "",
-      licenseCountry: "",
-      licenseState: "",
-      licenseCity: "",
-      govermentIdNumber: "",
-      govermentIdCountry: "",
-      govermentIdType: "",
-      boardCertification: "",
-      malpracticeInsurance: "",
-      educationHistory: "",
-      workHistory: "",
-      specialties: "",
-      offeredServices: "",
-      legalHistory: "",
-      references: "",
-      whereHeard: "",
-      supervisingPhysician: "",
-=======
       ssn: '',
-      maskedSsn: '',
       avatarSource: '',
       dateOfBirth: '',
       licenseNumber: '',
@@ -78,7 +53,6 @@ class ApplicationScreen extends React.Component {
       /*legalHistory: '',*/
       /*references: '',*/
       whereHeard: '',
->>>>>>> 849b69ed5cfb2b721d9aef57bc8b7cfa1be2e396
       selectedIndexes: []
     };
 
