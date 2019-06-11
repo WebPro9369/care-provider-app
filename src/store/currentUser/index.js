@@ -167,6 +167,7 @@ export const CurrentUserStore = types
       whereHeard: '',
       supervisingPhysician: '',
       titles: [],
+      addresses: [{}]
     }),
     address: types.optional(AddressStore, {
       name: '',

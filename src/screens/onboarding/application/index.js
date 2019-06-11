@@ -31,6 +31,9 @@ class ApplicationScreen extends React.Component {
     super(props);
     this.state = {
       ssn: '',
+      street: '',
+      city: '',
+      state: '',
       maskedSsn: '',
       avatarSource: '',
       dateOfBirth: '',
@@ -227,9 +230,9 @@ class ApplicationScreen extends React.Component {
        password,
        phone,
        address: {
-         street:street,
-         city:city,
-         state:state,
+         street,
+         city,
+         state,
          zip_code: zip,
        },
        application: {
@@ -264,9 +267,6 @@ class ApplicationScreen extends React.Component {
         password,
         dob: new Date(dob),
         phone,
-        street,
-        city,
-        state,
         zip,
         license_number,
         license_type,
@@ -288,6 +288,14 @@ class ApplicationScreen extends React.Component {
         source,
         title,
         supervisor,
+        addresses_attributes: [
+          {
+            street,
+            city,
+            state,
+            zip
+          }
+        ]
       }
     };
 
@@ -296,7 +304,7 @@ class ApplicationScreen extends React.Component {
 
       currentUserStore.setAuthentication({ id, apiKey });
 
-      navigate("ApplicationPending");
+      navigate("Tabs");
     };
 
     const errorHandler = () => Alert.alert("Registration failed.");

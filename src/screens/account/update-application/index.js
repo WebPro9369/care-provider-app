@@ -34,6 +34,9 @@ class UpdateApplicationScreen extends React.Component {
     const { store: { currentUserStore }} = props;
 
     const { application: {
+      street,
+      city,
+      state,
       dateOfBirth,
       licenseNumber,
       licenseType,
@@ -58,6 +61,9 @@ class UpdateApplicationScreen extends React.Component {
     }} = currentUserStore;
 
     this.state = {
+      street,
+      city,
+      state,
       dateOfBirth,
       licenseNumber,
       licenseType,
@@ -123,10 +129,13 @@ class UpdateApplicationScreen extends React.Component {
 
   updateStore() {
     const {
-      store: { currentUserStore : { application }}
+      store: { currentUserStore : { application, address }}
     } = this.props;
 
     const {
+      street,
+      city,
+      state,
       dateOfBirth,
       licenseNumber,
       licenseType,
@@ -149,6 +158,11 @@ class UpdateApplicationScreen extends React.Component {
       supervisingPhysician,
       selectedIndexes,
     } = this.state;
+
+    address
+    .setStreet(street)
+    .setCity(city)
+    .setState(state);
 
     application
       .setDateOfBirth(dateOfBirth)
@@ -186,12 +200,9 @@ class UpdateApplicationScreen extends React.Component {
 
     let {
       dateOfBirth,
-      address: {
-        street:street,
-        city:city,
-        state:state,
-        zip_code: zip,
-      },
+      street,
+      city,
+      state,
       licenseNumber: license_number,
       licenseType: license_type,
       licenseIssuer: license_issuer,
@@ -226,10 +237,6 @@ class UpdateApplicationScreen extends React.Component {
     const data = {
       care_provider: {
         dob: new Date(dateOfBirth),
-        street,
-        city,
-        state,
-        zip,
         license_number,
         license_type,
         license_issuer,
@@ -249,7 +256,7 @@ class UpdateApplicationScreen extends React.Component {
         /*offered_services: commaStringToArray(offered_services),*/
         source,
         title,
-        supervisor,
+        supervisor
       }
     };
 
