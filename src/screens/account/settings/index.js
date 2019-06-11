@@ -5,18 +5,13 @@ import { Avatar } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ImagePicker from "react-native-image-picker";
 import { removeAuthentication } from "@services/authentication";
-import { StyledText, FormTextInput } from "../../../components/text";
+import { StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { InputButton } from "../../../components/input-button";
 import { ServiceButton } from "../../../components/service-button";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 
-import {
-  HeaderWrapper,
-  ViewCentered,
-  View,
-  FormInputWrapper
-} from "../../../components/views";
+import { HeaderWrapper, ViewCentered, View } from "../../../components/views";
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
 
@@ -33,20 +28,8 @@ class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const {
-      store: {
-        currentUserStore: { firstName, lastName, email, phone }
-      }
-    } = props;
-    const name = `${firstName} ${lastName}`;
-
-
     this.state = {
-      avatarSource: null,
-      address: "22341 Justice Ave APT 725", // TODO: pending
-      biography: "", // TODO: pending
-      email,
-      phone
+      avatarSource: null
     };
   }
 
@@ -91,11 +74,18 @@ class SettingsScreen extends React.Component {
     const {
       navigation: { navigate },
       store: {
-        currentUserStore: { firstName, lastName, email, phone }
+        currentUserStore: {
+          firstName,
+          lastName,
+          email,
+          phone,
+          address,
+          application: { biography }
+        }
       }
     } = this.props;
     const name = `${firstName} ${lastName}`;
-    const { avatarSource, address, biography } = this.state;
+    const { avatarSource } = this.state;
     const avatarOptions = avatarSource
       ? {
           source: { uri: avatarSource.uri }
@@ -146,7 +136,7 @@ class SettingsScreen extends React.Component {
             <View style={{ padding: 16 }}>
               <InputButton
                 label="Address"
-                value={address}
+                value={address.street}
                 icon={
                   <FontAwesome name="angle-right" size={24} color={MIDGREY} />
                 }
@@ -174,13 +164,14 @@ class SettingsScreen extends React.Component {
               />
             </View>
             <View style={{ padding: 16 }}>
-              <FormInputWrapper>
-                <FormTextInput
-                  label="Short Biography"
-                  value={biography}
-                  placeholder="Short Biography"
-                />
-              </FormInputWrapper>
+              <InputButton
+                label="Short Biography"
+                value={biography}
+                icon={
+                  <FontAwesome name="angle-right" size={24} color={MIDGREY} />
+                }
+                onPress={() => navigate("AccountEditBio")}
+              />
             </View>
           </View>
           <View style={{ marginTop: 32, marginBottom: 32 }}>
