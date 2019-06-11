@@ -34,6 +34,9 @@ class UpdateApplicationScreen extends React.Component {
     const { store: { currentUserStore }} = props;
 
     const { application: {
+      street,
+      city,
+      state,
       dateOfBirth,
       licenseNumber,
       licenseType,
@@ -50,14 +53,15 @@ class UpdateApplicationScreen extends React.Component {
       workHistory,
       specialties,
       /*offeredServices,*/
-      /*legalHistory,*/
-      /*references,*/
       whereHeard,
       supervisingPhysician,
       titles,
     }} = currentUserStore;
 
     this.state = {
+      street,
+      city,
+      state,
       dateOfBirth,
       licenseNumber,
       licenseType,
@@ -74,8 +78,6 @@ class UpdateApplicationScreen extends React.Component {
       workHistory: workHistory.join(', '),
       specialties: specialties.join(', '),
       /*offeredServices: offeredServices.join(', '),*/
-      /*legalHistory,*/
-      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes: titles.map(title => TITLES.indexOf(title)),
@@ -123,10 +125,13 @@ class UpdateApplicationScreen extends React.Component {
 
   updateStore() {
     const {
-      store: { currentUserStore : { application }}
+      store: { currentUserStore : { application, address }}
     } = this.props;
 
     const {
+      street,
+      city,
+      state,
       dateOfBirth,
       licenseNumber,
       licenseType,
@@ -139,16 +144,19 @@ class UpdateApplicationScreen extends React.Component {
       govermentIdType,
       boardCertification,
       malpracticeInsurance,
-      /*legalHistory,*/
       educationHistory,
       workHistory,
       specialties,
       /*offeredServices,*/
-      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes,
     } = this.state;
+
+    address
+    .setStreet(street)
+    .setCity(city)
+    .setState(state);
 
     application
       .setDateOfBirth(dateOfBirth)
@@ -163,12 +171,10 @@ class UpdateApplicationScreen extends React.Component {
       .setGovermentIdNumber(govermentIdNumber)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
-      /*.setLegalHistory(legalHistory)*/
       .setEducationHistory(commaStringToArray(educationHistory))
       .setWorkHistory(commaStringToArray(workHistory))
       .setSpecialties(commaStringToArray(specialties))
       /*.setOfferedServices(commaStringToArray(offeredServices))*/
-      /*.setReferences(references)*/
       .setWhereHeard(whereHeard)
       .setSupervisingPhysician(supervisingPhysician)
       .setTitles(selectedIndexes.map(index => TITLES[index]));
@@ -186,12 +192,9 @@ class UpdateApplicationScreen extends React.Component {
 
     let {
       dateOfBirth,
-      address: {
-        street:street,
-        city:city,
-        state:state,
-        zip_code: zip,
-      },
+      street,
+      city,
+      state,
       licenseNumber: license_number,
       licenseType: license_type,
       licenseIssuer: license_issuer,
@@ -203,11 +206,9 @@ class UpdateApplicationScreen extends React.Component {
       govermentIdType: government_id_type,
       boardCertification: certification,
       malpracticeInsurance: malpractice,
-      /*legalHistory: legal_history,*/
       educationHistory: education,
       workHistory: work_history,
       specialties,
-      /*references,*/
       /*offeredServices: offered_services,*/
       whereHeard: source,
       selectedIndexes,
@@ -226,10 +227,6 @@ class UpdateApplicationScreen extends React.Component {
     const data = {
       care_provider: {
         dob: new Date(dateOfBirth),
-        street,
-        city,
-        state,
-        zip,
         license_number,
         license_type,
         license_issuer,
@@ -242,14 +239,13 @@ class UpdateApplicationScreen extends React.Component {
         certification,
         malpractice,
         /*legal_history,*/
-        /*references,*/
         education: commaStringToArray(education),
         work_history: commaStringToArray(work_history),
         specialties: commaStringToArray(specialties),
         /*offered_services: commaStringToArray(offered_services),*/
         source,
         title,
-        supervisor,
+        supervisor
       }
     };
 
@@ -289,8 +285,6 @@ class UpdateApplicationScreen extends React.Component {
       workHistory,
       specialties,
       /*offeredServices,*/
-      /*legalHistory,*/
-      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes
@@ -624,41 +618,11 @@ class UpdateApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.offeredServices = input)}
                 onChangeText={this.handleInputChange("offeredServices")}
                 onSubmitEditing={() =>
-                  this.inputRefs.legalHistory.getInnerRef().focus()
+                  this.inputRefs.supervisingPhysician.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper> */}
-            {/*}<FormInputWrapper>
-              <FormTextInput
-                name="legalHistory"
-                label="Legal History"
-                value={legalHistory}
-                placeholder="Legal History"
-                returnKeyType="next"
-                ref={input => (this.inputRefs.legalHistory = input)}
-                onChangeText={this.handleInputChange("legalHistory")}
-                onSubmitEditing={() =>
-                  this.inputRefs.whereHeard.getInnerRef().focus()
-                }
-                blurOnSubmit={false}
-              />
-            </FormInputWrapper> */}
-            {/*}<FormInputWrapper>
-              <FormTextInput
-                name="references"
-                label="References"
-                value={references}
-                placeholder="References"
-                returnKeyType="next"
-                ref={input => (this.inputRefs.references = input)}
-                onChangeText={this.handleInputChange("references")}
-                onSubmitEditing={() =>
-                  this.inputRefs.whereHeard.getInnerRef().focus()
-                }
-                blurOnSubmit={false}
-              />
-            </FormInputWrapper>*/}
             <FormInputWrapper>
               <FormTextInput
                 name="whereHeard"

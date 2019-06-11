@@ -50,13 +50,14 @@ class EditBankScreen extends React.Component {
     this.setState({ loading: true });
     try {
       const { bankAccount } = await stripe.createTokenWithBankAccount(params);
-      debugger;
       onboardingData.setBankToken(bankAccount.bankAccountId);
 
       createBankAccountProvider(
         id,
         {
-          token_id: bankAccount.bankAccountId
+          payout_account: {
+            token_id: bankAccount.bankAccountId
+          }
         },
         res => {
           currentUserStore.setPayoutAccount(res.data.payout_account);
@@ -68,7 +69,6 @@ class EditBankScreen extends React.Component {
           this.setState({ loading: false });
         }
       );
-
     } catch (e) {
       console.log(e);
       this.setState({ loading: false });
@@ -94,6 +94,7 @@ class EditBankScreen extends React.Component {
               label="Routing Number"
               placeholder="110000000"
               value={routingNumber}
+              keyboardType="number-pad"
               onChangeText={value => this.setState({ routingNumber: value })}
             />
           </FormInputView>
@@ -103,6 +104,7 @@ class EditBankScreen extends React.Component {
               leftIcon={<FontAwesome name="bank" size={30} color={BLUE} />}
               placeholder="000123456789"
               value={accountNumber}
+              keyboardType="number-pad"
               onChangeText={value => this.setState({ accountNumber: value })}
             />
           </FormInputView>
