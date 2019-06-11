@@ -19,7 +19,7 @@ export function sendEmail (recipientEmail, templateName) {
   if(templateName = "passwordReset")
   {
     //TODO: Generate deeplink after setting app scheme
-    //replacementTags = {\"PASSWORD_RESET_LINK\":\"REPLACEMENT_VALUE\"}
+    replacementTags = {"PASSWORD_RESET_LINK":"opearcare://newpwd"};
   }
 
   // Create sendTemplatedEmail params

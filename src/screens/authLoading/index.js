@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import React, { Component } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View, Linking } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
 import { getAuthentication } from "@services/authentication";
@@ -18,6 +18,28 @@ class AuthLoadingScreen extends Component {
     this.bootstrapAsync();
   }
 
+  componentDidMount() {
+    Linking.addEventListener('url', this.handleOpenURL);
+  }
+
+  componentWillUnmount () {
+    Linking.removeEventListener('url', this.handleOpenURL);
+  }
+
+  handleOpenURL = (event) => { // D
+    this.navigate(event.url);
+  }
+
+  navigate = (url) => { // E
+    const { navigate } = this.props.navigation;
+    const route = url.replace(/.*?:\/\//g, '');
+    const routeName = route.split('/')[0];
+
+    if (routeName === 'newpwd') {
+      navigate('AccountNewPwd');
+    };
+  }
+
   bootstrapAsync = async () => {
     const {
       navigation: { navigate },
@@ -25,11 +47,11 @@ class AuthLoadingScreen extends Component {
     } = this.props;
 
     const { id, apiKey, isAuthenticated, wasAuthenticated } = await getAuthentication();
-  
+
     if (!isAuthenticated && wasAuthenticated) return navigate("AccountSignIn");
     if (isAuthenticated && !store.providerStore.active) return navigate("ApplicationPending");
     if (!isAuthenticated) return navigate("Onboarding");
-  
+
     const {
       store: {
         currentUserStore

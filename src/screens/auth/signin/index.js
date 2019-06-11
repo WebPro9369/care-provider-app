@@ -9,6 +9,7 @@ import { KeyboardAvoidingView } from "@components/views/keyboard-view";
 import { colors } from "@utils/constants";
 import { getCareProvider, getApiToken } from "@services/opear-api";
 import { getFormattedDate } from "@utils/helpers";
+import { sendEmail } from "@utils/ses_sendemail";
 
 @inject("store")
 class SignInScreen extends React.Component {
@@ -34,8 +35,8 @@ class SignInScreen extends React.Component {
     const successHandler = res => {
       if (res.data.message) {
         return Alert.alert(`Incorrect credentials. Please try again.`);
-      } 
-      
+      }
+
       const { id, api_key: apiKey } = res.data;
       currentUserStore.setAuthentication({ id, apiKey });
 
@@ -75,9 +76,9 @@ class SignInScreen extends React.Component {
         } = res.data;
 
         const dob = getFormattedDate(new Date(dateOfBirth));
-  
+
         const [firstName, lastName] = name.split(" ");
-  
+
         currentUserStore
           .setFirstName(firstName)
           .setLastName(lastName)
@@ -113,10 +114,10 @@ class SignInScreen extends React.Component {
           .setGovermentIdType(govermentIdType)
           .setGovermentIdCountry(govermentIdCountry)
           .setGovermentIdNumber(govermentIdNumber);
-  
+
         navigate("Tabs");
       };
-  
+
       getCareProvider(id, { successHandler });
     };
 
@@ -125,10 +126,22 @@ class SignInScreen extends React.Component {
 
   onPressForgotPassword = () => {
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      store: { currentUserStore, providerStore }
     } = this.props;
-    navigate("AccountForgotPwd");
-    return true;
+
+    currentUserStore.setEmail("test");
+    providerStore.setActive(true);
+
+    if(providerStore.active) {
+      sendEmail(currentUserStore.email, "passwordReset");
+      Alert.alert("Reset requested.","Check your email to reset your password.");
+      return true;
+    }
+
+    Alert.alert("Please register.","You'll need to make an account first.");
+
+    return false;
   };
 
   onPressSignUp = () => {
@@ -202,7 +215,7 @@ class SignInScreen extends React.Component {
                 onPress={this.onPressSignUp}
               >
                 sign up
-              </StyledText>              
+              </StyledText>
               <StyledText style={{ color: "#ffffff" }}>  |  </StyledText>
               <StyledText
                 style={{ color: "#ffffff" }}
