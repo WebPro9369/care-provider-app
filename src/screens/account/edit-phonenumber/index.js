@@ -1,6 +1,5 @@
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
-import PhoneInput from "react-native-phone-input";
 import { StyledText } from "../../../components/text";
 import { StyledMaskedTextInput } from "../../../components/text-masked";
 import { NavHeader } from "../../../components/nav-header";
