@@ -3555,11 +3555,6 @@ globals@^9.18.0:
   resolved "https://registry.yarnpkg.com/globals/-/globals-9.18.0.tgz#aa3896b3e69b487f17e31ed2143d69a8e30c2d8a"
   integrity sha512-S0nG3CLEQiY/ILxqtztTWH/3iRRdyBLw6KMDxnKMchrtbj2OFmehVh0WUCfW3DUrIgx/qFrJPICrq4Z4sTR9UQ==
 
-google-libphonenumber@^2.0.9:
-  version "2.0.19"
-  resolved "https://registry.yarnpkg.com/google-libphonenumber/-/google-libphonenumber-2.0.19.tgz#a6d5ff60412aa33b161bb830d70aa39682583054"
-  integrity sha512-kwtbruT+eyiof081cxT1tltMTxgTOq3CQhUoEYBROC+vNf+COPqzfKJtVnDvgXQe4SzfbnAYkP8KoSpbJBIlSg==
-
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.15"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
@@ -6280,15 +6275,6 @@ react-native-masked-text@^1.12.3:
   dependencies:
     moment "2.19.3"
     tinymask "^1.0.2"
-
-react-native-phone-input@^0.2.1:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-phone-input/-/react-native-phone-input-0.2.2.tgz#17121b1384a15fd4a7c099362f2b5ca328e48041"
-  integrity sha512-r5LmYtwFftHTrn1Cj6tQCbm9E/h2sUJ5iCo5SXykkM5rIAn3twGSA6jmOAtqlgod+VNnYi49AHuNdUH75gRk7Q==
-  dependencies:
-    google-libphonenumber "^2.0.9"
-    lodash "^4.17.4"
-    prop-types "^15.5.10"
 
 react-native-push-notification@^3.1.3:
   version "3.1.3"
