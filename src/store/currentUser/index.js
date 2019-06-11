@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-param-reassign */
 import { types } from "mobx-state-tree";
 import { setAuthentication } from "@services/authentication";
@@ -5,28 +6,29 @@ import AddressStore from "../address";
 
 const ApplicationStore = types
   .model("ApplicationStore", {
-      dateOfBirth: types.string,
-      biography: types.string,
-      licenseNumber: types.string,
-      licenseType: types.string,
-      licenseIssuer: types.string,
-      licenseCountry: types.string,
-      licenseState: types.string,
-      licenseCity: types.string,
-      govermentIdType: types.string,
-      govermentIdCountry: types.string,
-      govermentIdNumber: types.string,
-      boardCertification: types.string,
-      malpracticeInsurance: types.string,
-      educationHistory: types.array(types.string),
-      workHistory: types.array(types.string),
-      specialties: types.array(types.string),
-      offeredServices: types.array(types.string),
-      legalHistory: types.string,
-      references: types.string,
-      whereHeard: types.string,
-      supervisingPhysician: types.string,
-      titles: types.array(types.string),
+    dateOfBirth: types.string,
+    biography: types.string,
+    ssnLast4: types.string,
+    licenseNumber: types.string,
+    licenseType: types.string,
+    licenseIssuer: types.string,
+    licenseCountry: types.string,
+    licenseState: types.string,
+    licenseCity: types.string,
+    govermentIdType: types.string,
+    govermentIdCountry: types.string,
+    govermentIdNumber: types.string,
+    boardCertification: types.string,
+    malpracticeInsurance: types.string,
+    educationHistory: types.array(types.string),
+    workHistory: types.array(types.string),
+    specialties: types.array(types.string),
+    offeredServices: types.array(types.string),
+    legalHistory: types.string,
+    references: types.string,
+    whereHeard: types.string,
+    supervisingPhysician: types.string,
+    titles: types.array(types.string)
   })
   .actions(self => ({
     setDateOfBirth(value) {
@@ -59,6 +61,10 @@ const ApplicationStore = types
     },
     setLicenseState(value) {
       self.licenseState = value;
+      return self;
+    },
+    setSSNLast4(value) {
+      self.ssnLast4 = value;
       return self;
     },
     setLicenseCity(value) {
@@ -119,10 +125,10 @@ const ApplicationStore = types
     }
   }));
 
-  const PayoutAccountStore = types
+const PayoutAccountStore = types
   .model("PayoutAccountStore", {
-      token_id: types.maybeNull(types.string),
-      last4: types.maybeNull(types.string)
+    token_id: types.maybeNull(types.string),
+    last4: types.maybeNull(types.string)
   })
   .actions(self => ({
     setTokenId(value) {
@@ -137,62 +143,62 @@ const ApplicationStore = types
 
 export const CurrentUserStore = types
   .model("CurrentUserStore", {
-		id: types.number,
-		apiKey: types.string,
-    password: types.optional(types.string, ''),
+    id: types.number,
+    apiKey: types.string,
+    password: types.optional(types.string, ""),
     email: types.string,
     firstName: types.string,
     lastName: types.string,
     phone: types.string,
     application: types.optional(ApplicationStore, {
-      dateOfBirth: '',
-      biography: '',
-      licenseNumber: '',
-      licenseType: '',
-      licenseIssuer: '',
-      licenseCountry: '',
-      licenseState: '',
-      licenseCity: '',
-      govermentIdType: '',
-      govermentIdCountry: '',
-      govermentIdNumber: '',
-      boardCertification: '',
-      malpracticeInsurance: '',
+      dateOfBirth: "",
+      biography: "",
+      licenseNumber: "",
+      licenseType: "",
+      licenseIssuer: "",
+      licenseCountry: "",
+      licenseState: "",
+      licenseCity: "",
+      govermentIdType: "",
+      govermentIdCountry: "",
+      govermentIdNumber: "",
+      boardCertification: "",
+      malpracticeInsurance: "",
       educationHistory: [],
       workHistory: [],
       specialties: [],
       offeredServices: [],
-      legalHistory: '',
-      references: '',
-      whereHeard: '',
-      supervisingPhysician: '',
-      titles: [],
+      legalHistory: "",
+      references: "",
+      whereHeard: "",
+      supervisingPhysician: "",
+      titles: []
     }),
     address: types.optional(AddressStore, {
-      name: '',
-      street: '',
-      city: '',
-      state: '',
-      zip_code: '',
-      apartment_number: '',
-      latitude: '',
-      longitude: '',
+      name: "",
+      street: "",
+      city: "",
+      state: "",
+      zip_code: "",
+      apartment_number: "",
+      latitude: "",
+      longitude: ""
     }),
     payout_account: types.optional(PayoutAccountStore, {}),
     stripe_balance: types.maybeNull(types.number)
   })
   .actions(self => ({
-		setID(value) {
+    setID(value) {
       self.id = value;
       return self;
-		},
+    },
     setAPIKey(value) {
       self.apiKey = value;
       return self;
     },
-    setAuthentication({ id, apiKey}) {
+    setAuthentication({ id, apiKey }) {
       self.setID(id).setAPIKey(apiKey);
-      setAuthentication({ id, apiKey});
+      setAuthentication({ id, apiKey });
 
       return self;
     },
