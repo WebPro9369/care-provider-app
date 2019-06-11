@@ -26,7 +26,9 @@ const ApplicationStore = types
       references: types.string,
       whereHeard: types.string,
       supervisingPhysician: types.string,
-      titles: types.array(types.string),
+      titles: types.array(types.string)/*,
+      acceptedTermsOfService: types.boolean,
+      acceptedPrivacy: types.boolean*/
   })
   .actions(self => ({
     setDateOfBirth(value) {
@@ -116,7 +118,15 @@ const ApplicationStore = types
     setTitles(value) {
       self.titles = value;
       return self;
-    }
+    }/*,
+    setAcceptedTermsOfService(value) {
+      self.acceptedTermsOfService = value;
+      return self;
+    },
+    setAcceptedPrivacy(value) {
+      self.acceptedPrivacy = value;
+      return self;
+    }*/
   }));
 
   const PayoutAccountStore = types

@@ -1,8 +1,8 @@
 /* eslint-disable no-return-assign */
 import React from "react";
 // import axios from "axios";
-import { Alert } from "react-native";
-import { Avatar, ButtonGroup } from "react-native-elements";
+import { Alert, Linking } from "react-native";
+import { Avatar, ButtonGroup, CheckBox, Icon } from "react-native-elements";
 import { inject, observer, PropTypes } from "mobx-react";
 import ImagePicker from "react-native-image-picker";
 import { FormTextInput, StyledText } from "@components/text";
@@ -56,7 +56,9 @@ class ApplicationScreen extends React.Component {
       /*references: '',*/
       whereHeard: '',
       supervisingPhysician: '',
-      selectedIndexes: []
+      selectedIndexes: []/*,
+      acceptedTermsOfService: false,
+      acceptedPrivacy: false*/
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -164,7 +166,9 @@ class ApplicationScreen extends React.Component {
       whereHeard,
       supervisingPhysician,
       selectedIndexes,
-      dateOfBirth,
+      dateOfBirth/*,
+      acceptedTermsOfService,
+      acceptedPrivacy*/
     } = this.state;
 
     address
@@ -193,7 +197,9 @@ class ApplicationScreen extends React.Component {
       /*.setReferences(references)*/
       .setWhereHeard(whereHeard)
       .setSupervisingPhysician(supervisingPhysician)
-      .setTitles(selectedIndexes.map(index => TITLES[index]));
+      .setTitles(selectedIndexes.map(index => TITLES[index]))
+      /*.setAcceptedPrivacy(acceptedPrivacy)
+      .setAcceptedTermsOfService(acceptedTermsOfService);*/
   }
 
   onSubmit = _ => {
@@ -220,6 +226,22 @@ class ApplicationScreen extends React.Component {
     if (!ssnPattern.test(ssn)) {
       return Alert.alert(
         "Please enter Social Security Number in 'XXX-XX-XXXX' format"
+      );
+    }
+
+    const {acceptedPrivacy, acceptedTermsOfService} = this.state;
+
+    if(!acceptedPrivacy)
+    {
+      return Alert.alert(
+        "Please review our Privacy Policy to continue"
+      );
+    }
+
+    if(!acceptedTermsOfService)
+    {
+      return Alert.alert(
+        "Please review our Terms of Service to continue"
       );
     }
 
@@ -256,7 +278,9 @@ class ApplicationScreen extends React.Component {
         /*offeredServices: offered_services,*/
         whereHeard: source,
         titles: title,
-        supervisingPhysician: supervisor,
+        supervisingPhysician: supervisor/*,
+        acceptedPrivacy: accepted_privacy,
+        acceptedTermsOfService: accepted_terms_of_service*/
        }
     } = currentUserStore;
 
@@ -288,6 +312,8 @@ class ApplicationScreen extends React.Component {
         source,
         title,
         supervisor,
+        /*accepted_terms_of_service,
+        accepted_privacy,*/
         addresses_attributes: [
           {
             street,
@@ -348,7 +374,9 @@ class ApplicationScreen extends React.Component {
       /*references,*/
       whereHeard,
       supervisingPhysician,
-      selectedIndexes
+      selectedIndexes,
+      /*acceptedTermsOfService,
+      acceptedPrivacy*/
     } = this.state;
 
     const avatarOptions = avatarSource
@@ -388,7 +416,7 @@ class ApplicationScreen extends React.Component {
               showEditButton
             />
           </ViewCentered>
-          <FormWrapper>
+          <FormWrapper style={{paddingBottom:0}}>
             <FormInputWrapper>
               <FormTextInput
                 name="dateOfBirth"
@@ -758,8 +786,84 @@ class ApplicationScreen extends React.Component {
                 />
               </FormInputWrapper>
             )}
+            <FormInputWrapper>
+              <StyledText
+                style={{
+                  fontSize: 16,
+                  color: colors.BLACK60
+                }}>
+                By checking this box I affirm that I have read and understood
+                Opear's{" "}
+                <StyledText
+                  style={{
+                      color: colors.BLUE,
+                      textDecorationLine: 'underline',
+                      textDecorationColor: colors.BLUE,
+                      fontSize: 16
+                    }}
+                  onPress={() => Linking.openURL('https://www.opear.com/terms_of_use')}>
+                  Terms of Use
+                </StyledText>
+                 {" "}and{" "}
+                <StyledText
+                  style={{
+                    color: colors.BLUE,
+                    textDecorationLine: 'underline',
+                    textDecorationColor: colors.BLUE,
+                    fontSize: 16
+                  }}
+                  onPress={() => Linking.openURL('https://www.opear.com/privacy')}>
+                  Privacy Policy
+                </StyledText>
+                {" "}and agree to be boundby their terms.
+              </StyledText>
+              <CheckBox
+                title="I have read and accept"
+                checked={this.state.acceptedTermsOfService}
+                onPress={() => this.setState({acceptedTermsOfService: !this.state.acceptedTermsOfService})}
+                size={36}
+                textStyle={{fontSize:18}}
+                containerStyle={{
+                  backgroundColor:colors.WHITE,
+                  borderColor:colors.WHITE,
+                  paddingLeft:0,
+                  marginLeft:0
+                }}
+                checkedIcon={'check-square'}
+                uncheckedIcon={'square-o'}
+                checkedColor={colors.SEAFOAMBLUE}
+                />
+              <StyledText
+                style={{
+                  fontSize: 16,
+                  color: colors.BLACK60,
+                  marginTop: 20
+                }}>
+                  I hereby affirm that I read and understood Opear's Terms of Use
+                  and Privacy Policy and agree to be bound by their terms. I have
+                  (and will maintain during my time as an Opear Provider) all
+                  necessary malpractice and other insurance as required under
+                  applicable law.
+                </StyledText>
+                <CheckBox
+                  title="I have read and accept"
+                  checked={this.state.acceptedPrivacy}
+                  onPress={() => this.setState({acceptedPrivacy: !this.state.acceptedPrivacy})}
+                  size={36}
+                  textStyle={{fontSize:18}}
+                  containerStyle={{
+                    backgroundColor:colors.WHITE,
+                    borderColor:colors.WHITE,
+                    paddingLeft:0,
+                    marginLeft:0
+                  }}
+                  checkedIcon={'check-square'}
+                  uncheckedIcon={'square-o'}
+                  checkedColor={colors.SEAFOAMBLUE}
+                />
+            </FormInputWrapper>
           </FormWrapper>
-          <FormInputWrapper style={{ marginBottom: 20 }}>
+          <FormInputWrapper style={{ marginBottom: 20, marginTop: 0, paddingTop: 0 }}>
             <ServiceButton title="Submit Application" onPress={this.onSubmit} />
           </FormInputWrapper>
         </KeyboardScrollView>
