@@ -23,13 +23,15 @@ class AskLocationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      zipcode: ''
+      zipcode: ""
     };
   }
 
   componentDidMount() {
     const {
-      store: { currentUserStore: { address } }
+      store: {
+        currentUserStore: { address }
+      }
     } = this.props;
     Geolocation.getCurrentPosition(
       position => {
@@ -68,7 +70,15 @@ class AskLocationScreen extends Component {
         //     console.tron.log("Error geocode: ", err);
         // https://maps.googleapis.com/maps/api/js?key=AIzaSyBu1rXRtcQVBHRHotogui7F2FWT9WpfcNw
         //   });
-        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + pos.lat + "," + pos.lng + "&key=" + GOOGLE_API_KEY)
+        return axios
+          .get(
+            "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+              pos.lat +
+              "," +
+              pos.lng +
+              "&key=" +
+              GOOGLE_API_KEY
+          )
           .then(res => {
             const addressComponents =
               res.data &&
@@ -148,11 +158,14 @@ class AskLocationScreen extends Component {
   onSubmit = () => {
     const {
       navigation: { navigate },
-      store: { currentUserStore: { address } }
+      store: {
+        currentUserStore: { address }
+      }
     } = this.props;
     const { zipcode } = this.state;
 
-    if (zipcode.length !== 5) return Alert.alert("Please enter a \n valid US zip code.");
+    if (zipcode.length !== 5)
+      return Alert.alert("Please enter a \n valid US zip code.");
 
     if (zipcode) address.setZipCode(zipcode);
     return navigate("NameCapture");
@@ -202,6 +215,7 @@ class AskLocationScreen extends Component {
               autoFocus
               placeholder="Zip code"
               value={zipcode}
+              keyboardType="number-pad"
               onChangeText={this.handleInputChange}
               maxLength={5}
             />

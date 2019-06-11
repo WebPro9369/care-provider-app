@@ -75,6 +75,7 @@ class PhoneNumberScreen extends Component {
               autoFocus
               placeholder="(123) 456 - 7890"
               value={phone}
+              keyboardType="number-pad"
               onChangeText={this.handleInputChange}
             />
           </View>
