@@ -126,12 +126,12 @@ class ApplicationScreen extends React.Component {
 
   hideSsnDigits = () => {
     const { maskedSsn } = this.state;
-    let hiddenSss="";
+    let hiddenSsn="";
     if (maskedSsn.length > 10) {
-      hiddenSss = `XXX-XX-${maskedSsn.substr(7, 4)}`;
+      hiddenSsn = `XXX-XX-${maskedSsn.substr(7, 4)}`;
     }
     this.setState({
-      maskedSsn: hiddenSss
+      maskedSsn: hiddenSsn
     });
   };
 
@@ -304,7 +304,7 @@ class ApplicationScreen extends React.Component {
 
       currentUserStore.setAuthentication({ id, apiKey });
 
-      navigate("Tabs");
+      navigate("Application");
     };
 
     const errorHandler = () => Alert.alert("Registration failed.");
