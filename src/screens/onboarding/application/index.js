@@ -49,8 +49,6 @@ class ApplicationScreen extends React.Component {
       workHistory: '',
       specialties: '',
       /* offeredServices: '', */
-      /*legalHistory: '',*/
-      /*references: '',*/
       whereHeard: '',
       supervisingPhysician: '',
       selectedIndexes: []
@@ -152,12 +150,10 @@ class ApplicationScreen extends React.Component {
       govermentIdType,
       boardCertification,
       malpracticeInsurance,
-      /*legalHistory,*/
       educationHistory,
       workHistory,
       specialties,
       /*offeredServices,*/
-      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes,
@@ -182,12 +178,10 @@ class ApplicationScreen extends React.Component {
       .setGovermentIdNumber(govermentIdNumber)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
-      /*.setLegalHistory(legalHistory)*/
       .setEducationHistory(commaStringToArray(educationHistory))
       .setWorkHistory(commaStringToArray(workHistory))
       .setSpecialties(commaStringToArray(specialties))
       /*.setOfferedServices(commaStringToArray(offeredServices))*/
-      /*.setReferences(references)*/
       .setWhereHeard(whereHeard)
       .setSupervisingPhysician(supervisingPhysician)
       .setTitles(selectedIndexes.map(index => TITLES[index]));
@@ -245,11 +239,9 @@ class ApplicationScreen extends React.Component {
         govermentIdType: government_id_type,
         boardCertification: certification,
         malpracticeInsurance: malpractice,
-        /*legalHistory: legal_history,*/
         educationHistory: education,
         workHistory: work_history,
         specialties,
-        /*references,*/
         /*offeredServices: offered_services,*/
         whereHeard: source,
         titles: title,
@@ -279,8 +271,6 @@ class ApplicationScreen extends React.Component {
         government_id_type,
         certification,
         malpractice,
-        /*legal_history,*/
-        /*references,*/
         education,
         work_history,
         specialties,
@@ -336,8 +326,6 @@ class ApplicationScreen extends React.Component {
       workHistory,
       specialties,
       /*offeredServices,*/
-      /*legalHistory,*/
-      /*references,*/
       whereHeard,
       supervisingPhysician,
       selectedIndexes
@@ -686,41 +674,11 @@ class ApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.offeredServices = input)}
                 onChangeText={this.handleInputChange("offeredServices")}
                 onSubmitEditing={() =>
-                  this.inputRefs.legalHistory.getInnerRef().focus()
+                  this.inputRefs.supervisingPhysician.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper> */}
-            {/*<FormInputWrapper>
-              <FormTextInput
-                name="legalHistory"
-                label="Legal History"
-                value={legalHistory}
-                placeholder="Legal History"
-                returnKeyType="next"
-                ref={input => (this.inputRefs.legalHistory = input)}
-                onChangeText={this.handleInputChange("legalHistory")}
-                onSubmitEditing={() =>
-                  this.inputRefs.whereHeard.getInnerRef().focus()
-                }
-                blurOnSubmit={false}
-              />
-            </FormInputWrapper>*/}
-            {/*}<FormInputWrapper>
-              <FormTextInput
-                name="references"
-                label="References"
-                value={references}
-                placeholder="References"
-                returnKeyType="next"
-                ref={input => (this.inputRefs.references = input)}
-                onChangeText={this.handleInputChange("references")}
-                onSubmitEditing={() =>
-                  this.inputRefs.whereHeard.getInnerRef().focus()
-                }
-                blurOnSubmit={false}
-              />
-            </FormInputWrapper>*/}
             <FormInputWrapper>
               <FormTextInput
                 name="whereHeard"

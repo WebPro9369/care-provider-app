@@ -22,8 +22,6 @@ const ApplicationStore = types
       workHistory: types.array(types.string),
       specialties: types.array(types.string),
       offeredServices: types.array(types.string),
-      legalHistory: types.string,
-      references: types.string,
       whereHeard: types.string,
       supervisingPhysician: types.string,
       titles: types.array(types.string),
@@ -97,14 +95,6 @@ const ApplicationStore = types
       self.offeredServices = value;
       return self;
     },
-    setLegalHistory(value) {
-      self.legalHistory = value;
-      return self;
-    },
-    setReferences(value) {
-      self.references = value;
-      return self;
-    },
     setWhereHeard(value) {
       self.whereHeard = value;
       return self;
@@ -162,8 +152,6 @@ export const CurrentUserStore = types
       workHistory: [],
       specialties: [],
       offeredServices: [],
-      legalHistory: '',
-      references: '',
       whereHeard: '',
       supervisingPhysician: '',
       titles: [],
