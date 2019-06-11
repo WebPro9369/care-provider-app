@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable camelcase */
 /* eslint-disable no-return-assign */
 import React from "react";
 // import axios from "axios";
@@ -54,6 +52,7 @@ class ApplicationScreen extends React.Component {
       /*legalHistory: '',*/
       /*references: '',*/
       whereHeard: '',
+      supervisingPhysician: '',
       selectedIndexes: []
     };
 
@@ -64,7 +63,7 @@ class ApplicationScreen extends React.Component {
     this.inputRefs = {};
   }
 
-  onAddAvatar = () => {
+  onAddAvatar = _ => {
     const options = {
       title: "Select Profile Picture"
     };
@@ -117,14 +116,14 @@ class ApplicationScreen extends React.Component {
       });
     }
 
-    return this.setState({
+    this.setState({
       [name]: value
     });
   };
 
   hideSsnDigits = () => {
     const { maskedSsn } = this.state;
-    let hiddenSss = "";
+    let hiddenSss="";
     if (maskedSsn.length > 10) {
       hiddenSss = `XXX-XX-${maskedSsn.substr(7, 4)}`;
     }
@@ -133,11 +132,9 @@ class ApplicationScreen extends React.Component {
     });
   };
 
-  updateStore = () => {
+  updateStore = _ => {
     const {
-      store: {
-        currentUserStore: { application }
-      }
+      store: { currentUserStore : { application, address }}
     } = this.props;
 
     const {
@@ -165,7 +162,6 @@ class ApplicationScreen extends React.Component {
       supervisingPhysician,
       selectedIndexes,
       dateOfBirth,
-      maskedSsn
     } = this.state;
 
     address
@@ -181,7 +177,6 @@ class ApplicationScreen extends React.Component {
       /* .setLicenseCountry(licenseCountry) */
       .setLicenseState(licenseState)
       .setLicenseCity(licenseCity)
-      .setSSNLast4(maskedSsn.substr(7, 4))
       /* }.setGovermentIdCountry(govermentIdCountry) */
       .setGovermentIdType(govermentIdType)
       .setGovermentIdNumber(govermentIdNumber)
@@ -196,14 +191,16 @@ class ApplicationScreen extends React.Component {
       .setWhereHeard(whereHeard)
       .setSupervisingPhysician(supervisingPhysician)
       .setTitles(selectedIndexes.map(index => TITLES[index]));
-  };
+  }
 
-  onSubmit = () => {
+  onSubmit = _ => {
     this.updateStore();
 
     const {
       navigation: { navigate },
-      store: { currentUserStore }
+      store: {
+        currentUserStore,
+      }
     } = this.props;
     const { dateOfBirth, ssn } = this.state;
 
@@ -223,14 +220,19 @@ class ApplicationScreen extends React.Component {
       );
     }
 
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      phone,
-      address: { street, city, state, zip_code: zip },
-      application: {
+    let {
+       firstName,
+       lastName,
+       email,
+       password,
+       phone,
+       address: {
+         street:street,
+         city:city,
+         state:state,
+         zip_code: zip,
+       },
+       application: {
         dateOfBirth: dob,
         licenseNumber: license_number,
         licenseType: license_type,
@@ -238,7 +240,6 @@ class ApplicationScreen extends React.Component {
         /* licenseCountry: license_country, */
         licenseState: license_state,
         licenseCity: license_city,
-        ssnLast4: ssn_last4,
         govermentIdNumber: government_id_number,
         /* govermentIdCountry: government_id_country, */
         govermentIdType: government_id_type,
@@ -252,8 +253,8 @@ class ApplicationScreen extends React.Component {
         /*offeredServices: offered_services,*/
         whereHeard: source,
         titles: title,
-        supervisingPhysician: supervisor
-      }
+        supervisingPhysician: supervisor,
+       }
     } = currentUserStore;
 
     const data = {
@@ -273,7 +274,6 @@ class ApplicationScreen extends React.Component {
         /* license_country, */
         license_state,
         license_city,
-        ssn_last4,
         government_id_number,
         /* government_id_country, */
         government_id_type,
@@ -287,11 +287,11 @@ class ApplicationScreen extends React.Component {
         /*offered_services,*/
         source,
         title,
-        supervisor
+        supervisor,
       }
     };
 
-    const successHandler = response => {
+    const successHandler = (response) => {
       const { id, api_key: apiKey } = response.data;
 
       currentUserStore.setAuthentication({ id, apiKey });
@@ -301,12 +301,12 @@ class ApplicationScreen extends React.Component {
 
     const errorHandler = () => Alert.alert("Registration failed.");
 
-    return registerCareProvider(data, { successHandler, errorHandler });
+    registerCareProvider(data, { successHandler, errorHandler });
   };
 
-  updateIndex = selectedIndexes => {
+  updateIndex = (selectedIndexes) => {
     this.setState({ selectedIndexes });
-  };
+  }
 
   render() {
     const {
@@ -386,7 +386,7 @@ class ApplicationScreen extends React.Component {
                 name="dateOfBirth"
                 label="Date of Birth"
                 value={dateOfBirth}
-                onChangeText={this.handleInputChange("dateOfBirth")}
+                onChangeText={this.handleInputChange('dateOfBirth')}
                 placeholder="mm/dd/yyyy"
                 returnKeyType="next"
                 onSubmitEditing={() =>
@@ -400,7 +400,7 @@ class ApplicationScreen extends React.Component {
                 name="street"
                 label="Street Address"
                 value={street}
-                onChangeText={this.handleInputChange("street")}
+                onChangeText={this.handleInputChange('street')}
                 placeholder="Street Address"
                 returnKeyType="next"
                 onSubmitEditing={() =>
@@ -415,7 +415,7 @@ class ApplicationScreen extends React.Component {
                 name="city"
                 label="City"
                 value={city}
-                onChangeText={this.handleInputChange("city")}
+                onChangeText={this.handleInputChange('city')}
                 placeholder="City"
                 returnKeyType="next"
                 onSubmitEditing={() =>
@@ -429,7 +429,7 @@ class ApplicationScreen extends React.Component {
                 name="state"
                 label="State"
                 value={state}
-                onChangeText={this.handleInputChange("state")}
+                onChangeText={this.handleInputChange('state')}
                 placeholder="State"
                 returnKeyType="next"
                 onSubmitEditing={() =>
@@ -522,7 +522,9 @@ class ApplicationScreen extends React.Component {
                 returnKeyType="next"
                 ref={input => (this.inputRefs.licenseCountry = input)}
                 onChangeText={this.handleInputChange("licenseCountry")}
-                onSubmitEditing={() => this.inputRefs.ssn.getInnerRef().focus()}
+                onSubmitEditing={() =>
+                  this.inputRefs.ssn.getInnerRef().focus()
+                }
                 blurOnSubmit={false}
               />
             </FormInputWrapper> */}
