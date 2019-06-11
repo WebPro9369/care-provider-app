@@ -304,7 +304,7 @@ class ApplicationScreen extends React.Component {
 
       currentUserStore.setAuthentication({ id, apiKey });
 
-      navigate("Application");
+      navigate("ApplicationPending");
     };
 
     const errorHandler = () => Alert.alert("Registration failed.");
