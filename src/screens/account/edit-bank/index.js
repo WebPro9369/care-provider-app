@@ -94,6 +94,7 @@ class EditBankScreen extends React.Component {
               label="Routing Number"
               placeholder="110000000"
               value={routingNumber}
+              keyboardType="number-pad"
               onChangeText={value => this.setState({ routingNumber: value })}
             />
           </FormInputView>
@@ -103,6 +104,7 @@ class EditBankScreen extends React.Component {
               leftIcon={<FontAwesome name="bank" size={30} color={BLUE} />}
               placeholder="000123456789"
               value={accountNumber}
+              keyboardType="number-pad"
               onChangeText={value => this.setState({ accountNumber: value })}
             />
           </FormInputView>
