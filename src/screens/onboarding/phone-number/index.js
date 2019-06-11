@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Alert, Image, View } from "react-native";
-import PhoneInput from "react-native-phone-input";
+import { Image, View } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
+import { TextInputMask } from "react-native-masked-text";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { ServiceButton } from "../../../components/service-button";
-import { StyledText, StyledTextInput } from "../../../components/text";
+import { StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { colors } from "../../../utils/constants";
 
@@ -24,12 +24,12 @@ class PhoneNumberScreen extends Component {
     };
   }
 
-  handleInputChange = (phone) => {
+  handleInputChange = phone => {
     this.setState({ phone });
   };
 
   onSubmit = () => {
-    const { phone} = this.state;
+    const { phone } = this.state;
     const {
       navigation: { navigate },
       store: { currentUserStore }
@@ -37,12 +37,12 @@ class PhoneNumberScreen extends Component {
 
     console.tron.log("Phone number: ", phone);
 
-    {/*if(!this.phone.isValidNumber())
+    {
+      /* if(!this.phone.isValidNumber())
     {
       return Alert.alert("Please enter a valid phone number.");
-    }*/}
-
-    //TODO: Change back to PhoneInput if possible for validation later
+    }*/
+    }
 
     currentUserStore.setPhone(phone);
 
@@ -70,16 +70,18 @@ class PhoneNumberScreen extends Component {
             What is your phone number?
           </StyledText>
           <View>
-            <StyledTextInput
+            <TextInputMask
               fontSize={28}
               autoFocus
               placeholder="(123) 456 - 7890"
               value={phone}
               keyboardType="number-pad"
+              type="custom"
+              options={{ mask: "(999) 999-9999" }}
               onChangeText={this.handleInputChange}
             />
           </View>
-          {/*}<View
+          {/* }<View
             style={{
               paddingTop: 16,
               paddingBottom: 16,
