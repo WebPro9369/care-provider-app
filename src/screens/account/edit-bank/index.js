@@ -50,13 +50,14 @@ class EditBankScreen extends React.Component {
     this.setState({ loading: true });
     try {
       const { bankAccount } = await stripe.createTokenWithBankAccount(params);
-      debugger;
       onboardingData.setBankToken(bankAccount.bankAccountId);
 
       createBankAccountProvider(
         id,
         {
-          token_id: bankAccount.bankAccountId
+          payout_account: {
+            token_id: bankAccount.bankAccountId
+          }
         },
         res => {
           currentUserStore.setPayoutAccount(res.data.payout_account);
@@ -68,7 +69,6 @@ class EditBankScreen extends React.Component {
           this.setState({ loading: false });
         }
       );
-
     } catch (e) {
       console.log(e);
       this.setState({ loading: false });

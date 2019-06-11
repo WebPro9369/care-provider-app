@@ -31,8 +31,8 @@ class PayoutsScreen extends React.Component {
       }
     } = this.props;
     getCareProvider(
-      currentUserStore.id,
-      res => {
+      currentUserStore.id, {
+      successHandler: res => {
         if (res.status === 200) {
           currentUserStore
             .setStripeBalance(res.data.stripe_balance)
@@ -46,12 +46,12 @@ class PayoutsScreen extends React.Component {
           });
         }
       },
-      () => {
+      errorHandler: () => {
         this.setState({
           loading: false
         });
       }
-    );
+    });
   }
 
   render() {
@@ -86,7 +86,7 @@ class PayoutsScreen extends React.Component {
             >
               {"Total Earnings: "}
             </StyledText>
-            {loading 
+            {loading
               ? <ActivityIndicator size="small" color={colors.SEAFOAMBLUE} />
               : (
                 <StyledText fontSize={24} color={colors.SEAFOAMBLUE}>
