@@ -439,26 +439,12 @@ class ApplicationScreen extends React.Component {
                 placeholder="State"
                 returnKeyType="next"
                 onSubmitEditing={() =>
-                  this.inputRefs.licenseNumber.getInnerRef().focus()
-                }
-                blurOnSubmit={false}
-              />
-            </FormInputWrapper>
-            <FormInputWrapper>
-              <FormTextInput
-                name="licenseNumber"
-                label="Medical License Number"
-                value={licenseNumber}
-                placeholder="Medical License Number"
-                returnKeyType="next"
-                ref={input => (this.inputRefs.licenseNumber = input)}
-                onChangeText={this.handleInputChange("licenseNumber")}
-                onSubmitEditing={() =>
                   this.inputRefs.licenseType.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
+
             <FormInputWrapper>
               <FormTextInput
                 name="licenseType"
@@ -469,11 +455,29 @@ class ApplicationScreen extends React.Component {
                 ref={input => (this.inputRefs.licenseType = input)}
                 onChangeText={this.handleInputChange("licenseType")}
                 onSubmitEditing={() =>
+                  this.inputRefs.licenseNumber.getInnerRef().focus()
+                }
+                blurOnSubmit={false}
+              />
+            </FormInputWrapper>
+
+            <FormInputWrapper>
+              <FormTextInput
+                name="licenseNumber"
+                label="Medical License Number"
+                value={licenseNumber}
+                placeholder="Medical License Number"
+                returnKeyType="next"
+                keyboardType="number-pad"
+                ref={input => (this.inputRefs.licenseNumber = input)}
+                onChangeText={this.handleInputChange("licenseNumber")}
+                onSubmitEditing={() =>
                   this.inputRefs.licenseIssuer.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
+
             <FormInputWrapper>
               <FormTextInput
                 name="licenseIssuer"
@@ -571,6 +575,7 @@ class ApplicationScreen extends React.Component {
                 value={govermentIdNumber}
                 placeholder="Goverment ID Number"
                 returnKeyType="next"
+                keyboardType="number-pad"
                 ref={input => (this.inputRefs.govermentIdNumber = input)}
                 onChangeText={this.handleInputChange("govermentIdNumber")}
                 onSubmitEditing={() =>
@@ -586,6 +591,7 @@ class ApplicationScreen extends React.Component {
                 value={maskedSsn || ssn}
                 placeholder="123-45-6789"
                 returnKeyType="next"
+                keyboardType="number-pad"
                 ref={input => (this.inputRefs.ssn = input)}
                 onChangeText={this.handleInputChange("ssn")}
                 onSubmitEditing={() => {
@@ -697,7 +703,7 @@ class ApplicationScreen extends React.Component {
                 blurOnSubmit={false}
               />
             </FormInputWrapper> */}
-            {/*<FormInputWrapper>
+            {/* <FormInputWrapper>
               <FormTextInput
                 name="legalHistory"
                 label="Legal History"
@@ -712,7 +718,7 @@ class ApplicationScreen extends React.Component {
                 blurOnSubmit={false}
               />
             </FormInputWrapper> */}
-            {/*}<FormInputWrapper>
+            {/* }<FormInputWrapper>
               <FormTextInput
                 name="references"
                 label="References"
@@ -732,7 +738,7 @@ class ApplicationScreen extends React.Component {
                 name="whereHeard"
                 label="Where did you hear about us?"
                 value={whereHeard}
-                placeholder="Where did you hear about us?"
+                placeholder="E.g. Facebook, A Friend"
                 returnKeyType="next"
                 ref={input => (this.inputRefs.whereHeard = input)}
                 onChangeText={this.handleInputChange("whereHeard")}
