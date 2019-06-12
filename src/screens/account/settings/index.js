@@ -178,7 +178,7 @@ class SettingsScreen extends React.Component {
             <View style={{ padding: 16 }}>
               <InputButton
                 label="Specialties"
-                value={application.specialties}
+                value={application.specialties.join(", ")}
                 icon={
                   <FontAwesome name="angle-right" size={24} color={MIDGREY} />
                 }
