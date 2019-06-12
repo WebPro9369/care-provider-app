@@ -7,7 +7,6 @@ import EditAddressScreen from "../screens/account/edit-address";
 import EditPhoneNumberScreen from "../screens/account/edit-phonenumber";
 import PayoutsScreen from "../screens/account/payouts";
 import EditBankScreen from "../screens/account/edit-bank";
-import UpdateApplicationScreen from "../screens/account/update-application";
 import ForgotPwdScreen from "../screens/auth/forgotPwd";
 import NewPwdScreen from "../screens/auth/enterNewPwd";
 
@@ -36,9 +35,6 @@ const AccountNavigator = createStackNavigator(
     },
     AccountEditBank: {
       screen: EditBankScreen
-    },
-    AccountUpdateApplication: {
-      screen: UpdateApplicationScreen
     },
     AccountForgotPwd: {
       screen: ForgotPwdScreen
