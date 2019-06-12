@@ -23,12 +23,11 @@ class AuthLoadingScreen extends Component {
       navigation: { navigate },
       store
     } = this.props;
-
     const { id, apiKey, isAuthenticated, wasAuthenticated } = await getAuthentication();
 
     if (!isAuthenticated && wasAuthenticated) return navigate("AccountSignIn");
     if (!isAuthenticated) return navigate("Onboarding");
-  
+
     const {
       store: {
         currentUserStore
@@ -109,8 +108,16 @@ class AuthLoadingScreen extends Component {
       navigate("Tabs");
     };
 
-    getCareProvider(id, { successHandler });
+    const errorHandler = (err) => {
+      if(err.response.status == 401) {
+        navigate("AccountSignIn");
+      }
+    };
+
+    getCareProvider(id, { successHandler, errorHandler });
   };
+
+
 
   render() {
     return (
