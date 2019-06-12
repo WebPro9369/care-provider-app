@@ -188,6 +188,9 @@ class AskLocationScreen extends Component {
   };
 
   render() {
+    const {
+      navigation: { navigate }
+    } = this.props;
     const { zipcode } = this.state;
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
@@ -221,7 +224,20 @@ class AskLocationScreen extends Component {
             />
           </View>
         </View>
+
         <View>
+          <StyledText
+            style={{
+              color: colors.BLUE,
+              textDecorationLine: "underline",
+              textDecorationColor: colors.BLUE,
+              fontSize: 16,
+              marginBottom: 20,
+              textAlign: "center"
+            }}
+            onPress={() => navigate("AccountSignIn")}>
+            Have an Account? Sign In
+          </StyledText>
           <Image
             source={imgProgressbar}
             resizeMode="contain"
