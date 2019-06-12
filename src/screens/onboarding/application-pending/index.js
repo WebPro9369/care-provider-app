@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View, Alert, NativeModules } from "react-native";
+import { Image, View, Alert, NativeModules, Linking } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import axios from "axios";
 import TouchID from "react-native-touch-id";
@@ -18,6 +18,28 @@ class ApplicationPendingScreen extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    Linking.addEventListener('url', this.handleOpenURL);
+  }
+
+  componentWillUnmount () {
+    Linking.removeEventListener('url', this.handleOpenURL);
+  }
+
+  handleOpenURL = (event) => {
+    this.navigate(event.url);
+  }
+
+  navigate = (url) => {
+    const { navigate } = this.props.navigation;
+    const route = url.replace(/.*?:\/\//g, '');
+    const routeName = route.split('/')[0];
+
+    if (routeName === 'newpwd') {
+      navigate('AccountNewPwd');
+    };
   }
 
   render() {

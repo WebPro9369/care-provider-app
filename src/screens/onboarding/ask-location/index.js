@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import { Image, View, Alert, NativeModules } from "react-native";
+import { Image, View, Alert, NativeModules, Linking } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import axios from "axios";
 import Geolocation from "react-native-geolocation-service";
 import TouchID from "react-native-touch-id";
 import Geocoder from "react-native-geocoder";
-import { ServiceButton } from "../../../components/service-button";
-import { StyledText, StyledTextInput } from "../../../components/text";
-import { NavHeader } from "../../../components/nav-header";
-import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
-import { colors, GOOGLE_API_KEY } from "../../../utils/constants";
+import { ServiceButton } from "@components/service-button";
+import { StyledText, StyledTextInput } from "@components/text";
+import { NavHeader } from "@components/nav-header";
+import { KeyboardAvoidingView } from "@components/views/keyboard-view";
+import { colors, GOOGLE_API_KEY } from "@utils/constants";
 
-const imgProgressbar = require("../../../../assets/images/ProgressBar1.png");
+const imgProgressbar = require("@assets/images/ProgressBar1.png");
 
 @inject("store")
 @observer
@@ -28,6 +28,8 @@ class AskLocationScreen extends Component {
   }
 
   componentDidMount() {
+    Linking.addEventListener('url', this.handleOpenURL);
+
     const {
       store: { currentUserStore: { address } }
     } = this.props;
@@ -173,6 +175,24 @@ class AskLocationScreen extends Component {
     //     Alert.alert("Touch ID is not supported.");
     //   });
   };
+
+  componentWillUnmount () {
+    Linking.removeEventListener('url', this.handleOpenURL);
+  }
+
+  handleOpenURL = (event) => {
+    this.navigate(event.url);
+  }
+
+  navigate = (url) => {
+    const { navigate } = this.props.navigation;
+    const route = url.replace(/.*?:\/\//g, '');
+    const routeName = route.split('/')[0];
+
+    if (routeName === 'newpwd') {
+      navigate('AccountNewPwd');
+    };
+  }
 
   render() {
     const { zipcode } = this.state;

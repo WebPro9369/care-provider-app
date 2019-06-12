@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import React, { Component } from "react";
-import { ActivityIndicator, View, Linking } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
 import { getAuthentication } from "@services/authentication";
@@ -16,28 +16,6 @@ class AuthLoadingScreen extends Component {
   constructor(props) {
     super(props);
     this.bootstrapAsync();
-  }
-
-  componentDidMount() {
-    Linking.addEventListener('url', this.handleOpenURL);
-  }
-
-  componentWillUnmount () {
-    Linking.removeEventListener('url', this.handleOpenURL);
-  }
-
-  handleOpenURL = (event) => { // D
-    this.navigate(event.url);
-  }
-
-  navigate = (url) => { // E
-    const { navigate } = this.props.navigation;
-    const route = url.replace(/.*?:\/\//g, '');
-    const routeName = route.split('/')[0];
-
-    if (routeName === 'newpwd') {
-      navigate('AccountNewPwd');
-    };
   }
 
   bootstrapAsync = async () => {
