@@ -35,7 +35,7 @@ class SettingsScreen extends React.Component {
 
     const {
       store: {
-        currentUserStore: { firstName, lastName, email, phone }
+        currentUserStore: { firstName, lastName, email, phone, application}
       }
     } = props;
     const name = `${firstName} ${lastName}`;
@@ -46,7 +46,8 @@ class SettingsScreen extends React.Component {
       address: "22341 Justice Ave APT 725", // TODO: pending
       biography: "", // TODO: pending
       email,
-      phone
+      phone,
+      application
     };
   }
 
@@ -91,7 +92,7 @@ class SettingsScreen extends React.Component {
     const {
       navigation: { navigate },
       store: {
-        currentUserStore: { firstName, lastName, email, phone }
+        currentUserStore: { firstName, lastName, email, phone, application }
       }
     } = this.props;
     const name = `${firstName} ${lastName}`;
@@ -104,6 +105,7 @@ class SettingsScreen extends React.Component {
           // icon: { name: "user", type: "font-awesome" }
           source: imgDoctor
         };
+
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
         <HeaderWrapper>
@@ -171,6 +173,16 @@ class SettingsScreen extends React.Component {
                   <FontAwesome name="angle-right" size={24} color={MIDGREY} />
                 }
                 onPress={() => navigate("AccountEditPhoneNumber")}
+              />
+            </View>
+            <View style={{ padding: 16 }}>
+              <InputButton
+                label="Specialties"
+                value={application.specialties.join(", ")}
+                icon={
+                  <FontAwesome name="angle-right" size={24} color={MIDGREY} />
+                }
+                onPress={() => navigate("AccountEditSpecialties")}
               />
             </View>
             <View style={{ padding: 16 }}>

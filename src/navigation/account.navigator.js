@@ -5,6 +5,7 @@ import EditNameScreen from "../screens/account/edit-name";
 import EditEmailScreen from "../screens/account/edit-email";
 import EditAddressScreen from "../screens/account/edit-address";
 import EditPhoneNumberScreen from "../screens/account/edit-phonenumber";
+import EditSpecialtiesScreen from "../screens/account/edit-specialties";
 import PayoutsScreen from "../screens/account/payouts";
 import EditBankScreen from "../screens/account/edit-bank";
 import ForgotPwdScreen from "../screens/auth/forgotPwd";
@@ -29,6 +30,9 @@ const AccountNavigator = createStackNavigator(
     },
     AccountEditPhoneNumber: {
       screen: EditPhoneNumberScreen
+    },
+    AccountEditSpecialties: {
+      screen: EditSpecialtiesScreen
     },
     AccountPayouts: {
       screen: PayoutsScreen
