@@ -719,7 +719,7 @@ class ApplicationScreen extends React.Component {
                   onPress={() => Linking.openURL('https://www.opear.com/privacy')}>
                   Privacy Policy
                 </StyledText>
-                {" "}and agree to be boundby their terms.
+                {" "}and agree to be bound by their terms.
               </StyledText>
               <CheckBox
                 title="I have read and accept"
