@@ -13,9 +13,9 @@ const ApplicationStore = types
       licenseCountry: types.string,
       licenseState: types.string,
       licenseCity: types.string,
-      govermentIdType: types.string,
-      govermentIdCountry: types.string,
-      govermentIdNumber: types.string,
+      governmentIdType: types.string,
+      governmentIdCountry: types.string,
+      governmentIdNumber: types.string,
       boardCertification: types.string,
       malpracticeInsurance: types.string,
       educationHistory: types.array(types.string),
@@ -69,16 +69,16 @@ const ApplicationStore = types
       self.licenseCity = value;
       return self;
     },
-    setGovermentIdType(value) {
-      self.govermentIdType = value;
+    setgovernmentIdType(value) {
+      self.governmentIdType = value;
       return self;
     },
-    setGovermentIdCountry(value) {
-      self.govermentIdCountry = value;
+    setgovernmentIdCountry(value) {
+      self.governmentIdCountry = value;
       return self;
     },
-    setGovermentIdNumber(value) {
-      self.govermentIdNumber = value;
+    setgovernmentIdNumber(value) {
+      self.governmentIdNumber = value;
       return self;
     },
     setMalpracticeInsurance(value) {
@@ -158,9 +158,9 @@ export const CurrentUserStore = types
       licenseCountry: "",
       licenseState: "",
       licenseCity: "",
-      govermentIdType: "",
-      govermentIdCountry: "",
-      govermentIdNumber: "",
+      governmentIdType: "",
+      governmentIdCountry: "",
+      governmentIdNumber: "",
       boardCertification: "",
       malpracticeInsurance: "",
       educationHistory: [],
