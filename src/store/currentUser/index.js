@@ -41,6 +41,10 @@ const ApplicationStore = types
       self.biography = value;
       return self;
     },
+    setSSNLast4(value) {
+      self.ssnLast4 = value;
+      return self;
+    },
     setLicenseNumber(value) {
       self.licenseNumber = value;
       return self;
