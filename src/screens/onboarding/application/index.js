@@ -689,15 +689,12 @@ class ApplicationScreen extends React.Component {
                 Opear's{" "}
                 <StyledText
                   style={{
-                    color: colors.BLUE,
-                    textDecorationLine: "underline",
-                    textDecorationColor: colors.BLUE,
-                    fontSize: 16
-                  }}
-                  onPress={() =>
-                    Linking.openURL("https://www.opear.com/terms_of_use")
-                  }
-                >
+                      color: colors.BLUE,
+                      textDecorationLine: 'underline',
+                      textDecorationColor: colors.BLUE,
+                      fontSize: 16
+                    }}
+                  onPress={() => Linking.openURL('https://www.opear.com/terms-conditions/')}>
                   Terms of Use
                 </StyledText>{" "}
                 and{" "}
