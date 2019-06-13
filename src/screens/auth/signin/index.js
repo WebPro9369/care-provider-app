@@ -9,7 +9,6 @@ import { KeyboardAvoidingView } from "@components/views/keyboard-view";
 import { colors } from "@utils/constants";
 import { getCareProvider, getApiToken } from "@services/opear-api";
 import { getFormattedDate } from "@utils/helpers";
-import { sendEmail } from "@utils/ses_sendemail";
 
 @inject("store")
 class SignInScreen extends React.Component {
@@ -148,22 +147,10 @@ class SignInScreen extends React.Component {
 
   onPressForgotPassword = () => {
     const {
-      navigation: { navigate },
-      store: { currentUserStore, providerStore }
+      navigation: { navigate }
     } = this.props;
-
-    currentUserStore.setEmail("test");
-    providerStore.setActive(true);
-
-    if(providerStore.active) {
-      sendEmail(currentUserStore.email, "passwordReset");
-      Alert.alert("Reset requested.","Check your email to reset your password.");
-      return true;
-    }
-
-    Alert.alert("Please register.","You'll need to make an account first.");
-
-    return false;
+    navigate("AccountForgotPwd");
+    return true;
   };
 
   onPressSignUp = () => {
