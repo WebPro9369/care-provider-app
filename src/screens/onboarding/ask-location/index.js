@@ -236,7 +236,7 @@ class AskLocationScreen extends Component {
               textAlign: "center"
             }}
             onPress={() => navigate("AccountSignIn")}>
-            Have an Account? Sign In
+            Have an account? Sign In
           </StyledText>
           <Image
             source={imgProgressbar}
