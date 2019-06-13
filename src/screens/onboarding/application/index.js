@@ -500,7 +500,7 @@ class ApplicationScreen extends React.Component {
                 value={govermentIdType}
                 placeholder="Driver's License, U.S. Passport, State ID, etc."
                 returnKeyType="next"
-                ref={input => (this.inputRefs.govermentIdType = input)}
+                ref={input => (this.inputRefs.governmentIdType = input)}
                 onChangeText={this.handleInputChange("govermentIdType")}
                 onSubmitEditing={() =>
                   this.inputRefs.govermentIdNumber.getInnerRef().focus()
