@@ -34,6 +34,7 @@ const AccountNavigator = createStackNavigator(
     },
     AccountEditBio: {
       screen: EditBioScreen
+    },
     AccountEditSpecialties: {
       screen: EditSpecialtiesScreen
     },
