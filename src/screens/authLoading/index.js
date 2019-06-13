@@ -64,6 +64,7 @@ class AuthLoadingScreen extends Component {
         payout_account,
         dob: dateOfBirth,
         active,
+        biography
       } = res.data;
 
       if (!active) return navigate("ApplicationPending");
@@ -103,7 +104,8 @@ class AuthLoadingScreen extends Component {
         .setLicenseCity(licenseCity)
         .setGovermentIdType(govermentIdType)
         .setGovermentIdCountry(govermentIdCountry)
-        .setGovermentIdNumber(govermentIdNumber);
+        .setGovermentIdNumber(govermentIdNumber)
+        .setBiography(biography);
 
       navigate("Tabs");
     };
