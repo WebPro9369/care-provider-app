@@ -148,9 +148,9 @@ class ApplicationScreen extends React.Component {
       .setLicenseState(licenseState)
       .setLicenseCity(licenseCity)
       .setSSNLast4(ssn)
-      /* }.setgovernmentIdCountry(governmentIdCountry) */
-      .setgovernmentIdType(governmentIdType)
-      .setgovernmentIdNumber(governmentIdNumber)
+      /* }.setGovernmentIdCountry(governmentIdCountry) */
+      .setGovernmentIdType(governmentIdType)
+      .setGovernmentIdNumber(governmentIdNumber)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
       .setEducationHistory(commaStringToArray(educationHistory))
