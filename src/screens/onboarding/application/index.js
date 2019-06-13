@@ -43,8 +43,8 @@ class ApplicationScreen extends React.Component {
       licenseIssuer: "",
       licenseState: "",
       licenseCity: "",
-      govermentIdNumber: "",
-      govermentIdType: "",
+      governmentIdNumber: "",
+      governmentIdType: "",
       boardCertification: "",
       malpracticeInsurance: "",
       educationHistory: "",
@@ -119,8 +119,8 @@ class ApplicationScreen extends React.Component {
       licenseIssuer,
       licenseState,
       licenseCity,
-      govermentIdNumber,
-      govermentIdType,
+      governmentIdNumber,
+      governmentIdType,
       boardCertification,
       malpracticeInsurance,
       educationHistory,
@@ -148,9 +148,9 @@ class ApplicationScreen extends React.Component {
       .setLicenseState(licenseState)
       .setLicenseCity(licenseCity)
       .setSSNLast4(ssn)
-      /* }.setGovermentIdCountry(govermentIdCountry) */
-      .setGovermentIdType(govermentIdType)
-      .setGovermentIdNumber(govermentIdNumber)
+      /* }.setgovernmentIdCountry(governmentIdCountry) */
+      .setgovernmentIdType(governmentIdType)
+      .setgovernmentIdNumber(governmentIdNumber)
       .setBoardCertification(boardCertification)
       .setMalpracticeInsurance(malpracticeInsurance)
       .setEducationHistory(commaStringToArray(educationHistory))
@@ -212,8 +212,8 @@ class ApplicationScreen extends React.Component {
         licenseIssuer: license_issuer,
         licenseState: license_state,
         licenseCity: license_city,
-        govermentIdNumber: government_id_number,
-        govermentIdType: government_id_type,
+        governmentIdNumber: government_id_number,
+        governmentIdType: government_id_type,
         boardCertification: certification,
         malpracticeInsurance: malpractice,
         educationHistory: education,
@@ -298,8 +298,8 @@ class ApplicationScreen extends React.Component {
       licenseIssuer,
       licenseState,
       licenseCity,
-      govermentIdNumber,
-      govermentIdType,
+      governmentIdNumber,
+      governmentIdType,
       ssn,
       boardCertification,
       malpracticeInsurance,
@@ -495,29 +495,29 @@ class ApplicationScreen extends React.Component {
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
-                name="govermentIdType"
-                label="Goverment ID Type"
-                value={govermentIdType}
+                name="governmentIdType"
+                label="government ID Type"
+                value={governmentIdType}
                 placeholder="Driver's License, U.S. Passport, State ID, etc."
                 returnKeyType="next"
                 ref={input => (this.inputRefs.governmentIdType = input)}
-                onChangeText={this.handleInputChange("govermentIdType")}
+                onChangeText={this.handleInputChange("governmentIdType")}
                 onSubmitEditing={() =>
-                  this.inputRefs.govermentIdNumber.getInnerRef().focus()
+                  this.inputRefs.governmentIdNumber.getInnerRef().focus()
                 }
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
-                name="govermentIdNumber"
-                label="Goverment ID Number"
-                value={govermentIdNumber}
-                placeholder="Goverment ID Number"
+                name="governmentIdNumber"
+                label="government ID Number"
+                value={governmentIdNumber}
+                placeholder="government ID Number"
                 returnKeyType="next"
                 keyboardType="number-pad"
-                ref={input => (this.inputRefs.govermentIdNumber = input)}
-                onChangeText={this.handleInputChange("govermentIdNumber")}
+                ref={input => (this.inputRefs.governmentIdNumber = input)}
+                onChangeText={this.handleInputChange("governmentIdNumber")}
                 onSubmitEditing={() => this.inputRefs.ssn.getInnerRef().focus()}
                 blurOnSubmit={false}
               />
