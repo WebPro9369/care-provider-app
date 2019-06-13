@@ -253,7 +253,8 @@ class ApplicationScreen extends React.Component {
         titles: title,
         supervisingPhysician: supervisor,
         acceptedPrivacy: accepted_privacy,
-        acceptedTermsOfService: accepted_terms_of_service
+        acceptedTermsOfService: accepted_terms_of_service,
+        ssnLast4: ssn_last_4
       }
     } = currentUserStore;
 
@@ -282,6 +283,7 @@ class ApplicationScreen extends React.Component {
         supervisor,
         accepted_terms_of_service,
         accepted_privacy,
+        ssn_last_4,
         addresses_attributes: [
           {
             street,
