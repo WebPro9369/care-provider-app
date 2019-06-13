@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React, { Component } from "react";
 import { ActivityIndicator, View } from "react-native";
@@ -20,18 +21,20 @@ class AuthLoadingScreen extends Component {
 
   bootstrapAsync = async () => {
     const {
-      navigation: { navigate },
-      store
+      navigation: { navigate }
     } = this.props;
-    const { id, apiKey, isAuthenticated, wasAuthenticated } = await getAuthentication();
+    const {
+      id,
+      apiKey,
+      isAuthenticated,
+      wasAuthenticated
+    } = await getAuthentication();
 
     if (!isAuthenticated && wasAuthenticated) return navigate("AccountSignIn");
     if (!isAuthenticated) return navigate("Onboarding");
 
     const {
-      store: {
-        currentUserStore
-      }
+      store: { currentUserStore }
     } = this.props;
     currentUserStore.setAuthentication({ id, apiKey });
 
@@ -40,7 +43,6 @@ class AuthLoadingScreen extends Component {
         name,
         email,
         phone,
-
         zip,
         certification,
         title: titles,
@@ -64,7 +66,8 @@ class AuthLoadingScreen extends Component {
         payout_account,
         dob: dateOfBirth,
         active,
-        biography
+        biography,
+        addresses
       } = res.data;
 
       if (!active) return navigate("ApplicationPending");
@@ -82,8 +85,16 @@ class AuthLoadingScreen extends Component {
         .setStripeBalance(stripe_balance)
         .setPayoutAccount(payout_account);
 
-      address
-        .setZipCode(zip);
+      address.setZipCode(zip);
+
+      if (addresses && addresses.length > 0) {
+        const addressData = addresses[addresses.length - 1];
+        address
+          .setName(addressData.name || "")
+          .setStreet(addressData.street || "")
+          .setCity(addressData.city || "")
+          .setState(addressData.state || "");
+      }
 
       application
         .setBoardCertification(certification)
@@ -107,19 +118,17 @@ class AuthLoadingScreen extends Component {
         .setGovermentIdNumber(govermentIdNumber)
         .setBiography(biography);
 
-      navigate("Tabs");
+      return navigate("Tabs");
     };
 
-    const errorHandler = (err) => {
-      if(err.response.status == 401) {
+    const errorHandler = err => {
+      if (err.response.status === 401) {
         navigate("AccountSignIn");
       }
     };
 
-    getCareProvider(id, { successHandler, errorHandler });
+    return getCareProvider(id, { successHandler, errorHandler });
   };
-
-
 
   render() {
     return (
