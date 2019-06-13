@@ -92,44 +92,14 @@ class ApplicationScreen extends React.Component {
   };
 
   handleInputChange = name => value => {
-    // if (name === "ssn") {
-    //   let val = value.replace(/\D/g, "");
-    //   let newVal = "";
-    //   let maskedSsn = "";
-    //   if (val.length > 4) {
-    //     maskedSsn = val;
-    //   }
-    //   if (val.length > 3 && val.length < 6) {
-    //     newVal += `${val.substr(0, 3)}-`;
-    //     val = val.substr(3);
-    //   }
-    //   if (val.length > 5) {
-    //     newVal += `${val.substr(0, 3)}-`;
-    //     newVal += `${val.substr(3, 2)}-`;
-    //     val = val.substr(5);
-    //   }
-    //   newVal += val;
-    //   maskedSsn = newVal.substring(0, 11);
-
-    //   return this.setState({
-    //     ssn: maskedSsn,
-    //     maskedSsn
-    //   });
-    // }
-
-    this.setState({
-      [name]: value
-    });
-  };
-
-  hideSsnDigits = () => {
-    const { maskedSsn } = this.state;
-    let hiddenSsn = "";
-    if (maskedSsn.length > 10) {
-      hiddenSsn = `XXX-XX-${maskedSsn.substr(7, 4)}`;
+    if (name === "ssn") {
+      return this.setState({
+        ssn: value.substr(0, 4)
+      });
     }
-    this.setState({
-      maskedSsn: hiddenSsn
+
+    return this.setState({
+      [name]: value
     });
   };
 
