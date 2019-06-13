@@ -53,9 +53,9 @@ class AuthLoadingScreen extends Component {
         license_country: licenseCountry,
         license_state: licenseState,
         license_city: licenseCity,
-        government_id_country: govermentIdCountry,
-        government_id_type: govermentIdType,
-        government_id_number: govermentIdNumber,
+        government_id_country: governmentIdCountry,
+        government_id_type: governmentIdType,
+        government_id_number: governmentIdNumber,
         education,
         work_history: workHistory,
         specialties,
@@ -113,9 +113,9 @@ class AuthLoadingScreen extends Component {
         .setLicenseCountry(licenseCountry)
         .setLicenseState(licenseState)
         .setLicenseCity(licenseCity)
-        .setGovermentIdType(govermentIdType)
-        .setGovermentIdCountry(govermentIdCountry)
-        .setGovermentIdNumber(govermentIdNumber)
+        .setGovernmentIdType(governmentIdType)
+        .setGovernmentIdCountry(governmentIdCountry)
+        .setGovernmentIdNumber(governmentIdNumber)
         .setBiography(biography);
 
       return navigate("Tabs");

@@ -496,7 +496,7 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="governmentIdType"
-                label="government ID Type"
+                label="Government ID Type"
                 value={governmentIdType}
                 placeholder="Driver's License, U.S. Passport, State ID, etc."
                 returnKeyType="next"
@@ -511,9 +511,9 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper>
               <FormTextInput
                 name="governmentIdNumber"
-                label="government ID Number"
+                label="Government ID Number"
                 value={governmentIdNumber}
-                placeholder="government ID Number"
+                placeholder="Government ID Number"
                 returnKeyType="next"
                 keyboardType="number-pad"
                 ref={input => (this.inputRefs.governmentIdNumber = input)}

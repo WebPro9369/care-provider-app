@@ -34,8 +34,8 @@ class SignInScreen extends React.Component {
     const successHandler = res => {
       if (res.data.message) {
         return Alert.alert(`Incorrect credentials. Please try again.`);
-      } 
-      
+      }
+
       const { id, api_key: apiKey } = res.data;
       currentUserStore.setAuthentication({ id, apiKey });
 
@@ -56,9 +56,9 @@ class SignInScreen extends React.Component {
           license_country: licenseCountry,
           license_state: licenseState,
           license_city: licenseCity,
-          government_id_country: govermentIdCountry,
-          government_id_type: govermentIdType,
-          government_id_number: govermentIdNumber,
+          government_id_country: governmentIdCountry,
+          government_id_type: governmentIdType,
+          government_id_number: governmentIdNumber,
           education,
           work_history: workHistory,
           specialties,
@@ -71,9 +71,9 @@ class SignInScreen extends React.Component {
         } = res.data;
 
         const dob = getFormattedDate(new Date(dateOfBirth));
-  
+
         const [firstName, lastName] = name.split(" ");
-  
+
         currentUserStore
           .setFirstName(firstName)
           .setLastName(lastName)
@@ -102,13 +102,13 @@ class SignInScreen extends React.Component {
           .setLicenseCountry(licenseCountry)
           .setLicenseState(licenseState)
           .setLicenseCity(licenseCity)
-          .setGovermentIdType(govermentIdType)
-          .setGovermentIdCountry(govermentIdCountry)
-          .setGovermentIdNumber(govermentIdNumber);
-  
+          .setGovernmentIdType(governmentIdType)
+          .setGovernmentIdCountry(governmentIdCountry)
+          .setGovernmentIdNumber(governmentIdNumber);
+
         navigate("Tabs");
       };
-  
+
       getCareProvider(id, { successHandler });
     };
 
