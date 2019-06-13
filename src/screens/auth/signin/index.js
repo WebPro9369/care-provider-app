@@ -194,14 +194,15 @@ class SignInScreen extends React.Component {
                 onPress={this.onPressSignUp}
               >
                 sign up
-              </StyledText>
-              <StyledText style={{ color: "#ffffff" }}>  |  </StyledText>
-              <StyledText
+              </StyledText>              
+              {/* <StyledText style={{ color: "#ffffff" }}>  |  </StyledText> */}
+              {/* TODO: Re-enable forgot password */}
+              {/* <StyledText
                 style={{ color: "#ffffff" }}
                 onPress={this.onPressForgotPassword}
               >
                 forgot password?
-              </StyledText>
+              </StyledText> */}
             </ViewCentered>
           </FormInputWrapper>
         </FormWrapper>
