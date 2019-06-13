@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-return-assign */
 import React from "react";
 // import axios from "axios";
@@ -8,7 +9,7 @@ import ImagePicker from "react-native-image-picker";
 import { FormTextInput, StyledText } from "@components/text";
 import { NavHeader } from "@components/nav-header";
 import { ServiceButton } from "@components/service-button";
-import { FormMaskedTextInput } from "@components/text-masked"
+import { FormMaskedTextInput } from "@components/text-masked";
 import {
   ContainerView,
   FormInputWrapper,
@@ -35,7 +36,6 @@ class ApplicationScreen extends React.Component {
       street: "",
       city: "",
       state: "",
-      maskedSsn: "",
       avatarSource: "",
       dateOfBirth: "",
       licenseNumber: "",
@@ -50,8 +50,8 @@ class ApplicationScreen extends React.Component {
       educationHistory: "",
       workHistory: "",
       specialties: "",
-      whereHeard: '',
-      supervisingPhysician: '',
+      whereHeard: "",
+      supervisingPhysician: "",
       selectedIndexes: [],
       acceptedTermsOfService: false,
       acceptedPrivacy: false
@@ -92,30 +92,30 @@ class ApplicationScreen extends React.Component {
   };
 
   handleInputChange = name => value => {
-    if (name === "ssn") {
-      let val = value.replace(/\D/g, "");
-      let newVal = "";
-      let maskedSsn = "";
-      if (val.length > 4) {
-        maskedSsn = val;
-      }
-      if (val.length > 3 && val.length < 6) {
-        newVal += `${val.substr(0, 3)}-`;
-        val = val.substr(3);
-      }
-      if (val.length > 5) {
-        newVal += `${val.substr(0, 3)}-`;
-        newVal += `${val.substr(3, 2)}-`;
-        val = val.substr(5);
-      }
-      newVal += val;
-      maskedSsn = newVal.substring(0, 11);
+    // if (name === "ssn") {
+    //   let val = value.replace(/\D/g, "");
+    //   let newVal = "";
+    //   let maskedSsn = "";
+    //   if (val.length > 4) {
+    //     maskedSsn = val;
+    //   }
+    //   if (val.length > 3 && val.length < 6) {
+    //     newVal += `${val.substr(0, 3)}-`;
+    //     val = val.substr(3);
+    //   }
+    //   if (val.length > 5) {
+    //     newVal += `${val.substr(0, 3)}-`;
+    //     newVal += `${val.substr(3, 2)}-`;
+    //     val = val.substr(5);
+    //   }
+    //   newVal += val;
+    //   maskedSsn = newVal.substring(0, 11);
 
-      return this.setState({
-        ssn: maskedSsn,
-        maskedSsn
-      });
-    }
+    //   return this.setState({
+    //     ssn: maskedSsn,
+    //     maskedSsn
+    //   });
+    // }
 
     this.setState({
       [name]: value
@@ -160,6 +160,7 @@ class ApplicationScreen extends React.Component {
       supervisingPhysician,
       selectedIndexes,
       dateOfBirth,
+      ssn,
       acceptedTermsOfService,
       acceptedPrivacy
     } = this.state;
@@ -176,6 +177,8 @@ class ApplicationScreen extends React.Component {
       .setLicenseIssuer(licenseIssuer)
       .setLicenseState(licenseState)
       .setLicenseCity(licenseCity)
+      .setSSNLast4(ssn)
+      /* }.setGovermentIdCountry(govermentIdCountry) */
       .setGovermentIdType(govermentIdType)
       .setGovermentIdNumber(govermentIdNumber)
       .setBoardCertification(boardCertification)
@@ -208,42 +211,31 @@ class ApplicationScreen extends React.Component {
       return Alert.alert(`Please enter Date of Birth in \n mm/dd/yyyy format`);
     }
 
-    const ssnPattern = /^[0-9]{3}-[0-9]{2}-[0-9]{4}$/;
+    const ssnPattern = /^[0-9]{4}/;
     if (!ssnPattern.test(ssn)) {
       return Alert.alert(
-        "Please enter Social Security Number in 'XXX-XX-XXXX' format"
+        "Please enter Social Security Number in 'XXXX' format"
       );
     }
 
-    const {acceptedPrivacy, acceptedTermsOfService} = this.state;
+    const { acceptedPrivacy, acceptedTermsOfService } = this.state;
 
-    if(!acceptedPrivacy)
-    {
-      return Alert.alert(
-        "Please review our Privacy Policy to continue"
-      );
+    if (!acceptedPrivacy) {
+      return Alert.alert("Please review our Privacy Policy to continue");
     }
 
-    if(!acceptedTermsOfService)
-    {
-      return Alert.alert(
-        "Please review our Terms of Service to continue"
-      );
+    if (!acceptedTermsOfService) {
+      return Alert.alert("Please review our Terms of Service to continue");
     }
 
-    let {
-       firstName,
-       lastName,
-       email,
-       password,
-       phone,
-       address: {
-         street,
-         city,
-         state,
-         zip_code: zip,
-       },
-       application: {
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      phone,
+      address: { street, city, state, zip_code: zip },
+      application: {
         dateOfBirth: dob,
         licenseNumber: license_number,
         licenseType: license_type,
@@ -262,7 +254,7 @@ class ApplicationScreen extends React.Component {
         supervisingPhysician: supervisor,
         acceptedPrivacy: accepted_privacy,
         acceptedTermsOfService: accepted_terms_of_service
-       }
+      }
     } = currentUserStore;
 
     const data = {
@@ -337,7 +329,6 @@ class ApplicationScreen extends React.Component {
       govermentIdNumber,
       govermentIdType,
       ssn,
-      maskedSsn,
       boardCertification,
       malpracticeInsurance,
       educationHistory,
@@ -387,7 +378,7 @@ class ApplicationScreen extends React.Component {
               showEditButton
             />
           </ViewCentered>
-          <FormWrapper style={{paddingBottom:0}}>
+          <FormWrapper style={{ paddingBottom: 0 }}>
             <FormInputWrapper>
               <FormMaskedTextInput
                 name="dateOfBirth"
@@ -551,24 +542,21 @@ class ApplicationScreen extends React.Component {
                 keyboardType="number-pad"
                 ref={input => (this.inputRefs.govermentIdNumber = input)}
                 onChangeText={this.handleInputChange("govermentIdNumber")}
-                onSubmitEditing={() =>
-                  this.inputRefs.boardCertification.getInnerRef().focus()
-                }
+                onSubmitEditing={() => this.inputRefs.ssn.getInnerRef().focus()}
                 blurOnSubmit={false}
               />
             </FormInputWrapper>
             <FormInputWrapper>
               <FormTextInput
                 name="ssn"
-                label="Social Security Number"
-                value={maskedSsn || ssn}
-                placeholder="123-45-6789"
+                label="SSN - Last 4 Digits"
+                value={ssn}
+                placeholder="1234"
                 returnKeyType="next"
                 keyboardType="number-pad"
                 ref={input => (this.inputRefs.ssn = input)}
                 onChangeText={this.handleInputChange("ssn")}
                 onSubmitEditing={() => {
-                  this.hideSsnDigits();
                   this.inputRefs.boardCertification.getInnerRef().focus();
                 }}
                 blurOnSubmit={false}
@@ -695,7 +683,8 @@ class ApplicationScreen extends React.Component {
                 style={{
                   fontSize: 16,
                   color: colors.BLACK60
-                }}>
+                }}
+              >
                 By checking this box I affirm that I have read and understood
                 Opear's{" "}
                 <StyledText
@@ -707,67 +696,81 @@ class ApplicationScreen extends React.Component {
                     }}
                   onPress={() => Linking.openURL('https://www.opear.com/terms-conditions/')}>
                   Terms of Use
-                </StyledText>
-                 {" "}and{" "}
+                </StyledText>{" "}
+                and{" "}
                 <StyledText
                   style={{
                     color: colors.BLUE,
-                    textDecorationLine: 'underline',
+                    textDecorationLine: "underline",
                     textDecorationColor: colors.BLUE,
                     fontSize: 16
                   }}
-                  onPress={() => Linking.openURL('https://www.opear.com/privacy')}>
+                  onPress={() =>
+                    Linking.openURL("https://www.opear.com/privacy")
+                  }
+                >
                   Privacy Policy
-                </StyledText>
-                {" "}and agree to be bound by their terms.
+                </StyledText>{" "}
+                and agree to be bound by their terms.
               </StyledText>
               <CheckBox
                 title="I have read and accept"
                 checked={this.state.acceptedPrivacy}
-                onPress={() => this.setState({acceptedPrivacy: !this.state.acceptedPrivacy})}
+                onPress={() =>
+                  this.setState({
+                    acceptedPrivacy: !this.state.acceptedPrivacy
+                  })
+                }
                 size={36}
-                textStyle={{fontSize:18}}
+                textStyle={{ fontSize: 18 }}
                 containerStyle={{
-                  backgroundColor:colors.WHITE,
-                  borderColor:colors.WHITE,
-                  paddingLeft:0,
-                  marginLeft:0
+                  backgroundColor: colors.WHITE,
+                  borderColor: colors.WHITE,
+                  paddingLeft: 0,
+                  marginLeft: 0
                 }}
-                checkedIcon={'check-square'}
-                uncheckedIcon={'square-o'}
+                checkedIcon={"check-square"}
+                uncheckedIcon={"square-o"}
                 checkedColor={colors.SEAFOAMBLUE}
-                />
+              />
               <StyledText
                 style={{
                   fontSize: 16,
                   color: colors.BLACK60,
                   marginTop: 20
-                }}>
-                  I hereby affirm that I read and understood Opear's Terms of Use
-                  and Privacy Policy and agree to be bound by their terms. I have
-                  (and will maintain during my time as an Opear Provider) all
-                  necessary malpractice and other insurance as required under
-                  applicable law.
-                </StyledText>
-                <CheckBox
-                  title="I have read and accept"
-                  checked={this.state.acceptedTermsOfService}
-                  onPress={() => this.setState({acceptedTermsOfService: !this.state.acceptedTermsOfService})}
-                  size={36}
-                  textStyle={{fontSize:18}}
-                  containerStyle={{
-                    backgroundColor:colors.WHITE,
-                    borderColor:colors.WHITE,
-                    paddingLeft:0,
-                    marginLeft:0
-                  }}
-                  checkedIcon={'check-square'}
-                  uncheckedIcon={'square-o'}
-                  checkedColor={colors.SEAFOAMBLUE}
-                />
+                }}
+              >
+                I hereby affirm that I read and understood Opear's Terms of Use
+                and Privacy Policy and agree to be bound by their terms. I have
+                (and will maintain during my time as an Opear Provider) all
+                necessary malpractice and other insurance as required under
+                applicable law.
+              </StyledText>
+              <CheckBox
+                title="I have read and accept"
+                checked={this.state.acceptedTermsOfService}
+                onPress={() =>
+                  this.setState({
+                    acceptedTermsOfService: !this.state.acceptedTermsOfService
+                  })
+                }
+                size={36}
+                textStyle={{ fontSize: 18 }}
+                containerStyle={{
+                  backgroundColor: colors.WHITE,
+                  borderColor: colors.WHITE,
+                  paddingLeft: 0,
+                  marginLeft: 0
+                }}
+                checkedIcon={"check-square"}
+                uncheckedIcon={"square-o"}
+                checkedColor={colors.SEAFOAMBLUE}
+              />
             </FormInputWrapper>
           </FormWrapper>
-          <FormInputWrapper style={{ marginBottom: 20, marginTop: 0, paddingTop: 0 }}>
+          <FormInputWrapper
+            style={{ marginBottom: 20, marginTop: 0, paddingTop: 0 }}
+          >
             <ServiceButton title="Submit Application" onPress={this.onSubmit} />
           </FormInputWrapper>
         </KeyboardScrollView>

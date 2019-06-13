@@ -23,12 +23,11 @@ class AuthLoadingScreen extends Component {
       navigation: { navigate },
       store
     } = this.props;
-
     const { id, apiKey, isAuthenticated, wasAuthenticated } = await getAuthentication();
 
     if (!isAuthenticated && wasAuthenticated) return navigate("AccountSignIn");
     if (!isAuthenticated) return navigate("Onboarding");
-  
+
     const {
       store: {
         currentUserStore
@@ -65,6 +64,7 @@ class AuthLoadingScreen extends Component {
         payout_account,
         dob: dateOfBirth,
         active,
+        biography
       } = res.data;
 
       if (!active) return navigate("ApplicationPending");
@@ -104,13 +104,22 @@ class AuthLoadingScreen extends Component {
         .setLicenseCity(licenseCity)
         .setGovermentIdType(govermentIdType)
         .setGovermentIdCountry(govermentIdCountry)
-        .setGovermentIdNumber(govermentIdNumber);
+        .setGovermentIdNumber(govermentIdNumber)
+        .setBiography(biography);
 
       navigate("Tabs");
     };
 
-    getCareProvider(id, { successHandler });
+    const errorHandler = (err) => {
+      if(err.response.status == 401) {
+        navigate("AccountSignIn");
+      }
+    };
+
+    getCareProvider(id, { successHandler, errorHandler });
   };
+
+
 
   render() {
     return (
