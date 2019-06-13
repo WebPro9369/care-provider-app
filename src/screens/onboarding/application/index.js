@@ -360,6 +360,7 @@ class ApplicationScreen extends React.Component {
                 placeholder="mm/dd/yyyy"
                 maskOptions={{ mask: "99/99/9999" }}
                 returnKeyType="next"
+                ref={input => (this.inputRefs.dateOfBirth = input)}
                 keyboardType="number-pad"
                 onSubmitEditing={() =>
                   this.inputRefs.street.getInnerRef().focus()
@@ -375,6 +376,7 @@ class ApplicationScreen extends React.Component {
                 onChangeText={this.handleInputChange("street")}
                 placeholder="Street Address"
                 returnKeyType="next"
+                ref={input => (this.inputRefs.street = input)}
                 onSubmitEditing={() =>
                   this.inputRefs.city.getInnerRef().focus()
                 }
@@ -390,6 +392,7 @@ class ApplicationScreen extends React.Component {
                 onChangeText={this.handleInputChange("city")}
                 placeholder="City"
                 returnKeyType="next"
+                ref={input => (this.inputRefs.city = input)}
                 onSubmitEditing={() =>
                   this.inputRefs.state.getInnerRef().focus()
                 }
@@ -404,6 +407,7 @@ class ApplicationScreen extends React.Component {
                 onChangeText={this.handleInputChange("state")}
                 placeholder="State"
                 returnKeyType="next"
+                ref={input => (this.inputRefs.state = input)}
                 onSubmitEditing={() =>
                   this.inputRefs.licenseType.getInnerRef().focus()
                 }
