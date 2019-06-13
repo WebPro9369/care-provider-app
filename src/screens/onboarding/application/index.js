@@ -705,7 +705,7 @@ class ApplicationScreen extends React.Component {
                       textDecorationColor: colors.BLUE,
                       fontSize: 16
                     }}
-                  onPress={() => Linking.openURL('https://www.opear.com/terms_of_use')}>
+                  onPress={() => Linking.openURL('https://www.opear.com/terms-conditions/')}>
                   Terms of Use
                 </StyledText>
                  {" "}and{" "}
