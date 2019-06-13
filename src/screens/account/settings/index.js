@@ -94,6 +94,7 @@ class SettingsScreen extends React.Component {
           // icon: { name: "user", type: "font-awesome" }
           source: imgDoctor
         };
+
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
         <HeaderWrapper>

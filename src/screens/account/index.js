@@ -17,7 +17,7 @@ class AccountScreen extends React.Component {
   static propTypes = {
     store: PropTypes.observableObject.isRequired
   };
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +42,7 @@ class AccountScreen extends React.Component {
       navigation: { navigate }
     } = this.props;
     const { avatarImg, rating } = this.state;
-    const { currentUserStore: { 
+    const { currentUserStore: {
       firstName, lastName,
       application: {
         biography,
@@ -81,12 +81,6 @@ class AccountScreen extends React.Component {
             onPress={() => navigate("AccountPayouts")}
           >
             <ListButtonText>Payouts</ListButtonText>
-            <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
-          </ListTouchableButtonWrapper>
-          <ListTouchableButtonWrapper
-            onPress={() => navigate("AccountUpdateApplication")}
-          >
-            <ListButtonText>Update Application</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
           <ListTouchableButtonWrapper
