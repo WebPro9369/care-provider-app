@@ -47,6 +47,7 @@
 		452356267C9243FCA4906F91 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C35D0C0D68422D903576AB /* libAirMaps.a */; };
 		47946EAAE00B44FA80C5150C /* FlamaMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 026C6B824DD14781AD8F9842 /* FlamaMedium.otf */; };
 		4D7C3E9943A9459EAE7DF962 /* libRNTwilioVoice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C01320D70D649608652A238 /* libRNTwilioVoice.a */; };
+		5386486622B2F9EB00B4B72B /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 5386483422B2F9EB00B4B72B /* assets */; };
 		53CBCD7B228F003900EDCC7A /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		5C34ED6B2278493CAF1CD893 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CA44A0999DE43B886593455 /* SimpleLineIcons.ttf */; };
 		601738A87BAB44219B8D075E /* libPods-careproviderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77540F1653D6E45DA5DC91F5 /* libPods-careproviderTests.a */; };
@@ -473,6 +474,7 @@
 		420ADCBE2854A0704E270210 /* libPods-careprovider-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-careprovider-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CC0AFB2C06C4019848C6558 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		4DC373636F11420194B3678B /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		5386483422B2F9EB00B4B72B /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		55950305553D2C64A21258C9 /* libPods-careprovider-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-careprovider-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A4DED3816918AAE175D843B /* Pods-careprovider-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-careprovider-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-careprovider-tvOSTests/Pods-careprovider-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		5A8A6069B3184605AE756B37 /* libRNCardIO.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCardIO.a; sourceTree = "<group>"; };
@@ -799,6 +801,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				5386483422B2F9EB00B4B72B /* assets */,
 				840E2EA5228E730C0077F7D2 /* Crashlytics.framework */,
 				840E2EA6228E730C0077F7D2 /* Fabric.framework */,
 				13B07FAE1A68108700A75B9A /* careprovider */,
@@ -1542,6 +1545,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5386486622B2F9EB00B4B72B /* assets in Resources */,
 				53CBCD7B228F003900EDCC7A /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
