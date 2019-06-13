@@ -80,7 +80,9 @@ class SettingsScreen extends React.Component {
           email,
           phone,
           address,
-          application: { biography }
+          application: {
+            biography,
+            specialties}
         }
       }
     } = this.props;
@@ -164,6 +166,16 @@ class SettingsScreen extends React.Component {
                 onPress={() => navigate("AccountEditPhoneNumber")}
               />
             </View>
+            <View style={{ padding: 16 }}>
+                <InputButton
+                  label="Specialties"
+                  value={specialties.join(", ")}
+                  icon={
+                    <FontAwesome name="angle-right" size={24} color={MIDGREY} />
+                  }
+                  onPress={() => navigate("AccountEditSpecialties")}
+                />
+              </View>
             <View style={{ padding: 16 }}>
               <InputButton
                 label="Short Biography"
