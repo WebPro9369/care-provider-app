@@ -69,15 +69,15 @@ const ApplicationStore = types
       self.licenseCity = value;
       return self;
     },
-    setgovernmentIdType(value) {
+    setGovernmentIdType(value) {
       self.governmentIdType = value;
       return self;
     },
-    setgovernmentIdCountry(value) {
+    setGovernmentIdCountry(value) {
       self.governmentIdCountry = value;
       return self;
     },
-    setgovernmentIdNumber(value) {
+    setGovernmentIdNumber(value) {
       self.governmentIdNumber = value;
       return self;
     },
