@@ -1,12 +1,12 @@
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
-import { StyledText, StyledTextInput, FormTextInput } from "../../../components/text";
-import { NavHeader } from "../../../components/nav-header";
-import { ServiceButton } from "../../../components/service-button";
-import { View, FormWrapper } from "../../../components/views";
-import { updateCareProvider } from "../../../services/opear-api";
-import { KeyboardAvoidingView, FormInputView } from "../../../components/views/keyboard-view";
-import { colors } from "../../../utils/constants";
+import { StyledText, StyledTextInput, FormTextInput } from "@components/text";
+import { NavHeader } from "@components/nav-header";
+import { ServiceButton } from "@components/service-button";
+import { View, FormWrapper } from "@components/views";
+import { updateCareProvider } from "@services/opear-api";
+import { KeyboardAvoidingView, FormInputView } from "@components/views/keyboard-view";
+import { colors } from "@utils/constants";
 import { commaStringToArray } from "@utils/helpers";
 
 @inject("store")
@@ -31,7 +31,7 @@ class EditSpecialtiesScreen extends React.Component {
   handleInputChange = name => value => {
 
     this.setState({
-      [name]: value
+      [name]: commaStringToArray(value)
     });
 
   };
@@ -46,14 +46,8 @@ class EditSpecialtiesScreen extends React.Component {
     const { specialties } = this.state;
     const data = { specialties };
 
-    this.setState(
-      {
-        specialties: commaStringToArray(data.specialties)
-      }
-    )
-
     const successHandler = () => {
-      currentUserStore.application.setSpecialties(commaStringToArray(specialties));
+      currentUserStore.application.setSpecialties(specialties);
       goBack();
     };
 
