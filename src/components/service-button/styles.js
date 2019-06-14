@@ -23,6 +23,5 @@ export const ServiceText = styled.Text`
   color: ${props => props.color || colors.WHITE};
   font-family: "FlamaMedium";
   font-size: 20px;
-  line-height: 30px;
   text-align: center;
 `;

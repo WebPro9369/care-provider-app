@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View, Alert } from "react-native";
+import { Image, View, Alert, SafeAreaView } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { ServiceButton } from "../../../components/service-button";
@@ -52,42 +52,44 @@ class NameCaptureScreen extends Component {
     const { name } = this.state;
 
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
-        <View>
-          <NavHeader
-            hasBackButton
-            size="small"
-            onPressBackButton={() => goBack()}
-          />
-          <StyledText
-            textAlign="left"
-            style={{ marginTop: 24, marginBottom: 24 }}
-          >
-            What is your full name?
-          </StyledText>
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView behavior="padding" enabled>
           <View>
-            <StyledTextInput
-              fontSize={28}
-              autoFocus
-              placeholder="Full name"
-              value={name}
-              onChangeText={this.handleInputChange}
+            <NavHeader
+              hasBackButton
+              size="small"
+              onPressBackButton={() => goBack()}
+            />
+            <StyledText
+              textAlign="left"
+              style={{ marginTop: 24, marginBottom: 24 }}
+            >
+              What is your full name?
+          </StyledText>
+            <View>
+              <StyledTextInput
+                fontSize={28}
+                autoFocus
+                placeholder="Full name"
+                value={name}
+                onChangeText={this.handleInputChange}
+              />
+            </View>
+          </View>
+          <View>
+            <Image
+              source={imgProgressbar}
+              resizeMode="contain"
+              style={{ width: "100%", marginBottom: 16 }}
+            />
+            <ServiceButton
+              title="Next"
+              style={{ marginBottom: 20 }}
+              onPress={this.onSubmit}
             />
           </View>
-        </View>
-        <View>
-          <Image
-            source={imgProgressbar}
-            resizeMode="contain"
-            style={{ width: "100%", marginBottom: 16 }}
-          />
-          <ServiceButton
-            title="Next"
-            style={{ marginBottom: 20 }}
-            onPress={this.onSubmit}
-          />
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 }
