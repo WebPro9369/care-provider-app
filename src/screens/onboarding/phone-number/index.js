@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View } from "react-native";
+import { Image, View, SafeAreaView } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { TextInputMask } from "react-native-masked-text";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
@@ -56,32 +56,33 @@ class PhoneNumberScreen extends Component {
     const { phone } = this.state;
 
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
-        <View>
-          <NavHeader
-            hasBackButton
-            size="small"
-            onPressBackButton={() => goBack()}
-          />
-          <StyledText
-            textAlign="left"
-            style={{ marginTop: 24, marginBottom: 24 }}
-          >
-            What is your phone number?
-          </StyledText>
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView behavior="padding" enabled>
           <View>
-            <TextInputMask
-              fontSize={28}
-              autoFocus
-              placeholder="(123) 456 - 7890"
-              value={phone}
-              keyboardType="number-pad"
-              type="custom"
-              options={{ mask: "(999) 999-9999" }}
-              onChangeText={this.handleInputChange}
+            <NavHeader
+              hasBackButton
+              size="small"
+              onPressBackButton={() => goBack()}
             />
-          </View>
-          {/* }<View
+            <StyledText
+              textAlign="left"
+              style={{ marginTop: 24, marginBottom: 24 }}
+            >
+              What is your phone number?
+          </StyledText>
+            <View>
+              <TextInputMask
+                fontSize={28}
+                autoFocus
+                placeholder="(123) 456 - 7890"
+                value={phone}
+                keyboardType="number-pad"
+                type="custom"
+                options={{ mask: "(999) 999-9999" }}
+                onChangeText={this.handleInputChange}
+              />
+            </View>
+            {/* }<View
             style={{
               paddingTop: 16,
               paddingBottom: 16,
@@ -98,20 +99,21 @@ class PhoneNumberScreen extends Component {
               autoFormat="true"
             />
           </View>*/}
-        </View>
-        <View>
-          <Image
-            source={imgProgressbar}
-            resizeMode="contain"
-            style={{ width: "100%", marginBottom: 16 }}
-          />
-          <ServiceButton
-            title="Next"
-            style={{ marginBottom: 20 }}
-            onPress={this.onSubmit}
-          />
-        </View>
-      </KeyboardAvoidingView>
+          </View>
+          <View>
+            <Image
+              source={imgProgressbar}
+              resizeMode="contain"
+              style={{ width: "100%", marginBottom: 16 }}
+            />
+            <ServiceButton
+              title="Next"
+              style={{ marginBottom: 20 }}
+              onPress={this.onSubmit}
+            />
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 }

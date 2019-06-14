@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View, Alert, NativeModules } from "react-native";
+import { Image, View, Alert, NativeModules, SafeAreaView } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import axios from "axios";
 import Geolocation from "react-native-geolocation-service";
@@ -193,63 +193,65 @@ class AskLocationScreen extends Component {
     } = this.props;
     const { zipcode } = this.state;
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
-        <View>
-          <NavHeader
-            title="Welcome to opear"
-            hasBackButton={false}
-            size="small"
-          />
-          <StyledText
-            textAlign="left"
-            style={{ marginTop: 24, marginBottom: 24 }}
-          >
-            Let&apos;s make sure opear is in your area:
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView behavior="padding" enabled>
+          <View>
+            <NavHeader
+              title="Welcome to Opear"
+              hasBackButton={false}
+              size="small"
+            />
+            <StyledText
+              textAlign="left"
+              style={{ marginTop: 24, marginBottom: 24 }}
+            >
+              Let&apos;s make sure Opear is in your area:
           </StyledText>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingRight: 16
-            }}
-          >
-            <StyledTextInput
-              fontSize={28}
-              autoFocus
-              placeholder="Zip code"
-              value={zipcode}
-              keyboardType="number-pad"
-              onChangeText={this.handleInputChange}
-              maxLength={5}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingRight: 16
+              }}
+            >
+              <StyledTextInput
+                fontSize={28}
+                autoFocus
+                placeholder="Zip code"
+                value={zipcode}
+                keyboardType="number-pad"
+                onChangeText={this.handleInputChange}
+                maxLength={5}
+              />
+            </View>
+          </View>
+
+          <View>
+            <StyledText
+              style={{
+                color: colors.BLUE,
+                textDecorationLine: "underline",
+                textDecorationColor: colors.BLUE,
+                fontSize: 16,
+                marginBottom: 20,
+                textAlign: "center"
+              }}
+              onPress={() => navigate("AccountSignIn")}>
+              Have an account? Sign In
+          </StyledText>
+            <Image
+              source={imgProgressbar}
+              resizeMode="contain"
+              style={{ width: "100%", marginBottom: 16 }}
+            />
+            <ServiceButton
+              title="Check Availability"
+              style={{ marginBottom: 20 }}
+              onPress={this.onSubmit}
             />
           </View>
-        </View>
-
-        <View>
-          <StyledText
-            style={{
-              color: colors.BLUE,
-              textDecorationLine: "underline",
-              textDecorationColor: colors.BLUE,
-              fontSize: 16,
-              marginBottom: 20,
-              textAlign: "center"
-            }}
-            onPress={() => navigate("AccountSignIn")}>
-            Have an account? Sign In
-          </StyledText>
-          <Image
-            source={imgProgressbar}
-            resizeMode="contain"
-            style={{ width: "100%", marginBottom: 16 }}
-          />
-          <ServiceButton
-            title="Check Availability"
-            style={{ marginBottom: 20 }}
-            onPress={this.onSubmit}
-          />
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 }
