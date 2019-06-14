@@ -92,6 +92,7 @@ class ApplicationScreen extends React.Component {
   };
 
   handleInputChange = name => value => {
+    // TODO: Remove this if block as we don't have the ssn field any  more
     if (name === "ssn") {
       return this.setState({
         ssn: value.substr(0, 4)
@@ -273,7 +274,8 @@ class ApplicationScreen extends React.Component {
       navigate("ApplicationPending");
     };
 
-    const errorHandler = () => Alert.alert("Registration failed.");
+    // eslint-disable-next-line prettier/prettier
+    const errorHandler = () => Alert.alert("Registration failed. Please ensure your information is correct, or contact help@opear.com.");
 
     registerCareProvider(data, { successHandler, errorHandler });
   };
@@ -315,23 +317,23 @@ class ApplicationScreen extends React.Component {
 
     const avatarOptions = avatarSource
       ? {
-        source: { uri: avatarSource.uri }
-      }
+          source: { uri: avatarSource.uri }
+        }
       : {
-        icon: { name: "user", type: "font-awesome" }
-      };
+          icon: { name: "user", type: "font-awesome" }
+        };
     return (
       <ContainerView>
         <SafeAreaView style={{ flex: 1 }}>
-          <HeaderWrapper>
-            <NavHeader
-              title="Your application"
-              size="medium"
-              hasBackButton
-              onPressBackButton={() => goBack()}
-            />
-          </HeaderWrapper>
           <KeyboardScrollView keyboardShouldPersistTaps="handled">
+            <HeaderWrapper>
+              <NavHeader
+                title="Your application"
+                size="medium"
+                hasBackButton
+                onPressBackButton={() => goBack()}
+              />
+            </HeaderWrapper>
             <ViewCentered paddingBottom={24}>
               <Avatar
                 {...avatarOptions}
@@ -422,7 +424,7 @@ class ApplicationScreen extends React.Component {
                   label="Medical License Type"
                   value={licenseType}
                   placeholder="Medical License Type"
-                  returnKeyType="next"
+                  // returnKeyType="next"
                   ref={input => (this.inputRefs.licenseType = input)}
                   onChangeText={this.handleInputChange("licenseType")}
                   onSubmitEditing={() =>
@@ -438,8 +440,8 @@ class ApplicationScreen extends React.Component {
                   label="Medical License Number"
                   value={licenseNumber}
                   placeholder="Medical License Number"
-                  returnKeyType="next"
-                  keyboardType="number-pad"
+                  // returnKeyType="next"
+                  keyboardType="phone-pad"
                   ref={input => (this.inputRefs.licenseNumber = input)}
                   onChangeText={this.handleInputChange("licenseNumber")}
                   onSubmitEditing={() =>
@@ -519,7 +521,9 @@ class ApplicationScreen extends React.Component {
                   keyboardType="number-pad"
                   ref={input => (this.inputRefs.governmentIdNumber = input)}
                   onChangeText={this.handleInputChange("governmentIdNumber")}
-                  onSubmitEditing={() => this.inputRefs.ssn.getInnerRef().focus()}
+                  onSubmitEditing={() =>
+                    this.inputRefs.ssn.getInnerRef().focus()
+                  }
                   blurOnSubmit={false}
                 />
               </FormInputWrapper>
@@ -557,7 +561,7 @@ class ApplicationScreen extends React.Component {
               <FormInputWrapper>
                 <StyledText fontSize={14} color={colors.BLACK60}>
                   Title (select all that apply)
-              </StyledText>
+                  </StyledText>
                 <ButtonGroup
                   onPress={this.updateIndex}
                   selectedIndexes={selectedIndexes}
@@ -620,12 +624,35 @@ class ApplicationScreen extends React.Component {
                   returnKeyType="next"
                   ref={input => (this.inputRefs.specialties = input)}
                   onChangeText={this.handleInputChange("specialties")}
-                  onSubmitEditing={() =>
-                    this.inputRefs.whereHeard.getInnerRef().focus()
-                  }
+                  onSubmitEditing={() => {
+                    if (this.inputRefs.supervisingPhysician) {
+                      this.inputRefs.supervisingPhysician.getInnerRef().focus();
+                    } else {
+                      this.inputRefs.whereHeard.getInnerRef().focus();
+                    }
+                  }}
                   blurOnSubmit={false}
                 />
               </FormInputWrapper>
+              {selectedIndexes.includes(0) ? null : (
+                <FormInputWrapper>
+                  <FormTextInput
+                    name="supervisingPhysician"
+                    label="Supervising Physician"
+                    value={supervisingPhysician}
+                    placeholder="Supervising Physician"
+                    returnKeyType="next"
+                    ref={input => (this.inputRefs.supervisingPhysician = input)}
+                    onChangeText={this.handleInputChange(
+                      "supervisingPhysician"
+                    )}
+                    onSubmitEditing={() => 
+                      this.inputRefs.whereHeard.getInnerRef().focus()
+                    }
+                    blurOnSubmit={false}
+                  />
+                </FormInputWrapper>
+              )}
               <FormInputWrapper>
                 <FormTextInput
                   name="whereHeard"
@@ -641,23 +668,8 @@ class ApplicationScreen extends React.Component {
                     // this.inputRefs.supervisingPhysician &&
                     // this.inputRefs.supervisingPhysician.getInnerRef().focus()
                   }
-                  blurOnSubmit={false}
                 />
               </FormInputWrapper>
-              {selectedIndexes.includes(0) ? null : (
-                <FormInputWrapper>
-                  <FormTextInput
-                    name="supervisingPhysician"
-                    label="Supervising Physician"
-                    value={supervisingPhysician}
-                    placeholder="Supervising Physician"
-                    returnKeyType="done"
-                    ref={input => (this.inputRefs.supervisingPhysician = input)}
-                    onChangeText={this.handleInputChange("supervisingPhysician")}
-                    onSubmitEditing={() => Keyboard.dismiss}
-                  />
-                </FormInputWrapper>
-              )}
               <FormInputWrapper>
                 <StyledText
                   style={{
@@ -666,18 +678,25 @@ class ApplicationScreen extends React.Component {
                   }}
                 >
                   By checking this box I affirm that I have read and understood
-                Opear's{" "}
+                  Opear's
+{" "}
                   <StyledText
                     style={{
                       color: colors.BLUE,
-                      textDecorationLine: 'underline',
+                      textDecorationLine: "underline",
                       textDecorationColor: colors.BLUE,
                       fontSize: 16
                     }}
-                    onPress={() => Linking.openURL('https://www.opear.com/terms-conditions/')}>
+                    onPress={() =>
+                      Linking.openURL("https://www.opear.com/terms-conditions/")
+                    }
+                  
+                  >
                     Terms of Use
-                </StyledText>{" "}
-                  and{" "}
+                    </StyledText>
+{" "}
+                  and
+{" "}
                   <StyledText
                     style={{
                       color: colors.BLUE,
@@ -690,9 +709,10 @@ class ApplicationScreen extends React.Component {
                     }
                   >
                     Privacy Policy
-                </StyledText>{" "}
+                    </StyledText>
+{" "}
                   and agree to be bound by their terms.
-              </StyledText>
+                  </StyledText>
                 <CheckBox
                   title="I have read and accept"
                   checked={this.state.acceptedPrivacy}
@@ -709,8 +729,8 @@ class ApplicationScreen extends React.Component {
                     paddingLeft: 0,
                     marginLeft: 0
                   }}
-                  checkedIcon={"check-square"}
-                  uncheckedIcon={"square-o"}
+                  checkedIcon="check-square"
+                  uncheckedIcon="square-o"
                   checkedColor={colors.SEAFOAMBLUE}
                 />
                 <StyledText
@@ -720,12 +740,12 @@ class ApplicationScreen extends React.Component {
                     marginTop: 20
                   }}
                 >
-                  I hereby affirm that I read and understood Opear's Terms of Use
-                  and Privacy Policy and agree to be bound by their terms. I have
-                  (and will maintain during my time as an Opear Provider) all
-                  necessary malpractice and other insurance as required under
-                  applicable law.
-              </StyledText>
+                  I hereby affirm that I read and understood Opear's Terms of
+                  Use and Privacy Policy and agree to be bound by their terms. I
+                  have (and will maintain during my time as an Opear Provider)
+                  all necessary malpractice and other insurance as required
+                  under applicable law.
+                  </StyledText>
                 <CheckBox
                   title="I have read and accept"
                   checked={this.state.acceptedTermsOfService}
@@ -742,8 +762,8 @@ class ApplicationScreen extends React.Component {
                     paddingLeft: 0,
                     marginLeft: 0
                   }}
-                  checkedIcon={"check-square"}
-                  uncheckedIcon={"square-o"}
+                  checkedIcon="check-square"
+                  uncheckedIcon="square-o"
                   checkedColor={colors.SEAFOAMBLUE}
                 />
               </FormInputWrapper>
@@ -751,7 +771,10 @@ class ApplicationScreen extends React.Component {
             <FormInputWrapper
               style={{ marginBottom: 20, marginTop: 0, paddingTop: 0 }}
             >
-              <ServiceButton title="Submit Application" onPress={this.onSubmit} />
+              <ServiceButton
+                title="Submit Application"
+                onPress={this.onSubmit}
+              />
             </FormInputWrapper>
           </KeyboardScrollView>
         </SafeAreaView>
