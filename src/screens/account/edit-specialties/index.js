@@ -1,12 +1,14 @@
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
-import { StyledText, StyledTextInput, FormTextInput } from "@components/text";
+import { FormTextInput } from "@components/text";
 import { NavHeader } from "@components/nav-header";
 import { ServiceButton } from "@components/service-button";
-import { View, FormWrapper } from "@components/views";
+import { FormWrapper } from "@components/views";
 import { updateCareProvider } from "@services/opear-api";
-import { KeyboardAvoidingView, FormInputView } from "@components/views/keyboard-view";
-import { colors } from "@utils/constants";
+import {
+  KeyboardAvoidingView,
+  FormInputView
+} from "@components/views/keyboard-view";
 import { commaStringToArray } from "@utils/helpers";
 
 @inject("store")
@@ -19,10 +21,15 @@ class EditSpecialtiesScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { store: { currentUserStore: { id, application: { specialties } } } }  = this.props;
+    const {
+      store: {
+        currentUserStore: {
+          application: { specialties }
+        }
+      }
+    }  = props;
 
     this.state = {
-      id,
       specialties: specialties.join(", ")
     };
 
@@ -39,29 +46,27 @@ class EditSpecialtiesScreen extends React.Component {
   onSubmit = () => {
     const {
       navigation: { goBack },
-      store: { currentUserStore}
+      store: {
+        currentUserStore: { id, application }
+      }
     } = this.props;
 
-    const { id } = this.state;
     const { specialties } = this.state;
-    const data = { specialties };
+    const data = { care_provider: { specialties } };
 
     const successHandler = () => {
-      currentUserStore.application.setSpecialties(specialties);
+      application.setSpecialties(specialties);
       goBack();
     };
 
-    updateCareProvider(
-      id,
-      data,
-      { successHandler }
-    );
-  }
+    updateCareProvider(id, data, { successHandler });
+  };
 
   render() {
     const {
       navigation: { goBack }
     } = this.props;
+
     const { specialties } = this.state;
 
     return (

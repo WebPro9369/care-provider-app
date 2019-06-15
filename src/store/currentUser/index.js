@@ -86,19 +86,19 @@ const ApplicationStore = types
       return self;
     },
     setEducationHistory(value) {
-      self.educationHistory = value;
+      self.educationHistory.replace(value);
       return self;
     },
     setWorkHistory(value) {
-      self.workHistory = value;
+      self.workHistory.replace(value);
       return self;
     },
     setSpecialties(value) {
-      self.specialties = value;
+      self.specialties.replace(value);
       return self;
     },
     setOfferedServices(value) {
-      self.offeredServices = value;
+      self.offeredServices.replace(value);
       return self;
     },
     setWhereHeard(value) {
