@@ -26,6 +26,11 @@ target 'careprovider' do
 
   pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
 
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
+
+  pod 'SentryReactNative', :path => '../node_modules/react-native-sentry'
+
   target 'careproviderTests' do
     inherit! :search_paths
     # Pods for testing

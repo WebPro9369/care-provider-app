@@ -77,6 +77,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-sentry/sentry.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -138,6 +139,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-sentry')
+    implementation project(':react-native-maps')
     implementation project(':react-native-keychain')
     implementation project(':tipsi-stripe')
     implementation project(':react-native-image-picker')
@@ -148,7 +151,6 @@ dependencies {
     implementation project(':react-native-push-notification')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-reanimated')
-    implementation project(':react-native-maps')
     implementation project(':react-native-gesture-handler')
     implementation project(':react-native-awesome-card-io')
     implementation fileTree(dir: "libs", include: ["*.jar"])
