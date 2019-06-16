@@ -950,6 +950,14 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		06FCF763A4C44604832C606F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			path = Application;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -984,7 +992,7 @@
 				840E2E6C228E679B0077F7D2 /* ShellScript */,
 				0514F04FA374346CF5EFCF1A /* [CP] Embed Pods Frameworks */,
 				07E97A42F8F53D808324ECA3 /* [CP] Copy Pods Resources */,
-				7BD908FFA26C469EA148257D /* Upload Debug Symbols to Sentry */,
+				F054CCD6506B494E8EB9AAE1 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -1746,7 +1754,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7BD908FFA26C469EA148257D /* Upload Debug Symbols to Sentry */ = {
+		F054CCD6506B494E8EB9AAE1 /* Upload Debug Symbols to Sentry */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
