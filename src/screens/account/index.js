@@ -13,6 +13,7 @@ const imgDoctor = require("../../../assets/images/Doctor.png");
 
 @inject("store")
 @observer
+
 class AccountScreen extends React.Component {
   static propTypes = {
     store: PropTypes.observableObject.isRequired
@@ -20,10 +21,17 @@ class AccountScreen extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       avatarImg: imgDoctor,
       rating: "4.5",
     };
+  }
+
+  componentDidMount () {
+    this._onFocusListener = this.props.navigation.addListener('didFocus', (payload) => {
+      this.forceUpdate();
+    });
   }
 
   logOut = () => {
@@ -50,6 +58,7 @@ class AccountScreen extends React.Component {
         specialties,
       }
     } } = store;
+
     return (
       <ContainerView padding={16}>
         <View style={{ paddingTop: 24, paddingBottom: 24 }}>
