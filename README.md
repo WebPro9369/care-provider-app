@@ -26,8 +26,10 @@ This is a React Native app for Care Provider App.
 
 _TODO: Fix the below line to be dynamic_
 * edit android/local.properties to point to your android sdk  (src: https://stackoverflow.com/questions/27620262/sdk-location-not-found-define-location-with-sdk-dir-in-the-local-properties-fil)
+* plug in your Android device to your computer
+* make sure your device is in Developer/Debug mode
 * `yarn start`
-* react-native run-android
+* `react-native run-android`
 
 ### Troublshooting
 - Clean Gradle local cache `cd android && gradlew cleanBuildCache` src: https://stackoverflow.com/a/30450020/1895126
