@@ -5,6 +5,11 @@ import { TwilioService } from "./src/services";
 import { mainStore } from "./src/store";
 import RootContainer from "./src/root-container";
 
+import { Sentry } from 'react-native-sentry';
+
+Sentry.config('https://cf2675d7f0cf4c97996e262a36d9bf34@sentry.io/1220229').install();
+
+
 @observer
 export default class App extends React.Component {
   constructor(props) {

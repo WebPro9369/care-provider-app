@@ -1,4 +1,6 @@
 rootProject.name = 'careprovider'
+include ':react-native-sentry'
+project(':react-native-sentry').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sentry/android')
 include ':react-native-maps'
 project(':react-native-maps').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-maps/lib/android')
 include ':react-native-keychain'

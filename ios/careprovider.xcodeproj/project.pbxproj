@@ -74,6 +74,7 @@
 		F4890C8A90A47A715B3B08C7 /* libPods-careprovider-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 420ADCBE2854A0704E270210 /* libPods-careprovider-tvOS.a */; };
 		F70779D9E9204682908FD788 /* FlamaLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = F04F7EFCFFF144538F2657EF /* FlamaLight.otf */; };
 		F8023E8CC81B4B9E8B46AD83 /* libRNCardIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A8A6069B3184605AE756B37 /* libRNCardIO.a */; };
+		1BA4721EA8EC4B45BEC6116D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1047CA7DDB4393B60B978E /* libz.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -509,6 +510,7 @@
 		F04F7EFCFFF144538F2657EF /* FlamaLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FlamaLight.otf; path = ../assets/fonts/FlamaLight.otf; sourceTree = "<group>"; };
 		F7B7F12C9A0C3CDC6C00DC3B /* Pods-careproviderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-careproviderTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-careproviderTests/Pods-careproviderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FF34C019093E4D1392383538 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		4F1047CA7DDB4393B60B978E /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -549,6 +551,7 @@
 				7C61FCAA8A12405DB14298B8 /* libRNVectorIcons.a in Frameworks */,
 				4D7C3E9943A9459EAE7DF962 /* libRNTwilioVoice.a in Frameworks */,
 				6C4CF65B50DA84F3931B6763 /* libPods-careprovider.a in Frameworks */,
+				1BA4721EA8EC4B45BEC6116D /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,6 +714,7 @@
 				420ADCBE2854A0704E270210 /* libPods-careprovider-tvOS.a */,
 				55950305553D2C64A21258C9 /* libPods-careprovider-tvOSTests.a */,
 				77540F1653D6E45DA5DC91F5 /* libPods-careproviderTests.a */,
+				4F1047CA7DDB4393B60B978E /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -938,6 +942,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		787B85214EC84869AE1A4F04 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			path = Application;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -972,6 +984,7 @@
 				840E2E6C228E679B0077F7D2 /* ShellScript */,
 				0514F04FA374346CF5EFCF1A /* [CP] Embed Pods Frameworks */,
 				07E97A42F8F53D808324ECA3 /* [CP] Copy Pods Resources */,
+				7BD908FFA26C469EA148257D /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -1568,7 +1581,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		0514F04FA374346CF5EFCF1A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1626,7 +1639,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		4AF4E78BB7EA583AFA60DCC3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1732,6 +1745,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		7BD908FFA26C469EA148257D /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Upload Debug Symbols to Sentry";
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
 		};
 /* End PBXShellScriptBuildPhase section */
 

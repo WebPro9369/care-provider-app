@@ -3,6 +3,7 @@ package com.careprovider;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.sentry.RNSentryPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.oblador.keychain.KeychainPackage;
 import com.gettipsi.stripe.StripeReactPackage;
@@ -36,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSentryPackage(),
             new MapsPackage(),
             new KeychainPackage(),
             new StripeReactPackage(),
