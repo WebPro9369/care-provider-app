@@ -206,7 +206,7 @@ class AskLocationScreen extends Component {
               style={{ marginTop: 24, marginBottom: 24 }}
             >
               Let&apos;s make sure Opear is in your area:
-          </StyledText>
+            </StyledText>
             <View
               style={{
                 flexDirection: "row",
@@ -238,7 +238,7 @@ class AskLocationScreen extends Component {
               }}
               onPress={() => navigate("AccountSignIn")}>
               Have an account? Sign In
-          </StyledText>
+            </StyledText>
             <Image
               source={imgProgressbar}
               resizeMode="contain"
