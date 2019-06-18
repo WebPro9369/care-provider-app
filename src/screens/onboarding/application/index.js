@@ -2,7 +2,7 @@
 /* eslint-disable no-return-assign */
 import React from "react";
 // import axios from "axios";
-import { Keyboard, Alert, Linking, SafeAreaView } from "react-native";
+import { Platform, Keyboard, Alert, Linking, SafeAreaView } from "react-native";
 import { Avatar, ButtonGroup, CheckBox, Icon } from "react-native-elements";
 import { inject, observer, PropTypes } from "mobx-react";
 import ImagePicker from "react-native-image-picker";
@@ -337,7 +337,11 @@ class ApplicationScreen extends React.Component {
     return (
       <ContainerView>
         <SafeAreaView style={{ flex: 1 }}>
-          <KeyboardScrollView keyboardShouldPersistTaps="handled">
+          <KeyboardScrollView
+            keyboardShouldPersistTaps="handled"
+            enableOnAndroid
+            extraHeight={Platform.select({ android: 45 })}
+          >
             <HeaderWrapper>
               <NavHeader
                 title="Your application"
@@ -436,7 +440,7 @@ class ApplicationScreen extends React.Component {
                   label="Medical License Type"
                   value={licenseType}
                   placeholder="Medical License Type"
-                  // returnKeyType="next"
+                  returnKeyType="next"
                   ref={input => (this.inputRefs.licenseType = input)}
                   onChangeText={this.handleInputChange("licenseType")}
                   onSubmitEditing={() =>
@@ -452,7 +456,7 @@ class ApplicationScreen extends React.Component {
                   label="Medical License Number"
                   value={licenseNumber}
                   placeholder="Medical License Number"
-                  // returnKeyType="next"
+                  returnKeyType="next"
                   keyboardType="phone-pad"
                   ref={input => (this.inputRefs.licenseNumber = input)}
                   onChangeText={this.handleInputChange("licenseNumber")}
