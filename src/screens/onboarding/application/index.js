@@ -283,11 +283,11 @@ class ApplicationScreen extends React.Component {
       navigate("ApplicationPending");
     };
 
-    // eslint-disable-next-line prettier/prettier
-    const errorHandler = () => Alert.alert(
-        "There was an issue",
-        "There was an issue with creating your account. Please ensure your information is correct and try again, or contact help@opear.com."
-      );
+    const errorHandler = err => console.tron.log("API Error: ", err);
+    Alert.alert(
+      "There was an issue",
+      "There was an issue with creating your account. Please ensure your information is correct and try again, or contact help@opear.com."
+    );
 
     registerCareProvider(data, { successHandler, errorHandler });
   };

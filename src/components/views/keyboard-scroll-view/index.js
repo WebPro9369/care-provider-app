@@ -10,12 +10,10 @@ KeyboardScrollView.propTypes = {
   padding: PropTypes.number,
   extraScrollHeight: PropTypes.number,
   enableResetScrollToCoords: PropTypes.bool
-  // extraHeight: PropTypes.number,
 };
 
 KeyboardScrollView.defaultProps = {
   padding: 15,
   extraScrollHeight: 45,
-  enableResetScrollToCoords: true
-  // extraHeight: 0,
+  enableResetScrollToCoords: false
 };
