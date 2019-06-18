@@ -37,7 +37,7 @@
 		</array>
 	</dict>
 	<key>LSApplicationCategoryType</key>
-	<string/>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -58,17 +58,17 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>Enabling Face ID allows you quick and secure access to your account.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Care Provider app uses your location info</string>
+	<string>We use your location to pair you with consumer requests in your area</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Care Provider app uses your location info</string>
+	<string>We use your location to pair you with consumer requests in your area</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Care Provider app uses your location info</string>
+	<string>We use your location to pair you with consumer requests in your area</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Care Provider app uses your microphone</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Care Proivder app would like to save photos to your photo gallery</string>
+	<string>We need access to your photo library so you can set your profile image</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Care Provider app uses photo library</string>
+	<string>We use your photo library to set your profile image</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Flama.otf</string>
