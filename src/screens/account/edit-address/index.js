@@ -104,12 +104,14 @@ class EditAddressScreen extends React.Component {
           })
           .catch(err => {
             console.tron.log("Google map api error: ", err);
-            return Alert.alert("Google Map API failed to get your location.");
+            return Alert.alert(
+              "There was an issue", 
+              "Google Map API failed to get your location.");
           });
       },
       error => {
         console.tron.log("Error getting current location: ", error);
-        Alert.alert("Failed to get current location.");
+        Alert.alert("There was an issue", "Failed to get current location.");
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );

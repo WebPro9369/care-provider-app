@@ -35,7 +35,7 @@ class NameCaptureScreen extends Component {
     } = this.props;
     const { name } = this.state;
     if (!name) {
-      return Alert.alert("Please input your full name.");
+      return Alert.alert("There was an issue", "Please input your full name.");
     }
     const names = name.split(" ");
     currentUserStore.setFirstName(names[0]);

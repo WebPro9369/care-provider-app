@@ -41,7 +41,10 @@ class AskLocationScreen extends Component {
           !position.coords.latitude ||
           !position.coords.longitude
         ) {
-          return Alert.alert("Failed to get your location.");
+          return Alert.alert(
+            "There was an issue",
+            "Failed to get your location."
+          );
         }
         console.tron.log(
           "Current position: ",
@@ -165,7 +168,10 @@ class AskLocationScreen extends Component {
     const { zipcode } = this.state;
 
     if (zipcode.length !== 5)
-      return Alert.alert("Error", "Please enter a valid US zip code.");
+      return Alert.alert(
+        "There was an issue",
+        "Please enter a valid US zip code."
+      );
 
     if (zipcode) address.setZipCode(zipcode);
     return navigate("NameCapture");
@@ -174,16 +180,16 @@ class AskLocationScreen extends Component {
     //     console.tron.log("BiometryType: ", biometryType);
     //     TouchID.authenticate()
     //       .then(success => {
-    //         Alert.alert("Authenticated Successfully");
+    //         Alert.alert("There was an issue", "Authenticated Successfully");
     //       })
     //       .catch(error => {
     //         console.tron.log(error);
-    //         Alert.alert("Authentication failed.");
+    //         Alert.alert("There was an issue", "Authentication failed.");
     //       });
     //   })
     //   .catch(error => {
     //     console.tron.log("TouchID not supported: ", error);
-    //     Alert.alert("Touch ID is not supported.");
+    //     Alert.alert("There was an issue", "Touch ID is not supported.");
     //   });
   };
 

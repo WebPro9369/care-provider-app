@@ -179,12 +179,15 @@ class ApplicationScreen extends React.Component {
     const dateRegex2 = /^(0[1-9]|1[0-2])(0[1-9]|1\d|2\d|3[01])(19|20)\d{2}$/;
 
     if (!dateRegex1.test(dateOfBirth) && !dateRegex2.test(dateOfBirth)) {
-      return Alert.alert(`Please enter Date of Birth in \n mm/dd/yyyy format`);
+      return Alert.alert(
+        "There was an issue", 
+        "Please enter Date of Birth in mm/dd/yyyy format");
     }
 
     const ssnPattern = /^[0-9]{4}/;
     if (!ssnPattern.test(ssn)) {
       return Alert.alert(
+        "There was an issue",
         "Please enter Social Security Number in 'XXXX' format"
       );
     }
@@ -192,11 +195,17 @@ class ApplicationScreen extends React.Component {
     const { acceptedPrivacy, acceptedTermsOfService } = this.state;
 
     if (!acceptedPrivacy) {
-      return Alert.alert("Please review our Privacy Policy to continue");
+      return Alert.alert(
+        "There was an issue",
+        "Please review our Privacy Policy to continue"
+      );
     }
 
     if (!acceptedTermsOfService) {
-      return Alert.alert("Please review our Terms of Service to continue");
+      return Alert.alert(
+        "There was an issue",
+        "Please review our Terms of Service to continue"
+      );
     }
 
     const {
@@ -275,7 +284,10 @@ class ApplicationScreen extends React.Component {
     };
 
     // eslint-disable-next-line prettier/prettier
-    const errorHandler = () => Alert.alert("Registration failed. Please ensure your information is correct, or contact help@opear.com.");
+    const errorHandler = () => Alert.alert(
+        "There was an issue",
+        "There was an issue with creating your account. Please ensure your information is correct and try again, or contact help@opear.com."
+      );
 
     registerCareProvider(data, { successHandler, errorHandler });
   };

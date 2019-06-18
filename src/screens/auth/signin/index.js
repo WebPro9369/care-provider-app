@@ -33,7 +33,10 @@ class SignInScreen extends React.Component {
 
     const successHandler = res => {
       if (res.data.message) {
-        return Alert.alert(`Incorrect credentials. Please try again.`);
+        return Alert.alert(
+          "There was an issue",
+          "Incorrect credentials. Please try again."
+        );
       }
 
       const { id, api_key: apiKey } = res.data;
