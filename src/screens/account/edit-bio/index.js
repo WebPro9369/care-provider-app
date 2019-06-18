@@ -63,7 +63,7 @@ class EditBioScreen extends React.Component {
     const { biography } = this.state;
 
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
+      <KeyboardAvoidingView enabled>
         <NavHeader
           title="Edit biography"
           size="medium"

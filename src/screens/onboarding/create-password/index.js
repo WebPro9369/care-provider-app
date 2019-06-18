@@ -51,7 +51,7 @@ class CreatePasswordScreen extends Component {
     const { password } = this.state;
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView behavior="padding" enabled>
+        <KeyboardAvoidingView enabled>
           <View>
             <NavHeader
               hasBackButton

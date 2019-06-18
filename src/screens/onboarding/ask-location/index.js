@@ -165,7 +165,7 @@ class AskLocationScreen extends Component {
     const { zipcode } = this.state;
 
     if (zipcode.length !== 5)
-      return Alert.alert("Please enter a \n valid US zip code.");
+      return Alert.alert("Error", "Please enter a valid US zip code.");
 
     if (zipcode) address.setZipCode(zipcode);
     return navigate("NameCapture");
@@ -194,7 +194,7 @@ class AskLocationScreen extends Component {
     const { zipcode } = this.state;
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView behavior="padding" enabled>
+        <KeyboardAvoidingView enabled>
           <View>
             <NavHeader
               title="Welcome to Opear"

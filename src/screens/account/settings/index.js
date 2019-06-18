@@ -98,7 +98,7 @@ class SettingsScreen extends React.Component {
         };
 
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
+      <KeyboardAvoidingView enabled>
         <HeaderWrapper>
           <NavHeader
             title="Settings"
