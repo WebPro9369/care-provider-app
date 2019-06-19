@@ -9,7 +9,7 @@ import { ServiceButton } from "../../../components/service-button";
 import { FormInputWrapper, FormWrapper } from "../../../components/views";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { colors } from "../../../utils/constants";
-import { sendEmail } from "@utils/ses_sendemail";
+import { passwordReset } from "@services/opear-api";
 
 @inject("store")
 class ForgotPwdScreen extends React.Component {
@@ -37,9 +37,12 @@ class ForgotPwdScreen extends React.Component {
 
     console.tron.log(email);
 
-    sendEmail(email, "passwordReset");
+    const successHandler = () => {
+      Alert.alert("Reset requested.","Check your email to reset your password.");
+    };
 
-    Alert.alert("Reset requested.","Check your email to reset your password.");
+    passwordReset(email, { successHandler });
+
     return true;
 
   };

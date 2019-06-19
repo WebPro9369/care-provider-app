@@ -42,7 +42,7 @@ class SignInScreen extends React.Component {
     const routeName = route.split('/')[0];
 
     if (routeName === 'newpwd') {
-      navigate('AccountNewPwd');
+      navigate('AccountNewPwd',{routeInfo:route});
     };
   }
 
