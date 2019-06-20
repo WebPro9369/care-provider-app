@@ -31,6 +31,10 @@ _TODO: Fix the below line to be dynamic_
 * `yarn start`
 * `react-native run-android`
 
+### Release to Google Play Store
+
+* follow instructions here: https://facebook.github.io/react-native/docs/signed-apk-android
+
 ### Troublshooting
 - Clean Gradle local cache `cd android && gradlew cleanBuildCache` src: https://stackoverflow.com/a/30450020/1895126
 - Clean Gradle global `rm -rf $HOME/.gradle/caches/` src: https://stackoverflow.com/a/30450020/1895126
