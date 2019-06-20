@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { Platform } from "react-native";
 
 export const KeyboardAvoidingView = styled.KeyboardAvoidingView`
   flex: 1;
@@ -10,7 +11,8 @@ export const KeyboardAvoidingView = styled.KeyboardAvoidingView`
 
 KeyboardAvoidingView.defaultProps = {
   startFromTop: false,
-  padding: 16
+  padding: 16,
+  behavior: Platform.OS === "ios" ? "padding" : null
 };
 
 export const FormInputView = styled.View`

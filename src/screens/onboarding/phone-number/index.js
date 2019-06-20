@@ -37,12 +37,11 @@ class PhoneNumberScreen extends Component {
 
     console.tron.log("Phone number: ", phone);
 
-    {
-      /* if(!this.phone.isValidNumber())
-    {
-      return Alert.alert("Please enter a valid phone number.");
-    }*/
-    }
+    /* 
+    if(!this.phone.isValidNumber()) {
+      return Alert.alert("There was an issue", "Please enter a valid phone number.");
+    } 
+    */
 
     currentUserStore.setPhone(phone);
 
@@ -57,7 +56,7 @@ class PhoneNumberScreen extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView behavior="padding" enabled>
+        <KeyboardAvoidingView enabled>
           <View>
             <NavHeader
               hasBackButton

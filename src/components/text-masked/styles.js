@@ -10,6 +10,8 @@ export const StyledMaskedTextInput = styled(TextInputMask)`
   font-size: ${props => props.fontSize};
   line-height: ${props => props.lineHeight};
   text-align: ${props => props.textAlign};
+  padding-top: 0;
+  padding-bottom: 0;
 `;
 
 StyledMaskedTextInput.defaultProps = {

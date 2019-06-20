@@ -34,3 +34,10 @@ _TODO: Fix the below line to be dynamic_
 ### Troublshooting
 - Clean Gradle local cache `cd android && gradlew cleanBuildCache` src: https://stackoverflow.com/a/30450020/1895126
 - Clean Gradle global `rm -rf $HOME/.gradle/caches/` src: https://stackoverflow.com/a/30450020/1895126
+
+# Reactotron
+Reactotron is setup for this project, which provides helpful debugging.
+
+Get started by installing the Desktop application.
+
+Note, for Android debugging, you will need to run `adb reverse tcp:9090 tcp:9090`

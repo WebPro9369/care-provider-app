@@ -36,7 +36,10 @@ class EmailCaptureScreen extends Component {
     const { email } = this.state;
     const regEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!email || !regEmail.test(email)) {
-      return Alert.alert("Please enter a valid email address.");
+      return Alert.alert(
+        "There was an issue",
+        "Please enter a valid email address."
+      );
     }
     currentUserStore.setEmail(email);
     return navigate("CreatePassword");
@@ -49,7 +52,7 @@ class EmailCaptureScreen extends Component {
     const { email } = this.state;
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView behavior="padding" enabled>
+        <KeyboardAvoidingView enabled>
           <View>
             <NavHeader
               hasBackButton

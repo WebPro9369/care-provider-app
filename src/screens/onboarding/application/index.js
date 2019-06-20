@@ -2,7 +2,7 @@
 /* eslint-disable no-return-assign */
 import React from "react";
 // import axios from "axios";
-import { Keyboard, Alert, Linking, SafeAreaView } from "react-native";
+import { Platform, Keyboard, Alert, Linking, SafeAreaView } from "react-native";
 import { Avatar, ButtonGroup, CheckBox, Icon } from "react-native-elements";
 import { inject, observer, PropTypes } from "mobx-react";
 import ImagePicker from "react-native-image-picker";
@@ -179,12 +179,15 @@ class ApplicationScreen extends React.Component {
     const dateRegex2 = /^(0[1-9]|1[0-2])(0[1-9]|1\d|2\d|3[01])(19|20)\d{2}$/;
 
     if (!dateRegex1.test(dateOfBirth) && !dateRegex2.test(dateOfBirth)) {
-      return Alert.alert(`Please enter Date of Birth in \n mm/dd/yyyy format`);
+      return Alert.alert(
+        "There was an issue", 
+        "Please enter Date of Birth in mm/dd/yyyy format");
     }
 
     const ssnPattern = /^[0-9]{4}/;
     if (!ssnPattern.test(ssn)) {
       return Alert.alert(
+        "There was an issue",
         "Please enter Social Security Number in 'XXXX' format"
       );
     }
@@ -192,11 +195,17 @@ class ApplicationScreen extends React.Component {
     const { acceptedPrivacy, acceptedTermsOfService } = this.state;
 
     if (!acceptedPrivacy) {
-      return Alert.alert("Please review our Privacy Policy to continue");
+      return Alert.alert(
+        "There was an issue",
+        "Please review our Privacy Policy to continue"
+      );
     }
 
     if (!acceptedTermsOfService) {
-      return Alert.alert("Please review our Terms of Service to continue");
+      return Alert.alert(
+        "There was an issue",
+        "Please review our Terms of Service to continue"
+      );
     }
 
     const {
@@ -274,8 +283,11 @@ class ApplicationScreen extends React.Component {
       navigate("ApplicationPending");
     };
 
-    // eslint-disable-next-line prettier/prettier
-    const errorHandler = () => Alert.alert("Registration failed. Please ensure your information is correct, or contact help@opear.com.");
+    const errorHandler = err => console.tron.log("API Error: ", err);
+    Alert.alert(
+      "There was an issue",
+      "There was an issue with creating your account. Please ensure your information is correct and try again, or contact help@opear.com."
+    );
 
     registerCareProvider(data, { successHandler, errorHandler });
   };
@@ -325,7 +337,11 @@ class ApplicationScreen extends React.Component {
     return (
       <ContainerView>
         <SafeAreaView style={{ flex: 1 }}>
-          <KeyboardScrollView keyboardShouldPersistTaps="handled">
+          <KeyboardScrollView
+            keyboardShouldPersistTaps="handled"
+            enableOnAndroid
+            extraHeight={Platform.select({ android: 45 })}
+          >
             <HeaderWrapper>
               <NavHeader
                 title="Your application"
@@ -424,7 +440,7 @@ class ApplicationScreen extends React.Component {
                   label="Medical License Type"
                   value={licenseType}
                   placeholder="Medical License Type"
-                  // returnKeyType="next"
+                  returnKeyType="next"
                   ref={input => (this.inputRefs.licenseType = input)}
                   onChangeText={this.handleInputChange("licenseType")}
                   onSubmitEditing={() =>
@@ -440,7 +456,7 @@ class ApplicationScreen extends React.Component {
                   label="Medical License Number"
                   value={licenseNumber}
                   placeholder="Medical License Number"
-                  // returnKeyType="next"
+                  returnKeyType="next"
                   keyboardType="phone-pad"
                   ref={input => (this.inputRefs.licenseNumber = input)}
                   onChangeText={this.handleInputChange("licenseNumber")}
