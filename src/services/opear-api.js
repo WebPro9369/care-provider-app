@@ -2,9 +2,9 @@ import Axios from "axios";
 
 export const API_SETTINGS = {
   apiKey: null,
-  //endpoint: "http://api.opear.com" 
+  // endpoint: "http://api.opear.com"
   endpoint: "http://ec2-18-191-228-16.us-east-2.compute.amazonaws.com"
-  //endpoint: "http://localhost:3000/"
+  // endpoint: "http://localhost:3000/"
 };
 
 const axios = Axios.create({
@@ -22,7 +22,10 @@ const axios = Axios.create({
   }
 });
 
-export const registerCareProvider = (data, { successHandler, errorHandler } = {}) => {
+export const registerCareProvider = (
+  data,
+  { successHandler, errorHandler } = {}
+) => {
   axios
     .post("/v1/care_providers", data)
     .then(res => {
@@ -35,7 +38,10 @@ export const registerCareProvider = (data, { successHandler, errorHandler } = {}
     });
 };
 
-export const getCareProvider = (userID, { successHandler, errorHandler } = {}) => {
+export const getCareProvider = (
+  userID,
+  { successHandler, errorHandler } = {}
+) => {
   axios
     .get(`/v1/care_providers/${userID}`)
     .then(res => {
@@ -48,7 +54,11 @@ export const getCareProvider = (userID, { successHandler, errorHandler } = {}) =
     });
 };
 
-export const updateCareProvider = (userID, data, { successHandler, errorHandler } = {}) => {
+export const updateCareProvider = (
+  userID,
+  data,
+  { successHandler, errorHandler } = {}
+) => {
   axios
     .patch(`/v1/care_providers/${userID}`, data)
     .then(res => {
@@ -61,8 +71,11 @@ export const updateCareProvider = (userID, data, { successHandler, errorHandler 
     });
 };
 
-export const getVisits = (userID, { past, successHandler, errorHandler } = {}) => {
-  const url = `/v1/visits` + (past ? '?past=true' : '');
+export const getVisits = (
+  userID,
+  { past, successHandler, errorHandler } = {}
+) => {
+  const url = `/v1/visits${past ? "?past=true" : ""}`;
 
   axios
     .get(url)
@@ -76,7 +89,11 @@ export const getVisits = (userID, { past, successHandler, errorHandler } = {}) =
     });
 };
 
-export const getVisit = (userID, visitID, { successHandler, errorHandler } = {}) => {
+export const getVisit = (
+  userID,
+  visitID,
+  { successHandler, errorHandler } = {}
+) => {
   axios
     .get(`/v1/visits/${visitID}`)
     .then(res => {
@@ -89,7 +106,10 @@ export const getVisit = (userID, visitID, { successHandler, errorHandler } = {})
     });
 };
 
-export const getAvailabilities = (userID, { successHandler, errorHandler } = {}) => {
+export const getAvailabilities = (
+  userID,
+  { successHandler, errorHandler } = {}
+) => {
   const url = `/v1/care_providers/${userID}/availability`;
 
   axios
@@ -104,7 +124,11 @@ export const getAvailabilities = (userID, { successHandler, errorHandler } = {})
     });
 };
 
-export const updateAvailabilities = (userID, data, { successHandler, errorHandler } = {}) => {
+export const updateAvailabilities = (
+  userID,
+  data,
+  { successHandler, errorHandler } = {}
+) => {
   const url = `/v1/care_providers/${userID}/availability`;
 
   axios
@@ -119,7 +143,12 @@ export const updateAvailabilities = (userID, data, { successHandler, errorHandle
     });
 };
 
-export const createBankAccountProvider = (userID, data, successHandler, errorHandler) => {
+export const createBankAccountProvider = (
+  userID,
+  data,
+  successHandler,
+  errorHandler
+) => {
   const url = `/v1/care_providers/${userID}/payout_account`;
   axios
     .post(url, data)
@@ -137,8 +166,11 @@ export const createBankAccountProvider = (userID, data, successHandler, errorHan
     });
 };
 
-
-export const getApiToken = (email, password, { successHandler, errorHandler } = {}) => {
+export const getApiToken = (
+  email,
+  password,
+  { successHandler, errorHandler } = {}
+) => {
   const url = `/v1/authentications`;
 
   axios
