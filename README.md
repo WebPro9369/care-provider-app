@@ -33,7 +33,11 @@ _TODO: Fix the below line to be dynamic_
 
 ### Release to Google Play Store
 
-* follow instructions here: https://facebook.github.io/react-native/docs/signed-apk-android
+1. `cd android`
+2. `./gradlew bundleRelease`
+3. Test build locally in release mode `react-native run-android --variant=release`
+* follow setup instructions here for the first time setup: https://facebook.github.io/react-native/docs/signed-apk-android
+
 
 ### Troublshooting
 - Clean Gradle local cache `cd android && gradlew cleanBuildCache` src: https://stackoverflow.com/a/30450020/1895126
