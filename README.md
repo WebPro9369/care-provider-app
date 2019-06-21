@@ -34,9 +34,10 @@ _TODO: Fix the below line to be dynamic_
 ### Release to Google Play Store
 
 1. `cd android`
-2. `./gradlew bundleRelease`
-3. Edit the `versionCode` and `versionName` in `app/build.gradle`
-3. Test build locally in release mode `react-native run-android --variant=release`
+2. Edit the `versionCode` and `versionName` in `app/build.gradle`
+3. `./gradlew bundleRelease`
+4. Test build locally in release mode `react-native run-android --variant=release`
+5. Upload the `android/app/build/outputs/bundle/release/app.aab` to the Google Play Store
 * follow setup instructions here for the first time setup: https://facebook.github.io/react-native/docs/signed-apk-android
 
 
