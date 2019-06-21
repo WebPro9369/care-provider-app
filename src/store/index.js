@@ -1,7 +1,7 @@
 import { types } from "mobx-state-tree";
 import { ApplicationStore } from "./application";
 import { ProviderStore } from "./provider";
-import { CurrentUserStore } from './currentUser';
+import { CurrentUserStore } from "./currentUser";
 
 const MainStore = types.model("MainStore", {
   applicationStore: types.optional(ApplicationStore, {
@@ -17,12 +17,13 @@ const MainStore = types.model("MainStore", {
   }),
   currentUserStore: types.optional(CurrentUserStore, {
     id: 0,
-		apiKey: '',
-    email: '',
-    firstName: '',
-    lastName: '',
-    phone: '',
-  }),
+    apiKey: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    rating: 0
+  })
 });
 
 export const mainStore = MainStore.create();
