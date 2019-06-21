@@ -61,7 +61,7 @@ class EditEmailScreen extends React.Component {
     const { email } = this.state;
 
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
+      <KeyboardAvoidingView enabled>
         <NavHeader
           title="Edit email"
           size="medium"

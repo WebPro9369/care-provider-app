@@ -16,7 +16,7 @@ class ApplicationPendingScreen extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" padding={0} enabled>
+      <KeyboardAvoidingView padding={0} enabled>
         <View style={{ marginTop: 180, paddingLeft: 30, paddingRight: 30 }}>
           <StyledText
             lineHeight={37}

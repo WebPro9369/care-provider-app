@@ -37,7 +37,8 @@ class CreatePasswordScreen extends Component {
     const regEx = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
     if (!password || !password.match(regEx)) {
       return Alert.alert(
-        "Please input a valid password.\nPasswords must be between 8 and 20 characters, must include a combination of numbers and letters (upper or lower case), and/or special characters."
+        "There was an issue",
+        "Please input a valid password. Passwords must be between 8 and 20 characters, must include a combination of numbers and letters (upper or lower case), and/or special characters."
       );
     }
     currentUserStore.setPassword(password);
@@ -51,7 +52,7 @@ class CreatePasswordScreen extends Component {
     const { password } = this.state;
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView behavior="padding" enabled>
+        <KeyboardAvoidingView enabled>
           <View>
             <NavHeader
               hasBackButton

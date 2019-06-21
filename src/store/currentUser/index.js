@@ -185,7 +185,8 @@ export const CurrentUserStore = types
       longitude: '',
     }),
     payout_account: types.optional(PayoutAccountStore, {}),
-    stripe_balance: types.maybeNull(types.number)
+    stripe_balance: types.maybeNull(types.number),
+    rating: types.number
   })
   .actions(self => ({
 		setID(value) {
@@ -228,6 +229,10 @@ export const CurrentUserStore = types
     },
     setStripeBalance(value) {
       self.stripe_balance = value;
+      return self;
+    },
+    setRating(value) {
+      self.rating = value;
       return self;
     }
   }));

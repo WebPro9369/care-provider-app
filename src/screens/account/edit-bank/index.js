@@ -81,7 +81,7 @@ class EditBankScreen extends React.Component {
     } = this.props;
     const { accountNumber, routingNumber, loading } = this.state;
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
+      <KeyboardAvoidingView enabled>
         <NavHeader
           title="Edit bank"
           size="medium"

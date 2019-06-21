@@ -31,6 +31,23 @@ _TODO: Fix the below line to be dynamic_
 * `yarn start`
 * `react-native run-android`
 
+### Release to Google Play Store
+
+1. `cd android`
+2. Edit the `versionCode` and `versionName` in `app/build.gradle`
+3. `./gradlew bundleRelease`
+4. Test build locally in release mode `react-native run-android --variant=release`
+5. Upload the `android/app/build/outputs/bundle/release/app.aab` to the Google Play Store
+* follow setup instructions here for the first time setup: https://facebook.github.io/react-native/docs/signed-apk-android
+
+
 ### Troublshooting
 - Clean Gradle local cache `cd android && gradlew cleanBuildCache` src: https://stackoverflow.com/a/30450020/1895126
 - Clean Gradle global `rm -rf $HOME/.gradle/caches/` src: https://stackoverflow.com/a/30450020/1895126
+
+# Reactotron
+Reactotron is setup for this project, which provides helpful debugging.
+
+Get started by installing the Desktop application.
+
+Note, for Android debugging, you will need to run `adb reverse tcp:9090 tcp:9090`

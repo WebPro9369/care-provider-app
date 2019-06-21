@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable no-underscore-dangle */
 import React from "react";
 import { Linking } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -13,7 +15,6 @@ const imgDoctor = require("../../../assets/images/Doctor.png");
 
 @inject("store")
 @observer
-
 class AccountScreen extends React.Component {
   static propTypes = {
     store: PropTypes.observableObject.isRequired
@@ -23,13 +24,13 @@ class AccountScreen extends React.Component {
     super(props);
 
     this.state = {
-      avatarImg: imgDoctor,
-      rating: "4.5",
+      avatarImg: imgDoctor
     };
   }
 
-  componentDidMount () {
-    this._onFocusListener = this.props.navigation.addListener('didFocus', (payload) => {
+  componentDidMount() {
+    const { navigation } = this.props;
+    this._onFocusListener = navigation.addListener("didFocus", () => {
       this.forceUpdate();
     });
   }
@@ -41,7 +42,7 @@ class AccountScreen extends React.Component {
 
     removeAuthentication();
 
-    navigate("AccountSignIn")
+    navigate("AccountSignIn");
   };
 
   render() {
@@ -49,15 +50,15 @@ class AccountScreen extends React.Component {
       store,
       navigation: { navigate }
     } = this.props;
-    const { avatarImg, rating } = this.state;
-    const { currentUserStore: {
-      firstName, lastName,
-      application: {
-        biography,
-        workHistory,
-        specialties,
+    const { avatarImg } = this.state;
+    const {
+      currentUserStore: {
+        firstName,
+        lastName,
+        application: { biography, workHistory, specialties },
+        rating
       }
-    } } = store;
+    } = store;
 
     return (
       <ContainerView padding={16}>
@@ -75,7 +76,7 @@ class AccountScreen extends React.Component {
           avatarImg={avatarImg}
           name={`${firstName} ${lastName}`}
           bio={biography}
-          history={workHistory.join(', ')}
+          history={workHistory.join(", ")}
           rating={rating}
           badges={specialties}
         />

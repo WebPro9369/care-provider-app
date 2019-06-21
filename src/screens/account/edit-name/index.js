@@ -61,7 +61,7 @@ class EditNameScreen extends React.Component {
     const { name } = this.state;
 
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
+      <KeyboardAvoidingView enabled>
         <NavHeader
           title="Edit name"
           size="medium"

@@ -67,7 +67,8 @@ class AuthLoadingScreen extends Component {
         dob: dateOfBirth,
         active,
         biography,
-        addresses
+        addresses,
+        rating
       } = res.data;
 
       if (!active) return navigate("ApplicationPending");
@@ -83,7 +84,8 @@ class AuthLoadingScreen extends Component {
         .setEmail(email)
         .setPhone(phone)
         .setStripeBalance(stripe_balance)
-        .setPayoutAccount(payout_account);
+        .setPayoutAccount(payout_account)
+        .setRating(rating);
 
       address.setZipCode(zip);
 
