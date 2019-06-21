@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert } from "react-native";
+import { Alert, Linking } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { FormTextInput, StyledText } from "@components/text";
 import { NavHeader } from "@components/nav-header";
@@ -21,6 +21,28 @@ class SignInScreen extends React.Component {
     this.state = {
       email: null,
       password: null
+    };
+  }
+
+  componentDidMount() {
+    Linking.addEventListener('url', this.handleOpenURL);
+  }
+
+  componentWillUnmount () {
+    Linking.removeEventListener('url', this.handleOpenURL);
+  }
+
+  handleOpenURL = (event) => {
+    this.navigate(event.url);
+  }
+
+  navigate = (url) => {
+    const { navigate } = this.props.navigation;
+    const route = url.replace(/.*?:\/\//g, '');
+    const routeName = route.split('/')[0];
+
+    if (routeName === 'newpwd') {
+      navigate('AccountNewPwd',{routeInfo:route});
     };
   }
 
@@ -197,10 +219,9 @@ class SignInScreen extends React.Component {
                 onPress={this.onPressSignUp}
               >
                 sign up
-              </StyledText>              
-              {/* <StyledText style={{ color: "#ffffff" }}>  |  </StyledText> */}
-              {/* TODO: Re-enable forgot password */}
-              {/* <StyledText
+              </StyledText>
+              <StyledText style={{ color: "#ffffff" }}>  |  </StyledText>
+              <StyledText
                 style={{ color: "#ffffff" }}
                 onPress={this.onPressForgotPassword}
               >

@@ -1,5 +1,5 @@
 import React from "react";
-// import { Alert, View } from "react-native";
+import { Alert, View, Linking } from "react-native";
 // import { inject, observer } from "mobx-react";
 // import axios from "axios";
 import { FormTextInput, StyledText } from "../../../components/text";
@@ -12,11 +12,24 @@ import { colors } from "../../../utils/constants";
 class NewPwdScreen extends React.Component {
   constructor(props) {
     super(props);
+
+    const {
+      navigation
+    } = this.props;
+
+    const routeInfo = navigation.getParam('routeInfo', 0);
+    //get routeInfo pieces like this: route.split('/')
+
+    console.tron.log(routeInfo);
+
     this.state = {
       confirm: null,
       password: null
     };
   }
+
+
+
 
   onSubmit = () => {
     return true;
