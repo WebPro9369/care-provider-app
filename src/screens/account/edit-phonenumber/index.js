@@ -1,7 +1,7 @@
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
-import PhoneInput from "react-native-phone-input";
-import { StyledText, StyledTextInput } from "../../../components/text";
+import { StyledText } from "../../../components/text";
+import { StyledMaskedTextInput } from "../../../components/text-masked";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
 import { View } from "../../../components/views";
@@ -69,37 +69,23 @@ class EditPhoneNumberScreen extends React.Component {
         <View style={{ padding: 16 }}>
           <StyledText fontSize={14}>Phone number</StyledText>
           <View>
-            <StyledTextInput
+            <StyledMaskedTextInput
               fontSize={28}
               autoFocus
               placeholder="(123) 456 - 7890"
+              keyboardType="number-pad"
+              type="custom"
+              options={{ mask: "(999) 999-9999" }}
               value={phone}
               onChangeText={this.handleInputChange}
             />
           </View>
-          {/* TODO: Reimplement PhoneInput if possible */}
-          {/*<View
-            style={{
-              paddingTop: 16,
-              paddingBottom: 16,
-              borderBottomColor: colors.BLACK38,
-              borderBottomWidth: 1
-            }}
-          >
-            <PhoneInput
-              ref={phone => {
-                this.phone = phone;
-              }}
-              value={phone}
-              onChangePhoneNumber={this.handleChange}
-            />
-          </View>*/}
         </View>
-        <View style={{ paddingLeft: 16 }}>
+        {/* <View style={{ paddingLeft: 16 }}>
           <StyledText fontSize={16} color={colors.BLACK38}>
             A verification code will be sent to this number
           </StyledText>
-        </View>
+        </View> */}
         <View style={{ marginTop: 250 }}>
           <ServiceButton title="Update Phone" onPress={this.onSubmit} />
         </View>

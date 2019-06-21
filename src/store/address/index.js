@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { types } from "mobx-state-tree";
 
-export default AddressStore = types
+const AddressStore = types
   .model("AddressStore", {
     name: types.string,
     street: types.string,
@@ -46,3 +46,5 @@ export default AddressStore = types
       return self;
     }
   }));
+
+export default AddressStore;

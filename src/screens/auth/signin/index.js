@@ -55,7 +55,10 @@ class SignInScreen extends React.Component {
 
     const successHandler = res => {
       if (res.data.message) {
-        return Alert.alert(`Incorrect credentials. Please try again.`);
+        return Alert.alert(
+          "There was an issue",
+          "Incorrect credentials. Please try again."
+        );
       }
 
       const { id, api_key: apiKey } = res.data;
@@ -68,9 +71,7 @@ class SignInScreen extends React.Component {
           name,
           email,
           phone,
-          street,
-          city,
-          state,
+          zip,
           certification,
           title: titles,
           malpractice,
@@ -80,13 +81,11 @@ class SignInScreen extends React.Component {
           license_country: licenseCountry,
           license_state: licenseState,
           license_city: licenseCity,
-          government_id_country: govermentIdCountry,
-          government_id_type: govermentIdType,
-          government_id_number: govermentIdNumber,
-          legal_history: legalHistory,
+          government_id_country: governmentIdCountry,
+          government_id_type: governmentIdType,
+          government_id_number: governmentIdNumber,
           education,
           work_history: workHistory,
-          references,
           specialties,
           offered_services: offeredServices,
           source,
@@ -109,19 +108,15 @@ class SignInScreen extends React.Component {
           .setPayoutAccount(payout_account);
 
         address
-          .setStreet(street)
-          .setCity(city)
-          .setState(state);
+          .setZipCode(zip);
 
         application
           .setBoardCertification(certification)
           .setTitles(titles)
           .setMalpracticeInsurance(malpractice)
-          .setLegalHistory(legalHistory)
           .setSupervisingPhysician(supervisor)
           .setEducationHistory(education)
           .setWorkHistory(workHistory)
-          .setReferences(references)
           .setSpecialties(specialties)
           .setOfferedServices(offeredServices)
           .setWhereHeard(source)
@@ -132,9 +127,9 @@ class SignInScreen extends React.Component {
           .setLicenseCountry(licenseCountry)
           .setLicenseState(licenseState)
           .setLicenseCity(licenseCity)
-          .setGovermentIdType(govermentIdType)
-          .setGovermentIdCountry(govermentIdCountry)
-          .setGovermentIdNumber(govermentIdNumber);
+          .setGovernmentIdType(governmentIdType)
+          .setGovernmentIdCountry(governmentIdCountry)
+          .setGovernmentIdNumber(governmentIdNumber);
 
         navigate("Tabs");
       };
@@ -231,7 +226,7 @@ class SignInScreen extends React.Component {
                 onPress={this.onPressForgotPassword}
               >
                 forgot password?
-              </StyledText>
+              </StyledText> */}
             </ViewCentered>
           </FormInputWrapper>
         </FormWrapper>

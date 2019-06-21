@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable prefer-template */
 import React from "react";
 import { Alert } from "react-native";
+import { inject, observer, PropTypes } from "mobx-react";
 import axios from "axios";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { FormTextInput } from "../../../components/text";
@@ -16,18 +18,34 @@ import {
 } from "../../../components/views";
 import { FormInputView } from "../../../components/views/keyboard-view";
 import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
+import { updateCareProvider } from "../../../services/opear-api";
 import { colors, GOOGLE_API_KEY } from "../../../utils/constants";
 
 const { DARKSKYBLUE } = colors;
 
+@inject("store")
+@observer
 class EditAddressScreen extends React.Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+
   constructor(props) {
     super(props);
+
+    const {
+      store: {
+        currentUserStore: {
+          address: { name, street, city, zip_code }
+        }
+      }
+    } = props;
+
     this.state = {
-      address: "22341 Justice Avenue",
-      city: "San Francisco",
-      zip: "94043",
-      locationName: "Eddie's House"
+      name,
+      street,
+      city,
+      zip_code
     };
   }
 
@@ -38,7 +56,7 @@ class EditAddressScreen extends React.Component {
         this.setState({
           address: "",
           city: "",
-          zip: ""
+          zip_code: ""
         });
         return axios
           .get(
@@ -79,29 +97,71 @@ class EditAddressScreen extends React.Component {
 
               if (a.types.includes("postal_code")) {
                 this.setState({
-                  zip: a.short_name
+                  zip_code: a.short_name
                 });
               }
             }
           })
           .catch(err => {
             console.tron.log("Google map api error: ", err);
-            return Alert.alert("Google Map API failed to get your location.");
+            return Alert.alert(
+              "There was an issue", 
+              "Google Map API failed to get your location.");
           });
       },
       error => {
         console.tron.log("Error getting current location: ", error);
-        Alert.alert("Failed to get current location.");
+        Alert.alert("There was an issue", "Failed to get current location.");
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
+  };
+
+  handleChange = field => value => {
+    this.setState({ [field]: value });
+  };
+
+  onSubmit = () => {
+    const {
+      navigation: { goBack },
+      store: {
+        currentUserStore: { id, address }
+      }
+    } = this.props;
+
+    const { street, city, zip_code: zip, name } = this.state;
+    const data = {
+      care_provider: {
+        addresses_attributes: [
+          {
+            name,
+            street,
+            city,
+            zip
+          }
+        ]
+      }
+    };
+
+    const successHandler = () => {
+      address
+        .setName(name)
+        .setStreet(street)
+        .setCity(city)
+        .setZipCode(zip);
+
+      goBack();
+    };
+
+    updateCareProvider(id, data, { successHandler });
   };
 
   render() {
     const {
       navigation: { goBack }
     } = this.props;
-    const { address, city, zip, locationName } = this.state;
+
+    const { name, street, city, zip_code } = this.state;
     return (
       <ContainerView style={{ paddingTop: 16 }}>
         <NavHeader
@@ -116,7 +176,7 @@ class EditAddressScreen extends React.Component {
             <FormInputView>
               <FormTextInput
                 label="Address"
-                value={address}
+                value={street}
                 rightIcon={
                   <TouchableView onPress={this.setCurrentLocation}>
                     <FontAwesome
@@ -126,6 +186,7 @@ class EditAddressScreen extends React.Component {
                     />
                   </TouchableView>
                 }
+                onChangeText={this.handleChange("street")}
               />
             </FormInputView>
             <FormInputView>
@@ -137,22 +198,28 @@ class EditAddressScreen extends React.Component {
                     marginRight: 20
                   }}
                   value={city}
+                  onChangeText={this.handleChange("city")}
                 />
                 <FormTextInput
                   label="Zip"
                   wrapperStyle={{
                     flex: 1
                   }}
-                  value={zip}
+                  value={zip_code}
+                  onChangeText={this.handleChange("zip_code")}
                 />
               </FlexView>
             </FormInputView>
             <FormInputView>
-              <FormTextInput label="Location Name" value={locationName} />
+              <FormTextInput
+                label="Location Name"
+                value={name}
+                onChangeText={this.handleChange("name")}
+              />
             </FormInputView>
           </FormWrapper>
           <View style={{ paddingBottom: 32 }}>
-            <ServiceButton title="Update Address" onPress={() => goBack()} />
+            <ServiceButton title="Update Address" onPress={this.onSubmit} />
           </View>
         </KeyboardScrollView>
       </ContainerView>

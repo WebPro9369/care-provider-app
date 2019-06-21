@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable no-underscore-dangle */
 import React from "react";
 import { Linking } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -17,13 +19,20 @@ class AccountScreen extends React.Component {
   static propTypes = {
     store: PropTypes.observableObject.isRequired
   };
-  
+
   constructor(props) {
     super(props);
+
     this.state = {
-      avatarImg: imgDoctor,
-      rating: "4.5",
+      avatarImg: imgDoctor
     };
+  }
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    this._onFocusListener = navigation.addListener("didFocus", () => {
+      this.forceUpdate();
+    });
   }
 
   logOut = () => {
@@ -33,7 +42,7 @@ class AccountScreen extends React.Component {
 
     removeAuthentication();
 
-    navigate("AccountSignIn")
+    navigate("AccountSignIn");
   };
 
   render() {
@@ -41,15 +50,16 @@ class AccountScreen extends React.Component {
       store,
       navigation: { navigate }
     } = this.props;
-    const { avatarImg, rating } = this.state;
-    const { currentUserStore: { 
-      firstName, lastName,
-      application: {
-        biography,
-        workHistory,
-        specialties,
+    const { avatarImg } = this.state;
+    const {
+      currentUserStore: {
+        firstName,
+        lastName,
+        application: { biography, workHistory, specialties },
+        rating
       }
-    } } = store;
+    } = store;
+
     return (
       <ContainerView padding={16}>
         <View style={{ paddingTop: 24, paddingBottom: 24 }}>
@@ -66,7 +76,7 @@ class AccountScreen extends React.Component {
           avatarImg={avatarImg}
           name={`${firstName} ${lastName}`}
           bio={biography}
-          history={workHistory.join(', ')}
+          history={workHistory.join(", ")}
           rating={rating}
           badges={specialties}
         />
@@ -81,12 +91,6 @@ class AccountScreen extends React.Component {
             onPress={() => navigate("AccountPayouts")}
           >
             <ListButtonText>Payouts</ListButtonText>
-            <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
-          </ListTouchableButtonWrapper>
-          <ListTouchableButtonWrapper
-            onPress={() => navigate("AccountUpdateApplication")}
-          >
-            <ListButtonText>Update Application</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
           <ListTouchableButtonWrapper

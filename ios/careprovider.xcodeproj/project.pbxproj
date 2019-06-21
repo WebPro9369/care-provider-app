@@ -27,6 +27,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1BA4721EA8EC4B45BEC6116D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1047CA7DDB4393B60B978E /* libz.tbd */; };
 		22280F966B014B9997D2F645 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC9A6E566230497E813CDC1A /* FontAwesome5_Solid.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -44,9 +45,9 @@
 		3B52C7A030D74E9EB06005D9 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DBB18A5C6F174C05A747938A /* Foundation.ttf */; };
 		3F3EBB3EAE4A490EB5730283 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF34C019093E4D1392383538 /* FontAwesome5_Regular.ttf */; };
 		41832512CD17488F8123A4C0 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FD79BD545DF4595B42F09A4 /* FontAwesome.ttf */; };
-		452356267C9243FCA4906F91 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C35D0C0D68422D903576AB /* libAirMaps.a */; };
 		47946EAAE00B44FA80C5150C /* FlamaMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 026C6B824DD14781AD8F9842 /* FlamaMedium.otf */; };
 		4D7C3E9943A9459EAE7DF962 /* libRNTwilioVoice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C01320D70D649608652A238 /* libRNTwilioVoice.a */; };
+		5386486622B2F9EB00B4B72B /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 5386483422B2F9EB00B4B72B /* assets */; };
 		53CBCD7B228F003900EDCC7A /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		5C34ED6B2278493CAF1CD893 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CA44A0999DE43B886593455 /* SimpleLineIcons.ttf */; };
 		601738A87BAB44219B8D075E /* libPods-careproviderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77540F1653D6E45DA5DC91F5 /* libPods-careproviderTests.a */; };
@@ -372,13 +373,6 @@
 			remoteGlobalIDString = ED296FEE214C9CF800B7C4FE;
 			remoteInfo = "jsiexecutor-tvOS";
 		};
-		8491A878224BB85A001B8FC4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76F22000EBDF49E287832FF9 /* AirMaps.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
-			remoteInfo = AirMaps;
-		};
 		8491A87B224BB85A001B8FC4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 96755DE4ADF2433FA51191BD /* RNCardIO.xcodeproj */;
@@ -467,12 +461,13 @@
 		32400AAC46574E88A962BE9C /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		3283F49A67E519790CDDD754 /* libPods-careprovider.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-careprovider.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		38321D9386C845FEB26C628F /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		38C35D0C0D68422D903576AB /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
 		3CCCDDB7992B2297F0331D31 /* Pods-careprovider-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-careprovider-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-careprovider-tvOS/Pods-careprovider-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		411959D993424375BA221449 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		420ADCBE2854A0704E270210 /* libPods-careprovider-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-careprovider-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CC0AFB2C06C4019848C6558 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		4DC373636F11420194B3678B /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		4F1047CA7DDB4393B60B978E /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		5386483422B2F9EB00B4B72B /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		55950305553D2C64A21258C9 /* libPods-careprovider-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-careprovider-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A4DED3816918AAE175D843B /* Pods-careprovider-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-careprovider-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-careprovider-tvOSTests/Pods-careprovider-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		5A8A6069B3184605AE756B37 /* libRNCardIO.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCardIO.a; sourceTree = "<group>"; };
@@ -480,7 +475,6 @@
 		603B66EBA80E47C7A7D3A682 /* libRNReanimated.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNReanimated.a; sourceTree = "<group>"; };
 		65D8BA38B15C4294A9DB3DD0 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		70F87083637D48DEBC47405C /* Flama.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Flama.otf; path = ../assets/fonts/Flama.otf; sourceTree = "<group>"; };
-		76F22000EBDF49E287832FF9 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		77540F1653D6E45DA5DC91F5 /* libPods-careproviderTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-careproviderTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7C01320D70D649608652A238 /* libRNTwilioVoice.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTwilioVoice.a; sourceTree = "<group>"; };
@@ -554,11 +548,11 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				F8023E8CC81B4B9E8B46AD83 /* libRNCardIO.a in Frameworks */,
 				0389477A3733468F823AD99F /* libRNGestureHandler.a in Frameworks */,
-				452356267C9243FCA4906F91 /* libAirMaps.a in Frameworks */,
 				A7B39A8BBA1646999569D527 /* libRNReanimated.a in Frameworks */,
 				7C61FCAA8A12405DB14298B8 /* libRNVectorIcons.a in Frameworks */,
 				4D7C3E9943A9459EAE7DF962 /* libRNTwilioVoice.a in Frameworks */,
 				6C4CF65B50DA84F3931B6763 /* libPods-careprovider.a in Frameworks */,
+				1BA4721EA8EC4B45BEC6116D /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -721,6 +715,7 @@
 				420ADCBE2854A0704E270210 /* libPods-careprovider-tvOS.a */,
 				55950305553D2C64A21258C9 /* libPods-careprovider-tvOSTests.a */,
 				77540F1653D6E45DA5DC91F5 /* libPods-careproviderTests.a */,
+				4F1047CA7DDB4393B60B978E /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -779,7 +774,6 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				96755DE4ADF2433FA51191BD /* RNCardIO.xcodeproj */,
 				4CC0AFB2C06C4019848C6558 /* RNGestureHandler.xcodeproj */,
-				76F22000EBDF49E287832FF9 /* AirMaps.xcodeproj */,
 				E330D4B6C47644F89EFF96E1 /* RNReanimated.xcodeproj */,
 				411959D993424375BA221449 /* RNVectorIcons.xcodeproj */,
 				DBCAEDAD3D784A5CBCCCB39A /* RNTwilioVoice.xcodeproj */,
@@ -799,6 +793,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				5386483422B2F9EB00B4B72B /* assets */,
 				840E2EA5228E730C0077F7D2 /* Crashlytics.framework */,
 				840E2EA6228E730C0077F7D2 /* Fabric.framework */,
 				13B07FAE1A68108700A75B9A /* careprovider */,
@@ -856,7 +851,6 @@
 			children = (
 				5A8A6069B3184605AE756B37 /* libRNCardIO.a */,
 				EA1FED7E1FB84F3F8D975C4F /* libRNGestureHandler.a */,
-				38C35D0C0D68422D903576AB /* libAirMaps.a */,
 				603B66EBA80E47C7A7D3A682 /* libRNReanimated.a */,
 				898CDBE6CC20465C82E4FA05 /* libRNVectorIcons.a */,
 				C189CCC4B8EE4D5397BDE2CE /* libRNVectorIcons-tvOS.a */,
@@ -877,14 +871,6 @@
 			isa = PBXGroup;
 			children = (
 				8491A87C224BB85A001B8FC4 /* libRNCardIO.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		8491A873224BB85A001B8FC4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8491A879224BB85A001B8FC4 /* libAirMaps.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -990,6 +976,7 @@
 				840E2E6C228E679B0077F7D2 /* ShellScript */,
 				0514F04FA374346CF5EFCF1A /* [CP] Embed Pods Frameworks */,
 				07E97A42F8F53D808324ECA3 /* [CP] Copy Pods Resources */,
+				F054CCD6506B494E8EB9AAE1 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -1085,10 +1072,6 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
-				{
-					ProductGroup = 8491A873224BB85A001B8FC4 /* Products */;
-					ProjectRef = 76F22000EBDF49E287832FF9 /* AirMaps.xcodeproj */;
-				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -1465,13 +1448,6 @@
 			remoteRef = 8491A86D224BB85A001B8FC4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8491A879224BB85A001B8FC4 /* libAirMaps.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAirMaps.a;
-			remoteRef = 8491A878224BB85A001B8FC4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		8491A87C224BB85A001B8FC4 /* libRNCardIO.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1542,6 +1518,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5386486622B2F9EB00B4B72B /* assets in Resources */,
 				53CBCD7B228F003900EDCC7A /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
@@ -1596,7 +1573,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		0514F04FA374346CF5EFCF1A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1654,7 +1631,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		4AF4E78BB7EA583AFA60DCC3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1738,6 +1715,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		F054CCD6506B494E8EB9AAE1 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
 		};
 		FBD5970EFF7633848F30567A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1840,7 +1831,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-twilio-programmable-voice/ios/RNTwilioVoice",
@@ -1848,16 +1838,7 @@
 				INFOPLIST_FILE = careproviderTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1879,7 +1860,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-twilio-programmable-voice/ios/RNTwilioVoice",
@@ -1887,16 +1867,7 @@
 				INFOPLIST_FILE = careproviderTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1926,7 +1897,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-twilio-programmable-voice/ios/RNTwilioVoice",
@@ -1963,7 +1933,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-twilio-programmable-voice/ios/RNTwilioVoice",
@@ -1999,23 +1968,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-twilio-programmable-voice/ios/RNTwilioVoice",
 				);
 				INFOPLIST_FILE = "careprovider-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2045,23 +2004,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-twilio-programmable-voice/ios/RNTwilioVoice",
 				);
 				INFOPLIST_FILE = "careprovider-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2090,23 +2039,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-twilio-programmable-voice/ios/RNTwilioVoice",
 				);
 				INFOPLIST_FILE = "careprovider-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2135,23 +2074,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-awesome-card-io/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-twilio-programmable-voice/ios/RNTwilioVoice",
 				);
 				INFOPLIST_FILE = "careprovider-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",

@@ -13,20 +13,20 @@ const ApplicationStore = types
       licenseCountry: types.string,
       licenseState: types.string,
       licenseCity: types.string,
-      govermentIdType: types.string,
-      govermentIdCountry: types.string,
-      govermentIdNumber: types.string,
+      governmentIdType: types.string,
+      governmentIdCountry: types.string,
+      governmentIdNumber: types.string,
       boardCertification: types.string,
       malpracticeInsurance: types.string,
       educationHistory: types.array(types.string),
       workHistory: types.array(types.string),
       specialties: types.array(types.string),
       offeredServices: types.array(types.string),
-      legalHistory: types.string,
-      references: types.string,
       whereHeard: types.string,
       supervisingPhysician: types.string,
-      titles: types.array(types.string),
+      acceptedPrivacy: types.boolean,
+      acceptedTermsOfService: types.boolean,
+      titles: types.array(types.string)
   })
   .actions(self => ({
     setDateOfBirth(value) {
@@ -39,6 +39,10 @@ const ApplicationStore = types
     },
     setBiography(value) {
       self.biography = value;
+      return self;
+    },
+    setSSNLast4(value) {
+      self.ssnLast4 = value;
       return self;
     },
     setLicenseNumber(value) {
@@ -65,16 +69,16 @@ const ApplicationStore = types
       self.licenseCity = value;
       return self;
     },
-    setGovermentIdType(value) {
-      self.govermentIdType = value;
+    setGovernmentIdType(value) {
+      self.governmentIdType = value;
       return self;
     },
-    setGovermentIdCountry(value) {
-      self.govermentIdCountry = value;
+    setGovernmentIdCountry(value) {
+      self.governmentIdCountry = value;
       return self;
     },
-    setGovermentIdNumber(value) {
-      self.govermentIdNumber = value;
+    setGovernmentIdNumber(value) {
+      self.governmentIdNumber = value;
       return self;
     },
     setMalpracticeInsurance(value) {
@@ -82,27 +86,19 @@ const ApplicationStore = types
       return self;
     },
     setEducationHistory(value) {
-      self.educationHistory = value;
+      self.educationHistory.replace(value);
       return self;
     },
     setWorkHistory(value) {
-      self.workHistory = value;
+      self.workHistory.replace(value);
       return self;
     },
     setSpecialties(value) {
-      self.specialties = value;
+      self.specialties.replace(value);
       return self;
     },
     setOfferedServices(value) {
-      self.offeredServices = value;
-      return self;
-    },
-    setLegalHistory(value) {
-      self.legalHistory = value;
-      return self;
-    },
-    setReferences(value) {
-      self.references = value;
+      self.offeredServices.replace(value);
       return self;
     },
     setWhereHeard(value) {
@@ -115,6 +111,14 @@ const ApplicationStore = types
     },
     setTitles(value) {
       self.titles = value;
+      return self;
+    },
+    setAcceptedPrivacy(value) {
+      self.acceptedPrivacy = value;
+      return self;
+    },
+    setAcceptedTermsOfService(value) {
+      self.acceptedTermsOfService = value;
       return self;
     }
   }));
@@ -145,28 +149,30 @@ export const CurrentUserStore = types
     lastName: types.string,
     phone: types.string,
     application: types.optional(ApplicationStore, {
-      dateOfBirth: '',
-      biography: '',
-      licenseNumber: '',
-      licenseType: '',
-      licenseIssuer: '',
-      licenseCountry: '',
-      licenseState: '',
-      licenseCity: '',
-      govermentIdType: '',
-      govermentIdCountry: '',
-      govermentIdNumber: '',
-      boardCertification: '',
-      malpracticeInsurance: '',
+      dateOfBirth: "",
+      biography: "",
+      ssnLast4: "",
+      licenseNumber: "",
+      licenseType: "",
+      licenseIssuer: "",
+      licenseCountry: "",
+      licenseState: "",
+      licenseCity: "",
+      governmentIdType: "",
+      governmentIdCountry: "",
+      governmentIdNumber: "",
+      boardCertification: "",
+      malpracticeInsurance: "",
       educationHistory: [],
       workHistory: [],
       specialties: [],
       offeredServices: [],
-      legalHistory: '',
-      references: '',
       whereHeard: '',
       supervisingPhysician: '',
       titles: [],
+      addresses: [{}],
+      acceptedTermsOfService: false,
+      acceptedPrivacy: false,
     }),
     address: types.optional(AddressStore, {
       name: '',
@@ -179,7 +185,8 @@ export const CurrentUserStore = types
       longitude: '',
     }),
     payout_account: types.optional(PayoutAccountStore, {}),
-    stripe_balance: types.maybeNull(types.number)
+    stripe_balance: types.maybeNull(types.number),
+    rating: types.number
   })
   .actions(self => ({
 		setID(value) {
@@ -222,6 +229,10 @@ export const CurrentUserStore = types
     },
     setStripeBalance(value) {
       self.stripe_balance = value;
+      return self;
+    },
+    setRating(value) {
+      self.rating = value;
       return self;
     }
   }));

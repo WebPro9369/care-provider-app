@@ -75,16 +75,16 @@ class RootContainer extends React.Component {
           console.tron.log("BiometryType: ", biometryType);
           TouchID.authenticate()
             .then(() => {
-              Alert.alert("Authenticated Successfully");
+              Alert.alert("There was an issue", "Authenticated Successfully");
             })
             .catch(error => {
               console.tron.log(error);
-              Alert.alert("Authentication failed.");
+              Alert.alert("There was an issue", "Authentication failed.");
             });
         })
         .catch(error => {
           console.tron.log("TouchID not supported: ", error);
-          Alert.alert("Touch ID is not supported.");
+          Alert.alert("There was an issue", "Touch ID is not supported.");
         });
     }
   };

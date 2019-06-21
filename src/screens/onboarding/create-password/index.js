@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Alert, Image, View } from "react-native";
+import { Alert, Image, View, SafeAreaView } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { ServiceButton } from "../../../components/service-button";
@@ -37,7 +37,8 @@ class CreatePasswordScreen extends Component {
     const regEx = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
     if (!password || !password.match(regEx)) {
       return Alert.alert(
-        "Please input a valid password.\nPasswords must be between 8 and 20 characters, must include a combination of numbers and letters (upper or lower case), and/or special characters."
+        "There was an issue",
+        "Please input a valid password. Passwords must be between 8 and 20 characters, must include a combination of numbers and letters (upper or lower case), and/or special characters."
       );
     }
     currentUserStore.setPassword(password);
@@ -50,43 +51,45 @@ class CreatePasswordScreen extends Component {
     } = this.props;
     const { password } = this.state;
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
-        <View>
-          <NavHeader
-            hasBackButton
-            size="small"
-            onPressBackButton={() => goBack()}
-          />
-          <StyledText
-            textAlign="left"
-            style={{ marginTop: 24, marginBottom: 24 }}
-          >
-            Choose a password
-          </StyledText>
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView enabled>
           <View>
-            <StyledTextInput
-              fontSize={28}
-              autoFocus
-              placeholder="Enter password"
-              secureTextEntry
-              value={password}
-              onChangeText={this.handleInputChange}
+            <NavHeader
+              hasBackButton
+              size="small"
+              onPressBackButton={() => goBack()}
+            />
+            <StyledText
+              textAlign="left"
+              style={{ marginTop: 24, marginBottom: 24 }}
+            >
+              Choose a password
+          </StyledText>
+            <View>
+              <StyledTextInput
+                fontSize={28}
+                autoFocus
+                placeholder="Enter password"
+                secureTextEntry
+                value={password}
+                onChangeText={this.handleInputChange}
+              />
+            </View>
+          </View>
+          <View>
+            <Image
+              source={imgProgressbar}
+              resizeMode="contain"
+              style={{ width: "100%", marginBottom: 16 }}
+            />
+            <ServiceButton
+              title="Next"
+              style={{ marginBottom: 20 }}
+              onPress={this.onSubmit}
             />
           </View>
-        </View>
-        <View>
-          <Image
-            source={imgProgressbar}
-            resizeMode="contain"
-            style={{ width: "100%", marginBottom: 16 }}
-          />
-          <ServiceButton
-            title="Next"
-            style={{ marginBottom: 20 }}
-            onPress={this.onSubmit}
-          />
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 }

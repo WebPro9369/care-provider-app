@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View, Alert, NativeModules, Linking } from "react-native";
+import { Image, View, Alert, NativeModules, Linking, SafeAreaView } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import axios from "axios";
 import Geolocation from "react-native-geolocation-service";
@@ -23,7 +23,7 @@ class AskLocationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      zipcode: ''
+      zipcode: ""
     };
   }
 
@@ -31,7 +31,9 @@ class AskLocationScreen extends Component {
     Linking.addEventListener('url', this.handleOpenURL);
 
     const {
-      store: { currentUserStore: { address } }
+      store: {
+        currentUserStore: { address }
+      }
     } = this.props;
     Geolocation.getCurrentPosition(
       position => {
@@ -41,7 +43,10 @@ class AskLocationScreen extends Component {
           !position.coords.latitude ||
           !position.coords.longitude
         ) {
-          return Alert.alert("Failed to get your location.");
+          return Alert.alert(
+            "There was an issue",
+            "Failed to get your location."
+          );
         }
         console.tron.log(
           "Current position: ",
@@ -70,7 +75,15 @@ class AskLocationScreen extends Component {
         //     console.tron.log("Error geocode: ", err);
         // https://maps.googleapis.com/maps/api/js?key=AIzaSyBu1rXRtcQVBHRHotogui7F2FWT9WpfcNw
         //   });
-        return axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + pos.lat + "," + pos.lng + "&key=" + GOOGLE_API_KEY)
+        return axios
+          .get(
+            "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+              pos.lat +
+              "," +
+              pos.lng +
+              "&key=" +
+              GOOGLE_API_KEY
+          )
           .then(res => {
             const addressComponents =
               res.data &&
@@ -150,11 +163,17 @@ class AskLocationScreen extends Component {
   onSubmit = () => {
     const {
       navigation: { navigate },
-      store: { currentUserStore: { address } }
+      store: {
+        currentUserStore: { address }
+      }
     } = this.props;
     const { zipcode } = this.state;
 
-    if (zipcode.length !== 5) return Alert.alert("Please enter a \n valid US zip code.");
+    if (zipcode.length !== 5)
+      return Alert.alert(
+        "There was an issue",
+        "Please enter a valid US zip code."
+      );
 
     if (zipcode) address.setZipCode(zipcode);
     return navigate("NameCapture");
@@ -163,16 +182,16 @@ class AskLocationScreen extends Component {
     //     console.tron.log("BiometryType: ", biometryType);
     //     TouchID.authenticate()
     //       .then(success => {
-    //         Alert.alert("Authenticated Successfully");
+    //         Alert.alert("There was an issue", "Authenticated Successfully");
     //       })
     //       .catch(error => {
     //         console.tron.log(error);
-    //         Alert.alert("Authentication failed.");
+    //         Alert.alert("There was an issue", "Authentication failed.");
     //       });
     //   })
     //   .catch(error => {
     //     console.tron.log("TouchID not supported: ", error);
-    //     Alert.alert("Touch ID is not supported.");
+    //     Alert.alert("There was an issue", "Touch ID is not supported.");
     //   });
   };
 
@@ -195,51 +214,70 @@ class AskLocationScreen extends Component {
   }
 
   render() {
+    const {
+      navigation: { navigate }
+    } = this.props;
     const { zipcode } = this.state;
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
-        <View>
-          <NavHeader
-            title="Welcome to opear"
-            hasBackButton={false}
-            size="small"
-          />
-          <StyledText
-            textAlign="left"
-            style={{ marginTop: 24, marginBottom: 24 }}
-          >
-            Let&apos;s make sure opear is in your area:
-          </StyledText>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingRight: 16
-            }}
-          >
-            <StyledTextInput
-              fontSize={28}
-              autoFocus
-              placeholder="Zip code"
-              value={zipcode}
-              onChangeText={this.handleInputChange}
-              maxLength={5}
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView enabled>
+          <View>
+            <NavHeader
+              title="Welcome to Opear"
+              hasBackButton={false}
+              size="small"
+            />
+            <StyledText
+              textAlign="left"
+              style={{ marginTop: 24, marginBottom: 24 }}
+            >
+              Let&apos;s make sure Opear is in your area:
+            </StyledText>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingRight: 16
+              }}
+            >
+              <StyledTextInput
+                fontSize={28}
+                autoFocus
+                placeholder="Zip code"
+                value={zipcode}
+                keyboardType="number-pad"
+                onChangeText={this.handleInputChange}
+                maxLength={5}
+              />
+            </View>
+          </View>
+
+          <View>
+            <StyledText
+              style={{
+                color: colors.BLUE,
+                textDecorationLine: "underline",
+                textDecorationColor: colors.BLUE,
+                fontSize: 16,
+                marginBottom: 20,
+                textAlign: "center"
+              }}
+              onPress={() => navigate("AccountSignIn")}>
+              Have an account? Sign In
+            </StyledText>
+            <Image
+              source={imgProgressbar}
+              resizeMode="contain"
+              style={{ width: "100%", marginBottom: 16 }}
+            />
+            <ServiceButton
+              title="Check Availability"
+              style={{ marginBottom: 20 }}
+              onPress={this.onSubmit}
             />
           </View>
-        </View>
-        <View>
-          <Image
-            source={imgProgressbar}
-            resizeMode="contain"
-            style={{ width: "100%", marginBottom: 16 }}
-          />
-          <ServiceButton
-            title="Check Availability"
-            style={{ marginBottom: 20 }}
-            onPress={this.onSubmit}
-          />
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 }

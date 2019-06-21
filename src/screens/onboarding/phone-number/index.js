@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Alert, Image, View } from "react-native";
-import PhoneInput from "react-native-phone-input";
+import { Image, View, SafeAreaView } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
+import { TextInputMask } from "react-native-masked-text";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { ServiceButton } from "../../../components/service-button";
-import { StyledText, StyledTextInput } from "../../../components/text";
+import { StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { colors } from "../../../utils/constants";
 
@@ -24,12 +24,12 @@ class PhoneNumberScreen extends Component {
     };
   }
 
-  handleInputChange = (phone) => {
+  handleInputChange = phone => {
     this.setState({ phone });
   };
 
   onSubmit = () => {
-    const { phone} = this.state;
+    const { phone } = this.state;
     const {
       navigation: { navigate },
       store: { currentUserStore }
@@ -37,12 +37,11 @@ class PhoneNumberScreen extends Component {
 
     console.tron.log("Phone number: ", phone);
 
-    {/*if(!this.phone.isValidNumber())
-    {
-      return Alert.alert("Please enter a valid phone number.");
-    }*/}
-
-    //TODO: Change back to PhoneInput if possible for validation later
+    /* 
+    if(!this.phone.isValidNumber()) {
+      return Alert.alert("There was an issue", "Please enter a valid phone number.");
+    } 
+    */
 
     currentUserStore.setPhone(phone);
 
@@ -56,29 +55,33 @@ class PhoneNumberScreen extends Component {
     const { phone } = this.state;
 
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
-        <View>
-          <NavHeader
-            hasBackButton
-            size="small"
-            onPressBackButton={() => goBack()}
-          />
-          <StyledText
-            textAlign="left"
-            style={{ marginTop: 24, marginBottom: 24 }}
-          >
-            What is your phone number?
-          </StyledText>
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView enabled>
           <View>
-            <StyledTextInput
-              fontSize={28}
-              autoFocus
-              placeholder="(123) 456 - 7890"
-              value={phone}
-              onChangeText={this.handleInputChange}
+            <NavHeader
+              hasBackButton
+              size="small"
+              onPressBackButton={() => goBack()}
             />
-          </View>
-          {/*}<View
+            <StyledText
+              textAlign="left"
+              style={{ marginTop: 24, marginBottom: 24 }}
+            >
+              What is your phone number?
+          </StyledText>
+            <View>
+              <TextInputMask
+                fontSize={28}
+                autoFocus
+                placeholder="(123) 456 - 7890"
+                value={phone}
+                keyboardType="number-pad"
+                type="custom"
+                options={{ mask: "(999) 999-9999" }}
+                onChangeText={this.handleInputChange}
+              />
+            </View>
+            {/* }<View
             style={{
               paddingTop: 16,
               paddingBottom: 16,
@@ -95,20 +98,21 @@ class PhoneNumberScreen extends Component {
               autoFormat="true"
             />
           </View>*/}
-        </View>
-        <View>
-          <Image
-            source={imgProgressbar}
-            resizeMode="contain"
-            style={{ width: "100%", marginBottom: 16 }}
-          />
-          <ServiceButton
-            title="Next"
-            style={{ marginBottom: 20 }}
-            onPress={this.onSubmit}
-          />
-        </View>
-      </KeyboardAvoidingView>
+          </View>
+          <View>
+            <Image
+              source={imgProgressbar}
+              resizeMode="contain"
+              style={{ width: "100%", marginBottom: 16 }}
+            />
+            <ServiceButton
+              title="Next"
+              style={{ marginBottom: 20 }}
+              onPress={this.onSubmit}
+            />
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 }

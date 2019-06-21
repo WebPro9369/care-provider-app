@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React, { Component } from "react";
 import { ActivityIndicator, View } from "react-native";
@@ -20,22 +21,21 @@ class AuthLoadingScreen extends Component {
 
   bootstrapAsync = async () => {
     const {
-      navigation: { navigate },
-      store
+      navigation: { navigate }
     } = this.props;
-
-    const { id, apiKey, isAuthenticated, wasAuthenticated } = await getAuthentication();
+    const {
+      id,
+      apiKey,
+      isAuthenticated,
+      wasAuthenticated
+    } = await getAuthentication();
 
     if (!isAuthenticated && wasAuthenticated) return navigate("AccountSignIn");
-    if (isAuthenticated && !store.providerStore.active) return navigate("ApplicationPending");
     if (!isAuthenticated) return navigate("Onboarding");
 
     const {
-      store: {
-        currentUserStore
-      }
+      store: { currentUserStore }
     } = this.props;
-    const { address, application } = currentUserStore;
     currentUserStore.setAuthentication({ id, apiKey });
 
     const successHandler = res => {
@@ -43,9 +43,6 @@ class AuthLoadingScreen extends Component {
         name,
         email,
         phone,
-        street,
-        city,
-        state,
         zip,
         certification,
         title: titles,
@@ -56,25 +53,30 @@ class AuthLoadingScreen extends Component {
         license_country: licenseCountry,
         license_state: licenseState,
         license_city: licenseCity,
-        government_id_country: govermentIdCountry,
-        government_id_type: govermentIdType,
-        government_id_number: govermentIdNumber,
-        legal_history: legalHistory,
+        government_id_country: governmentIdCountry,
+        government_id_type: governmentIdType,
+        government_id_number: governmentIdNumber,
         education,
         work_history: workHistory,
-        references,
         specialties,
         offered_services: offeredServices,
         source,
         supervisor,
         stripe_balance,
         payout_account,
-        dob: dateOfBirth
+        dob: dateOfBirth,
+        active,
+        biography,
+        addresses,
+        rating
       } = res.data;
+
+      if (!active) return navigate("ApplicationPending");
 
       const dob = getFormattedDate(new Date(dateOfBirth));
 
       const [firstName, lastName] = name.split(" ");
+      const { address, application } = currentUserStore;
 
       currentUserStore
         .setFirstName(firstName)
@@ -82,23 +84,27 @@ class AuthLoadingScreen extends Component {
         .setEmail(email)
         .setPhone(phone)
         .setStripeBalance(stripe_balance)
-        .setPayoutAccount(payout_account);
+        .setPayoutAccount(payout_account)
+        .setRating(rating);
 
-      address
-        .setStreet(street)
-        .setCity(city)
-        .setState(state)
-        .setZipCode(zip);
+      address.setZipCode(zip);
+
+      if (addresses && addresses.length > 0) {
+        const addressData = addresses[addresses.length - 1];
+        address
+          .setName(addressData.name || "")
+          .setStreet(addressData.street || "")
+          .setCity(addressData.city || "")
+          .setState(addressData.state || "");
+      }
 
       application
         .setBoardCertification(certification)
         .setTitles(titles)
         .setMalpracticeInsurance(malpractice)
-        .setLegalHistory(legalHistory)
         .setSupervisingPhysician(supervisor)
         .setEducationHistory(education)
         .setWorkHistory(workHistory)
-        .setReferences(references)
         .setSpecialties(specialties)
         .setOfferedServices(offeredServices)
         .setWhereHeard(source)
@@ -109,14 +115,21 @@ class AuthLoadingScreen extends Component {
         .setLicenseCountry(licenseCountry)
         .setLicenseState(licenseState)
         .setLicenseCity(licenseCity)
-        .setGovermentIdType(govermentIdType)
-        .setGovermentIdCountry(govermentIdCountry)
-        .setGovermentIdNumber(govermentIdNumber);
+        .setGovernmentIdType(governmentIdType)
+        .setGovernmentIdCountry(governmentIdCountry)
+        .setGovernmentIdNumber(governmentIdNumber)
+        .setBiography(biography);
 
-      navigate("Tabs");
+      return navigate("Tabs");
     };
 
-    getCareProvider(id, { successHandler });
+    const errorHandler = err => {
+      if (err.response.status === 401) {
+        navigate("AccountSignIn");
+      }
+    };
+
+    return getCareProvider(id, { successHandler, errorHandler });
   };
 
   render() {
