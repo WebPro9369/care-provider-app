@@ -30,34 +30,9 @@ class PastVisitsScreen extends React.Component {
     getVisits(id, {
       past: true,
       successHandler: (res) => {
-        const visits = res.data.map(visitData => {
-          const { 
-            id,
-            reason: illness,
-            appointment_time: appointmentTime,
-            address: {
-              city,
-              state,
-            },
-            child: {
-              first_name: childFirstName,
-              last_name: childLastName,
-            }
-          } = visitData;
+        const visits = res.data;
 
-          return {
-            key: id,
-            id,
-            avatarImg: [imgDog, imgTiger, imgFox][Math.floor(Math.random() * 3)], // TODO: add actual avatar
-            name: `${childFirstName} ${childLastName}`,
-            illness,
-            time: formatAMPM(new Date(appointmentTime)),
-            address: `${city}, ${state}`,
-            color: "#f9b44d"
-          }
-        });
-
-        this.setState({ visits })
+        this.setState({ visits: visits })
       }
     });
   }
@@ -68,51 +43,53 @@ class PastVisitsScreen extends React.Component {
       navigation: { navigate }
     } = this.props;
 
+    const dates = Object.keys(visits)
+
+    var visitsDisplayStack = [];
+    var dayOptions = { month: 'long', day: 'numeric' };
+    var timeOptions = { day: undefined, hour: 'numeric' };
+
+    for (const date of dates) {
+
+      var visitsOnDate = visits[date];
+
+      dateAsObject = new Date(date);
+
+      visitsDisplayStack.push(
+        <StyledText fontSize={16} color={colors.BLACK60}>
+          {dateAsObject.toLocaleString("en-US", dayOptions)}
+        </StyledText>
+      );
+
+      for (const visitOnDate of visitsOnDate) {
+
+        var formattedTime = new Date(visitOnDate.appointment_time).toLocaleDateString("en-US", timeOptions);
+        formattedTime = formattedTime.split(", ");
+
+        visitsDisplayStack.push(
+          <View style={{ marginBottom: 9 }}>
+            <VisitDetailCard
+              avatarImg={imgFox}
+              name={visitOnDate.child.first_name}
+              illness={visitOnDate.reason}
+              time={formattedTime[1]}
+              address={visitOnDate.address.street}
+              onPress={() => navigate("VisitsVisitDetails", {
+                visitID: visitOnDate.id
+              })}
+            />
+          </View>
+        );
+      }
+
+    }
+
     return (
       <ContainerView style={{ marginTop: 0 }}>
         <ScrollView padding={0}>
           <View style={{ paddingTop: 24 }}>
             <ContentWrapper>
-              <StyledText fontSize={16} color={colors.BLACK60}>
-                Jan 9
-              </StyledText>
-              <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {visits.map(item => (
-                  <View key={item.key} style={{ marginBottom: 9 }}>
-                    <VisitDetailCard
-                      avatarImg={item.avatarImg}
-                      name={item.name}
-                      illness={item.illness}
-                      time={item.time}
-                      address={item.address}
-                      onPress={() => navigate("VisitsPastVisitDetails", {
-                        visitID: item.id
-                      })}
-                    />
-                  </View>
-                ))}
-              </View>
-            </ContentWrapper>
-          </View>
-          <View>
-            <ContentWrapper>
-              <StyledText>Jan 10</StyledText>
-              <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {visits.map(item => (
-                  <View key={item.key} style={{ marginBottom: 9 }}>
-                    <VisitDetailCard
-                      avatarImg={item.avatarImg}
-                      name={item.name}
-                      illness={item.illness}
-                      time={item.time}
-                      address={item.address}
-                      onPress={() => navigate("VisitsPastVisitDetails", {
-                        visitID: item.id
-                      })}
-                    />
-                  </View>
-                ))}
-              </View>
+            {visitsDisplayStack}
             </ContentWrapper>
           </View>
         </ScrollView>
