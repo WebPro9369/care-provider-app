@@ -60,7 +60,7 @@ class EditBankScreen extends React.Component {
           }
         },
         res => {
-          currentUserStore.setPayoutAccount(res.data.payout_account);
+          currentUserStore.setPayoutAccount(res.data);
           this.setState({ loading: false });
 
           goBack();
