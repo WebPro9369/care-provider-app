@@ -340,7 +340,9 @@ class ApplicationScreen extends React.Component {
           <KeyboardScrollView
             keyboardShouldPersistTaps="handled"
             enableOnAndroid
-            extraHeight={Platform.select({ android: 45 })}
+            extraScrollHeight={Platform.select({ android: 140 })}
+            extraHeight={Platform.select({ android: 140 })}
+            behavior="padding"
           >
             <HeaderWrapper>
               <NavHeader
@@ -565,13 +567,10 @@ class ApplicationScreen extends React.Component {
                   label="Board Certification"
                   value={boardCertification}
                   placeholder="Board Certification"
-                  returnKeyType="next"
+                  returnKeyType="done"
                   ref={input => (this.inputRefs.boardCertification = input)}
                   onChangeText={this.handleInputChange("boardCertification")}
-                  onSubmitEditing={() =>
-                    this.inputRefs.malpracticeInsurance.getInnerRef().focus()
-                  }
-                  blurOnSubmit={false}
+                  onSubmitEditing={() => () => Keyboard.dismiss}
                 />
               </FormInputWrapper>
               <FormInputWrapper>
