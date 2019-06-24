@@ -26,11 +26,11 @@ class NewPwdScreen extends React.Component {
     const routeInfo = navigation.getParam("routeInfo", 0);
 
     if (!confirm || !password) {
-      return Alert.alert("Please input new password.");
+      return Alert.alert("New Password", "Please input new password.");
     }
 
     if (confirm && password && confirm !== password) {
-      return Alert.alert("Passwords do not match.");
+      return Alert.alert("Password Error", "Passwords do not match.");
     }
     const id = routeInfo.substring(
       routeInfo.lastIndexOf("reset_token=") + 12,

@@ -23,22 +23,18 @@ class ForgotPwdScreen extends React.Component {
   }
 
   onSubmit = () => {
-    // const {
-    //   navigation: { navigate }
-    // } = this.props;
-
     const { email } = this.state;
-
     const regEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
     if (!email || !regEmail.test(email)) {
-      return Alert.alert("Please enter a valid email address.");
+      return Alert.alert("Email Error", "Please enter a valid email address.");
     }
 
     // console.tron.log("Password reset email: ", email);
 
     const successHandler = () => {
       Alert.alert(
-        "Reset requested.",
+        "Reset Requested",
         "Check your email to reset your password."
       );
     };
