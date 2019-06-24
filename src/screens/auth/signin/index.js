@@ -226,7 +226,7 @@ class SignInScreen extends React.Component {
                 onPress={this.onPressForgotPassword}
               >
                 forgot password?
-              </StyledText> */}
+              </StyledText>
             </ViewCentered>
           </FormInputWrapper>
         </FormWrapper>
