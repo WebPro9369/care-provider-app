@@ -1,8 +1,10 @@
 import React from "react";
+import { Alert, Linking } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { CheckBox } from "react-native-elements";
 import stripe from "tipsi-stripe";
 import { inject, observer } from "mobx-react";
-import { FormTextInput } from "../../../components/text";
+import { FormTextInput, StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
 import { FormWrapper } from "../../../components/views";
@@ -11,7 +13,7 @@ import {
   FormInputView
 } from "../../../components/views/keyboard-view";
 import { colors } from "../../../utils/constants";
-import { createBankAccountProvider } from "../../../services/opear-api";
+import { createBankAccountProvider, updateCareProvider } from "../../../services/opear-api";
 
 const { BLUE } = colors;
 
@@ -24,7 +26,8 @@ class EditBankScreen extends React.Component {
     this.state = {
       accountNumber: "",
       routingNumber: "",
-      loading: false
+      loading: false,
+      acceptedStripeTOS: false
     };
   }
 
@@ -37,7 +40,12 @@ class EditBankScreen extends React.Component {
       }
     } = this.props;
     const { id } = currentUserStore;
-    const { accountNumber, routingNumber } = this.state;
+    const { accountNumber, routingNumber, acceptedStripeTOS } = this.state;
+
+    if(!acceptedStripeTOS) {
+      return Alert.alert("Please review the Stripe Terms of Service.");
+    }
+    console.tron.log("true!");
 
     const params = {
       accountNumber,
@@ -48,7 +56,8 @@ class EditBankScreen extends React.Component {
       accountHolderName: `${currentUserStore.first_name} ${currentUserStore.last_name}`
     };
     this.setState({ loading: true });
-    try {
+    /*try {
+
       const token = await stripe.createTokenWithBankAccount(params);
       onboardingData.setBankToken(token.tokenId);
 
@@ -70,16 +79,31 @@ class EditBankScreen extends React.Component {
         }
       );
     } catch (e) {
-      console.log(e);
+      console.tron.log(e);
+
       this.setState({ loading: false });
+    }*/
+
+    const data = {
+      care_provider: {
+        accepted_stripe_tos: acceptedStripeTOS
+      }
+    };
+
+    const successHandler = response => {
+      currentUserStore.setAcceptedStripeTOS(true);
     }
+
+    updateCareProvider(id, data, { successHandler });
+
+
   };
 
   render() {
     const {
       navigation: { goBack }
     } = this.props;
-    const { accountNumber, routingNumber, loading } = this.state;
+    const { accountNumber, routingNumber, loading, acceptedStripeTOS } = this.state;
     return (
       <KeyboardAvoidingView enabled>
         <NavHeader
@@ -106,6 +130,52 @@ class EditBankScreen extends React.Component {
               value={accountNumber}
               keyboardType="number-pad"
               onChangeText={value => this.setState({ accountNumber: value })}
+            />
+          </FormInputView>
+          <FormInputView>
+            <StyledText
+              style={{
+                fontSize: 16,
+                color: colors.BLACK60
+              }}
+            >
+            By adding your account, you agree to the {" "}
+              <StyledText
+                style={{
+                  color: colors.BLUE,
+                  textDecorationLine: "underline",
+                  textDecorationColor: colors.BLUE,
+                  fontSize: 16
+                }}
+                onPress={() =>
+                  Linking.openURL("https://www.stripe.com/connect-account/legal")
+                }
+              >
+                Stripe Connected Account Agreement
+                </StyledText>
+                .
+              </StyledText>
+            <CheckBox
+              title="I have read and accept"
+              checked={acceptedStripeTOS}
+              onPress={() =>
+                {
+                  this.setState({
+                    acceptedStripeTOS: !acceptedStripeTOS
+                  });
+                }
+              }
+              size={36}
+              textStyle={{ fontSize: 18 }}
+              containerStyle={{
+                backgroundColor: colors.WHITE,
+                borderColor: colors.WHITE,
+                paddingLeft: 0,
+                marginLeft: 0
+              }}
+              checkedIcon="check-square"
+              uncheckedIcon="square-o"
+              checkedColor={colors.SEAFOAMBLUE}
             />
           </FormInputView>
         </FormWrapper>
