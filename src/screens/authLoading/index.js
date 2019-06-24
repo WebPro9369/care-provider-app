@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React, { Component } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View, Linking } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
 import { getAuthentication } from "@services/authentication";
@@ -14,10 +14,38 @@ class AuthLoadingScreen extends Component {
     store: PropTypes.observableObject.isRequired
   };
 
-  constructor(props) {
-    super(props);
-    this.bootstrapAsync();
+  componentDidMount() {
+    Linking.addEventListener("url", this.handleOpenURL);
+    Linking.getInitialURL()
+      .then(url => {
+        if (url) {
+          console.tron.log(`Initial url is: ${url}`);
+          return this.handleOpenURL(url);
+        }
+        return this.bootstrapAsync();
+      })
+      .catch(err => console.tron.log("Error getInitialURL", err));
   }
+
+  componentWillUnmount() {
+    Linking.removeEventListener("url", this.handleOpenURL);
+  }
+
+  handleOpenURL = url => {
+    this.navigate(url);
+  };
+
+  navigate = url => {
+    const {
+      navigation: { navigate }
+    } = this.props;
+    const route = url.replace(/.*?:\/\//g, "");
+    const routeName = route.split("/")[0];
+
+    if (routeName === "newpwd") {
+      navigate("AccountNewPwd", { routeInfo: route });
+    }
+  };
 
   bootstrapAsync = async () => {
     const {
