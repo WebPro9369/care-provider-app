@@ -9,8 +9,6 @@ import EditBioScreen from "../screens/account/edit-bio";
 import EditSpecialtiesScreen from "../screens/account/edit-specialties";
 import PayoutsScreen from "../screens/account/payouts";
 import EditBankScreen from "../screens/account/edit-bank";
-import ForgotPwdScreen from "../screens/auth/forgotPwd";
-import NewPwdScreen from "../screens/auth/enterNewPwd";
 
 const AccountNavigator = createStackNavigator(
   {
@@ -43,12 +41,6 @@ const AccountNavigator = createStackNavigator(
     },
     AccountEditBank: {
       screen: EditBankScreen
-    },
-    AccountForgotPwd: {
-      screen: ForgotPwdScreen
-    },
-    AccountNewPwd: {
-      screen: NewPwdScreen
     }
   },
   {
