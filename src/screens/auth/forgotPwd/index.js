@@ -1,7 +1,9 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/order */
 import React from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { Alert, View } from "react-native";
-import { inject, observer } from "mobx-react";
+import { Alert } from "react-native";
+import { inject } from "mobx-react";
 // import axios from "axios";
 import { FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
@@ -21,14 +23,11 @@ class ForgotPwdScreen extends React.Component {
   }
 
   onSubmit = () => {
-    const {
-      navigation: { navigate },
-      store: { currentUserStore, providerStore }
-    } = this.props;
+    // const {
+    //   navigation: { navigate }
+    // } = this.props;
 
-    const {
-      email
-    } = this.state;
+    const { email } = this.state;
 
     const regEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!email || !regEmail.test(email)) {
@@ -38,13 +37,15 @@ class ForgotPwdScreen extends React.Component {
     console.tron.log(email);
 
     const successHandler = () => {
-      Alert.alert("Reset requested.","Check your email to reset your password.");
+      Alert.alert(
+        "Reset requested.",
+        "Check your email to reset your password."
+      );
     };
 
     passwordReset(email, { successHandler });
 
     return true;
-
   };
 
   handleEmailChange = text => {

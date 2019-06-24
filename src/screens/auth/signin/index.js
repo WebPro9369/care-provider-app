@@ -1,6 +1,9 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-shadow */
+/* eslint-disable import/no-unresolved */
 import React from "react";
 import { Alert, Linking } from "react-native";
-import { inject, observer, PropTypes } from "mobx-react";
+import { inject, PropTypes } from "mobx-react";
 import { FormTextInput, StyledText } from "@components/text";
 import { NavHeader } from "@components/nav-header";
 import { ServiceButton } from "@components/service-button";
@@ -25,26 +28,28 @@ class SignInScreen extends React.Component {
   }
 
   componentDidMount() {
-    Linking.addEventListener('url', this.handleOpenURL);
+    Linking.addEventListener("url", this.handleOpenURL);
   }
 
-  componentWillUnmount () {
-    Linking.removeEventListener('url', this.handleOpenURL);
+  componentWillUnmount() {
+    Linking.removeEventListener("url", this.handleOpenURL);
   }
 
-  handleOpenURL = (event) => {
+  handleOpenURL = event => {
     this.navigate(event.url);
-  }
+  };
 
-  navigate = (url) => {
-    const { navigate } = this.props.navigation;
-    const route = url.replace(/.*?:\/\//g, '');
-    const routeName = route.split('/')[0];
+  navigate = url => {
+    const {
+      navigation: { navigate }
+    } = this.props;
+    const route = url.replace(/.*?:\/\//g, "");
+    const routeName = route.split("/")[0];
 
-    if (routeName === 'newpwd') {
-      navigate('AccountNewPwd',{routeInfo:route});
-    };
-  }
+    if (routeName === "newpwd") {
+      navigate("AccountNewPwd", { routeInfo: route });
+    }
+  };
 
   onSubmit = () => {
     const { email, password } = this.state;
@@ -107,8 +112,7 @@ class SignInScreen extends React.Component {
           .setStripeBalance(stripe_balance)
           .setPayoutAccount(payout_account);
 
-        address
-          .setZipCode(zip);
+        address.setZipCode(zip);
 
         application
           .setBoardCertification(certification)
@@ -134,7 +138,7 @@ class SignInScreen extends React.Component {
         navigate("Tabs");
       };
 
-      getCareProvider(id, { successHandler });
+      return getCareProvider(id, { successHandler });
     };
 
     getApiToken(email, password, { successHandler });
@@ -211,22 +215,20 @@ class SignInScreen extends React.Component {
             />
           </FormInputWrapper>
           <FormInputWrapper paddingTop={6}>
-            <ViewCentered
-              style={{ flexDirection: "row" }}
-            >
+            <ViewCentered style={{ flexDirection: "row" }}>
               <StyledText
                 style={{ color: "#ffffff" }}
                 onPress={this.onPressSignUp}
               >
                 sign up
               </StyledText>
-              <StyledText style={{ color: "#ffffff" }}>  |  </StyledText>
+              <StyledText style={{ color: "#ffffff" }}> | </StyledText>
               <StyledText
                 style={{ color: "#ffffff" }}
                 onPress={this.onPressForgotPassword}
               >
                 forgot password?
-              </StyledText> */}
+              </StyledText>
             </ViewCentered>
           </FormInputWrapper>
         </FormWrapper>

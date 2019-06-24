@@ -3,7 +3,8 @@ import { mst } from "reactotron-mst";
 import { mainStore } from "./src/store";
 
 if (__DEV__) {
-  Reactotron.configure({ host: "localhost" })
+  Reactotron.configure({ host: "192.168.3.211" })
+  // Reactotron.configure({ host: "localhost" })
     .useReactNative()
     .use(mst())
     .connect();
