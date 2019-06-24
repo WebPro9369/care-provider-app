@@ -34,7 +34,7 @@ class ForgotPwdScreen extends React.Component {
       return Alert.alert("Please enter a valid email address.");
     }
 
-    console.tron.log(email);
+    // console.tron.log("Password reset email: ", email);
 
     const successHandler = () => {
       Alert.alert(
@@ -43,7 +43,7 @@ class ForgotPwdScreen extends React.Component {
       );
     };
 
-    passwordReset(email, { successHandler });
+    passwordReset({ email }, { successHandler });
 
     return true;
   };

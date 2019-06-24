@@ -1,26 +1,18 @@
 import React from "react";
-import { Alert, View, Linking } from "react-native";
+import { Alert } from "react-native";
 // import { inject, observer } from "mobx-react";
 // import axios from "axios";
-import { FormTextInput, StyledText } from "../../../components/text";
+import { FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
 import { FormInputWrapper, FormWrapper } from "../../../components/views";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
+import { updatePassword } from "../../../services/opear-api";
 import { colors } from "../../../utils/constants";
 
 class NewPwdScreen extends React.Component {
   constructor(props) {
     super(props);
-
-    const {
-      navigation
-    } = this.props;
-
-    const routeInfo = navigation.getParam('routeInfo', 0);
-    //get routeInfo pieces like this: route.split('/')
-
-    console.tron.log(routeInfo);
 
     this.state = {
       confirm: null,
@@ -28,10 +20,43 @@ class NewPwdScreen extends React.Component {
     };
   }
 
-
-
-
   onSubmit = () => {
+    const { confirm, password } = this.state;
+    const { navigation } = this.props;
+    const routeInfo = navigation.getParam("routeInfo", 0);
+
+    if (!confirm || !password) {
+      return Alert.alert("Please input new password.");
+    }
+
+    if (confirm && password && confirm !== password) {
+      return Alert.alert("Passwords do not match.");
+    }
+    const id = routeInfo.substring(
+      routeInfo.lastIndexOf("reset_token=") + 12,
+      routeInfo.lastIndexOf("/email")
+    );
+    const email = routeInfo.substring(routeInfo.lastIndexOf("email=") + 6);
+
+    // console.tron.log("Token: ", id, email);
+    const data = {
+      id,
+      email,
+      password
+    };
+
+    const successHandler = () => {
+      navigation.navigate("AccountSignIn");
+    };
+
+    const errorHandler = () => {
+      Alert.alert(
+        "Error",
+        "Failed to update your password. Please check if your token is expired."
+      );
+    };
+
+    updatePassword(data, { successHandler, errorHandler });
     return true;
   };
 
@@ -64,7 +89,7 @@ class NewPwdScreen extends React.Component {
         style={{ backgroundColor: colors.LIGHTGREEN, height: "100%" }}
       >
         <NavHeader
-          title="Sign In"
+          title="Enter New Password"
           size="medium"
           hasBackButton={false}
           serviceTextStyle={{ color: "#ffffff" }}
@@ -92,13 +117,13 @@ class NewPwdScreen extends React.Component {
           </FormInputWrapper>
           <FormInputWrapper paddingBottom={6} style={{ marginBottom: 0 }}>
             <ServiceButton
-              title="Sign In"
+              title="Update Password"
               onPress={this.onSubmit}
               backgroundColor="#ffffff"
               color={colors.LIGHTGREEN}
             />
           </FormInputWrapper>
-          <FormInputWrapper paddingTop={6}>
+          {/* <FormInputWrapper paddingTop={6}>
             <StyledText
               textAlign="center"
               style={{
@@ -110,7 +135,7 @@ class NewPwdScreen extends React.Component {
             >
               forgot password?
             </StyledText>
-          </FormInputWrapper>
+          </FormInputWrapper> */}
         </FormWrapper>
       </KeyboardAvoidingView>
     );
