@@ -15,7 +15,7 @@ import { ServiceButton } from "@components/service-button";
 import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { colors } from "@utils/constants";
-import { getVisit } from "@services/opear-api";
+import { getVisit, updateVisit } from "@services/opear-api";
 import { formatAMPM } from "@utils/helpers";
 
 const imgDog = require("../../../../assets/images/Dog.png");
@@ -48,7 +48,7 @@ class VisitDetailsScreen extends React.Component {
         longitude: -122.4324,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
-  
+
         currentLatitude: 37.78925,
         currentLongitude: -122.4924,
         distance: 0,
@@ -78,12 +78,12 @@ class VisitDetailsScreen extends React.Component {
           allergies,
         },
         address: {
-          city, 
-          state, 
+          city,
+          state,
         }
       } = res.data;
 
-      const data = { 
+      const data = {
         child: {
           key: childID,
           avatarImg: imgDog,
@@ -96,7 +96,7 @@ class VisitDetailsScreen extends React.Component {
         parentName: "Michael Smith", // TODO: missing
         reason,
         allergies: allergies.join(', '),
-        parentNotes: parentNotes, 
+        parentNotes: parentNotes,
       };
 
       this.setState({ data, loaded: true });
@@ -160,6 +160,26 @@ class VisitDetailsScreen extends React.Component {
       android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
     });
     Linking.openURL(url);
+  };
+
+  cancelVisit = () => {
+    const {
+      navigation: { goBack }
+    } = this.props;
+
+    const { visitID } = this.state;
+
+    const data = {
+      state: "canceled"
+    };
+
+
+    const successHandler = (res) => {
+      goBack();
+    }
+
+    updateVisit(visitID, data, { successHandler });
+
   };
 
   render() {
@@ -281,7 +301,7 @@ class VisitDetailsScreen extends React.Component {
                 <ServiceButton
                   grey
                   title="Cancel Visit"
-                  onPress={() => goBack()}
+                  onPress={() => this.cancelVisit()}
                 />
               </View>
             </View>
