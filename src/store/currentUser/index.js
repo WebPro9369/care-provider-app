@@ -148,6 +148,7 @@ export const CurrentUserStore = types
     firstName: types.string,
     lastName: types.string,
     phone: types.string,
+    acceptedStripeTOS: types.boolean,
     application: types.optional(ApplicationStore, {
       dateOfBirth: "",
       biography: "",
@@ -221,6 +222,10 @@ export const CurrentUserStore = types
     },
     setPhone(value) {
       self.phone = value;
+      return self;
+    },
+    setAcceptedStripeTOS(value) {
+      self.acceptedStripeTOS = value;
       return self;
     },
     setPayoutAccount(value) {

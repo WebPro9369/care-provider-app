@@ -22,7 +22,8 @@ const MainStore = types.model("MainStore", {
     firstName: "",
     lastName: "",
     phone: "",
-    rating: 0
+    rating: 0,
+    acceptedStripeTOS: false
   })
 });
 
