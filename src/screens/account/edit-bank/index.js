@@ -35,15 +35,14 @@ class EditBankScreen extends React.Component {
     const {
       navigation: { goBack },
       store: {
-        providerStore: { onboardingData },
         currentUserStore
       }
     } = this.props;
     const { id } = currentUserStore;
     const { accountNumber, routingNumber, acceptedStripeTOS } = this.state;
 
-    if(!acceptedStripeTOS) {
-      return Alert.alert("Please review the Stripe Terms of Service.");
+    if (!acceptedStripeTOS) {
+      return Alert.alert("Error", "Please review the Stripe Terms of Service.");
     }
     console.tron.log("true!");
 
@@ -56,6 +55,7 @@ class EditBankScreen extends React.Component {
       accountHolderName: `${currentUserStore.first_name} ${currentUserStore.last_name}`
     };
     this.setState({ loading: true });
+    // TODO: Remove this comment block
     /*try {
 
       const token = await stripe.createTokenWithBankAccount(params);
