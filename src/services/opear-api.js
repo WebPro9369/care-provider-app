@@ -2,7 +2,7 @@ import Axios from "axios";
 
 export const API_SETTINGS = {
   apiKey: null,
-  endpoint: "https://api.opear.com" 
+  endpoint: "https://api.opear.com"
   //endpoint: "http://ec2-18-191-228-16.us-east-2.compute.amazonaws.com"
   //endpoint: "http://localhost:3000/"
 };
@@ -102,6 +102,19 @@ export const getVisit = (
     })
     .catch(err => {
       console.tron.log("Get visit error: ", err);
+      if (errorHandler) errorHandler(err);
+    });
+};
+
+export const updateVisit = (visitID, data, { successHandler, errorHandler } = {}) => {
+  axios
+    .patch(`/v1/visits/${visitID}`, data)
+    .then(res => {
+      console.tron.log("Update visit done: ", res);
+      if (successHandler) successHandler(res);
+    })
+    .catch(err => {
+      console.tron.log("Update visit error: ", err);
       if (errorHandler) errorHandler(err);
     });
 };
