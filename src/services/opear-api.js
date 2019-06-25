@@ -2,9 +2,9 @@ import Axios from "axios";
 
 export const API_SETTINGS = {
   apiKey: null,
-  endpoint: "https://api.opear.com" 
-  //endpoint: "http://ec2-18-191-228-16.us-east-2.compute.amazonaws.com"
-  //endpoint: "http://localhost:3000/"
+  endpoint: "https://api.opear.com"
+  // endpoint: "http://ec2-18-191-228-16.us-east-2.compute.amazonaws.com"
+  // endpoint: "http://localhost:3000/"
 };
 
 const axios = Axios.create({
@@ -194,6 +194,20 @@ export const passwordReset = (data, { successHandler, errorHandler } = {}) => {
     })
     .catch(err => {
       console.tron.log("Password reset error: ", err);
+      if (errorHandler) errorHandler(err);
+    });
+};
+
+export const updatePassword = (data, { successHandler, errorHandler } = {}) => {
+  const url = `/v1/password_resets/${data.id}`;
+  axios
+    .patch(url, data)
+    .then(res => {
+      console.tron.log("Update password done: ", res);
+      if (successHandler) successHandler(res);
+    })
+    .catch(err => {
+      console.tron.log("Update password error: ", err);
       if (errorHandler) errorHandler(err);
     });
 };

@@ -1,5 +1,13 @@
+/* eslint-disable no-unused-expressions */
 import React, { Component } from "react";
-import { Image, View, Alert, NativeModules, Linking, SafeAreaView } from "react-native";
+import {
+  Image,
+  View,
+  Alert,
+  NativeModules,
+  Linking,
+  SafeAreaView
+} from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import axios from "axios";
 import Geolocation from "react-native-geolocation-service";
@@ -28,8 +36,6 @@ class AskLocationScreen extends Component {
   }
 
   componentDidMount() {
-    Linking.addEventListener('url', this.handleOpenURL);
-
     const {
       store: {
         currentUserStore: { address }
@@ -195,24 +201,6 @@ class AskLocationScreen extends Component {
     //   });
   };
 
-  componentWillUnmount () {
-    Linking.removeEventListener('url', this.handleOpenURL);
-  }
-
-  handleOpenURL = (event) => {
-    this.navigate(event.url);
-  }
-
-  navigate = (url) => {
-    const { navigate } = this.props.navigation;
-    const route = url.replace(/.*?:\/\//g, '');
-    const routeName = route.split('/')[0];
-
-    if (routeName === 'newpwd') {
-      navigate('AccountNewPwd',{routeInfo:route});
-    };
-  }
-
   render() {
     const {
       navigation: { navigate }
@@ -262,7 +250,8 @@ class AskLocationScreen extends Component {
                 marginBottom: 20,
                 textAlign: "center"
               }}
-              onPress={() => navigate("AccountSignIn")}>
+              onPress={() => navigate("AccountSignIn")}
+            >
               Have an account? Sign In
             </StyledText>
             <Image
