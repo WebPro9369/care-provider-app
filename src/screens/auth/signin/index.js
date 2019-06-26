@@ -70,11 +70,14 @@ class SignInScreen extends React.Component {
           specialties,
           offered_services: offeredServices,
           source,
+          active,
           supervisor,
           stripe_balance,
           payout_account,
           dob: dateOfBirth
         } = res.data;
+
+        if (!active) return navigate("ApplicationPending");
 
         const dob = getFormattedDate(new Date(dateOfBirth));
 
