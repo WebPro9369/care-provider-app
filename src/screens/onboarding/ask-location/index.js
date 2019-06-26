@@ -175,7 +175,7 @@ class AskLocationScreen extends Component {
     } = this.props;
     const { zipcode } = this.state;
 
-    if (zipcode.length !== 5)
+    if (!zipcode || zipcode.length !== 5)
       return Alert.alert(
         "There was an issue",
         "Please enter a valid US zip code."

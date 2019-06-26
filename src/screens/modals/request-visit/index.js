@@ -19,6 +19,7 @@ const imgDog = require("../../../../assets/images/Dog.png");
 
 @inject("store")
 @observer
+// TODO: Remove static data
 class RequestVisitModalComponent extends Component {
   state = {
     modalVisible: false,
