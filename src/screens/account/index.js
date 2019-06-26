@@ -37,10 +37,13 @@ class AccountScreen extends React.Component {
 
   logOut = () => {
     const {
-      navigation: { navigate }
+      navigation: { navigate },
+      store: { currentUserStore }
     } = this.props;
 
     removeAuthentication();
+
+    currentUserStore.reset();
 
     navigate("AccountSignIn");
   };
