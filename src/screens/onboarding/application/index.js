@@ -283,9 +283,10 @@ class ApplicationScreen extends React.Component {
       navigate("ApplicationPending");
     };
 
+    // TODO: Fix alert to pop up
     const errorHandler = err => console.tron.log("API Error: ", err);
     Alert.alert(
-      "There was an issue",
+      "Uhoh",
       "There was an issue with creating your account. Please ensure your information is correct and try again, or contact help@opear.com."
     );
 
