@@ -55,8 +55,7 @@ class EditBankScreen extends React.Component {
       accountHolderName: `${currentUserStore.first_name} ${currentUserStore.last_name}`
     };
     this.setState({ loading: true });
-    // TODO: Remove this comment block
-    /*try {
+    try {
 
       const token = await stripe.createTokenWithBankAccount(params);
       onboardingData.setBankToken(token.tokenId);
@@ -82,7 +81,7 @@ class EditBankScreen extends React.Component {
       console.tron.log(e);
 
       this.setState({ loading: false });
-    }*/
+    }
 
     const data = {
       care_provider: {
