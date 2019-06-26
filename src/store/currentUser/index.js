@@ -239,5 +239,15 @@ export const CurrentUserStore = types
     setRating(value) {
       self.rating = value;
       return self;
+    },
+    reset() {
+      self.id = 0;
+      self.apiKey = "";
+      self.email = "";
+      self.firstName = "";
+      self.lastName = "";
+      self.phone = "";
+      self.rating = 0;
+      self.acceptedStripeTOS = false;
     }
   }));
