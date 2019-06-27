@@ -70,9 +70,7 @@ class ForgotPwdScreen extends React.Component {
           hasBackButton
           backgroundColor={colors.LIGHTGREEN}
           serviceTextStyle={{ color: "#ffffff" }}
-          onPressBackButton={() => {
-            goBack();
-          }}
+          onPressBackButton={() => goBack()}
         />
         <FormWrapper centered padding={0}>
           <FormInputWrapper paddingLeft={16} paddingRight={16}>

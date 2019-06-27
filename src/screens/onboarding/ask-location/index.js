@@ -250,7 +250,7 @@ class AskLocationScreen extends Component {
                 marginBottom: 20,
                 textAlign: "center"
               }}
-              onPress={() => navigate("AccountSignIn")}
+              onPress={() => navigate("Authenticating")}
             >
               Have an account? Sign In
             </StyledText>

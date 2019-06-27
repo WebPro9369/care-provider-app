@@ -45,7 +45,7 @@ class AccountScreen extends React.Component {
 
     currentUserStore.reset();
 
-    navigate("AccountSignIn");
+    navigate("Authenticating");
   };
 
   render() {
