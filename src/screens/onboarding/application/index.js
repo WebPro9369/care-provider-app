@@ -181,7 +181,7 @@ class ApplicationScreen extends React.Component {
 
     if (!dateRegex1.test(dateOfBirth) && !dateRegex2.test(dateOfBirth)) {
       return Alert.alert(
-        "There was an issue", 
+        "There was an issue",
         "Please enter Date of Birth in mm/dd/yyyy format");
     }
 
@@ -288,11 +288,13 @@ class ApplicationScreen extends React.Component {
     };
 
     // TODO: Fix alert to pop up
-    const errorHandler = err => console.tron.log("API Error: ", err);
-    Alert.alert(
-      "Uhoh",
-      "There was an issue with creating your account. Please ensure your information is correct and try again, or contact help@opear.com."
-    );
+    const errorHandler = err => {
+      console.tron.log("API Error: ", err);
+      Alert.alert(
+        "Uhoh",
+        "There was an issue with creating your account. Please ensure your information is correct and try again, or contact help@opear.com."
+      );
+    };
 
     registerCareProvider(data, { successHandler, errorHandler });
   };
@@ -666,7 +668,7 @@ class ApplicationScreen extends React.Component {
                     onChangeText={this.handleInputChange(
                       "supervisingPhysician"
                     )}
-                    onSubmitEditing={() => 
+                    onSubmitEditing={() =>
                       this.inputRefs.whereHeard.getInnerRef().focus()
                     }
                     blurOnSubmit={false}
@@ -710,7 +712,7 @@ class ApplicationScreen extends React.Component {
                     onPress={() =>
                       Linking.openURL("https://www.opear.com/terms-conditions/")
                     }
-                  
+
                   >
                     Terms of Use
                     </StyledText>
