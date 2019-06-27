@@ -22,6 +22,19 @@ const axios = Axios.create({
   }
 });
 
+const axiosFormData = Axios.create({
+  baseURL: API_SETTINGS.endpoint,
+  headers: {
+    Authorization: {
+      toString() {
+        if (!API_SETTINGS.apiKey) return "";
+        return `Token ${API_SETTINGS.apiKey}`;
+      }
+    },
+    "Content-Type": "multipart/form-data"
+  }
+});
+
 export const registerCareProvider = (
   data,
   { successHandler, errorHandler } = {}
@@ -71,6 +84,25 @@ export const updateCareProvider = (
     });
 };
 
+export const updateCareProviderAvatar = (
+  userID,
+  data,
+  { successHandler, errorHandler } = {}
+) => {
+  const formData = new FormData();
+  formData.append("file", data);
+  axiosFormData
+    .patch(`/v1/care_providers/${userID}`, { avatar: formData })
+    .then(res => {
+      console.tron.log("Care provider avatar update done: ", res);
+      if (successHandler) successHandler(res);
+    })
+    .catch(err => {
+      console.tron.log("Care provider avatar update error: ", err);
+      if (errorHandler) errorHandler(err);
+    });
+};
+
 export const getVisits = (
   userID,
   { past, successHandler, errorHandler } = {}
@@ -106,7 +138,11 @@ export const getVisit = (
     });
 };
 
-export const updateVisit = (visitID, data, { successHandler, errorHandler } = {}) => {
+export const updateVisit = (
+  visitID,
+  data,
+  { successHandler, errorHandler } = {}
+) => {
   axios
     .patch(`/v1/visits/${visitID}`, data)
     .then(res => {

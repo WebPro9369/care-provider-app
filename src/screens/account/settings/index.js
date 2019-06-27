@@ -14,6 +14,7 @@ import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { HeaderWrapper, ViewCentered, View } from "../../../components/views";
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
+import { updateCareProviderAvatar } from "../../../services/opear-api";
 
 const { GREEN, MIDGREY } = colors;
 const imgDoctor = require("../../../../assets/images/Doctor.png");
@@ -48,7 +49,11 @@ class SettingsScreen extends React.Component {
       } else if (response.customButton) {
         console.tron.log("User tapped custom button: ", response.customButton);
       } else {
-        const source = { uri: response.uri };
+        const source = {
+          name: response.fileName,
+          type: response.type,
+          uri: response.uri
+        };
 
         // You can also display the image using data:
         // const source = { uri: 'data:image/jpeg;base64,' + response.data };
@@ -68,6 +73,28 @@ class SettingsScreen extends React.Component {
     removeAuthentication();
 
     navigate("AccountSignIn");
+  };
+
+  goBack = () => {
+    const { avatarSource } = this.state;
+    const {
+      navigation: { navigate },
+      store: { currentUserStore }
+    } = this.props;
+    const data = {
+      avatar: avatarSource
+    };
+
+    console.tron.log("current user id: ", currentUserStore.id);
+
+    const successHandler = res => {
+      console.tron.log("Avatar update successful: ", res);
+    };
+
+    updateCareProviderAvatar(currentUserStore.id, avatarSource, {
+      successHandler
+    });
+    navigate("AccountDefault");
   };
 
   render() {
@@ -102,7 +129,7 @@ class SettingsScreen extends React.Component {
             title="Settings"
             size="medium"
             hasBackButton
-            onPressBackButton={() => navigate("AccountDefault")}
+            onPressBackButton={this.goBack}
           />
         </HeaderWrapper>
         <ScrollView>
