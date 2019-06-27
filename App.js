@@ -1,4 +1,5 @@
 import React from "react";
+import PushNotification from "react-native-push-notification";
 import { AppState } from "react-native";
 import { Provider, observer } from "mobx-react";
 import { TwilioService } from "./src/services";
@@ -20,6 +21,20 @@ export default class App extends React.Component {
       // eslint-disable-next-line no-console
       console.log("Reactotron Configured")
     );
+
+    
+    PushNotification.configure({
+      onRegister({ token }) {
+        console.tron && console.tron.log("Push notification device token: ", token);
+
+        const { currentUserStore } = mainStore;
+        currentUserStore.setNotificationToken(token);
+        TwilioService.bindDevice(token);
+      },
+      onNotification(notification) {
+        console.tron && console.tron.log("NOTIFICATION:", notification);
+      }
+    });
   }
 
   componentWillMount() {}
@@ -58,20 +73,10 @@ export default class App extends React.Component {
 
       TwilioService.sendSMS("SMS Boby", null, "+19085008863");
       TwilioService.makeCall(null, null, "+19085008863");
-
-      // if (Platform.OS === "ios") {
-      //   date = date.toISOString();
-      // }
-
-      // PushNotification.localNotificationSchedule({
-      //   message: "My Notification Message",
-      //   date
-      // });
     }
   }
 
   render() {
-    // if (mainStore.applicationStore.getSplashShowing() === false) {
     return (
       <Provider store={mainStore}>
         <RootContainer />

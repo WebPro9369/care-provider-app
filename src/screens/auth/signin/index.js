@@ -10,6 +10,7 @@ import { ServiceButton } from "@components/service-button";
 import { ViewCentered, FormInputWrapper, FormWrapper } from "@components/views";
 import { KeyboardAvoidingView } from "@components/views/keyboard-view";
 import { colors } from "@utils/constants";
+import { storeNotificationToken } from "@services/authentication";
 import { getCareProvider, getApiToken } from "@services/opear-api";
 import { getFormattedDate } from "@utils/helpers";
 
@@ -44,6 +45,9 @@ class SignInScreen extends React.Component {
 
       const { id, api_key: apiKey } = res.data;
       currentUserStore.setAuthentication({ id, apiKey });
+
+      const { notificationToken } = currentUserStore;
+      storeNotificationToken(id, notificationToken);
 
       const successHandler = res => {
         const { address, application } = currentUserStore;

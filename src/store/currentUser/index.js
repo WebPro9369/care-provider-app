@@ -149,6 +149,7 @@ export const CurrentUserStore = types
     lastName: types.string,
     phone: types.string,
     acceptedStripeTOS: types.boolean,
+    notificationToken: types.string,
     application: types.optional(ApplicationStore, {
       dateOfBirth: "",
       biography: "",
@@ -249,5 +250,9 @@ export const CurrentUserStore = types
       self.phone = "";
       self.rating = 0;
       self.acceptedStripeTOS = false;
-    }
+    },
+    setNotificationToken(value) {
+      self.notificationToken = value;
+      return self;
+		},
   }));
