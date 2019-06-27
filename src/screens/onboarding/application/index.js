@@ -18,6 +18,7 @@ import {
   ViewCentered
 } from "@components/views";
 import { KeyboardScrollView } from "@components/views/keyboard-scroll-view";
+import { storeNotificationToken } from "@services/authentication";
 import { registerCareProvider } from "@services/opear-api";
 import { colors, TITLES } from "@utils/constants";
 import { commaStringToArray } from "@utils/helpers";
@@ -279,6 +280,9 @@ class ApplicationScreen extends React.Component {
       const { id, api_key: apiKey } = response.data;
 
       currentUserStore.setAuthentication({ id, apiKey });
+
+      const { notificationToken } = currentUserStore;
+      storeNotificationToken(id, notificationToken);
 
       navigate("ApplicationPending");
     };

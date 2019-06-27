@@ -1,7 +1,6 @@
 import Axios from "axios";
 
 const TWILIO_API = "https://opear-twilio-api.herokuapp.com/";
-// const TWILIO_API = "http://192.168.3.211:8080/";
 const axios = Axios.create({
   baseURL: TWILIO_API,
   headers: {
@@ -10,19 +9,6 @@ const axios = Axios.create({
     }
   }
 });
-
-const getToken = () => {
-  return axios
-    .post("/authtoken", {
-      ClientName: `tester${new Date().getTime()}`,
-      identity: `tester${new Date().getTime()}`
-    })
-    .then(token => {
-      console.tron.log("Get token; ", token);
-      return token;
-    })
-    .catch(err => console.tron.log("Error getting twilio token: ", err));
-};
 
 const bindDevice = (
   token,
@@ -127,4 +113,4 @@ const makeCall = (url, from, to, successHandler, errorHandler) => {
     });
 };
 
-export default { getToken, bindDevice, sendNotification, sendSMS, makeCall };
+export default { bindDevice, sendNotification, sendSMS, makeCall };

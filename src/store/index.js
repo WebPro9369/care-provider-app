@@ -23,7 +23,8 @@ const MainStore = types.model("MainStore", {
     lastName: "",
     phone: "",
     rating: 0,
-    acceptedStripeTOS: false
+    acceptedStripeTOS: false,
+    notificationToken: "",
   })
 });
 
