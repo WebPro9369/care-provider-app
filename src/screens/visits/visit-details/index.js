@@ -1,5 +1,6 @@
 /* eslint-disable react/sort-comp */
 /* eslint-disable import/no-unresolved */
+/* eslint-disable camelcase */
 import React from "react";
 import PropTypes from "prop-types";
 import { inject, observer, PropTypes as MobXPropTypes } from "mobx-react";
@@ -59,6 +60,35 @@ class VisitDetailsScreen extends React.Component {
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
   }
+
+  navigateHandler = () => {
+    const { map } = this.state;
+    const from = `${map.currentLatitude},${map.currentLongitude}`;
+    const to = `${map.latitude},${map.longitude}`;
+    const url = Platform.select({
+      ios: `maps:0, 0?saddr=${from}&daddr=${to}`,
+      android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
+    });
+    Linking.openURL(url);
+  };
+
+  cancelVisit = () => {
+    const {
+      navigation: { goBack }
+    } = this.props;
+
+    const { visitID } = this.state;
+
+    const data = {
+      state: "canceled"
+    };
+
+    const successHandler = res => {
+      goBack();
+    };
+
+    updateVisit(visitID, data, { successHandler });
+  };
 
   navigatorWatch() {
     const {

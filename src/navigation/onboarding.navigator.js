@@ -5,7 +5,6 @@ import EmailCaptureScreen from "../screens/onboarding/email-capture";
 import CreatePasswordScreen from "../screens/onboarding/create-password";
 import PhoneNumberScreen from "../screens/onboarding/phone-number";
 import ApplicationScreen from "../screens/onboarding/application";
-import ApplicationPendingScreen from "../screens/onboarding/application-pending"
 
 const OnboardingNavigator = createStackNavigator(
   {
@@ -26,9 +25,6 @@ const OnboardingNavigator = createStackNavigator(
     },
     Application: {
       screen: ApplicationScreen
-    },
-    ApplicationPending: {
-      screen: ApplicationPendingScreen
     }
   },
   {
