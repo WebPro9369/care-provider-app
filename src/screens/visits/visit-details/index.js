@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable camelcase */
 import React from "react";
 import PropTypes from "prop-types";
 import { inject, observer, PropTypes as MobXPropTypes } from "mobx-react";
@@ -7,10 +9,7 @@ import haversine from "haversine";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import TwilioVoice from "react-native-twilio-programmable-voice";
 import { NavHeader } from "@components/nav-header";
-import {
-  LargeBookedDetailCard,
-  VisitDetailCard
-} from "@components/cards";
+import { LargeBookedDetailCard, VisitDetailCard } from "@components/cards";
 import { ServiceButton } from "@components/service-button";
 import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
@@ -38,7 +37,7 @@ class VisitDetailsScreen extends React.Component {
     super(props);
 
     const { navigation } = props;
-    const visitID = navigation.getParam('visitID', false);
+    const visitID = navigation.getParam("visitID", false);
     // TODO: if (!visitID) error!
 
     this.state = {
@@ -51,25 +50,29 @@ class VisitDetailsScreen extends React.Component {
 
         currentLatitude: 37.78925,
         currentLongitude: -122.4924,
-        distance: 0,
+        distance: 0
       },
       loaded: false,
-      localData: {},
+      localData: {}
     };
   }
 
   componentDidMount() {
-    const { store: { currentUserStore: { id: userID } } } = this.props;
+    const {
+      store: {
+        currentUserStore: { id: userID }
+      }
+    } = this.props;
     const { visitID } = this.state;
 
     this.navigatorWatch();
 
-    const successHandler = (res) => {
+    const successHandler = res => {
       const {
         reason,
         symptoms,
         parent_notes,
-        visit_notes,
+        // visit_notes,
         appointment_time,
         child,
         address,
@@ -84,23 +87,53 @@ class VisitDetailsScreen extends React.Component {
           symptoms,
           time: formatAMPM(new Date(appointment_time)),
           address: `${address.city}, ${address.state}`,
-          color: "#f9b44d",
+          color: "#f9b44d"
         },
-        parentName: `${parent.first_name} ${parent.last_name}`,
+        parentName: parent.name,
         reason,
         allergies: child.allergies,
-        parentNotes: parent_notes,
+        parentNotes: parent_notes
       };
 
       this.setState({ localData });
       this.setState({ loaded: true });
     };
 
-    getVisit(
-      userID,
-      visitID,
-      { successHandler });
+    getVisit(userID, visitID, { successHandler });
   }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  navigateHandler = () => {
+    const { map } = this.state;
+    const from = `${map.currentLatitude},${map.currentLongitude}`;
+    const to = `${map.latitude},${map.longitude}`;
+    const url = Platform.select({
+      ios: `maps:0, 0?saddr=${from}&daddr=${to}`,
+      android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
+    });
+    Linking.openURL(url);
+  };
+
+  cancelVisit = () => {
+    const {
+      navigation: { goBack }
+    } = this.props;
+
+    const { visitID } = this.state;
+
+    const data = {
+      state: "canceled"
+    };
+
+    const successHandler = res => {
+      goBack();
+    };
+
+    updateVisit(visitID, data, { successHandler });
+  };
 
   navigatorWatch() {
     const {
@@ -141,41 +174,6 @@ class VisitDetailsScreen extends React.Component {
     );
   }
 
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
-  }
-
-  navigateHandler = () => {
-    const { map } = this.state;
-    const from = `${map.currentLatitude},${map.currentLongitude}`;
-    const to = `${map.latitude},${map.longitude}`;
-    const url = Platform.select({
-      ios: `maps:0, 0?saddr=${from}&daddr=${to}`,
-      android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
-    });
-    Linking.openURL(url);
-  };
-
-  cancelVisit = () => {
-    const {
-      navigation: { goBack }
-    } = this.props;
-
-    const { visitID } = this.state;
-
-    const data = {
-      state: "canceled"
-    };
-
-
-    const successHandler = (res) => {
-      goBack();
-    }
-
-    updateVisit(visitID, data, { successHandler });
-
-  };
-
   render() {
     const {
       past,
@@ -192,19 +190,18 @@ class VisitDetailsScreen extends React.Component {
         reason,
         allergies,
         parentNotes,
-        visitNotes,
+        visitNotes
       }
     } = this.state;
 
     if (!loaded) {
-      return (<ContainerView>
-        <HeaderWrapper>
-          <NavHeader
-            title="Loading..."
-            size="medium"
-          />
-        </HeaderWrapper>
-      </ContainerView>);
+      return (
+        <ContainerView>
+          <HeaderWrapper>
+            <NavHeader title="Loading..." size="medium" />
+          </HeaderWrapper>
+        </ContainerView>
+      );
     }
 
     return (
