@@ -103,7 +103,10 @@ class AuthLoadingScreen extends Component {
 
       const dob = getFormattedDate(new Date(dateOfBirth));
 
-      const [firstName, lastName] = name.split(" ");
+      const nameSplitted = (name || "").split(" ");
+      const firstName = nameSplitted[0];
+      const lastName =
+        nameSplitted.length > 1 ? nameSplitted.splice(1).join(" ") : "";
       const { address, application } = currentUserStore;
 
       currentUserStore
