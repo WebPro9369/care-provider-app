@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable camelcase */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
@@ -57,14 +58,14 @@ class UpcomingVisitsScreen extends React.Component {
               visit_notes,
               payment_amount,
               state,
-              child = {},
-              address = {}
+              child,
+              address,
+              parent
             } = visit;
 
-            console.tron.log("visit.child = ", child);
-            console.tron.log("visit.address = ", address);
             child = child || {};
             address = address || {};
+            parent = parent || {};
 
             const newVisit = {
               id: visit.id,
@@ -104,9 +105,18 @@ class UpcomingVisitsScreen extends React.Component {
                 apartmentNumber: "",
                 latitude: "",
                 longitude: ""
+              },
+              parent: {
+                id: parent.id || -1,
+                name: parent.name || "",
+                email: parent.email || "",
+                phone: parent.phone || "",
+                zip: parent.zip || "",
+                acceptedPrivacy: parent.accepted_privacy || false,
+                acceptedTermsOfService: parent.accepted_terms_of_service || false,
+                active: parent.active || false
               }
             };
-            console.tron.log("new visit: ", newVisit);
             visitsStore.addVisit(newVisit);
           });
         }
@@ -115,7 +125,6 @@ class UpcomingVisitsScreen extends React.Component {
   }
 
   render() {
-    // const { visits } = this.state;
     const {
       navigation: { navigate },
       store: { visitsStore }
@@ -124,8 +133,6 @@ class UpcomingVisitsScreen extends React.Component {
     const visits = visitsStore.visits.sort(
       (a, b) => new Date(b.appointmentTime) - new Date(a.appointmentTime)
     );
-
-    const dates = Object.keys(visits);
 
     const visitsDisplayStack = [];
     const addedTimes = [];
@@ -149,14 +156,18 @@ class UpcomingVisitsScreen extends React.Component {
         .toLocaleDateString("en-US", timeOptions)
         .split(", ");
 
-      visitsDisplayStack.push(
+      const childName = visit.child.firstName
+        ? `${visit.child.firstName} ${visit.child.lastName}`
+        : "N/A";
+
+      return visitsDisplayStack.push(
         <View style={{ marginBottom: 9 }}>
           <VisitDetailCard
             avatarImg={imgFox}
-            name={visit.child.firstName}
+            name={childName}
             illness={visit.reason}
             time={formattedTime[1]}
-            address={visit.address.street}
+            address={visit.address.street || "N/A"}
             onPress={() =>
               navigate("VisitsVisitDetails", {
                 visitID: visit.id

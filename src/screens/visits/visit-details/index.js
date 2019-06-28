@@ -1,3 +1,5 @@
+/* eslint-disable react/sort-comp */
+/* eslint-disable import/no-unresolved */
 import React from "react";
 import PropTypes from "prop-types";
 import { inject, observer, PropTypes as MobXPropTypes } from "mobx-react";
@@ -7,16 +9,13 @@ import haversine from "haversine";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import TwilioVoice from "react-native-twilio-programmable-voice";
 import { NavHeader } from "@components/nav-header";
-import {
-  LargeBookedDetailCard,
-  VisitDetailCard
-} from "@components/cards";
+import { LargeBookedDetailCard, VisitDetailCard } from "@components/cards";
 import { ServiceButton } from "@components/service-button";
 import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { colors } from "@utils/constants";
-import { getVisit, updateVisit } from "@services/opear-api";
-import { formatAMPM } from "@utils/helpers";
+import { updateVisit } from "@services/opear-api";
+import { getValueById, formatAMPM } from "@utils/helpers";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -38,7 +37,7 @@ class VisitDetailsScreen extends React.Component {
     super(props);
 
     const { navigation } = props;
-    const visitID = navigation.getParam('visitID', false);
+    const visitID = navigation.getParam("visitID", false);
     // TODO: if (!visitID) error!
 
     this.state = {
@@ -51,55 +50,14 @@ class VisitDetailsScreen extends React.Component {
 
         currentLatitude: 37.78925,
         currentLongitude: -122.4924,
-        distance: 0,
+        distance: 0
       },
-      loaded: false,
-      localData: {},
+      loaded: true
     };
   }
 
-  componentDidMount() {
-    const { store: { currentUserStore: { id: userID } } } = this.props;
-    const { visitID } = this.state;
-
-    this.navigatorWatch();
-
-    const successHandler = (res) => {
-      const {
-        reason,
-        symptoms,
-        parent_notes,
-        visit_notes,
-        appointment_time,
-        child,
-        address,
-        parent
-      } = res.data;
-
-      const localData = {
-        child: {
-          key: child.id,
-          avatarImg: imgDog,
-          name: `${child.first_name} ${child.last_name}`,
-          symptoms,
-          time: formatAMPM(new Date(appointment_time)),
-          address: `${address.city}, ${address.state}`,
-          color: "#f9b44d",
-        },
-        parentName: `${parent.first_name} ${parent.last_name}`,
-        reason,
-        allergies: child.allergies,
-        parentNotes: parent_notes,
-      };
-
-      this.setState({ localData });
-      this.setState({ loaded: true });
-    };
-
-    getVisit(
-      userID,
-      visitID,
-      { successHandler });
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
   }
 
   navigatorWatch() {
@@ -141,10 +99,6 @@ class VisitDetailsScreen extends React.Component {
     );
   }
 
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
-  }
-
   navigateHandler = () => {
     const { map } = this.state;
     const from = `${map.currentLatitude},${map.currentLongitude}`;
@@ -167,44 +121,51 @@ class VisitDetailsScreen extends React.Component {
       state: "canceled"
     };
 
-
-    const successHandler = (res) => {
+    const successHandler = () => {
       goBack();
-    }
+    };
 
     updateVisit(visitID, data, { successHandler });
-
   };
 
   render() {
     const {
       past,
       navigation: { goBack, navigate },
-      store: { providerStore }
+      store: { providerStore, visitsStore }
     } = this.props;
     const { arrived } = providerStore;
+    const { visitID, loaded, map } = this.state;
+
+    const visit = getValueById(visitsStore.visits, visitID);
     const {
-      loaded,
-      map,
-      localData: {
-        child,
-        parentName,
-        reason,
-        allergies,
-        parentNotes,
-        visitNotes,
-      }
-    } = this.state;
+      child,
+      address,
+      parent,
+      symptoms,
+      appointmentTime,
+      reason,
+      parentNotes,
+      visitNotes
+    } = visit;
+
+    const childName = child.firstName
+      ? `${child.firstName} ${child.lastName}`
+      : "N/A";
+
+    const time = formatAMPM(new Date(appointmentTime));
+    const strAddress = `${address.city}${
+      address.state ? `, ${address.state}` : ""
+    }`;
 
     if (!loaded) {
-      return (<ContainerView>
-        <HeaderWrapper>
-          <NavHeader
-            title="Loading..."
-            size="medium"
-          />
-        </HeaderWrapper>
-      </ContainerView>);
+      return (
+        <ContainerView>
+          <HeaderWrapper>
+            <NavHeader title="Loading..." size="medium" />
+          </HeaderWrapper>
+        </ContainerView>
+      );
     }
 
     return (
@@ -224,17 +185,17 @@ class VisitDetailsScreen extends React.Component {
           />
           <View style={{ padding: 16, marginTop: 16 }}>
             <VisitDetailCard
-              avatarImg={child.avatarImg}
-              name={child.name}
-              illness={child.symptoms}
-              time={child.time}
-              address={child.address}
+              avatarImg={imgDog}
+              name={childName}
+              illness={symptoms.join(", ")}
+              time={time}
+              address={strAddress}
               disabled
             />
             <View style={{ marginTop: 32 }}>
               <LargeBookedDetailCard
                 type="Parent Name"
-                text={parentName}
+                text={parent.name || "N/A"}
                 icon={
                   // eslint-disable-next-line react/jsx-wrap-multilines
                   <FontAwesome
@@ -248,7 +209,6 @@ class VisitDetailsScreen extends React.Component {
                 }
                 disabled
                 onPress={() => {
-                  console.tron.log("Clicking phone");
                   TwilioVoice.connect({ To: "+19085008863" });
                 }}
               />
@@ -259,7 +219,7 @@ class VisitDetailsScreen extends React.Component {
               />
               <LargeBookedDetailCard
                 type="Allergies"
-                text={allergies}
+                text={child.allergies.join(", ")}
                 disabled
               />
               <LargeBookedDetailCard
