@@ -24,14 +24,6 @@ class UpcomingVisitsScreen extends React.Component {
     store: PropTypes.observableObject.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      visits: []
-    };
-  }
-
   componentDidMount() {
     const {
       store: {
@@ -44,7 +36,6 @@ class UpcomingVisitsScreen extends React.Component {
       successHandler: res => {
         for (const key in res.data) {
           const visitArray = res.data[key];
-          console.tron.log("gettig visits: ", key, visitArray);
           visitArray.forEach(visit => {
             let {
               parent_id,
@@ -113,7 +104,8 @@ class UpcomingVisitsScreen extends React.Component {
                 phone: parent.phone || "",
                 zip: parent.zip || "",
                 acceptedPrivacy: parent.accepted_privacy || false,
-                acceptedTermsOfService: parent.accepted_terms_of_service || false,
+                acceptedTermsOfService:
+                  parent.accepted_terms_of_service || false,
                 active: parent.active || false
               }
             };
@@ -130,9 +122,11 @@ class UpcomingVisitsScreen extends React.Component {
       store: { visitsStore }
     } = this.props;
 
-    const visits = visitsStore.visits.sort(
-      (a, b) => new Date(b.appointmentTime) - new Date(a.appointmentTime)
-    );
+    const visits = visitsStore.visits
+      .filter(v => v.state === "scheduled")
+      .sort(
+        (a, b) => new Date(b.appointmentTime) - new Date(a.appointmentTime)
+      );
 
     const visitsDisplayStack = [];
     const addedTimes = [];
