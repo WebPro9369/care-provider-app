@@ -54,7 +54,7 @@ class VisitDetailsScreen extends React.Component {
         distance: 0,
       },
       loaded: false,
-      data: {},
+      localData: {},
     };
   }
 
@@ -67,39 +67,33 @@ class VisitDetailsScreen extends React.Component {
     const successHandler = (res) => {
       const {
         reason,
-        symptoms: illness,
-        parent_notes: parentNotes,
-        visit_notes: visitNotes,
-        appointment_time: appointmentTime,
-        child: {
-          id: childID,
-          first_name: childFirstName,
-          last_name: childLastName,
-          allergies,
-        },
-        address: {
-          city,
-          state,
-        }
+        symptoms,
+        parent_notes,
+        visit_notes,
+        appointment_time,
+        child,
+        address,
+        parent
       } = res.data;
 
-      const data = {
+      const localData = {
         child: {
-          key: childID,
+          key: child.id,
           avatarImg: imgDog,
-          name: `${childFirstName} ${childLastName}`,
-          illness,
-          time: formatAMPM(new Date(appointmentTime)),
-          address: `${city}, ${state}`,
+          name: `${child.first_name} ${child.last_name}`,
+          symptoms,
+          time: formatAMPM(new Date(appointment_time)),
+          address: `${address.city}, ${address.state}`,
           color: "#f9b44d",
         },
-        parentName: "Michael Smith", // TODO: missing
+        parentName: `${parent.first_name} ${parent.last_name}`,
         reason,
-        allergies: allergies.join(', '),
-        parentNotes: parentNotes,
+        allergies: child.allergies,
+        parentNotes: parent_notes,
       };
 
-      this.setState({ data, loaded: true });
+      this.setState({ localData });
+      this.setState({ loaded: true });
     };
 
     getVisit(
@@ -192,7 +186,7 @@ class VisitDetailsScreen extends React.Component {
     const {
       loaded,
       map,
-      data: {
+      localData: {
         child,
         parentName,
         reason,
@@ -232,7 +226,7 @@ class VisitDetailsScreen extends React.Component {
             <VisitDetailCard
               avatarImg={child.avatarImg}
               name={child.name}
-              illness={child.illness}
+              illness={child.symptoms}
               time={child.time}
               address={child.address}
               disabled
