@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { inject, observer } from "mobx-react";
 import { StyledText } from "@components/text";
-import { KeyboardAvoidingView } from "@components/views/keyboard-view";
+import { ScrollView } from "@components/views/scroll-view";
 import { AccentBar } from "@components/accent-bar";
 
 @inject("store")
@@ -11,8 +11,15 @@ import { AccentBar } from "@components/accent-bar";
 class ApplicationPendingScreen extends Component {
   render() {
     return (
-      <KeyboardAvoidingView padding={0} enabled>
-        <View style={{ marginTop: 180, paddingLeft: 30, paddingRight: 30 }}>
+      <ScrollView padding={0}>
+        <View
+          style={{
+            marginTop: 180,
+            marginBottom: 180,
+            paddingLeft: 30,
+            paddingRight: 30
+          }}
+        >
           <StyledText
             lineHeight={37}
             fontSize={37}
@@ -45,7 +52,7 @@ class ApplicationPendingScreen extends Component {
           </StyledText>
         </View>
         <AccentBar />
-      </KeyboardAvoidingView>
+      </ScrollView>
     );
   }
 }
