@@ -2,6 +2,7 @@ import { types } from "mobx-state-tree";
 import { ApplicationStore } from "./application";
 import { ProviderStore } from "./provider";
 import { CurrentUserStore } from "./currentUser";
+import { VisitsStore } from "./visits";
 
 const MainStore = types.model("MainStore", {
   applicationStore: types.optional(ApplicationStore, {
@@ -24,7 +25,10 @@ const MainStore = types.model("MainStore", {
     phone: "",
     rating: 0,
     acceptedStripeTOS: false,
-    notificationToken: "",
+    notificationToken: ""
+  }),
+  visitsStore: types.optional(VisitsStore, {
+    visits: []
   })
 });
 

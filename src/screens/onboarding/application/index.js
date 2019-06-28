@@ -215,7 +215,7 @@ class ApplicationScreen extends React.Component {
       email,
       password,
       phone,
-      address: { street, city, state, zip_code: zip },
+      address: { street, city, state, zip: zip },
       application: {
         dateOfBirth: dob,
         licenseNumber: license_number,

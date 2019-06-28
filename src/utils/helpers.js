@@ -1,26 +1,44 @@
+/* eslint-disable prefer-template */
 export function formatAMPM(date) {
   let hours = date.getHours();
   let minutes = date.getMinutes();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-	minutes = minutes < 10 ? '0'+minutes : minutes;
-	
- 	return `${hours}:${minutes}${ampm}`;
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours %= 12;
+  hours = hours || 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+
+  return `${hours}:${minutes}${ampm}`;
 }
 
 export function commaStringToArray(value) {
-  return value.split(',').map(item => item.trim());
+  return value.split(",").map(item => item.trim());
 }
 
 export function getFormattedDate(date) {
   const year = date.getFullYear();
 
   let month = (1 + date.getMonth()).toString();
-  month = month.length > 1 ? month : '0' + month;
+  month = month.length > 1 ? month : "0" + month;
 
   let day = date.getDate().toString();
-  day = day.length > 1 ? day : '0' + day;
-  
-  return month + '/' + day + '/' + year;
+  day = day.length > 1 ? day : "0" + day;
+
+  return month + "/" + day + "/" + year;
 }
+
+export const getAge = birthDate => {
+  const birthDateDate = new Date(birthDate);
+  const currentDate = new Date();
+  const diffDate = currentDate - birthDateDate;
+  const age = Math.floor(diffDate / 31557600000);
+  return age;
+};
+
+export const getIndexByValue = (toSearch, id) => {
+  return toSearch.map(o => o.id).indexOf(id);
+};
+
+export const getValueById = (toSearch, id) => {
+  const index = getIndexByValue(toSearch, id);
+  return toSearch[index];
+};
