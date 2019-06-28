@@ -1,22 +1,28 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
+/* eslint-disable import/no-unresolved */
 import React from "react";
-import { inject, observer, PropTypes } from "mobx-react";
+import { inject, observer, PropTypes as MobXPropTypes } from "mobx-react";
 import { withNavigation } from "react-navigation";
 import { StyledText } from "@components/text";
 import { ContainerView, View, ContentWrapper } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { VisitDetailCard } from "@components/cards";
 import { colors } from "@utils/constants";
-import { formatAMPM  } from "@utils/helpers";
+// import { formatAMPM } from "@utils/helpers";
 import { getVisits } from "@services/opear-api";
 
 const imgFox = require("../../../assets/images/Fox.png");
-const imgDog = require("../../../assets/images/Dog.png");
-const imgTiger = require("../../../assets/images/Tiger.png");
 
 @inject("store")
 @observer
 class PastVisitsScreen extends React.Component {
-  constructor(props ){
+  static propTypes = {
+    store: MobXPropTypes.observableObject.isRequired
+  };
+
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -25,14 +31,39 @@ class PastVisitsScreen extends React.Component {
   }
 
   componentDidMount() {
-    const { store: { currentUserStore: { id }}} = this.props;
+    const {
+      store: {
+        currentUserStore: { id },
+        visitsStore
+      }
+    } = this.props;
 
     getVisits(id, {
       past: true,
-      successHandler: (res) => {
+      successHandler: res => {
         const visits = res.data;
 
-        this.setState({ visits: visits })
+        for (const key in res.data) {
+          const visitArray = res.data[key];
+          visitArray.forEach(visit =>
+            visitsStore.addVisit({
+              id: visit.id,
+              parentId: visit.parent_id,
+              childId: visit.child_id,
+              addressId: visit.address_id,
+              careProviderId: visit.care_provider_id,
+              reason: visit.reason,
+              symptoms: visit.symptoms,
+              appointmentTime: new Date(visit.appointment_time),
+              parentNotes: visit.parent_notes,
+              visitNotes: visit.visit_notes,
+              paymentAmount: visit.payment_amount,
+              state: visit.state
+            })
+          );
+        }
+
+        this.setState({ visits });
       }
     });
   }
@@ -43,17 +74,16 @@ class PastVisitsScreen extends React.Component {
       navigation: { navigate }
     } = this.props;
 
-    const dates = Object.keys(visits)
+    const dates = Object.keys(visits);
 
-    var visitsDisplayStack = [];
-    var dayOptions = { month: 'long', day: 'numeric' };
-    var timeOptions = { day: undefined, hour: 'numeric' };
+    const visitsDisplayStack = [];
+    const dayOptions = { month: "long", day: "numeric" };
+    const timeOptions = { day: undefined, hour: "numeric" };
 
     for (const date of dates) {
+      const visitsOnDate = visits[date];
 
-      var visitsOnDate = visits[date];
-
-      dateAsObject = new Date(date);
+      const dateAsObject = new Date(date);
 
       visitsDisplayStack.push(
         <StyledText fontSize={16} color={colors.BLACK60}>
@@ -62,8 +92,9 @@ class PastVisitsScreen extends React.Component {
       );
 
       for (const visitOnDate of visitsOnDate) {
-
-        var formattedTime = new Date(visitOnDate.appointment_time).toLocaleDateString("en-US", timeOptions);
+        let formattedTime = new Date(
+          visitOnDate.appointment_time
+        ).toLocaleDateString("en-US", timeOptions);
         formattedTime = formattedTime.split(", ");
 
         visitsDisplayStack.push(
@@ -74,23 +105,22 @@ class PastVisitsScreen extends React.Component {
               illness={visitOnDate.reason}
               time={formattedTime[1]}
               address={visitOnDate.address.street}
-              onPress={() => navigate("VisitsVisitDetails", {
-                visitID: visitOnDate.id
-              })}
+              onPress={() =>
+                navigate("VisitsVisitDetails", {
+                  visitID: visitOnDate.id
+                })
+              }
             />
           </View>
         );
       }
-
     }
 
     return (
       <ContainerView style={{ marginTop: 0 }}>
         <ScrollView padding={0}>
           <View style={{ paddingTop: 24 }}>
-            <ContentWrapper>
-            {visitsDisplayStack}
-            </ContentWrapper>
+            <ContentWrapper>{visitsDisplayStack}</ContentWrapper>
           </View>
         </ScrollView>
       </ContainerView>
