@@ -104,8 +104,6 @@ export const VisitsStore = types
         }
       });
 
-      console.tron.log("adding visit: ", visit);
-
       if (!found) {
         self.visits.push(visit);
       }
@@ -121,6 +119,10 @@ export const VisitsStore = types
     },
     setVisits(visits) {
       self.visits = visits;
+      return self;
+    },
+    setVisitState(index, value) {
+      self.visits[index].state = value;
       return self;
     }
   }));

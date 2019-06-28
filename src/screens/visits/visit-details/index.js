@@ -3,7 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { inject, observer, PropTypes as MobXPropTypes } from "mobx-react";
-import { Platform, Linking } from "react-native";
+import { Platform, Linking, Alert } from "react-native";
 import MapView from "react-native-maps";
 import haversine from "haversine";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -15,7 +15,7 @@ import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { colors } from "@utils/constants";
 import { updateVisit } from "@services/opear-api";
-import { getValueById, formatAMPM } from "@utils/helpers";
+import { getValueById, getIndexByValue, formatAMPM } from "@utils/helpers";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -112,20 +112,28 @@ class VisitDetailsScreen extends React.Component {
 
   cancelVisit = () => {
     const {
-      navigation: { goBack }
+      navigation: { goBack },
+      store: { visitsStore }
     } = this.props;
 
     const { visitID } = this.state;
+    const { visits } = visitsStore;
 
     const data = {
       state: "canceled"
     };
 
     const successHandler = () => {
+      const index = getIndexByValue(visits, visitID);
+      visitsStore.setVisitState(index, "canceled");
       goBack();
     };
 
-    updateVisit(visitID, data, { successHandler });
+    const errorHandler = () => {
+      Alert.alert("Visit Update Error", "Failed to cancel the visit.");
+    };
+
+    updateVisit(visitID, data, { successHandler, errorHandler });
   };
 
   render() {
