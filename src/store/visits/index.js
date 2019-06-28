@@ -3,6 +3,7 @@
 import { types } from "mobx-state-tree";
 import ChildStore from "../child";
 import AddressStore from "../address";
+import ParentStore from "../parent";
 
 export const VisitsStore = types
   .model("VisitsStore", {
@@ -45,6 +46,16 @@ export const VisitsStore = types
           apartmentNumber: "",
           latitude: "",
           longitude: ""
+        }),
+        parent: types.optional(ParentStore, {
+          id: -1,
+          name: "",
+          email: "",
+          phone: "",
+          zip: "",
+          acceptedPrivacy: false,
+          acceptedTermsOfService: false,
+          active: false
         })
       })
     )
@@ -92,6 +103,8 @@ export const VisitsStore = types
           found = true;
         }
       });
+
+      console.tron.log("adding visit: ", visit);
 
       if (!found) {
         self.visits.push(visit);
