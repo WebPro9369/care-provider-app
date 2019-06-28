@@ -36,7 +36,7 @@ class EditAddressScreen extends React.Component {
     const {
       store: {
         currentUserStore: {
-          address: { name, street, city, zip_code }
+          address: { name, street, city, zip }
         }
       }
     } = props;
@@ -45,7 +45,7 @@ class EditAddressScreen extends React.Component {
       name,
       street,
       city,
-      zip_code
+      zip
     };
   }
 
@@ -56,7 +56,7 @@ class EditAddressScreen extends React.Component {
         this.setState({
           address: "",
           city: "",
-          zip_code: ""
+          zip: ""
         });
         return axios
           .get(
@@ -97,7 +97,7 @@ class EditAddressScreen extends React.Component {
 
               if (a.types.includes("postal_code")) {
                 this.setState({
-                  zip_code: a.short_name
+                  zip: a.short_name
                 });
               }
             }
@@ -129,7 +129,7 @@ class EditAddressScreen extends React.Component {
       }
     } = this.props;
 
-    const { street, city, zip_code: zip, name } = this.state;
+    const { street, city, zip: zip, name } = this.state;
     const data = {
       care_provider: {
         addresses_attributes: [
@@ -161,7 +161,7 @@ class EditAddressScreen extends React.Component {
       navigation: { goBack }
     } = this.props;
 
-    const { name, street, city, zip_code } = this.state;
+    const { name, street, city, zip } = this.state;
     return (
       <ContainerView style={{ paddingTop: 16 }}>
         <NavHeader
@@ -205,8 +205,8 @@ class EditAddressScreen extends React.Component {
                   wrapperStyle={{
                     flex: 1
                   }}
-                  value={zip_code}
-                  onChangeText={this.handleChange("zip_code")}
+                  value={zip}
+                  onChangeText={this.handleChange("zip")}
                 />
               </FlexView>
             </FormInputView>

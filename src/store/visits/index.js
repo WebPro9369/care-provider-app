@@ -1,5 +1,8 @@
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable no-param-reassign */
 import { types } from "mobx-state-tree";
+import ChildStore from "../child";
+import AddressStore from "../address";
 
 export const VisitsStore = types
   .model("VisitsStore", {
@@ -17,7 +20,32 @@ export const VisitsStore = types
         parentNotes: types.string,
         visitNotes: types.string,
         paymentAmount: types.string,
-        state: types.string
+        state: types.string,
+        child: types.optional(ChildStore, {
+          id: -1,
+          age: -1,
+          gender: "",
+          firstName: "",
+          lastName: "",
+          birthDate: new Date("01/01/1900"),
+          birthHistory: "",
+          surgicalHistory: "",
+          currentMedications: "",
+          hospitalizations: "",
+          currentMedicalConditions: "",
+          allergies: []
+        }),
+        address: types.optional(AddressStore, {
+          id: -1,
+          name: "",
+          street: "",
+          city: "",
+          state: "",
+          zip: "",
+          apartmentNumber: "",
+          latitude: "",
+          longitude: ""
+        })
       })
     )
   })
