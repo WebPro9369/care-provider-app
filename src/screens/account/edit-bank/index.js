@@ -56,10 +56,7 @@ class EditBankScreen extends React.Component {
     };
     this.setState({ loading: true });
     try {
-
       const token = await stripe.createTokenWithBankAccount(params);
-      onboardingData.setBankToken(token.tokenId);
-
       createBankAccountProvider(
         id,
         {
@@ -94,8 +91,6 @@ class EditBankScreen extends React.Component {
     }
 
     updateCareProvider(id, data, { successHandler });
-
-
   };
 
   render() {
