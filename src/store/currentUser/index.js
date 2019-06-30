@@ -188,7 +188,7 @@ export const CurrentUserStore = types
       latitude: "",
       longitude: ""
     }),
-    payout_account: types.optional(PayoutAccountStore, {}),
+    payout_account: types.maybeNull(PayoutAccountStore),
     stripe_balance: types.maybeNull(types.number),
     rating: types.number
   })
