@@ -16,7 +16,7 @@ import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { colors } from "@utils/constants";
 import { updateVisit } from "@services/opear-api";
-import { getValueById, getIndexByValue, formatAMPM } from "@utils/helpers";
+import { getValueById, getIndexByValue, formatAMPM, isToday } from "@utils/helpers";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -88,6 +88,24 @@ class VisitDetailsScreen extends React.Component {
     };
 
     updateVisit(visitID, data, { successHandler });
+  };
+
+  startVisit = () => {
+    const {
+      navigation: { goBack }
+    } = this.props;
+
+    const { visitID } = this.state;
+
+    const data = {
+      state: "in_progress"
+    };
+
+    const startSuccessHandler = res => {
+      goBack();
+    };
+
+    updateVisit(visitID, data, { successHandler: startSuccessHandler });
   };
 
   navigatorWatch() {
@@ -289,6 +307,14 @@ class VisitDetailsScreen extends React.Component {
                   />
                 )}
               </View>
+              {isToday(appointmentTime)?(
+                <View style={{ paddingTop: 6, paddingBottom: 6 }}>
+                  <ServiceButton
+                    title="Start Appointment"
+                    onPress={() => this.startVisit()}
+                  />
+                </View>
+              ): null }
               <View style={{ paddingTop: 6, paddingBottom: 6 }}>
                 <ServiceButton
                   grey

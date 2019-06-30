@@ -42,3 +42,10 @@ export const getValueById = (toSearch, id) => {
   const index = getIndexByValue(toSearch, id);
   return toSearch[index];
 };
+
+export const isToday = (someDate) => {
+  const today = new Date();
+  return someDate.getDate() == today.getDate() &&
+    someDate.getMonth() == today.getMonth() &&
+    someDate.getFullYear() == today.getFullYear()
+};
