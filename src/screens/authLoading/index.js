@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React, { Component } from "react";
-import { ActivityIndicator, View, Linking } from "react-native";
+import { Alert, ActivityIndicator, View, Linking } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
 import { getAuthentication } from "@services/authentication";
@@ -115,6 +115,7 @@ class AuthLoadingScreen extends Component {
         .setEmail(email)
         .setPhone(phone)
         .setStripeBalance(stripe_balance)
+        // TODO: Fix this; currently breaks app when signing in, if payout_account isn't set
         .setPayoutAccount(payout_account)
         .setRating(rating);
 
@@ -157,6 +158,12 @@ class AuthLoadingScreen extends Component {
     const errorHandler = err => {
       if (err.response.status === 401) {
         navigate("Authenticating");
+      }
+      if (err.response.status === 500) {
+        Alert.alert(
+          "Error",
+          "There was an error signing in to your account. Please try again later"
+        );
       }
     };
 

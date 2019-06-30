@@ -62,17 +62,6 @@ export default class App extends React.Component {
   handleAppStateChange(appState) {
     if (appState === "background") {
       console.tron.log("Appstate changed: ", appState);
-      // let date = new Date(Date.now() + 10 * 1000);
-
-      TwilioService.sendNotification(
-        "Test Notification",
-        "This is a notification from Twilio!!!",
-        null,
-        "reo"
-      );
-
-      TwilioService.sendSMS("SMS Boby", null, "+19085008863");
-      TwilioService.makeCall(null, null, "+19085008863");
     }
   }
 

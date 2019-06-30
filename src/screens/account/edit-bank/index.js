@@ -34,9 +34,7 @@ class EditBankScreen extends React.Component {
   saveBankHandler = async () => {
     const {
       navigation: { goBack },
-      store: {
-        currentUserStore
-      }
+      store: { currentUserStore }
     } = this.props;
     const { id } = currentUserStore;
     const { accountNumber, routingNumber, acceptedStripeTOS } = this.state;
@@ -44,7 +42,6 @@ class EditBankScreen extends React.Component {
     if (!acceptedStripeTOS) {
       return Alert.alert("Error", "Please review the Stripe Terms of Service.");
     }
-    console.tron.log("true!");
 
     const params = {
       accountNumber,
@@ -52,6 +49,7 @@ class EditBankScreen extends React.Component {
       countryCode: "us",
       currency: "usd",
       accountHolderType: "individual",
+      // eslint-disable-next-line prettier/prettier
       accountHolderName: `${currentUserStore.first_name} ${currentUserStore.last_name}`
     };
     this.setState({ loading: true });
@@ -68,6 +66,7 @@ class EditBankScreen extends React.Component {
           currentUserStore.setPayoutAccount(res.data);
           this.setState({ loading: false });
 
+          console.tron.log("createBankAccountProvider succeeded");
           goBack();
         },
         () => {
@@ -75,7 +74,7 @@ class EditBankScreen extends React.Component {
         }
       );
     } catch (e) {
-      console.tron.log(e);
+      console.tron.log("error with saveBankHandler: ", e);
 
       this.setState({ loading: false });
     }
@@ -88,9 +87,18 @@ class EditBankScreen extends React.Component {
 
     const successHandler = response => {
       currentUserStore.setAcceptedStripeTOS(true);
-    }
+    };
 
-    updateCareProvider(id, data, { successHandler });
+    const errorHandler = err => {
+      Alert.alert(
+        "Error",
+        "There was an error saving your bank account information. Please try again."
+      );
+
+      console.tron.log("Error saving bank account:", err);
+    };
+
+    updateCareProvider(id, data, { successHandler, errorHandler });
   };
 
   render() {

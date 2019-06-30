@@ -1,13 +1,7 @@
-import * as Keychain from 'react-native-keychain';
-import {
-  API_SETTINGS,
-  updateCareProvider,
-} from '@services/opear-api';
+import * as Keychain from "react-native-keychain";
+import { API_SETTINGS, updateCareProvider } from "@services/opear-api";
 
-export function setAuthentication({
-  id,
-  apiKey
-}) {
+export function setAuthentication({ id, apiKey }) {
   Keychain.setGenericPassword(`${id}`, apiKey);
   API_SETTINGS.apiKey = apiKey;
 }
@@ -32,10 +26,10 @@ export async function getAuthentication() {
   }
 
   if (credentials) {
-    id = Number.parseInt(credentials.username, 10)
+    id = Number.parseInt(credentials.username, 10);
     apiKey = credentials.password;
 
-    apiKey && (isAuthenticated = true) || (wasAuthenticated = true);
+    (apiKey && (isAuthenticated = true)) || (wasAuthenticated = true);
   }
 
   return {
@@ -47,5 +41,5 @@ export async function getAuthentication() {
 }
 
 export function removeAuthentication(id) {
-  Keychain.setGenericPassword(`${id}`, '');
+  Keychain.setGenericPassword(`${id}`, "");
 }

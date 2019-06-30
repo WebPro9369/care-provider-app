@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-param-reassign */
 import { types } from "mobx-state-tree";
 import { setAuthentication } from "@services/authentication";
@@ -5,28 +6,28 @@ import AddressStore from "../address";
 
 const ApplicationStore = types
   .model("ApplicationStore", {
-      dateOfBirth: types.string,
-      biography: types.string,
-      licenseNumber: types.string,
-      licenseType: types.string,
-      licenseIssuer: types.string,
-      licenseCountry: types.string,
-      licenseState: types.string,
-      licenseCity: types.string,
-      governmentIdType: types.string,
-      governmentIdCountry: types.string,
-      governmentIdNumber: types.string,
-      boardCertification: types.string,
-      malpracticeInsurance: types.string,
-      educationHistory: types.array(types.string),
-      workHistory: types.array(types.string),
-      specialties: types.array(types.string),
-      offeredServices: types.array(types.string),
-      whereHeard: types.string,
-      supervisingPhysician: types.string,
-      acceptedPrivacy: types.boolean,
-      acceptedTermsOfService: types.boolean,
-      titles: types.array(types.string)
+    dateOfBirth: types.string,
+    biography: types.string,
+    licenseNumber: types.string,
+    licenseType: types.string,
+    licenseIssuer: types.string,
+    licenseCountry: types.string,
+    licenseState: types.string,
+    licenseCity: types.string,
+    governmentIdType: types.string,
+    governmentIdCountry: types.string,
+    governmentIdNumber: types.string,
+    boardCertification: types.string,
+    malpracticeInsurance: types.string,
+    educationHistory: types.array(types.string),
+    workHistory: types.array(types.string),
+    specialties: types.array(types.string),
+    offeredServices: types.array(types.string),
+    whereHeard: types.string,
+    supervisingPhysician: types.string,
+    acceptedPrivacy: types.boolean,
+    acceptedTermsOfService: types.boolean,
+    titles: types.array(types.string)
   })
   .actions(self => ({
     setDateOfBirth(value) {
@@ -123,10 +124,10 @@ const ApplicationStore = types
     }
   }));
 
-  const PayoutAccountStore = types
+const PayoutAccountStore = types
   .model("PayoutAccountStore", {
-      token_id: types.maybeNull(types.string),
-      last4: types.maybeNull(types.string)
+    token_id: types.maybeNull(types.string),
+    last4: types.maybeNull(types.string)
   })
   .actions(self => ({
     setTokenId(value) {
@@ -141,9 +142,9 @@ const ApplicationStore = types
 
 export const CurrentUserStore = types
   .model("CurrentUserStore", {
-		id: types.number,
-		apiKey: types.string,
-    password: types.optional(types.string, ''),
+    id: types.number,
+    apiKey: types.string,
+    password: types.optional(types.string, ""),
     email: types.string,
     firstName: types.string,
     lastName: types.string,
@@ -169,40 +170,40 @@ export const CurrentUserStore = types
       workHistory: [],
       specialties: [],
       offeredServices: [],
-      whereHeard: '',
-      supervisingPhysician: '',
+      whereHeard: "",
+      supervisingPhysician: "",
       titles: [],
       addresses: [{}],
       acceptedTermsOfService: false,
-      acceptedPrivacy: false,
+      acceptedPrivacy: false
     }),
     address: types.optional(AddressStore, {
       id: -1,
-      name: '',
-      street: '',
-      city: '',
-      state: '',
-      zip: '',
-      apartmentNumber: '',
-      latitude: '',
-      longitude: '',
+      name: "",
+      street: "",
+      city: "",
+      state: "",
+      zip: "",
+      apartmentNumber: "",
+      latitude: "",
+      longitude: ""
     }),
     payout_account: types.optional(PayoutAccountStore, {}),
     stripe_balance: types.maybeNull(types.number),
     rating: types.number
   })
   .actions(self => ({
-		setID(value) {
+    setID(value) {
       self.id = value;
       return self;
-		},
+    },
     setAPIKey(value) {
       self.apiKey = value;
       return self;
     },
-    setAuthentication({ id, apiKey}) {
+    setAuthentication({ id, apiKey }) {
       self.setID(id).setAPIKey(apiKey);
-      setAuthentication({ id, apiKey});
+      setAuthentication({ id, apiKey });
 
       return self;
     },
@@ -255,5 +256,5 @@ export const CurrentUserStore = types
     setNotificationToken(value) {
       self.notificationToken = value;
       return self;
-		},
+    }
   }));

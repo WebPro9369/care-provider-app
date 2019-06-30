@@ -90,7 +90,7 @@ class PayoutsScreen extends React.Component {
               ? <ActivityIndicator size="small" color={colors.SEAFOAMBLUE} />
               : (
                 <StyledText fontSize={24} color={colors.SEAFOAMBLUE}>
-                  {stripe_balance || "0"}$
+                  ${stripe_balance || "0"}
                 </StyledText>
             )}
           </FlexView>
