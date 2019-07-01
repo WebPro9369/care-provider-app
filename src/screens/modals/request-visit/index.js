@@ -103,7 +103,7 @@ class RequestVisitModalComponent extends Component {
 
     const successHandler = () => onCancel();
     // TODO: move this to a secure and specific endpoint like /visit/{id}/cancel
-    updateVisit(id, { state: "matched" }, { successHandler });
+    updateVisit(id, { state: 'pending' }, { successHandler });
   };
 
   render() {
