@@ -26,12 +26,10 @@ const threshold = 1000;
 @observer
 class VisitDetailsScreen extends React.Component {
   static propTypes = {
-    past: PropTypes.bool,
     store: MobXPropTypes.observableObject.isRequired
   };
 
   static defaultProps = {
-    past: false
   };
 
   constructor(props) {
@@ -186,7 +184,6 @@ class VisitDetailsScreen extends React.Component {
 
   render() {
     const {
-      past,
       navigation: { goBack, navigate },
       store: { providerStore, visitsStore }
     } = this.props;
@@ -194,6 +191,8 @@ class VisitDetailsScreen extends React.Component {
     const { visitID, loaded, map } = this.state;
 
     const visit = getValueById(visitsStore.visits, visitID);
+    const past = visit.state === "completed";
+
     const {
       child,
       address,
@@ -249,25 +248,27 @@ class VisitDetailsScreen extends React.Component {
               disabled
             />
             <View style={{ marginTop: 32 }}>
-              <LargeBookedDetailCard
-                type="Parent Name"
-                text={parent.name || "N/A"}
-                icon={
-                  // eslint-disable-next-line react/jsx-wrap-multilines
-                  <FontAwesome
-                    name="phone"
-                    size={36}
-                    style={{
-                      backgroundColor: "transparent",
-                      color: colors.DARKSKYBLUE
-                    }}
-                  />
-                }
-                disabled
-                onPress={() => {
-                  TwilioVoice.connect({ To: "+19085008863" });
-                }}
-              />
+              {!past ? (
+                <LargeBookedDetailCard
+                  type="Parent Name"
+                  text={parent.name || "N/A"}
+                  icon={
+                    // eslint-disable-next-line react/jsx-wrap-multilines
+                    <FontAwesome
+                      name="phone"
+                      size={36}
+                      style={{
+                        backgroundColor: "transparent",
+                        color: colors.DARKSKYBLUE
+                      }}
+                    />
+                  }
+                  disabled
+                  onPress={() => {
+                    TwilioVoice.connect({ To: "+19085008863" });
+                  }}
+                />
+              ) : null}
               <LargeBookedDetailCard
                 type="Visit Reason"
                 text={reason}
@@ -307,14 +308,14 @@ class VisitDetailsScreen extends React.Component {
                   />
                 )}
               </View>
-              {isToday(appointmentTime)?(
+              {isToday(appointmentTime) ? (
                 <View style={{ paddingTop: 6, paddingBottom: 6 }}>
                   <ServiceButton
                     title="Start Appointment"
                     onPress={() => this.startVisit()}
                   />
                 </View>
-              ): null }
+              ) : null}
               <View style={{ paddingTop: 6, paddingBottom: 6 }}>
                 <ServiceButton
                   grey
