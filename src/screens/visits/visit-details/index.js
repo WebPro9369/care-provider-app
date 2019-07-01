@@ -182,6 +182,11 @@ class VisitDetailsScreen extends React.Component {
     updateVisit(visitID, data, { successHandler, errorHandler });
   };
 
+  callParent = phone => {
+    TwilioVoice.connect({ To: phone });
+    console.tron.log("Place call to parent at: ", phone);
+  }
+
   render() {
     const {
       navigation: { goBack, navigate },
@@ -263,9 +268,8 @@ class VisitDetailsScreen extends React.Component {
                       }}
                     />
                   }
-                  disabled
                   onPress={() => {
-                    TwilioVoice.connect({ To: "+19085008863" });
+                    this.callParent(parent.phone);
                   }}
                 />
               ) : null}
