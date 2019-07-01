@@ -15,6 +15,7 @@ import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { colors } from "@utils/constants";
 import { updateVisit } from "@services/opear-api";
+import Geocoder from 'react-native-geocoder';
 import {
   getValueById,
   getIndexByValue,
@@ -207,6 +208,25 @@ class VisitDetailsScreen extends React.Component {
     const strAddress = `${address.city}${
       address.state ? `, ${address.state}` : ""
     }`;
+
+    const navAddress = `${address.street} ,${address.city}${
+      address.state ? `, ${address.state}` : ""
+    }`;
+
+    Geocoder.geocodeAddress(navAddress).then(res => {
+      if(res[0]) {
+        this.setState( {
+          map: {
+            latitude: res[0].position.lat,
+            longitude: res[0].position.lng
+          }
+        });
+      }
+      else {
+        throw "No response";
+      }
+    })
+    .catch(err => console.tron.log(err))
 
     if (!loaded) {
       return (
