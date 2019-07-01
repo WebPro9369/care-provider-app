@@ -24,7 +24,7 @@ class UpcomingVisitsScreen extends React.Component {
     } = this.props;
 
     const visits = visitsStore.visits
-      .filter(v => v.state === "scheduled")
+      .filter(v => v.state === "scheduled" || v.state === "in_progress")
       .sort(
         (a, b) => new Date(b.appointmentTime) - new Date(a.appointmentTime)
       );
