@@ -1,6 +1,6 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import { inject, observer } from "mobx-react";
+import { inject, observer, PropTypes } from "mobx-react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
@@ -12,6 +12,10 @@ import { getCareProvider } from "../../../services/opear-api";
 @inject("store")
 @observer
 class PayoutsScreen extends React.Component {
+  propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,13 +29,10 @@ class PayoutsScreen extends React.Component {
 
   getProviderInfo() {
     this.setState({ loading: true });
-    const { 
-      store: {
-        currentUserStore
-      }
+    const {
+      store: { currentUserStore }
     } = this.props;
-    getCareProvider(
-      currentUserStore.id, {
+    getCareProvider(currentUserStore.id, {
       successHandler: res => {
         if (res.status === 200) {
           currentUserStore
@@ -62,7 +63,7 @@ class PayoutsScreen extends React.Component {
       }
     } = this.props;
     const { loading } = this.state;
-    const bankLast4 = payout_account.last4
+    const bankLast4 = payout_account
       ? `****${payout_account.last4}`
       : "Please setup bank";
 

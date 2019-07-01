@@ -115,7 +115,6 @@ class AuthLoadingScreen extends Component {
         .setEmail(email)
         .setPhone(phone)
         .setStripeBalance(stripe_balance)
-        // TODO: Fix this; currently breaks app when signing in, if payout_account isn't set
         .setPayoutAccount(payout_account)
         .setRating(rating);
 

@@ -3,7 +3,7 @@ import { Alert, Linking } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { CheckBox } from "react-native-elements";
 import stripe from "tipsi-stripe";
-import { inject, observer } from "mobx-react";
+import { inject, observer, PropTypes } from "mobx-react";
 import { FormTextInput, StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
@@ -20,6 +20,10 @@ const { BLUE } = colors;
 @inject("store")
 @observer
 class EditBankScreen extends React.Component {
+  propTypes = {
+    store: PropTypes.observableObject.isRequired
+  };
+
   constructor(props) {
     super(props);
 
@@ -74,9 +78,13 @@ class EditBankScreen extends React.Component {
         }
       );
     } catch (e) {
-      console.tron.log("error with saveBankHandler: ", e);
-
+      console.tron.log("error with validating bank account with Stripe: ", e);
       this.setState({ loading: false });
+
+      return Alert.alert(
+        "Bank Account Error",
+        "There was an error validating your bank account information. Please try again."
+      );
     }
 
     const data = {
