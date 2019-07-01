@@ -42,13 +42,7 @@ class DashboardScreen extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      store: {
-        currentUserStore: { id }
-      }
-    } = this.props;
-
-    getVisits(id, {
+    getVisits({
       successHandler: res => {
         const visits = res.data.map(visitData => {
           const {
