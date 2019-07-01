@@ -293,7 +293,9 @@ class VisitDetailsScreen extends React.Component {
                 {arrived ? (
                   <ServiceButton
                     title="Arrived"
-                    onPress={() => navigate("VisitsVisitInProgress")}
+                    onPress={() =>
+                      navigate("VisitsVisitInProgress", { visitID })
+                    }
                   />
                 ) : (
                   <ServiceButton

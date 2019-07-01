@@ -72,10 +72,7 @@ export const updateCareProvider = (
     });
 };
 
-export const getVisits = (
-  userID,
-  { past, successHandler, errorHandler } = {}
-) => {
+export const getVisits = ({ past, successHandler, errorHandler } = {}) => {
   const url = `/v1/visits${past ? "?past=true" : ""}`;
 
   axios
@@ -106,7 +103,11 @@ export const getVisit = (
     });
 };
 
-export const updateVisit = (visitID, data, { successHandler, errorHandler } = {}) => {
+export const updateVisit = (
+  visitID,
+  data,
+  { successHandler, errorHandler } = {}
+) => {
   axios
     .patch(`/v1/visits/${visitID}`, data)
     .then(res => {

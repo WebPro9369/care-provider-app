@@ -42,8 +42,8 @@ class ManageVisitsScreen extends React.Component {
   componentDidMount() {
     const { navigation } = this.props;
     navigation.addListener("willFocus", route => {
-      console.tron.log("Visits screen will focus: ", route);
-      getVisits({ successHandler: this.handleVisits });
+      console.tron.log("Provider visits screen will focus: ", route);
+      getVisits({ successHandler: this.handleFetchedVisits });
       getVisits({ past: true, successHandler: this.handleFetchedVisits });
     });
   }
@@ -61,7 +61,7 @@ class ManageVisitsScreen extends React.Component {
 
     for (const key in data) {
       const visitArray = data[key];
-      // console.tron.log("Visit array: ", visitArray);
+      // console.tron.log("Provider visit array: ", visitArray);
       visitArray.forEach(visit => {
         let {
           parent_id,

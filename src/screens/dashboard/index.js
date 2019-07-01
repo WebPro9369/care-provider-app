@@ -43,14 +43,7 @@ class DashboardScreen extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      store: {
-        currentUserStore: { id },
-        providerStore
-      }
-    } = this.props;
-
-    getVisits(id, {
+    getVisits({
       successHandler: res => {
         if (!res.data) return;
         let visitForApproval;
