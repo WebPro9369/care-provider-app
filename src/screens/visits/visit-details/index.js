@@ -2,7 +2,6 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable camelcase */
 import React from "react";
-import PropTypes from "prop-types";
 import { inject, observer, PropTypes as MobXPropTypes } from "mobx-react";
 import { Platform, Linking, Alert } from "react-native";
 import MapView from "react-native-maps";
@@ -16,7 +15,12 @@ import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { colors } from "@utils/constants";
 import { updateVisit } from "@services/opear-api";
-import { getValueById, getIndexByValue, formatAMPM, isToday } from "@utils/helpers";
+import {
+  getValueById,
+  getIndexByValue,
+  formatAMPM,
+  isToday
+} from "@utils/helpers";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -27,9 +31,6 @@ const threshold = 1000;
 class VisitDetailsScreen extends React.Component {
   static propTypes = {
     store: MobXPropTypes.observableObject.isRequired
-  };
-
-  static defaultProps = {
   };
 
   constructor(props) {
@@ -70,40 +71,56 @@ class VisitDetailsScreen extends React.Component {
     Linking.openURL(url);
   };
 
-  cancelVisit = () => {
-    const {
-      navigation: { goBack }
-    } = this.props;
-
-    const { visitID } = this.state;
-
-    const data = {
-      state: "canceled"
-    };
-
-    const successHandler = res => {
-      goBack();
-    };
-
-    updateVisit(visitID, data, { successHandler });
-  };
-
   startVisit = () => {
     const {
-      navigation: { goBack }
+      navigation: { goBack },
+      store: { visitsStore }
     } = this.props;
 
     const { visitID } = this.state;
+    const { visits } = visitsStore;
 
     const data = {
       state: "in_progress"
     };
 
-    const startSuccessHandler = res => {
+    const successHandler = () => {
+      const index = getIndexByValue(visits, visitID);
+      visitsStore.setVisitState(index, "in_progress");
       goBack();
     };
 
-    updateVisit(visitID, data, { successHandler: startSuccessHandler });
+    const errorHandler = () => {
+      Alert.alert("Visit Update Error", "Failed to start the appointment.");
+    };
+
+    updateVisit(visitID, data, { successHandler, errorHandler });
+  };
+
+  cancelVisit = () => {
+    const {
+      navigation: { goBack },
+      store: { visitsStore }
+    } = this.props;
+
+    const { visitID } = this.state;
+    const { visits } = visitsStore;
+
+    const data = {
+      state: "canceled"
+    };
+
+    const successHandler = () => {
+      const index = getIndexByValue(visits, visitID);
+      visitsStore.setVisitState(index, "canceled");
+      goBack();
+    };
+
+    const errorHandler = () => {
+      Alert.alert("Visit Update Error", "Failed to cancel the visit.");
+    };
+
+    updateVisit(visitID, data, { successHandler, errorHandler });
   };
 
   navigatorWatch() {
@@ -156,36 +173,10 @@ class VisitDetailsScreen extends React.Component {
     Linking.openURL(url);
   };
 
-  cancelVisit = () => {
-    const {
-      navigation: { goBack },
-      store: { visitsStore }
-    } = this.props;
-
-    const { visitID } = this.state;
-    const { visits } = visitsStore;
-
-    const data = {
-      state: "canceled"
-    };
-
-    const successHandler = () => {
-      const index = getIndexByValue(visits, visitID);
-      visitsStore.setVisitState(index, "canceled");
-      goBack();
-    };
-
-    const errorHandler = () => {
-      Alert.alert("Visit Update Error", "Failed to cancel the visit.");
-    };
-
-    updateVisit(visitID, data, { successHandler, errorHandler });
-  };
-
   callParent = phone => {
     TwilioVoice.connect({ To: phone });
     console.tron.log("Place call to parent at: ", phone);
-  }
+  };
 
   render() {
     const {
