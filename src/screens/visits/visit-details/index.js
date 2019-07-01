@@ -263,9 +263,9 @@ class VisitDetailsScreen extends React.Component {
                       }}
                     />
                   }
-                  disabled
                   onPress={() => {
-                    TwilioVoice.connect({ To: "+19085008863" });
+                    TwilioVoice.connect({ To: parent.phone });
+                    console.tron.log("Place call to parent at: ", parent.phone);
                   }}
                 />
               ) : null}
