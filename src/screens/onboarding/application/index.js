@@ -193,7 +193,7 @@ class ApplicationScreen extends React.Component {
       );
     }
 
-    const { acceptedPrivacy, acceptedTermsOfService } = this.state;
+    const { specialties, acceptedPrivacy, acceptedTermsOfService } = this.state;
 
     if (!acceptedPrivacy) {
       return Alert.alert(
@@ -206,6 +206,21 @@ class ApplicationScreen extends React.Component {
       return Alert.alert(
         "There was an issue",
         "Please review our Terms of Service to continue"
+      );
+    }
+
+    let tooLongSpecialty = false;
+
+    specialties.forEach(el => {
+      if (el.length > 12) {
+        tooLongSpecialty = true;
+      }
+    });
+
+    if (specialties.length > 3 || tooLongSpecialty) {
+      return Alert.alert(
+        "Too long",
+        "Please limit your specialties each to 12 characters, and have no more than 3 specialities."
       );
     }
 
