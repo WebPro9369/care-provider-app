@@ -3,8 +3,9 @@ import Axios from "axios";
 export const API_SETTINGS = {
   apiKey: null,
   endpoint: "https://api.opear.com"
-  //endpoint: "http://ec2-18-191-228-16.us-east-2.compute.amazonaws.com"
-  //endpoint: "http://localhost:3000/"
+  // endpoint: "http://opear-api.serveo.net/"
+  // endpoint: "http://ec2-18-191-228-16.us-east-2.compute.amazonaws.com"
+  // endpoint: "http://localhost:3000/"
 };
 
 const axios = Axios.create({
@@ -87,7 +88,6 @@ export const getVisits = ({ past, successHandler, errorHandler } = {}) => {
 };
 
 export const getVisit = (
-  userID,
   visitID,
   { successHandler, errorHandler } = {}
 ) => {

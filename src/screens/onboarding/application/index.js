@@ -193,7 +193,7 @@ class ApplicationScreen extends React.Component {
       );
     }
 
-    const { specialties, acceptedPrivacy, acceptedTermsOfService } = this.state;
+    const { acceptedPrivacy, acceptedTermsOfService } = this.state;
 
     if (!acceptedPrivacy) {
       return Alert.alert(
@@ -211,13 +211,13 @@ class ApplicationScreen extends React.Component {
 
     let tooLongSpecialty = false;
 
-    specialties.forEach(el => {
+    currentUserStore.specialties.forEach(el => {
       if (el.length > 12) {
         tooLongSpecialty = true;
       }
     });
 
-    if (specialties.length > 3 || tooLongSpecialty) {
+    if (currentUserStore.specialties.length > 3 || tooLongSpecialty) {
       return Alert.alert(
         "Too long",
         "Please limit your specialties each to 12 characters, and have no more than 3 specialities."
