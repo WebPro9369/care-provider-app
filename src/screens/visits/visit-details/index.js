@@ -73,10 +73,9 @@ class VisitDetailsScreen extends React.Component {
 
   startVisit = () => {
     const {
-      navigation: { goBack },
+      navigation: { navigate },
       store: { visitsStore }
     } = this.props;
-
     const { visitID } = this.state;
     const { visits } = visitsStore;
 
@@ -87,7 +86,7 @@ class VisitDetailsScreen extends React.Component {
     const successHandler = () => {
       const index = getIndexByValue(visits, visitID);
       visitsStore.setVisitState(index, "in_progress");
-      goBack();
+      navigate("VisitsVisitInProgress", { visitID });
     };
 
     const errorHandler = () => {
