@@ -1,3 +1,4 @@
 import TwilioService from "./twilio";
+import GoogleMapsService from "./googleMaps";
 
-export { TwilioService };
+export { TwilioService, GoogleMapsService };

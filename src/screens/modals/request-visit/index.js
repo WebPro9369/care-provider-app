@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import ReactPropTypes from "prop-types";
-import { inject, observer, PropTypes } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import { Modal } from "react-native";
 import MapView from "react-native-maps";
+import { updateVisit } from "@services/opear-api";
 import {
   ModalWrapper,
   ViewCentered,
@@ -14,7 +15,7 @@ import { StyledText } from "../../../components/text";
 import { VisitDetailCard } from "../../../components/cards";
 import { ModalButton } from "../../../components/modal-button";
 import { colors } from "../../../utils/constants";
-import { updateVisit } from "@services/opear-api";
+import { GoogleMapsService } from "@services";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -26,7 +27,7 @@ class RequestVisitModalComponent extends Component {
     modalVisible: false,
     // TODO: Remove static map data
     distance: "3.8 miles away",
-    map: {
+    region: {
       latitude: 37.78825,
       longitude: -122.4324,
       latitudeDelta: 0.0922,
@@ -40,49 +41,78 @@ class RequestVisitModalComponent extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.modalVisible !== prevState.modalVisible ) {
+    if (nextProps.modalVisible !== prevState.modalVisible) {
       return { modalVisible: nextProps.modalVisible, visit: nextProps.visit };
     }
 
     return null;
   }
 
+  componentDidMount() {
+    this.getVisitGeoInfo();
+  }
+
+  getVisitGeoInfo = () => {
+    const { address } = this.state;
+    if (address) {
+      GoogleMapsService.getGeo(
+        `${address.street}${address.city && ", "}${address.city}${address.state && ", "}${address.state}`,
+        innerRes => {
+          const { data } = innerRes;
+          if (data && data.result && data.result.geometry) {
+            const { lat, lng } = data.result.geometry.location;
+            this.setState({
+              region: {
+                latitude: lat,
+                longitude: lng,
+                latitudeDelta: 0.09,
+                longitudeDelta: 0.09
+              }
+            });
+          } else {
+            this.setState({
+              region: null
+            });
+          }
+        },
+        () => {
+          this.setState({
+            region: null
+          });
+        }
+      );
+    }
+  }
+
   accept = () => {
     const { onAccept } = this.props;
-    const { visit: { id }} = this.state;
+    const {
+      visit: { id }
+    } = this.state;
 
     const successHandler = () => onAccept();
     // TODO: move this to a secure and specific endpoint like /visit/{id}/accept
-    updateVisit(id, { state: 'scheduled' }, { successHandler });
+    updateVisit(id, { state: "scheduled" }, { successHandler });
   };
 
   close = () => {
     const { onCancel } = this.props;
-    const { visit: { id }} = this.state;
+    const {
+      visit: { id }
+    } = this.state;
 
     const successHandler = () => onCancel();
     // TODO: move this to a secure and specific endpoint like /visit/{id}/cancel
-    updateVisit(id, { state: 'matched' }, { successHandler });
+    updateVisit(id, { state: "matched" }, { successHandler });
   };
 
   render() {
-    const {
-      modalVisible,
-      distance,
-      map
-    } = this.state;
+    const { modalVisible, distance, region } = this.state;
 
     if (!modalVisible) return null;
 
     const {
-      visit: {
-        name,
-        illness,
-        symptoms,
-        time,
-        allergies,
-        parentNotes
-      }
+      visit: { name, illness, symptoms, time, allergies, parentNotes }
     } = this.state;
 
     return (
@@ -102,10 +132,12 @@ class RequestVisitModalComponent extends Component {
                 {distance}
               </StyledText>
             </ViewCentered>
-            <MapView
-              style={{ alignSelf: "stretch", height: 160 }}
-              initialRegion={map}
-            />
+            {region && (
+              <MapView
+                style={{ alignSelf: "stretch", height: 160 }}
+                initialRegion={region}
+              />
+            )}
             <View style={{ paddingTop: 32, paddingBottom: 16 }}>
               <VisitDetailCard
                 avatarImg={imgDog}
@@ -126,7 +158,9 @@ class RequestVisitModalComponent extends Component {
                       Allergies
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>{allergies ? allergies : '-'}</StyledText>
+                  <StyledText fontSize={14}>
+                    {allergies ? allergies : "-"}
+                  </StyledText>
                 </FlexView>
                 <FlexView
                   justifyContent="start"
@@ -137,7 +171,9 @@ class RequestVisitModalComponent extends Component {
                       Other
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>{parentNotes ? parentNotes : '-'}</StyledText>
+                  <StyledText fontSize={14}>
+                    {parentNotes ? parentNotes : "-"}
+                  </StyledText>
                 </FlexView>
                 <FlexView
                   justifyContent="start"
@@ -148,7 +184,9 @@ class RequestVisitModalComponent extends Component {
                       Visit Reason
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>{symptoms.length ? symptoms.join(", ") : '-'}</StyledText>
+                  <StyledText fontSize={14}>
+                    {symptoms.length ? symptoms.join(", ") : "-"}
+                  </StyledText>
                 </FlexView>
               </View>
             </ContentWrapper>

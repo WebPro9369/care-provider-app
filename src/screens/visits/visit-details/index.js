@@ -21,6 +21,7 @@ import {
   formatAMPM,
   isToday
 } from "@utils/helpers";
+import { GoogleMapsService } from "@services";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -54,7 +55,33 @@ class VisitDetailsScreen extends React.Component {
       },
       loaded: true
     };
+    this.getVisitGeo();
   }
+
+  getVisitGeo = () => {
+    const {
+      store: { visitsStore }
+    } = this.props;
+    const { visitID, map } = this.state;
+    const visit = getValueById(visitsStore.visits, visitID);
+    const { address } = visit;
+    GoogleMapsService.getGeo(
+      `${address.street}${address.city && ", "}${address.city}${address.state && ", "}${address.state}`,
+      innerRes => {
+        const { data } = innerRes;
+        if (data && data.result && data.result.geometry) {
+          const { lat, lng } = data.result.geometry.location;
+          this.setState({
+            map: {
+              ...map,
+              latitude: lat,
+              longitude: lng
+            }
+          });
+        }
+      }
+    );
+  };
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
@@ -229,10 +256,12 @@ class VisitDetailsScreen extends React.Component {
           />
         </HeaderWrapper>
         <ScrollView padding={0}>
-          <MapView
-            style={{ alignSelf: "stretch", height: 200 }}
-            initialRegion={map}
-          />
+          {map && (
+            <MapView
+              style={{ alignSelf: "stretch", height: 200 }}
+              initialRegion={map}
+            />
+          )}
           <View style={{ padding: 16, marginTop: 16 }}>
             <VisitDetailCard
               avatarImg={imgDog}
