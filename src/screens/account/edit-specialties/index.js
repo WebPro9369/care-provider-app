@@ -10,6 +10,7 @@ import {
   FormInputView
 } from "@components/views/keyboard-view";
 import { commaStringToArray } from "@utils/helpers";
+import { Alert } from "react-native";
 
 @inject("store")
 @observer
@@ -27,20 +28,17 @@ class EditSpecialtiesScreen extends React.Component {
           application: { specialties }
         }
       }
-    }  = props;
+    } = props;
 
     this.state = {
       specialties: specialties.join(", ")
     };
-
   }
 
   handleInputChange = name => value => {
-
     this.setState({
       [name]: commaStringToArray(value)
     });
-
   };
 
   onSubmit = () => {
@@ -53,6 +51,20 @@ class EditSpecialtiesScreen extends React.Component {
 
     const { specialties } = this.state;
     const data = { care_provider: { specialties } };
+    let tooLongSpecialty = false;
+
+    specialties.forEach(el => {
+      if (el.length > 12) {
+        tooLongSpecialty = true;
+      }
+    });
+
+    if (specialties.length > 3 || tooLongSpecialty) {
+      return Alert.alert(
+        "Too long",
+        "Please limit your specialties each to 12 characters, and have no more than 3 specialities."
+      );
+    }
 
     const successHandler = () => {
       application.setSpecialties(specialties);
