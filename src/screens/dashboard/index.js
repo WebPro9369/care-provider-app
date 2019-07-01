@@ -43,6 +43,14 @@ class DashboardScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.timer = setInterval(() => this.getVisits(), 30000);
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  getVisits =() => {
     getVisits({
       successHandler: res => {
         if (!res.data) return;
