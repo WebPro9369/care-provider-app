@@ -21,11 +21,7 @@ class ReviewAllergiesModalComponent extends Component {
   state = {
     modalVisible: false,
     readChecked: false,
-    allergies: [
-      "Crustaceans, gluten",
-      "Crustaceans, gluten",
-      "Crustaceans, gluten"
-    ]
+    allergies: ''
   };
 
   static propTypes = {
@@ -34,31 +30,23 @@ class ReviewAllergiesModalComponent extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.modalVisible !== prevState.modalVisible) {
-      return { modalVisible: nextProps.modalVisible };
+      return { modalVisible: nextProps.modalVisible, allergies: nextProps.allergies };
     }
     return null;
   }
-
-  setReadChecked = value => {
-    this.setState({ readChecked: value });
-  };
 
   toggleReadChecked = () => {
     const { readChecked } = this.state;
     this.setState({ readChecked: !readChecked });
   };
 
-  setModalVisible = visible => {
-    this.setState({ modalVisible: visible });
-  };
-
-  close = () => {
-    this.setModalVisible(false);
-  };
-
   render() {
-    const { modalVisible, readChecked, allergies } = this.state;
+    const { modalVisible, readChecked } = this.state;
     const { onAccept } = this.props;
+
+    if (!modalVisible) return null;
+    const  { allergies } = this.state;
+
     return (
       <Modal animationType="slide" transparent={false} visible={modalVisible}>
         <ModalWrapper>
@@ -78,12 +66,9 @@ class ReviewAllergiesModalComponent extends Component {
             <ViewCentered paddingBottom={20} style={{ marginTop: 80 }}>
               <Image source={imgAllergy} style={{ width: 120, height: 120 }} />
               <View style={{ marginTop: 32 }}>
-                {allergies.map((item, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <StyledText key={index} color={colors.BLACK87}>
-                    {item}
-                  </StyledText>
-                ))}
+                <StyledText color={colors.BLACK87}>
+                  {allergies}
+                </StyledText>
               </View>
               <View style={{ marginTop: 60 }}>
                 <CheckBox
