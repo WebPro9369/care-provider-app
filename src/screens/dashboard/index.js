@@ -37,54 +37,87 @@ class DashboardScreen extends React.Component {
 
     this.state = {
       visits: [],
-      reviewAllergyModalVisible: false
+      visitForApproval: null,
+      allergiesForReview: null,
     };
   }
 
   componentDidMount() {
     const {
       store: {
-        currentUserStore: { id }
+        currentUserStore: { id },
+        providerStore
       }
     } = this.props;
 
     getVisits(id, {
       successHandler: res => {
-        const visits = res.data.map(visitData => {
+        if (!res.data) return;
+        let visitForApproval;
+
+        const visits = Object.values(res.data).flat().map(visitData => {
           const {
             id,
+            state: visitState,
             reason: illness,
             appointment_time: appointmentTime,
             address: { city, state },
-            child: { first_name: childFirstName, last_name: childLastName }
+            symptoms,
+            parent_notes: parentNotes,
+            child: { 
+              first_name: childFirstName, 
+              last_name: childLastName,
+              allergies
+            }
           } = visitData;
 
-          return {
-            key: id,
+          const visit = {
             id,
             avatarImg: [imgDog, imgTiger, imgFox][
               Math.floor(Math.random() * 3)
             ], // TODO: add actual avatar
             name: `${childFirstName} ${childLastName}`,
             illness,
+            symptoms,
             time: formatAMPM(new Date(appointmentTime)),
-            address: `${city}, ${state}`
+            address: `${city}, ${state}`,
+            allergies,
+            parentNotes,
           };
-        });
 
-        this.setState({ visits });
+          if (visitState === 'approving') {
+            visitForApproval = visit;
+          }
+
+          if (visitState !== 'scheduled' && visitState !== 'in_progress') return false;
+
+          return visit;
+        }).filter(Boolean);
+
+        this.setState({ visits, visitForApproval });
       }
     });
   }
 
-  showReviewAllergyModal = () => {
-    const { store } = this.props;
-    store.providerStore.setAppointment(false);
-    this.setState({ reviewAllergyModalVisible: true });
+  onRequestVisitAccept = () => {
+    const { visits, visitForApproval } = this.state;
+
+    visits.push(visitForApproval);
+    this.showReviewAllergyModal(visitForApproval.allergies);
+
+    this.setState({ visits, visitForApproval: null });
+  };
+
+  onRequestVisitCancel = () => {
+    this.setState({ visitForApproval: null });
+  };
+
+  showReviewAllergyModal = (allergies) => {
+    this.setState({ allergiesForReview: allergies });
   };
 
   hideReviewAllergyModal = () => {
-    this.setState({ reviewAllergyModalVisible: false });
+    this.setState({ allergiesForReview: false });
   };
 
   render() {
@@ -92,12 +125,13 @@ class DashboardScreen extends React.Component {
       navigation: { navigate },
       store
     } = this.props;
+
     const {
-      providerStore: { completeApplication, appointment },
+      providerStore: { completeApplication },
       currentUserStore: { firstName }
     } = store;
 
-    const { visits, reviewAllergyModalVisible } = this.state;
+    const { visits, visitForApproval, allergiesForReview } = this.state;
 
     return (
       <ContainerView>
@@ -134,14 +168,14 @@ class DashboardScreen extends React.Component {
               <StyledText>Upcoming bookings</StyledText>
               <View style={{ paddingTop: 16, paddingBottom: 16 }}>
                 {visits.map(item => (
-                  <View key={item.key} style={{ marginBottom: 9 }}>
+                  <View key={item.id} style={{ marginBottom: 9 }}>
                     <VisitDetailCard
                       avatarImg={item.avatarImg}
                       name={item.name}
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
-                      onPress={() => navigate("DashboardVisitDetails")}
+                      onPress={() => navigate("DashboardVisitDetails", { visitID: item.id })}
                     />
                   </View>
                 ))}
@@ -188,15 +222,15 @@ class DashboardScreen extends React.Component {
           </View>
         </ScrollView>
         <RequestVisitModalComponent
-          modalVisible={appointment}
-          onAccept={this.showReviewAllergyModal}
+          visit={visitForApproval}
+          modalVisible={!!visitForApproval}
+          onAccept={this.onRequestVisitAccept}
+          onCancel={this.onRequestVisitCancel}
         />
         <ReviewAllergiesModalComponent
-          modalVisible={reviewAllergyModalVisible}
-          onAccept={() => {
-            this.hideReviewAllergyModal();
-            navigate("History");
-          }}
+          allergies={allergiesForReview}
+          modalVisible={!!allergiesForReview}
+          onAccept={this.hideReviewAllergyModal}
         />
       </ContainerView>
     );

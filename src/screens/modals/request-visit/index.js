@@ -14,22 +14,18 @@ import { StyledText } from "../../../components/text";
 import { VisitDetailCard } from "../../../components/cards";
 import { ModalButton } from "../../../components/modal-button";
 import { colors } from "../../../utils/constants";
+import { updateVisit } from "@services/opear-api";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
 @inject("store")
 @observer
-// TODO: Remove static data
 class RequestVisitModalComponent extends Component {
   state = {
+    visit: null,
     modalVisible: false,
-    illness: "Flu Shot",
+    // TODO: Remove static map data
     distance: "3.8 miles away",
-    childname: "Benjamin",
-    time: "6PM",
-    allergies: "Crustaceans, gluten",
-    other: "Benjamin wears contact lenses",
-    visitReason: "Precautionary",
     map: {
       latitude: 37.78825,
       longitude: -122.4324,
@@ -40,48 +36,57 @@ class RequestVisitModalComponent extends Component {
 
   static propTypes = {
     onAccept: ReactPropTypes.func.isRequired,
-    store: PropTypes.observableObject.isRequired
+    onCancel: ReactPropTypes.func.isRequired
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.modalVisible !== prevState.modalVisible) {
-      return { modalVisible: nextProps.modalVisible };
+    if (nextProps.modalVisible !== prevState.modalVisible ) {
+      return { modalVisible: nextProps.modalVisible, visit: nextProps.visit };
     }
+
     return null;
   }
 
-  componentDidUpdate() {
-    // const { modalVisible } = this.props;
-    // if (prevProps.modalVisible !== modalVisible) {
-    //   this.setState({ modalVisible });
-    // }
-  }
+  accept = () => {
+    const { onAccept } = this.props;
+    const { visit: { id }} = this.state;
 
-  setModalVisible = visible => {
-    const { store } = this.props;
-    this.setState({ modalVisible: visible });
-    store.providerStore.setAppointment(visible);
+    const successHandler = () => onAccept();
+    // TODO: move this to a secure and specific endpoint like /visit/{id}/accept
+    updateVisit(id, { state: 'scheduled' }, { successHandler });
   };
 
   close = () => {
-    this.setModalVisible(false);
+    const { onCancel } = this.props;
+    const { visit: { id }} = this.state;
+
+    const successHandler = () => onCancel();
+    // TODO: move this to a secure and specific endpoint like /visit/{id}/cancel
+    updateVisit(id, { state: 'matched' }, { successHandler });
   };
 
   render() {
     const {
       modalVisible,
-      childname,
-      illness,
       distance,
-      time,
-      allergies,
-      other,
-      visitReason,
       map
     } = this.state;
-    const { onAccept } = this.props;
+
+    if (!modalVisible) return null;
+
+    const {
+      visit: {
+        name,
+        illness,
+        symptoms,
+        time,
+        allergies,
+        parentNotes
+      }
+    } = this.state;
+
     return (
-      <Modal animationType="slide" transparent={false} visible={modalVisible}>
+      <Modal animationType="slide" transparent={false}>
         <ModalWrapper>
           <View>
             <ViewCentered paddingTop={16} paddingBottom={16}>
@@ -104,7 +109,7 @@ class RequestVisitModalComponent extends Component {
             <View style={{ paddingTop: 32, paddingBottom: 16 }}>
               <VisitDetailCard
                 avatarImg={imgDog}
-                name={childname}
+                name={name}
                 illness={illness}
                 time={time}
                 address=""
@@ -121,7 +126,7 @@ class RequestVisitModalComponent extends Component {
                       Allergies
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>{allergies}</StyledText>
+                  <StyledText fontSize={14}>{allergies ? allergies : '-'}</StyledText>
                 </FlexView>
                 <FlexView
                   justifyContent="start"
@@ -132,7 +137,7 @@ class RequestVisitModalComponent extends Component {
                       Other
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>{other}</StyledText>
+                  <StyledText fontSize={14}>{parentNotes ? parentNotes : '-'}</StyledText>
                 </FlexView>
                 <FlexView
                   justifyContent="start"
@@ -143,13 +148,13 @@ class RequestVisitModalComponent extends Component {
                       Visit Reason
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>{visitReason}</StyledText>
+                  <StyledText fontSize={14}>{symptoms.length ? symptoms.join(", ") : '-'}</StyledText>
                 </FlexView>
               </View>
             </ContentWrapper>
           </View>
           <FlexView>
-            <ModalButton label="Accept" pos="left" onPress={onAccept} />
+            <ModalButton label="Accept" pos="left" onPress={this.accept} />
             <ModalButton
               label="Decline"
               pos="right"
