@@ -209,20 +209,21 @@ class ApplicationScreen extends React.Component {
       );
     }
 
-    let tooLongSpecialty = false;
+    // TODO: Fix this logic to validate specialties
+    // let tooLongSpecialty = false;
 
-    currentUserStore.specialties.forEach(el => {
-      if (el.length > 12) {
-        tooLongSpecialty = true;
-      }
-    });
+    // currentUserStore.specialties.forEach(el => {
+    //   if (el.length > 12) {
+    //     tooLongSpecialty = true;
+    //   }
+    // });
 
-    if (currentUserStore.specialties.length > 3 || tooLongSpecialty) {
-      return Alert.alert(
-        "Too long",
-        "Please limit your specialties each to 12 characters, and have no more than 3 specialities."
-      );
-    }
+    // if (currentUserStore.specialties.length > 3 || tooLongSpecialty) {
+    //   return Alert.alert(
+    //     "Too long",
+    //     "Please limit your specialties each to 12 characters, and have no more than 3 specialities."
+    //   );
+    // }
 
     const {
       firstName,
