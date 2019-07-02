@@ -4,17 +4,16 @@ import { types } from "mobx-state-tree";
 export const ChildStore = types
   .model("ChildStore", {
     id: types.number,
-    age: types.number,
     gender: types.string,
     first_name: types.string,
     last_name: types.string,
-    dob: types.Date,
+    dob: types.string,
     birth_history: types.optional(types.string, ""),
     surgical_history: types.optional(types.string, ""),
     current_medications: types.optional(types.string, ""),
     hospitalizations: types.optional(types.string, ""),
     current_medical_conditions: types.optional(types.string, ""),
-    allergies: types.array(types.string, "")
+    allergies: types.string
   })
   .actions(self => ({
     setGender(value) {
@@ -50,7 +49,7 @@ export const ChildStore = types
       return self;
     },
     setAllergies(value) {
-      self.allergies.replace(value);
+      self.allergies = value;
       return self;
     }
   }));
