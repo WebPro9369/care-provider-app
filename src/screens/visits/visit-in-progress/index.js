@@ -36,9 +36,16 @@ class VisitInProgressScreen extends React.Component {
     const visitID = navigation.getParam("visitID", false);
 
     this.state = {
-      visitID
+      visitID,
+      visitNotesEdited: null
     };
   }
+
+  onChangeVisitNotes = text => {
+    this.setState({
+      visitNotesEdited: text
+    });
+  };
 
   completeVisit = () => {
     const {
@@ -46,16 +53,23 @@ class VisitInProgressScreen extends React.Component {
       store: { visitsStore }
     } = this.props;
 
-    const { visitID } = this.state;
+    const { visitID, visitNotesEdited } = this.state;
     const { visits } = visitsStore;
 
     const data = {
       state: "completed"
     };
 
+    if (visitNotesEdited) {
+      data.visit_notes = visitNotesEdited;
+    }
+
     const successHandler = () => {
       const index = getIndexByValue(visits, visitID);
       visitsStore.setVisitState(index, "canceled");
+      if (visitNotesEdited) {
+        visitsStore.setVisitNotes(index, visitNotesEdited);
+      }
       navigate("VisitsDefault");
     };
 
@@ -72,7 +86,7 @@ class VisitInProgressScreen extends React.Component {
     } = this.props;
     // const { arrived } = providerStore;
     const { visits } = visitsStore;
-    const { visitID } = this.state;
+    const { visitID, visitNotesEdited } = this.state;
 
     const visit = getValueById(visits, visitID);
     const {
@@ -94,6 +108,7 @@ class VisitInProgressScreen extends React.Component {
     const strAddress = `${address.city}${
       address.state ? `, ${address.state}` : ""
     }`;
+    const strVisitNotes = visitNotesEdited || visitNotes;
 
     return (
       <ContainerView>
@@ -161,7 +176,12 @@ class VisitInProgressScreen extends React.Component {
                 Visit Notes
               </StyledText>
             </View>
-            <TextBox editable multiline value={visitNotes} />
+            <TextBox
+              editable
+              multiline
+              value={strVisitNotes}
+              onChangeText={this.onChangeVisitNotes}
+            />
           </View>
           <View style={{ marginTop: 48, paddingLeft: 16, paddingRight: 16 }}>
             <View style={{ paddingTop: 6, paddingBottom: 6 }}>
