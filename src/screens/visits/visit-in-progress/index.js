@@ -115,11 +115,13 @@ class VisitInProgressScreen extends React.Component {
           </StyledText>
         </ViewCentered>
         <ScrollView padding={0}>
-          <IllnessContainer>
-            <StyledText fontSize={16} color={colors.WHITE}>
-              {`Allergies: ${strAllergies}`}
-            </StyledText>
-          </IllnessContainer>
+          {strAllergies.length ? (
+            <IllnessContainer>
+              <StyledText fontSize={16} color={colors.WHITE}>
+                {`Allergies: ${strAllergies}`}
+              </StyledText>
+            </IllnessContainer>
+          ) : null}
           <View style={{ padding: 16, marginTop: 16 }}>
             <VisitDetailCard
               avatarImg={child.avatarImg || imgDog}
