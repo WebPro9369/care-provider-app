@@ -257,6 +257,7 @@ export const VisitDetailCard = ({
   illness,
   time,
   address,
+  date,
   ...rest
 }) => (
   <VisitDetailCardWrapper {...rest}>
@@ -286,6 +287,9 @@ export const VisitDetailCard = ({
         {time}
       </StyledText>
       <StyledText fontSize={12} lineHeight={24} color={colors.BLACK60}>
+        {date}
+      </StyledText>
+      <StyledText fontSize={12} lineHeight={24} color={colors.BLACK60}>
         {address}
       </StyledText>
     </View>
@@ -297,5 +301,6 @@ VisitDetailCard.propTypes = {
   name: PropTypes.string.isRequired,
   illness: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired
+  address: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired
 };

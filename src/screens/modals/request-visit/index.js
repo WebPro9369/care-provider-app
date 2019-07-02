@@ -112,7 +112,7 @@ class RequestVisitModalComponent extends Component {
     if (!modalVisible) return null;
 
     const {
-      visit: { name, illness, symptoms, time, allergies, parentNotes }
+      visit: { name, illness, symptoms, time, allergies, parentNotes, date }
     } = this.state;
 
     return (
@@ -145,6 +145,7 @@ class RequestVisitModalComponent extends Component {
                 illness={illness}
                 time={time}
                 address=""
+                date={date}
               />
             </View>
             <ContentWrapper>

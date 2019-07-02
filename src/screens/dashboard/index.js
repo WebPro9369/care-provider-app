@@ -66,8 +66,8 @@ class DashboardScreen extends React.Component {
             address: { city, state },
             symptoms,
             parent_notes: parentNotes,
-            child: { 
-              first_name: childFirstName, 
+            child: {
+              first_name: childFirstName,
               last_name: childLastName,
               allergies
             }
@@ -85,6 +85,7 @@ class DashboardScreen extends React.Component {
             address: `${city}, ${state}`,
             allergies,
             parentNotes,
+            date: new Date(appointmentTime).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
           };
 
           if (visitState === 'approving') {
