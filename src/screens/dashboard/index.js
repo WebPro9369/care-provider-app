@@ -38,68 +38,81 @@ class DashboardScreen extends React.Component {
     this.state = {
       visits: [],
       visitForApproval: null,
-      allergiesForReview: null,
+      allergiesForReview: null
     };
   }
 
   componentDidMount() {
     this.getVisits();
     this.timer = setInterval(() => this.getVisits(), 30000);
-  };
+  }
 
   componentWillUnmount() {
     clearInterval(this.timer);
   }
 
-  getVisits =() => {
+  getVisits = () => {
     getVisits({
       successHandler: res => {
         if (!res.data) return;
         let visitForApproval;
 
-        const visits = Object.values(res.data).flat().map(visitData => {
-          const {
-            id,
-            state: visitState,
-            reason: illness,
-            appointment_time: appointmentTime,
-            address: { city, state },
-            symptoms,
-            parent_notes: parentNotes,
-            child: { 
-              first_name: childFirstName, 
-              last_name: childLastName,
-              allergies
-            }
-          } = visitData;
-
-          const visit = {
-            id,
-            avatarImg: [imgDog, imgTiger, imgFox][
-              Math.floor(Math.random() * 3)
-            ], // TODO: add actual avatar
-            name: `${childFirstName} ${childLastName}`,
-            illness,
-            symptoms,
-            time: formatAMPM(new Date(appointmentTime)),
-            address: `${city}, ${state}`,
-            allergies,
-            parentNotes,
-          };
-
-          if (visitState === 'approving') {
-            visitForApproval = visit;
+        const {
+          store: {
+            visitsStore
           }
+        } = this.props;
 
-          if (visitState !== 'scheduled' && visitState !== 'in_progress') return false;
+        const visits = Object.values(res.data)
+          .flat();
 
-          return visit;
-        }).filter(Boolean);
+          visitsStore.setVisits(visits);
 
-        this.setState({ visits, visitForApproval });
+          const viewVisits = visits.map(visitData => {
+            const {
+              id,
+              state: visitState,
+              reason: illness,
+              appointment_time: appointmentTime,
+              address,
+              symptoms,
+              parent_notes: parentNotes,
+              child: {
+                first_name: childFirstName,
+                last_name: childLastName,
+                allergies
+              }
+            } = visitData;
+
+            const visit = {
+              id,
+              avatarImg: [imgDog, imgTiger, imgFox][
+                Math.floor(Math.random() * 3)
+              ], // TODO: add actual avatar
+              name: `${childFirstName} ${childLastName}`,
+              illness,
+              symptoms,
+              time: formatAMPM(new Date(appointmentTime)),
+              address,
+              allergies,
+              parentNotes
+            };
+
+            if (visitState === "approving") {
+              visitForApproval = visit;
+            }
+
+            if (visitState !== "scheduled" && visitState !== "in_progress")
+              return false;
+
+            return visit;
+          })
+          .filter(Boolean);
+
+        this.setState({ visits: viewVisits, visitForApproval });
       }
     });
-  }
+  };
 
   onRequestVisitAccept = () => {
     const { visits, visitForApproval } = this.state;
@@ -114,7 +127,7 @@ class DashboardScreen extends React.Component {
     this.setState({ visitForApproval: null });
   };
 
-  showReviewAllergyModal = (allergies) => {
+  showReviewAllergyModal = allergies => {
     this.setState({ allergiesForReview: allergies });
   };
 
@@ -177,7 +190,9 @@ class DashboardScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
-                      onPress={() => navigate("DashboardVisitDetails", { visitID: item.id })}
+                      onPress={() =>
+                        navigate("DashboardVisitDetails", { visitID: item.id })
+                      }
                     />
                   </View>
                 ))}

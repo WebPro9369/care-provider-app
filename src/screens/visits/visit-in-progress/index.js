@@ -80,9 +80,9 @@ class VisitInProgressScreen extends React.Component {
       parent,
       address,
       reason,
-      parentNotes,
-      visitNotes,
-      appointmentTime
+      parent_notes,
+      visit_notes,
+      appointment_time
     } = visit;
 
     const strAllergies = (child.allergies || []).join(", ");
@@ -90,10 +90,7 @@ class VisitInProgressScreen extends React.Component {
     const childName = child.firstName
       ? `${child.firstName} ${child.lastName}`
       : "";
-    const strTime = formatAMPM(appointmentTime);
-    const strAddress = `${address.city}${
-      address.state ? `, ${address.state}` : ""
-    }`;
+    const strTime = formatAMPM(new Date(appointment_time));
 
     return (
       <ContainerView>
@@ -126,7 +123,7 @@ class VisitInProgressScreen extends React.Component {
               name={childName}
               illness={strSymptoms}
               time={strTime}
-              address={strAddress}
+              address={address}
             />
             <View style={{ marginTop: 32 }}>
               <LargeBookedDetailCard
@@ -146,7 +143,7 @@ class VisitInProgressScreen extends React.Component {
               />
               <LargeBookedDetailCard type="Visit Reason" text={reason} />
               <LargeBookedDetailCard type="Allergies" text={strAllergies} />
-              <LargeBookedDetailCard type="Parent Notes" text={parentNotes} />
+              <LargeBookedDetailCard type="Parent Notes" text={parent_notes} />
             </View>
           </View>
           <View style={{ marginTop: 20, padding: 16 }}>
@@ -159,7 +156,7 @@ class VisitInProgressScreen extends React.Component {
                 Visit Notes
               </StyledText>
             </View>
-            <TextBox editable multiline value={visitNotes} />
+            <TextBox editable multiline value={visit_notes} />
           </View>
           <View style={{ marginTop: 48, paddingLeft: 16, paddingRight: 16 }}>
             <View style={{ paddingTop: 6, paddingBottom: 6 }}>
