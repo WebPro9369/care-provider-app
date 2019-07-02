@@ -78,7 +78,8 @@ class SignInScreen extends React.Component {
           supervisor,
           stripe_balance,
           payout_account,
-          dob: dateOfBirth
+          dob: dateOfBirth,
+          avatar
         } = res.data;
 
         if (!active) return navigate("ApplicationPending");
@@ -93,7 +94,8 @@ class SignInScreen extends React.Component {
           .setEmail(email)
           .setPhone(phone)
           .setStripeBalance(stripe_balance)
-          .setPayoutAccount(payout_account);
+          .setPayoutAccount(payout_account)
+          .setAvatar(avatar);
 
         address.setZipCode(zip);
 

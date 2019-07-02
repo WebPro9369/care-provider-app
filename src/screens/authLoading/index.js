@@ -99,7 +99,8 @@ class AuthLoadingScreen extends Component {
             active,
             biography,
             addresses,
-            rating
+            rating,
+            avatar
           } = res.data;
 
           if (!active) return navigate("ApplicationPending");
@@ -119,7 +120,8 @@ class AuthLoadingScreen extends Component {
             .setPhone(phone)
             .setStripeBalance(stripe_balance)
             .setPayoutAccount(payout_account)
-            .setRating(rating);
+            .setRating(rating)
+            .setAvatar(avatar);
 
           address.setZipCode(zip);
 
