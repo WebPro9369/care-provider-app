@@ -8,8 +8,8 @@ const ParentStore = types
     email: types.string,
     zip: types.string,
     phone: types.string,
-    acceptedPrivacy: types.boolean,
-    acceptedTermsOfService: types.boolean,
+    accepted_privacy: types.boolean,
+    accepted_terms_of_service: types.boolean,
     active: types.boolean
   })
   .actions(self => ({
@@ -30,11 +30,11 @@ const ParentStore = types
       return self;
     },
     setAcceptedPrivacy(value) {
-      self.acceptedPrivacy = value;
+      self.accepted_privacy = value;
       return self;
     },
     setAcceptedTOS(value) {
-      self.acceptedTermsOfService = value;
+      self.accepted_terms_of_service = value;
       return self;
     },
     setActive(value) {
