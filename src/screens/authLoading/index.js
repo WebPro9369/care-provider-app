@@ -39,7 +39,7 @@ class AuthLoadingScreen extends Component {
     const {
       navigation: { navigate }
     } = this.props;
-    const route = url.replace(/.*?:\/\//g, "");
+    const route = url.url.replace(/.*?:\/\//g, "");
     const routeName = route.split("/")[0];
 
     if (routeName === "newpwd") {
