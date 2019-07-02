@@ -43,9 +43,15 @@ export const getValueById = (toSearch, id) => {
   return toSearch[index];
 };
 
-export const isToday = (someDate) => {
+export const isToday = someDate => {
   const today = new Date();
   return someDate.getDate() == today.getDate() &&
     someDate.getMonth() == today.getMonth() &&
     someDate.getFullYear() == today.getFullYear()
+};
+
+export const addressToString = address => {
+  return `${address.street} ,${address.city}${
+    address.state ? `, ${address.state}` : ""
+  }`;
 };

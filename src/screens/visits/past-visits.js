@@ -27,7 +27,7 @@ class PastVisitsScreen extends React.Component {
     const visits = visitsStore.visits
       .filter(v => v.state === "completed")
       .sort(
-        (a, b) => new Date(b.appointmentTime) - new Date(a.appointmentTime)
+        (a, b) => new Date(b.appointment_time) - new Date(a.appointment_time)
       );
 
     const visitsDisplayStack = [];
@@ -36,34 +36,35 @@ class PastVisitsScreen extends React.Component {
     const timeOptions = { day: undefined, hour: "numeric", minute: "2-digit" };
 
     visits.map(visit => {
-      const { appointmentTime } = visit;
-      const dateAsObject = new Date(appointmentTime);
-
-      if (!addedTimes.includes(appointmentTime)) {
-        addedTimes.push(appointmentTime);
+      const { appointment_time } = visit;
+      const dateAsObject = new Date(appointment_time);
+      const dateDay = dateAsObject.toLocaleString("en-US", dayOptions);
+      if (!addedTimes.includes(dateDay)) {
+        addedTimes.push(dateDay);
         visitsDisplayStack.push(
-          <StyledText fontSize={16} color={colors.BLACK60}>
-            {dateAsObject.toLocaleString("en-US", dayOptions)}
+          <StyledText key={dateDay} fontSize={16} color={colors.BLACK60}>
+            {dateDay}
           </StyledText>
         );
       }
 
-      const formattedTime = new Date(visit.appointmentTime)
+      const formattedTime = dateAsObject
         .toLocaleDateString("en-US", timeOptions)
         .split(", ");
 
-      const childName = visit.child.firstName
-        ? `${visit.child.firstName} ${visit.child.lastName}`
+      const childName = visit.child.first_name
+        ? `${visit.child.first_name} ${visit.child.last_name}`
         : "N/A";
 
       return visitsDisplayStack.push(
         <View style={{ marginBottom: 9 }}>
           <VisitDetailCard
+            key={`visit-detail-${visit.id}`}
             avatarImg={imgFox}
             name={childName}
             illness={visit.reason}
             time={formattedTime[1]}
-            address={visit.address.street || "N/A"}
+            address={{ street: visit.address.street }}
             onPress={() =>
               navigate("VisitsVisitDetails", {
                 visitID: visit.id

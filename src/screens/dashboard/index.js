@@ -191,7 +191,7 @@ class DashboardScreen extends React.Component {
                       time={item.time}
                       address={item.address}
                       onPress={() =>
-                        navigate("DashboardVisitDetails", { visit: item })
+                        navigate("DashboardVisitDetails", { visitID: item.id })
                       }
                     />
                   </View>

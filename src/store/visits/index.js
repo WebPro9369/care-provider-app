@@ -16,25 +16,24 @@ export const VisitsStore = types
         care_provider_id: types.number,
         reason: types.string,
         symptoms: types.array(types.string),
-        appointment_time: types.Date,
+        appointment_time: types.string,
         parent_notes: types.string,
         visit_notes: types.maybeNull(types.string),
         payment_amount: types.string,
         state: types.string,
         child: types.optional(ChildStore, {
           id: -1,
-          age: -1,
           gender: "",
           avatar_image_index: types.number,
           first_name: "",
           last_name: "",
-          dob: new Date("01/01/1900"),
+          dob: "01/01/1900",
           surgical_history: "",
           current_medications: "",
           birth_history: "",
           hospitalizations: "",
           current_medical_conditions: "",
-          allergies: []
+          allergies: ""
         }),
         address: types.optional(AddressStore, {
           id: -1,
