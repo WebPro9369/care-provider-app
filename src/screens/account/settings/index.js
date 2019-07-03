@@ -14,6 +14,7 @@ import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { HeaderWrapper, ViewCentered, View } from "../../../components/views";
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
+import { updateCareProvider } from "@services/opear-api";
 
 const { GREEN, MIDGREY } = colors;
 const imgDoctor = require("../../../../assets/images/Doctor.png");
@@ -28,8 +29,14 @@ class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    const {
+      store: {
+        currentUserStore: { avatar }
+      }
+    } = this.props;
+
     this.state = {
-      avatarSource: null
+      avatarSource: { uri: avatar}
     };
   }
 
@@ -37,6 +44,10 @@ class SettingsScreen extends React.Component {
     const options = {
       title: "Select Profile Picture"
     };
+
+    const {
+      store: { currentUserStore }
+    } = this.props;
 
     ImagePicker.showImagePicker(options, response => {
       console.tron.log("Response = ", response);
@@ -56,6 +67,22 @@ class SettingsScreen extends React.Component {
         this.setState({
           avatarSource: source
         });
+
+        currentUserStore.setAvatar(source.uri);
+
+        successHandler = res => {
+          console.tron.log(res.data);
+        };
+
+        const data = {
+          care_provider: {
+            avatar: {
+              uri: source.uri
+            }
+          }
+        };
+
+        updateCareProvider(currentUserStore.id, data, { successHandler });
       }
     });
   };
@@ -86,14 +113,14 @@ class SettingsScreen extends React.Component {
     } = this.props;
     const name = `${firstName} ${lastName}`;
     const { avatarSource } = this.state;
-    const avatarOptions = avatarSource
-      ? {
-          source: { uri: avatarSource.uri }
-        }
-      : {
-          // icon: { name: "user", type: "font-awesome" }
-          source: imgDoctor
-        };
+    var avatarOptions = { source: imgDoctor };
+
+    if(avatarSource.uri != "/images/original/missing.png") {
+      avatarOptions = {
+        source:
+        { uri : avatarSource.uri}
+      };
+    }
 
     return (
       <KeyboardAvoidingView enabled>

@@ -24,6 +24,7 @@ const MainStore = types.model("MainStore", {
     lastName: "",
     phone: "",
     rating: 0,
+    avatar: "",
     acceptedStripeTOS: false,
     notificationToken: ""
   }),
