@@ -58,17 +58,24 @@ class DashboardScreen extends React.Component {
         let visitForApproval;
 
         const {
-          store: {
-            visitsStore
-          }
+          store: { visitsStore }
         } = this.props;
 
-        const visits = Object.values(res.data)
-          .flat();
+        const visits = Object.values(res.data || {}).reduce((acc, current) => {
+          (current || []).forEach(item => acc.push(item));
+          return acc;
+        }, []);
 
-          visitsStore.setVisits(visits);
+        console.tron.log("visits in dashboard: ", visits);
 
-          const viewVisits = visits.map(visitData => {
+        // visitsStore.setVisits(visits);
+        visits.forEach(visit => {
+          console.tron.log("adding visit: ", visit);
+          visitsStore.addVisit(visit);
+        });
+
+        const viewVisits = visits
+          .map(visitData => {
             const {
               id,
               state: visitState,
