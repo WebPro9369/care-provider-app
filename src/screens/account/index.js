@@ -23,9 +23,6 @@ class AccountScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      avatarImg: imgDoctor
-    };
   }
 
   componentDidMount() {
@@ -53,15 +50,21 @@ class AccountScreen extends React.Component {
       store,
       navigation: { navigate }
     } = this.props;
-    const { avatarImg } = this.state;
     const {
       currentUserStore: {
         firstName,
         lastName,
         application: { biography, workHistory, specialties },
-        rating
+        rating,
+        avatar
       }
     } = store;
+
+    var avatarImg = null;
+
+    if(avatar != "" && avatar != "/images/original/missing.png") {
+      avatarImg = avatar;
+    }
 
     return (
       <ContainerView padding={16}>
@@ -76,7 +79,7 @@ class AccountScreen extends React.Component {
           </StyledText>
         </View>
         <ProviderCard
-          avatarImg={avatarImg}
+          avatarImg={(avatarImg ? {uri: avatarImg} : imgDoctor)}
           name={`${firstName} ${lastName}`}
           bio={biography}
           history={workHistory.join(", ")}
