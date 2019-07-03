@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
 import { FormTextInput } from "../../../components/text";
@@ -33,6 +34,10 @@ class EditBioScreen extends React.Component {
   }
 
   handleChange = biography => {
+    if (biography.length > 140) {
+      biography = biography.substring(0, 140);
+    }
+
     this.setState({ biography });
   };
 
