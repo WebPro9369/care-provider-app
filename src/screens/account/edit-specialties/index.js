@@ -11,6 +11,7 @@ import {
 } from "@components/views/keyboard-view";
 import { commaStringToArray } from "@utils/helpers";
 import { Alert } from "react-native";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer

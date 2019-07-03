@@ -5,6 +5,7 @@ import { inject, observer } from "mobx-react";
 import { StyledText } from "@components/text";
 import { ScrollView } from "@components/views/scroll-view";
 import { AccentBar } from "@components/accent-bar";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer

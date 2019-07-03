@@ -19,6 +19,7 @@ import {
   getValueById,
   formatAMPM
 } from "../../../utils/helpers";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 

@@ -6,6 +6,7 @@ import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
 import { getAuthentication, removeAuthentication } from "@services/authentication";
 import { getFormattedDate } from "@utils/helpers";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer

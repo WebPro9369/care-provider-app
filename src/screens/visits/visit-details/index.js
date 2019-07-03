@@ -23,6 +23,7 @@ import {
   addressToString
 } from "@utils/helpers";
 import { GoogleMapsService } from "@services";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 

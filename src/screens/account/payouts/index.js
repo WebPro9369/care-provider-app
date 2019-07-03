@@ -8,6 +8,7 @@ import { ListTouchableButtonWrapper, ListButtonText } from "./styles";
 import { ContainerView, View, FlexView } from "../../../components/views";
 import { colors } from "../../../utils/constants";
 import { getCareProvider } from "../../../services/opear-api";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer

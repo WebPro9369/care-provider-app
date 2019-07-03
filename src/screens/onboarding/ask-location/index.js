@@ -18,6 +18,7 @@ import { StyledText, StyledTextInput } from "@components/text";
 import { NavHeader } from "@components/nav-header";
 import { KeyboardAvoidingView } from "@components/views/keyboard-view";
 import { colors, GOOGLE_API_KEY } from "@utils/constants";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgProgressbar = require("@assets/images/ProgressBar1.png");
 

@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   FormInputView
 } from "../../../components/views/keyboard-view";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer

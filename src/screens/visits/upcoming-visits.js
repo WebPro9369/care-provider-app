@@ -7,6 +7,7 @@ import { ContainerView, View, ContentWrapper } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { VisitDetailCard } from "@components/cards";
 import { colors } from "@utils/constants";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgFox = require("../../../assets/images/Fox.png");
 

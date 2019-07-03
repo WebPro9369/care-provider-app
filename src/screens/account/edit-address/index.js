@@ -20,6 +20,7 @@ import { FormInputView } from "../../../components/views/keyboard-view";
 import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
 import { updateCareProvider } from "../../../services/opear-api";
 import { colors, GOOGLE_API_KEY } from "../../../utils/constants";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const { DARKSKYBLUE } = colors;
 

@@ -10,6 +10,7 @@ import { ProviderCard } from "../../components/cards";
 import { ListTouchableButtonWrapper, ListButtonText } from "./styles";
 import { ContainerView, View } from "../../components/views";
 import { colors } from "../../utils/constants";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgDoctor = require("../../../assets/images/Doctor.png");
 

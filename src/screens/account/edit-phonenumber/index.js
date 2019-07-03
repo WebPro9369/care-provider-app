@@ -8,6 +8,7 @@ import { View } from "../../../components/views";
 import { updateCareProvider } from "../../../services/opear-api";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { colors } from "../../../utils/constants";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer

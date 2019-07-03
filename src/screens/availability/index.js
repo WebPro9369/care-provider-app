@@ -16,6 +16,7 @@ import { SliderMarker } from "@components/slider-marker";
 import { ServiceButton } from "@components/service-button";
 import { WEEKDAYS, colors } from "@utils/constants";
 import { getAvailabilities, updateAvailabilities } from "@services/opear-api";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer

@@ -15,6 +15,7 @@ import { HeaderWrapper, ViewCentered, View } from "../../../components/views";
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
 import { updateCareProvider } from "@services/opear-api";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const { GREEN, MIDGREY } = colors;
 const imgDoctor = require("../../../../assets/images/Doctor.png");

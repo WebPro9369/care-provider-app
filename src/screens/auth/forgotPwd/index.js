@@ -12,6 +12,7 @@ import { FormInputWrapper, FormWrapper } from "../../../components/views";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { colors } from "../../../utils/constants";
 import { passwordReset } from "@services/opear-api";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 class ForgotPwdScreen extends React.Component {
