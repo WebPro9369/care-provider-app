@@ -88,6 +88,7 @@ class NewPwdScreen extends React.Component {
         enabled
         style={{ backgroundColor: colors.LIGHTGREEN, height: "100%" }}
       >
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Enter New Password"
           size="medium"

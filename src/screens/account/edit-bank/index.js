@@ -116,6 +116,7 @@ class EditBankScreen extends React.Component {
     const { accountNumber, routingNumber, loading, acceptedStripeTOS } = this.state;
     return (
       <KeyboardAvoidingView enabled>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit bank"
           size="medium"

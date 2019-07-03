@@ -124,6 +124,7 @@ class SettingsScreen extends React.Component {
 
     return (
       <KeyboardAvoidingView enabled>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <HeaderWrapper>
           <NavHeader
             title="Settings"

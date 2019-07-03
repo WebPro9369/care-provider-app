@@ -83,6 +83,7 @@ class EditSpecialtiesScreen extends React.Component {
 
     return (
       <KeyboardAvoidingView startFromTop behavior="padding" enabled>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit specialties"
           size="medium"

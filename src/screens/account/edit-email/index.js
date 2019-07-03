@@ -20,7 +20,7 @@ class EditEmailScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { store: { currentUserStore: { email } } }  = props; 
+    const { store: { currentUserStore: { email } } }  = props;
 
     this.state = {
       email,
@@ -62,6 +62,7 @@ class EditEmailScreen extends React.Component {
 
     return (
       <KeyboardAvoidingView enabled>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit email"
           size="medium"

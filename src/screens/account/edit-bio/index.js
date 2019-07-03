@@ -64,6 +64,7 @@ class EditBioScreen extends React.Component {
 
     return (
       <KeyboardAvoidingView enabled>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit biography"
           size="medium"

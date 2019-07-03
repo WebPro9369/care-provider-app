@@ -65,6 +65,7 @@ class AccountScreen extends React.Component {
 
     return (
       <ContainerView padding={16}>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <View style={{ paddingTop: 24, paddingBottom: 24 }}>
           <StyledText
             fontSize={28}

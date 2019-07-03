@@ -50,30 +50,6 @@ class ForgotPwdScreen extends React.Component {
     });
   };
 
-  componentDidMount() {
-    Linking.addEventListener("url", this.handleOpenURL);
-  }
-
-  componentWillUnmount() {
-    Linking.removeEventListener("url", this.handleOpenURL);
-  }
-
-  handleOpenURL = url => {
-    this.navigate(url);
-  };
-
-  navigate = url => {
-    const {
-      navigation: { navigate }
-    } = this.props;
-    const route = url.url.replace(/.*?:\/\//g, "");
-    const routeName = route.split("/")[0];
-
-    if (routeName === "newpwd") {
-      navigate("AccountNewPwd", { routeInfo: route });
-    }
-  };
-
   render() {
     const {
       navigation: { goBack }
@@ -85,6 +61,7 @@ class ForgotPwdScreen extends React.Component {
         enabled
         style={{ backgroundColor: colors.LIGHTGREEN, height: "100%" }}
       >
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Forgot Password"
           size="medium"

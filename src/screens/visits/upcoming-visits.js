@@ -84,6 +84,7 @@ class UpcomingVisitsScreen extends React.Component {
 
     return (
       <ContainerView style={{ marginTop: 0 }}>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <ScrollView padding={0}>
           <View style={{ paddingTop: 24 }}>
             <ContentWrapper>{visitsDisplayStack}</ContentWrapper>

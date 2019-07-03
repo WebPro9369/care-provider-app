@@ -60,6 +60,7 @@ class EditPhoneNumberScreen extends React.Component {
 
     return (
       <KeyboardAvoidingView startFromTop behavior="padding" enabled>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit phone number"
           size="medium"

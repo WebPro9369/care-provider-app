@@ -105,7 +105,7 @@ class EditAddressScreen extends React.Component {
           .catch(err => {
             console.tron.log("Google map api error: ", err);
             return Alert.alert(
-              "There was an issue", 
+              "There was an issue",
               "Google Map API failed to get your location.");
           });
       },
@@ -164,6 +164,7 @@ class EditAddressScreen extends React.Component {
     const { name, street, city, zip } = this.state;
     return (
       <ContainerView style={{ paddingTop: 16 }}>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit Address"
           size="medium"

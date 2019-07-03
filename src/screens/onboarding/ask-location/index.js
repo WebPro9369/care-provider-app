@@ -209,6 +209,7 @@ class AskLocationScreen extends Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAvoidingView enabled>
+          <DeeplinkHandler navigation={this.props.navigation}/>
           <View>
             <NavHeader
               title="Welcome to Opear"

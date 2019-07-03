@@ -215,6 +215,7 @@ class VisitDetailsScreen extends React.Component {
     if (!visit) {
       return (
         <ContainerView>
+          <DeeplinkHandler navigation={this.props.navigation}/>
           <HeaderWrapper>
             <NavHeader title="Loading..." size="medium" />
           </HeaderWrapper>

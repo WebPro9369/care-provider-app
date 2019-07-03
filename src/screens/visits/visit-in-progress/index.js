@@ -102,6 +102,7 @@ class VisitInProgressScreen extends React.Component {
             onPressBackButton={() => goBack()}
           />
         </HeaderWrapper> */}
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <ViewCentered paddingTop={44} paddingBottom={20}>
           <StyledText
             fontSize={24}

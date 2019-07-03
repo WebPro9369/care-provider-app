@@ -69,6 +69,7 @@ class PayoutsScreen extends React.Component {
 
     return (
       <ContainerView padding={16}>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Payout Methods"
           size="medium"

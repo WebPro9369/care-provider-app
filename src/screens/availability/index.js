@@ -235,6 +235,7 @@ class AvailabilityScreen extends React.Component {
 
     return (
       <ContainerView style={{ paddingTop: 16, paddingBottom: 16 }}>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <View
           style={{
             paddingTop: 24,

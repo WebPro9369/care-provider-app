@@ -12,6 +12,7 @@ class ApplicationPendingScreen extends Component {
   render() {
     return (
       <ScrollView padding={0}>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <View
           style={{
             marginTop: 180,

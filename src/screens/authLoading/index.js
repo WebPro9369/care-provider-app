@@ -14,39 +14,6 @@ class AuthLoadingScreen extends Component {
     store: PropTypes.observableObject.isRequired
   };
 
-  componentDidMount() {
-    Linking.addEventListener("url", this.handleOpenURL);
-    Linking.getInitialURL()
-      .then(url => {
-        if (url) {
-          console.tron.log(`Initial url is: ${url}`);
-          return this.handleOpenURL(url);
-        }
-        return this.bootstrapAsync();
-      })
-      .catch(err => console.tron.log("Error getInitialURL", err));
-  }
-
-  componentWillUnmount() {
-    Linking.removeEventListener("url", this.handleOpenURL);
-  }
-
-  handleOpenURL = url => {
-    this.navigate(url);
-  };
-
-  navigate = url => {
-    const {
-      navigation: { navigate }
-    } = this.props;
-    const route = url.url.replace(/.*?:\/\//g, "");
-    const routeName = route.split("/")[0];
-
-    if (routeName === "newpwd") {
-      navigate("AccountNewPwd", { routeInfo: route });
-    }
-  };
-
   bootstrapAsync = async () => {
     const {
       navigation: { navigate }
@@ -185,6 +152,7 @@ class AuthLoadingScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <ActivityIndicator size="large" color="#7F5DB0" />
       </View>
     );

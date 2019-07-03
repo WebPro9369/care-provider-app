@@ -150,6 +150,7 @@ class DashboardScreen extends React.Component {
 
     return (
       <ContainerView>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <HeaderWrapper>
           <NavHeader title="" size="small" hasBackButton={false} />
         </HeaderWrapper>

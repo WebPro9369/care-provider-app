@@ -13,6 +13,7 @@ import { colors } from "@utils/constants";
 import { storeNotificationToken } from "@services/authentication";
 import { getCareProvider, getApiToken } from "@services/opear-api";
 import { getFormattedDate } from "@utils/helpers";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 class SignInScreen extends React.Component {
@@ -129,30 +130,6 @@ class SignInScreen extends React.Component {
     getApiToken(email, password, { successHandler });
   };
 
-  componentDidMount() {
-    Linking.addEventListener("url", this.handleOpenURL);
-  }
-
-  componentWillUnmount() {
-    Linking.removeEventListener("url", this.handleOpenURL);
-  }
-
-  handleOpenURL = url => {
-    this.navigate(url);
-  };
-
-  navigate = url => {
-    const {
-      navigation: { navigate }
-    } = this.props;
-    const route = url.url.replace(/.*?:\/\//g, "");
-    const routeName = route.split("/")[0];
-
-    if (routeName === "newpwd") {
-      navigate("AccountNewPwd", { routeInfo: route });
-    }
-  };
-
   onPressForgotPassword = () => {
     const {
       navigation: { navigate }
@@ -189,6 +166,7 @@ class SignInScreen extends React.Component {
         enabled
         style={{ backgroundColor: colors.LIGHTGREEN, height: "100%" }}
       >
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Sign In"
           size="medium"
