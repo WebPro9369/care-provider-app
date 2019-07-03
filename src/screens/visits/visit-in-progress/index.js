@@ -85,7 +85,7 @@ class VisitInProgressScreen extends React.Component {
       appointment_time
     } = visit;
 
-    const strAllergies = (child.allergies || []).join(", ");
+    const strAllergies = child.allergies || "N/A";
     const strSymptoms = (child.symptoms || []).join(", ");
     const childName = child.firstName
       ? `${child.firstName} ${child.lastName}`
