@@ -2,7 +2,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable import/no-unresolved */
 import React from "react";
-import { Alert } from "react-native";
+import { Alert, Linking } from "react-native";
 import { inject, PropTypes } from "mobx-react";
 import { FormTextInput, StyledText } from "@components/text";
 import { NavHeader } from "@components/nav-header";
@@ -127,6 +127,30 @@ class SignInScreen extends React.Component {
     };
 
     getApiToken(email, password, { successHandler });
+  };
+
+  componentDidMount() {
+    Linking.addEventListener("url", this.handleOpenURL);
+  }
+
+  componentWillUnmount() {
+    Linking.removeEventListener("url", this.handleOpenURL);
+  }
+
+  handleOpenURL = url => {
+    this.navigate(url);
+  };
+
+  navigate = url => {
+    const {
+      navigation: { navigate }
+    } = this.props;
+    const route = url.url.replace(/.*?:\/\//g, "");
+    const routeName = route.split("/")[0];
+
+    if (routeName === "newpwd") {
+      navigate("AccountNewPwd", { routeInfo: route });
+    }
   };
 
   onPressForgotPassword = () => {
