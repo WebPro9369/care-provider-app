@@ -66,15 +66,14 @@ class DashboardScreen extends React.Component {
           return acc;
         }, []);
 
-        console.tron.log("visits in dashboard: ", visits);
-
-        // visitsStore.setVisits(visits);
-        visits.forEach(visit => {
-          console.tron.log("adding visit: ", visit);
-          visitsStore.addVisit(visit);
-        });
+        // console.tron.log("visits in dashboard: ", visits);
+        visitsStore.setVisits(visits);
 
         const viewVisits = visits
+          .sort(
+            (a, b) =>
+              new Date(a.appointment_time) - new Date(b.appointment_time)
+          )
           .map(visitData => {
             const {
               id,
@@ -100,6 +99,7 @@ class DashboardScreen extends React.Component {
               illness,
               symptoms,
               time: formatAMPM(new Date(appointmentTime)),
+              appointmentTime,
               address,
               allergies,
               parentNotes
@@ -189,7 +189,7 @@ class DashboardScreen extends React.Component {
             <ContentWrapper>
               <StyledText>Upcoming bookings</StyledText>
               <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {visits.map(item => (
+                {visits.slice(0, 3).map(item => (
                   <View key={item.id} style={{ marginBottom: 9 }}>
                     <VisitDetailCard
                       avatarImg={item.avatarImg}
