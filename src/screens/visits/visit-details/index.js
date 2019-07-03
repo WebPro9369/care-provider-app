@@ -14,7 +14,7 @@ import { ServiceButton } from "@components/service-button";
 import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { colors } from "@utils/constants";
-import { updateVisit } from "@services/opear-api";
+import { getVisit, updateVisit } from "@services/opear-api";
 import {
   getValueById,
   getIndexByValue,
@@ -40,8 +40,16 @@ class VisitDetailsScreen extends React.Component {
     super(props);
 
     const { navigation } = props;
-    const visitID = navigation.getParam("visitID", false);
+    var visitID = navigation.getParam("visitID", false);
     // TODO: if (!visitID) error!
+    const routeInfo = navigation.getParam("routeInfo", false);
+
+    if(!visitID) {
+      var splitRoute = routeInfo.split("/");
+      console.tron.log(splitRoute);
+      visitID = splitRoute[1].split("=")[1];
+      console.tron.log(visitID);
+    }
 
     this.state = {
       visitID,
@@ -54,18 +62,42 @@ class VisitDetailsScreen extends React.Component {
         currentLatitude: 37.78925,
         currentLongitude: -122.4924,
         distance: 0
-      }
+      },
+      address:"",
+      loaded: false
     };
-    this.getVisitGeo();
+
+    if(!routeInfo) {
+      this.setState({
+        address: getValueById(visitsStore.visits, visitID)
+      });
+      this.getVisitGeo();
+    }
+    else {
+      successHandler = res => {
+        const {
+          address
+        } = res.data;
+
+        this.setState({
+          address: address
+        });
+        this.getVisitGeo();
+      };
+
+      getVisit(visitID, {successHandler});
+    }
   }
 
   getVisitGeo = () => {
     const {
       store: { visitsStore }
     } = this.props;
-    const { visitID, map } = this.state;
-    const visit = getValueById(visitsStore.visits, visitID);
-    const { address } = visit;
+
+    const {
+      address
+    } = this.state;
+
 
     GoogleMapsService.getGeo(addressToString(address), innerRes => {
       const { data } = innerRes;

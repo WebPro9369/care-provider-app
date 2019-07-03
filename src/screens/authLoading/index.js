@@ -6,7 +6,6 @@ import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
 import { getAuthentication, removeAuthentication } from "@services/authentication";
 import { getFormattedDate } from "@utils/helpers";
-import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer
@@ -14,6 +13,18 @@ class AuthLoadingScreen extends Component {
   static propTypes = {
     store: PropTypes.observableObject.isRequired
   };
+
+  componentDidMount() {
+    Linking.getInitialURL()
+      .then(url => {
+        if (url) {
+          console.tron.log(`Initial url is: ${url}`);
+          return this.handleOpenURL(url);
+        }
+        return this.bootstrapAsync();
+      })
+      .catch(err => console.tron.log("Error getInitialURL", err));
+  }
 
   bootstrapAsync = async () => {
     const {
@@ -153,7 +164,6 @@ class AuthLoadingScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <DeeplinkHandler navigation={this.props.navigation}/>
         <ActivityIndicator size="large" color="#7F5DB0" />
       </View>
     );
