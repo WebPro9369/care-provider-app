@@ -26,9 +26,9 @@ export const ProviderCard = ({
 }) => (
   <ProviderCardWrapper {...rest}>
     <FlexView alignItems="stretch">
-      <FlexView>
+      <FlexView style={{ flex: 1 }}>
         <Avatar rounded size={80} source={avatarImg} />
-        <View style={{ paddingLeft: 20 }}>
+        <View style={{ paddingLeft: 20, flex: 1 }}>
           <StyledText
             fontSize={16}
             fontFamily="FlamaMedium"
@@ -39,12 +39,7 @@ export const ProviderCard = ({
           <StyledText fontSize={16} color={colors.BLACK87}>
             {bio}
           </StyledText>
-          <StyledText
-            fontSize={14}
-            lineHeight={18}
-            color={colors.BLACK38}
-            style={{ maxWidth: 170 }}
-          >
+          <StyledText fontSize={14} lineHeight={18} color={colors.BLACK38}>
             {history}
           </StyledText>
         </View>
