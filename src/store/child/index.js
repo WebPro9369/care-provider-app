@@ -7,13 +7,13 @@ export const ChildStore = types
     gender: types.string,
     first_name: types.string,
     last_name: types.string,
-    dob: types.string,
+    dob: types.maybeNull(types.string),
     birth_history: types.optional(types.string, ""),
     surgical_history: types.optional(types.string, ""),
     current_medications: types.optional(types.string, ""),
     hospitalizations: types.optional(types.string, ""),
     current_medical_conditions: types.optional(types.string, ""),
-    allergies: types.string
+    allergies: types.maybeNull(types.string)
   })
   .actions(self => ({
     setGender(value) {

@@ -10,10 +10,10 @@ export const VisitsStore = types
     visits: types.array(
       types.model({
         id: types.number,
-        parent_id: types.number,
-        child_id: types.number,
-        address_id: types.number,
-        care_provider_id: types.number,
+        parent_id: types.maybeNull(types.number),
+        child_id: types.maybeNull(types.number),
+        address_id: types.maybeNull(types.number),
+        care_provider_id: types.maybeNull(types.number),
         reason: types.string,
         symptoms: types.array(types.string),
         appointment_time: types.string,
@@ -24,7 +24,7 @@ export const VisitsStore = types
         child: types.optional(ChildStore, {
           id: -1,
           gender: "",
-          avatar_image_index: types.number,
+          avatar_image_index: -1,
           first_name: "",
           last_name: "",
           dob: "01/01/1900",
@@ -94,9 +94,10 @@ export const VisitsStore = types
     },
     addVisit(visit) {
       let found = false;
-      (self.visits || []).forEach(v => {
+      (self.visits || []).forEach((v, index) => {
         if (v.id === visit.id) {
           found = true;
+          self.visits[index] = visit;
         }
       });
 
@@ -114,7 +115,7 @@ export const VisitsStore = types
       return self;
     },
     setVisits(visits) {
-      self.visits = visits;
+      self.visits.replace(visits);
       return self;
     },
     setVisitState(index, value) {
