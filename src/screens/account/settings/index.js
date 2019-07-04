@@ -1,20 +1,26 @@
 /* eslint-disable import/no-unresolved */
 import React from "react";
+import { Switch } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { Avatar } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ImagePicker from "react-native-image-picker";
 import { removeAuthentication } from "@services/authentication";
+import { updateCareProvider } from "@services/opear-api";
 import { StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { InputButton } from "../../../components/input-button";
 import { ServiceButton } from "../../../components/service-button";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 
-import { HeaderWrapper, ViewCentered, View } from "../../../components/views";
+import {
+  HeaderWrapper,
+  ViewCentered,
+  FlexView,
+  View
+} from "../../../components/views";
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
-import { updateCareProvider } from "@services/opear-api";
 
 const { GREEN, MIDGREY } = colors;
 const imgDoctor = require("../../../../assets/images/Doctor.png");
@@ -36,7 +42,8 @@ class SettingsScreen extends React.Component {
     } = this.props;
 
     this.state = {
-      avatarSource: { uri: avatar}
+      avatarSource: { uri: avatar },
+      smsNotification: false
     };
   }
 
@@ -70,7 +77,7 @@ class SettingsScreen extends React.Component {
 
         currentUserStore.setAvatar(source.uri);
 
-        successHandler = res => {
+        const successHandler = res => {
           console.tron.log(res.data);
         };
 
@@ -84,6 +91,13 @@ class SettingsScreen extends React.Component {
 
         updateCareProvider(currentUserStore.id, data, { successHandler });
       }
+    });
+  };
+
+  onChangeSmsNotification = value => {
+    console.tron.log("Sms notification: ", value);
+    this.setState({
+      smsNotification: value
     });
   };
 
@@ -112,14 +126,11 @@ class SettingsScreen extends React.Component {
       }
     } = this.props;
     const name = `${firstName} ${lastName}`;
-    const { avatarSource } = this.state;
-    var avatarOptions = { source: imgDoctor };
+    const { avatarSource, smsNotification } = this.state;
+    const avatarOptions = { source: imgDoctor };
 
-    if(avatarSource.uri != "/images/original/missing.png") {
-      avatarOptions = {
-        source:
-        { uri : avatarSource.uri}
-      };
+    if (avatarSource.uri !== "/images/original/missing.png") {
+      avatarOptions.source = { uri: avatarSource.uri };
     }
 
     return (
@@ -212,6 +223,13 @@ class SettingsScreen extends React.Component {
               />
             </View>
           </View>
+          <FlexView style={{ padding: 16 }}>
+            <StyledText fontSize={20}>SMS Notifications</StyledText>
+            <Switch
+              value={smsNotification}
+              onValueChange={this.onChangeSmsNotification}
+            />
+          </FlexView>
           <View style={{ marginTop: 32, marginBottom: 32 }}>
             <ServiceButton title="Log Out" onPress={this.logOut} />
           </View>
