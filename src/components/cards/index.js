@@ -302,6 +302,6 @@ VisitDetailCard.propTypes = {
   name: PropTypes.string.isRequired,
   illness: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired
+  date: PropTypes.string.isRequired,
   address: PropTypes.object.isRequired
 };

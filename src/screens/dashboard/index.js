@@ -189,6 +189,7 @@ class DashboardScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
+                      date={item.date}
                       onPress={() =>
                         navigate("DashboardVisitDetails", { visitID: item.id })
                       }
