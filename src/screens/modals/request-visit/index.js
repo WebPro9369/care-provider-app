@@ -27,12 +27,7 @@ class RequestVisitModalComponent extends Component {
     modalVisible: false,
     // TODO: Remove static map data
     distance: "3.8 miles away",
-    region: {
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421
-    }
+    region: null
   };
 
   static propTypes = {
@@ -48,25 +43,30 @@ class RequestVisitModalComponent extends Component {
     return null;
   }
 
-  componentDidMount() {
-    this.getVisitGeoInfo();
+  componentDidUpdate() {
+    if (this.state.visit && (!this.state.region || !this.state.region.loaded)) {
+      this.getVisitGeoInfo();
+    }
   }
 
   getVisitGeoInfo = () => {
-    const { address } = this.state;
+    const { visit: { address } } = this.state;
     if (address) {
       GoogleMapsService.getGeo(
-        `${address.street}${address.city && ", "}${address.city}${address.state && ", "}${address.state}`,
+        `${address.street} ,${address.city}${
+          address.state ? `, ${address.state}` : ""
+        }`,
         innerRes => {
           const { data } = innerRes;
-          if (data && data.result && data.result.geometry) {
-            const { lat, lng } = data.result.geometry.location;
+          if (data && data.results && data.results[0].geometry) {
+            const { lat, lng } = data.results[0].geometry.location;
             this.setState({
               region: {
                 latitude: lat,
                 longitude: lng,
                 latitudeDelta: 0.09,
-                longitudeDelta: 0.09
+                longitudeDelta: 0.09,
+                loaded: true
               }
             });
           } else {
@@ -112,7 +112,7 @@ class RequestVisitModalComponent extends Component {
     if (!modalVisible) return null;
 
     const {
-      visit: { name, illness, symptoms, time, allergies, parentNotes, date }
+      visit: { name, illness, symptoms, time, allergies, parentNotes, address, date }
     } = this.state;
 
     return (
@@ -144,8 +144,10 @@ class RequestVisitModalComponent extends Component {
                 name={name}
                 illness={illness}
                 time={time}
-                address=""
                 date={date}
+                address={`${address.street} ,${address.city}${
+                  address.state ? `, ${address.state}` : ""
+                }`}
               />
             </View>
             <ContentWrapper>

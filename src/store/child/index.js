@@ -4,17 +4,16 @@ import { types } from "mobx-state-tree";
 export const ChildStore = types
   .model("ChildStore", {
     id: types.number,
-    age: types.number,
     gender: types.string,
-    firstName: types.string,
-    lastName: types.string,
-    birthDate: types.Date,
-    birthHistory: types.optional(types.string, ""),
-    surgicalHistory: types.optional(types.string, ""),
-    currentMedications: types.optional(types.string, ""),
+    first_name: types.string,
+    last_name: types.string,
+    dob: types.string,
+    birth_history: types.optional(types.string, ""),
+    surgical_history: types.optional(types.string, ""),
+    current_medications: types.optional(types.string, ""),
     hospitalizations: types.optional(types.string, ""),
-    currentMedicalConditions: types.optional(types.string, ""),
-    allergies: types.array(types.string, "")
+    current_medical_conditions: types.optional(types.string, ""),
+    allergies: types.string
   })
   .actions(self => ({
     setGender(value) {
@@ -26,19 +25,19 @@ export const ChildStore = types
       return self;
     },
     setBirthDate(value) {
-      self.birthDate = value;
+      self.dob = value;
       return self;
     },
     setBirthHistory(value) {
-      self.birthHistory = value;
+      self.birth_history = value;
       return self;
     },
     setSurgicalHistory(value) {
-      self.surgicalHistory = value;
+      self.surgical_history = value;
       return self;
     },
     setCurrentMedications(value) {
-      self.currentMedications = value;
+      self.current_medications = value;
       return self;
     },
     setHospitalizations(value) {
@@ -46,11 +45,11 @@ export const ChildStore = types
       return self;
     },
     setCurrentMedicalConditions(value) {
-      self.currentMedicalConditions = value;
+      self.current_medical_conditions = value;
       return self;
     },
     setAllergies(value) {
-      self.allergies.replace(value);
+      self.allergies = value;
       return self;
     }
   }));

@@ -13,6 +13,7 @@ import {
   styles
 } from "./styles";
 import { MAX_STARS, colors } from "../../utils/constants";
+import { addressToString } from "../../utils/helpers";
 
 export const ProviderCard = ({
   avatarImg,
@@ -290,7 +291,7 @@ export const VisitDetailCard = ({
         {date}
       </StyledText>
       <StyledText fontSize={12} lineHeight={24} color={colors.BLACK60}>
-        {address}
+        {addressToString(address)}
       </StyledText>
     </View>
   </VisitDetailCardWrapper>
@@ -301,6 +302,6 @@ VisitDetailCard.propTypes = {
   name: PropTypes.string.isRequired,
   illness: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired
+  address: PropTypes.object.isRequired
 };
