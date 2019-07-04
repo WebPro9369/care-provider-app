@@ -93,7 +93,8 @@ class DashboardScreen extends React.Component {
               time: formatAMPM(new Date(appointmentTime)),
               address,
               allergies,
-              parentNotes
+              parentNotes,
+              date: new Date(appointmentTime).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
             };
 
             if (visitState === "approving") {
@@ -188,6 +189,7 @@ class DashboardScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
+                      date={item.date}
                       onPress={() =>
                         navigate("DashboardVisitDetails", { visitID: item.id })
                       }
