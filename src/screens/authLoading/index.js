@@ -15,15 +15,7 @@ class AuthLoadingScreen extends Component {
   };
 
   componentDidMount() {
-    Linking.getInitialURL()
-      .then(url => {
-        if (url) {
-          console.tron.log(`Initial url is: ${url}`);
-          return this.handleOpenURL(url);
-        }
         return this.bootstrapAsync();
-      })
-      .catch(err => console.tron.log("Error getInitialURL", err));
   }
 
   bootstrapAsync = async () => {
