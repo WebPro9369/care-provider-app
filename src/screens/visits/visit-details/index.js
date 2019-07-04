@@ -69,7 +69,7 @@ class VisitDetailsScreen extends React.Component {
 
     if(!routeInfo) {
       this.setState({
-        address: getValueById(visitsStore.visits, visitID)
+        address: getValueById(visitsStore.visits, visitID).address
       });
       this.getVisitGeo();
     }
