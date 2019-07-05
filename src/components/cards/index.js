@@ -281,7 +281,7 @@ export const VisitDetailCard = ({
         {illness}
       </StyledText>
     </View>
-    <View style={{ display: "flex", alignItems: "center", flex: 1 }}>
+    <View>
       <StyledText
         fontSize={16}
         fontFamily="FlamaMedium"
