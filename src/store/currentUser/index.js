@@ -151,6 +151,7 @@ export const CurrentUserStore = types
     phone: types.string,
     acceptedStripeTOS: types.boolean,
     notificationToken: types.string,
+    avatar: types.string,
     application: types.optional(ApplicationStore, {
       dateOfBirth: "",
       biography: "",
@@ -255,6 +256,10 @@ export const CurrentUserStore = types
     },
     setNotificationToken(value) {
       self.notificationToken = value;
+      return self;
+    },
+    setAvatar(value) {
+      self.avatar = value;
       return self;
     }
   }));

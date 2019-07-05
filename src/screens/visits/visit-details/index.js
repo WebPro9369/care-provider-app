@@ -15,12 +15,12 @@ import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { colors } from "@utils/constants";
 import { updateVisit } from "@services/opear-api";
-import Geocoder from 'react-native-geocoder';
 import {
   getValueById,
   getIndexByValue,
   formatAMPM,
-  isToday
+  isToday,
+  addressToString
 } from "@utils/helpers";
 import { GoogleMapsService } from "@services";
 
@@ -53,8 +53,7 @@ class VisitDetailsScreen extends React.Component {
         currentLatitude: 37.78925,
         currentLongitude: -122.4924,
         distance: 0
-      },
-      loaded: true
+      }
     };
     this.getVisitGeo();
   }
@@ -66,22 +65,21 @@ class VisitDetailsScreen extends React.Component {
     const { visitID, map } = this.state;
     const visit = getValueById(visitsStore.visits, visitID);
     const { address } = visit;
-    GoogleMapsService.getGeo(
-      `${address.street}${address.city && ", "}${address.city}${address.state && ", "}${address.state}`,
-      innerRes => {
-        const { data } = innerRes;
-        if (data && data.result && data.result.geometry) {
-          const { lat, lng } = data.result.geometry.location;
-          this.setState({
-            map: {
-              ...map,
-              latitude: lat,
-              longitude: lng
-            }
-          });
-        }
+
+    GoogleMapsService.getGeo(addressToString(address), innerRes => {
+      const { data } = innerRes;
+      if (data && data.results && data.results[0].geometry) {
+        const { lat, lng } = data.results[0].geometry.location;
+        this.setState({
+          map: {
+            ...map,
+            latitude: lat,
+            longitude: lng
+          },
+          loaded: true
+        });
       }
-    );
+    });
   };
 
   componentWillUnmount() {
@@ -214,6 +212,15 @@ class VisitDetailsScreen extends React.Component {
     const { visitID, loaded, map } = this.state;
 
     const visit = getValueById(visitsStore.visits, visitID);
+    if (!visit) {
+      return (
+        <ContainerView>
+          <HeaderWrapper>
+            <NavHeader title="Loading..." size="medium" />
+          </HeaderWrapper>
+        </ContainerView>
+      );
+    }
     const past = visit.state === "completed";
 
     const {
@@ -221,39 +228,19 @@ class VisitDetailsScreen extends React.Component {
       address,
       parent,
       symptoms,
-      appointmentTime,
+      appointment_time,
       reason,
-      parentNotes,
-      visitNotes
+      parent_notes,
+      visit_notes
     } = visit;
 
-    const childName = child.firstName
-      ? `${child.firstName} ${child.lastName}`
+    const childName = child.first_name
+      ? `${child.first_name} ${child.last_name}`
       : "N/A";
 
-    const time = formatAMPM(new Date(appointmentTime));
-    const strAddress = `${address.city}${
-      address.state ? `, ${address.state}` : ""
-    }`;
-
-    const navAddress = `${address.street} ,${address.city}${
-      address.state ? `, ${address.state}` : ""
-    }`;
-
-    Geocoder.geocodeAddress(navAddress).then(res => {
-      if(res[0]) {
-        this.setState( {
-          map: {
-            latitude: res[0].position.lat,
-            longitude: res[0].position.lng
-          }
-        });
-      }
-      else {
-        throw "No response";
-      }
-    })
-    .catch(err => console.tron.log(err))
+    const appointmentTime = new Date(appointment_time);
+    const formattedDate = new Date(appointmentTime).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    const time = formatAMPM(appointmentTime);
 
     if (!loaded) {
       return (
@@ -279,6 +266,7 @@ class VisitDetailsScreen extends React.Component {
           {map && (
             <MapView
               style={{ alignSelf: "stretch", height: 200 }}
+              region={map}
               initialRegion={map}
             />
           )}
@@ -288,7 +276,8 @@ class VisitDetailsScreen extends React.Component {
               name={childName}
               illness={symptoms.join(", ")}
               time={time}
-              address={strAddress}
+              address={address}
+              date={formattedDate}
               disabled
             />
             <View style={{ marginTop: 32 }}>
@@ -319,18 +308,18 @@ class VisitDetailsScreen extends React.Component {
               />
               <LargeBookedDetailCard
                 type="Allergies"
-                text={child.allergies.join(", ")}
+                text={child.allergies}
                 disabled
               />
               <LargeBookedDetailCard
                 type="Parent Notes"
-                text={parentNotes}
+                text={parent_notes}
                 disabled
               />
               {past ? (
                 <LargeBookedDetailCard
                   type="Visit Notes"
-                  text={visitNotes}
+                  text={visit_notes}
                   disabled
                 />
               ) : null}

@@ -39,7 +39,7 @@ class AuthLoadingScreen extends Component {
     const {
       navigation: { navigate }
     } = this.props;
-    const route = url.replace(/.*?:\/\//g, "");
+    const route = url.url.replace(/.*?:\/\//g, "");
     const routeName = route.split("/")[0];
 
     if (routeName === "newpwd") {
@@ -99,7 +99,8 @@ class AuthLoadingScreen extends Component {
             active,
             biography,
             addresses,
-            rating
+            rating,
+            avatar
           } = res.data;
 
           if (!active) return navigate("ApplicationPending");
@@ -119,7 +120,8 @@ class AuthLoadingScreen extends Component {
             .setPhone(phone)
             .setStripeBalance(stripe_balance)
             .setPayoutAccount(payout_account)
-            .setRating(rating);
+            .setRating(rating)
+            .setAvatar(avatar);
 
           address.setZipCode(zip);
 
