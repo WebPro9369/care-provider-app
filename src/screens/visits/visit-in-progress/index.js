@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React from "react";
 import { Alert, Linking } from "react-native";
@@ -94,20 +95,20 @@ class VisitInProgressScreen extends React.Component {
       parent,
       address,
       reason,
-      parentNotes,
-      visitNotes,
-      appointmentTime
+      parent_notes,
+      visit_notes,
+      appointment_time
     } = visit;
 
     const strSymptoms = (child.symptoms || []).join(", ");
     const childName = child.firstName
-      ? `${child.firstName} ${child.lastName}`
+      ? `${child.first_name} ${child.last_name}`
       : "";
-    const strTime = formatAMPM(appointmentTime);
+    const strTime = formatAMPM(new Date(appointment_time));
     const strAddress = `${address.city}${
       address.state ? `, ${address.state}` : ""
     }`;
-    const strVisitNotes = visitNotesEdited || visitNotes;
+    const strVisitNotes = visitNotesEdited || visit_notes;
 
     return (
       <ContainerView>
@@ -162,7 +163,7 @@ class VisitInProgressScreen extends React.Component {
               />
               <LargeBookedDetailCard type="Visit Reason" text={reason} />
               <LargeBookedDetailCard type="Allergies" text={child.allergies} />
-              <LargeBookedDetailCard type="Parent Notes" text={parentNotes} />
+              <LargeBookedDetailCard type="Parent Notes" text={parent_notes} />
             </View>
           </View>
           <View style={{ marginTop: 20, padding: 16 }}>
