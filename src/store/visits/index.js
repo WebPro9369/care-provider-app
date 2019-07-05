@@ -126,7 +126,7 @@ export const VisitsStore = types
       return self;
     },
     setVisitNotes(index, value) {
-      self.visits[index].visitNotes = value;
+      self.visits[index].visit_notes = value;
       return self;
     }
   }));

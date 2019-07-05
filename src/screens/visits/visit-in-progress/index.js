@@ -99,7 +99,6 @@ class VisitInProgressScreen extends React.Component {
       appointmentTime
     } = visit;
 
-    const strAllergies = (child.allergies || []).join(", ");
     const strSymptoms = (child.symptoms || []).join(", ");
     const childName = child.firstName
       ? `${child.firstName} ${child.lastName}`
@@ -130,10 +129,10 @@ class VisitInProgressScreen extends React.Component {
           </StyledText>
         </ViewCentered>
         <ScrollView padding={0}>
-          {strAllergies.length ? (
+          {child.allergies.length ? (
             <IllnessContainer>
               <StyledText fontSize={16} color={colors.WHITE}>
-                {`Allergies: ${strAllergies}`}
+                {`Allergies: ${child.allergies}`}
               </StyledText>
             </IllnessContainer>
           ) : null}
@@ -162,7 +161,7 @@ class VisitInProgressScreen extends React.Component {
                 }
               />
               <LargeBookedDetailCard type="Visit Reason" text={reason} />
-              <LargeBookedDetailCard type="Allergies" text={strAllergies} />
+              <LargeBookedDetailCard type="Allergies" text={child.allergies} />
               <LargeBookedDetailCard type="Parent Notes" text={parentNotes} />
             </View>
           </View>
