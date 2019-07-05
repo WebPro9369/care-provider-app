@@ -257,23 +257,27 @@ export const VisitDetailCard = ({
   ...rest
 }) => (
   <VisitDetailCardWrapper {...rest}>
-    <FlexView justifyContent="start" alignItems="center">
-      <Avatar rounded size={40} source={avatarImg} />
-      <View style={{ marginLeft: 20 }}>
-        <StyledText
-          fontSize={14}
-          fontFamily="FlamaMedium"
-          lineHeight={18}
-          color={colors.BLACK87}
-        >
-          {name}
-        </StyledText>
-        <StyledText fontSize={14} lineHeight={18} color={colors.BLACK60}>
-          {illness}
-        </StyledText>
-      </View>
-    </FlexView>
-    <View style={{ display: "flex", alignItems: "center" }}>
+    <Avatar rounded size={40} source={avatarImg} />
+    <View style={{ marginLeft: 20, flex: 1 }}>
+      <StyledText
+        fontSize={14}
+        fontFamily="FlamaMedium"
+        lineHeight={18}
+        color={colors.BLACK87}
+        style={{ alignSelf: "flex-start" }}
+      >
+        {name}
+      </StyledText>
+      <StyledText
+        fontSize={14}
+        lineHeight={18}
+        color={colors.BLACK60}
+        style={{ alignSelf: "flex-start" }}
+      >
+        {illness}
+      </StyledText>
+    </View>
+    <View>
       <StyledText
         fontSize={16}
         fontFamily="FlamaMedium"
