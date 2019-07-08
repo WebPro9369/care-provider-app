@@ -2,7 +2,7 @@
 /* eslint-disable import/order */
 import React from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { Alert } from "react-native";
+import { Alert, Linking } from "react-native";
 import { inject } from "mobx-react";
 // import axios from "axios";
 import { FormTextInput } from "../../../components/text";
@@ -48,6 +48,30 @@ class ForgotPwdScreen extends React.Component {
     this.setState({
       email: text
     });
+  };
+
+  componentDidMount() {
+    Linking.addEventListener("url", this.handleOpenURL);
+  }
+
+  componentWillUnmount() {
+    Linking.removeEventListener("url", this.handleOpenURL);
+  }
+
+  handleOpenURL = url => {
+    this.navigate(url);
+  };
+
+  navigate = url => {
+    const {
+      navigation: { navigate }
+    } = this.props;
+    const route = url.url.replace(/.*?:\/\//g, "");
+    const routeName = route.split("/")[0];
+
+    if (routeName === "newpwd") {
+      navigate("AccountNewPwd", { routeInfo: route });
+    }
   };
 
   render() {

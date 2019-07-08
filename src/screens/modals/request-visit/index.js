@@ -112,7 +112,7 @@ class RequestVisitModalComponent extends Component {
     if (!modalVisible) return null;
 
     const {
-      visit: { name, illness, symptoms, time, allergies, parentNotes, address }
+      visit: { name, illness, symptoms, time, allergies, parentNotes, address, date }
     } = this.state;
 
     return (
@@ -144,6 +144,7 @@ class RequestVisitModalComponent extends Component {
                 name={name}
                 illness={illness}
                 time={time}
+                date={date}
                 address={`${address.street} ,${address.city}${
                   address.state ? `, ${address.state}` : ""
                 }`}

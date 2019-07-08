@@ -8,7 +8,8 @@ import { removeAuthentication } from "@services/authentication";
 import { StyledText } from "../../components/text";
 import { ProviderCard } from "../../components/cards";
 import { ListTouchableButtonWrapper, ListButtonText } from "./styles";
-import { ContainerView, View } from "../../components/views";
+import { View } from "../../components/views";
+import { ScrollView } from "../../components/views/scroll-view";
 import { colors } from "../../utils/constants";
 
 const imgDoctor = require("../../../assets/images/Doctor.png");
@@ -23,9 +24,6 @@ class AccountScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      avatarImg: imgDoctor
-    };
   }
 
   componentDidMount() {
@@ -53,18 +51,24 @@ class AccountScreen extends React.Component {
       store,
       navigation: { navigate }
     } = this.props;
-    const { avatarImg } = this.state;
     const {
       currentUserStore: {
         firstName,
         lastName,
         application: { biography, workHistory, specialties },
-        rating
+        rating,
+        avatar
       }
     } = store;
 
+    var avatarImg = null;
+
+    if(avatar != "" && avatar != "/images/original/missing.png") {
+      avatarImg = avatar;
+    }
+
     return (
-      <ContainerView padding={16}>
+      <ScrollView padding={16}>
         <View style={{ paddingTop: 24, paddingBottom: 24 }}>
           <StyledText
             fontSize={28}
@@ -76,7 +80,7 @@ class AccountScreen extends React.Component {
           </StyledText>
         </View>
         <ProviderCard
-          avatarImg={avatarImg}
+          avatarImg={(avatarImg ? {uri: avatarImg} : imgDoctor)}
           name={`${firstName} ${lastName}`}
           bio={biography}
           history={workHistory.join(", ")}
@@ -107,7 +111,7 @@ class AccountScreen extends React.Component {
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
         </View>
-      </ContainerView>
+      </ScrollView>
     );
   }
 }

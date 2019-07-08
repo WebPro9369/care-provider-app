@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React from "react";
 import { Alert, Linking } from "react-native";
@@ -10,7 +11,6 @@ import {
 } from "../../../components/cards";
 import { ServiceButton } from "../../../components/service-button";
 import { ContainerView, View, ViewCentered } from "../../../components/views";
-import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
 import { StyledText } from "../../../components/text";
 import { IllnessContainer, TextBox } from "./styles";
@@ -19,6 +19,7 @@ import {
   getValueById,
   formatAMPM
 } from "../../../utils/helpers";
+import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -36,9 +37,16 @@ class VisitInProgressScreen extends React.Component {
     const visitID = navigation.getParam("visitID", false);
 
     this.state = {
-      visitID
+      visitID,
+      visitNotesEdited: null
     };
   }
+
+  onChangeVisitNotes = text => {
+    this.setState({
+      visitNotesEdited: text
+    });
+  };
 
   completeVisit = () => {
     const {
@@ -46,16 +54,23 @@ class VisitInProgressScreen extends React.Component {
       store: { visitsStore }
     } = this.props;
 
-    const { visitID } = this.state;
+    const { visitID, visitNotesEdited } = this.state;
     const { visits } = visitsStore;
 
     const data = {
       state: "completed"
     };
 
+    if (visitNotesEdited) {
+      data.visit_notes = visitNotesEdited;
+    }
+
     const successHandler = () => {
       const index = getIndexByValue(visits, visitID);
       visitsStore.setVisitState(index, "canceled");
+      if (visitNotesEdited) {
+        visitsStore.setVisitNotes(index, visitNotesEdited);
+      }
       navigate("VisitsDefault");
     };
 
@@ -72,7 +87,7 @@ class VisitInProgressScreen extends React.Component {
     } = this.props;
     // const { arrived } = providerStore;
     const { visits } = visitsStore;
-    const { visitID } = this.state;
+    const { visitID, visitNotesEdited } = this.state;
 
     const visit = getValueById(visits, visitID);
     const {
@@ -85,12 +100,16 @@ class VisitInProgressScreen extends React.Component {
       appointment_time
     } = visit;
 
-    const strAllergies = (child.allergies || []).join(", ");
+    const strAllergies = child.allergies || "N/A";
     const strSymptoms = (child.symptoms || []).join(", ");
     const childName = child.firstName
-      ? `${child.firstName} ${child.lastName}`
+      ? `${child.first_name} ${child.last_name}`
       : "";
     const strTime = formatAMPM(new Date(appointment_time));
+    const strAddress = `${address.city}${
+      address.state ? `, ${address.state}` : ""
+    }`;
+    const strVisitNotes = visitNotesEdited || visit_notes;
 
     return (
       <ContainerView>
@@ -111,19 +130,21 @@ class VisitInProgressScreen extends React.Component {
             Visit In Progress
           </StyledText>
         </ViewCentered>
-        <ScrollView padding={0}>
-          <IllnessContainer>
-            <StyledText fontSize={16} color={colors.WHITE}>
-              {`Allergies: ${strAllergies}`}
-            </StyledText>
-          </IllnessContainer>
+        <KeyboardScrollView padding={0}>
+          {strAllergies.length ? (
+            <IllnessContainer>
+              <StyledText fontSize={16} color={colors.WHITE}>
+                {`Allergies: ${strAllergies}`}
+              </StyledText>
+            </IllnessContainer>
+          ) : null}
           <View style={{ padding: 16, marginTop: 16 }}>
             <VisitDetailCard
               avatarImg={child.avatarImg || imgDog}
               name={childName}
               illness={strSymptoms}
               time={strTime}
-              address={address}
+              address={strAddress}
             />
             <View style={{ marginTop: 32 }}>
               <LargeBookedDetailCard
@@ -156,7 +177,12 @@ class VisitInProgressScreen extends React.Component {
                 Visit Notes
               </StyledText>
             </View>
-            <TextBox editable multiline value={visit_notes} />
+            <TextBox
+              editable
+              multiline
+              value={strVisitNotes}
+              onChangeText={this.onChangeVisitNotes}
+            />
           </View>
           <View style={{ marginTop: 48, paddingLeft: 16, paddingRight: 16 }}>
             <View style={{ paddingTop: 6, paddingBottom: 6 }}>
@@ -173,7 +199,7 @@ class VisitInProgressScreen extends React.Component {
               />
             </View>
           </View>
-        </ScrollView>
+        </KeyboardScrollView>
       </ContainerView>
     );
   }

@@ -121,6 +121,10 @@ export const VisitsStore = types
     setVisitState(index, value) {
       self.visits[index].state = value;
       return self;
+    },
+    setVisitNotes(index, value) {
+      self.visits[index].visit_notes = value;
+      return self;
     }
   }));
 

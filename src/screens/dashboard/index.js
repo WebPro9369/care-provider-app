@@ -61,12 +61,8 @@ class DashboardScreen extends React.Component {
           store: { visitsStore }
         } = this.props;
 
-        const visits = Object.values(res.data || {}).reduce((acc, current) => {
-          (current || []).forEach(item => acc.push(item));
-          return acc;
-        }, []);
+        const visits = Object.values(res.data).flat();
 
-        // console.tron.log("visits in dashboard: ", visits);
         visitsStore.setVisits(visits);
 
         const viewVisits = visits
@@ -102,7 +98,8 @@ class DashboardScreen extends React.Component {
               appointmentTime,
               address,
               allergies,
-              parentNotes
+              parentNotes,
+              date: new Date(appointmentTime).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
             };
 
             if (visitState === "approving") {
@@ -197,6 +194,7 @@ class DashboardScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
+                      date={item.date}
                       onPress={() =>
                         navigate("DashboardVisitDetails", { visitID: item.id })
                       }
