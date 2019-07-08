@@ -7,7 +7,7 @@ export const ChildStore = types
     gender: types.string,
     first_name: types.string,
     last_name: types.string,
-    dob: types.maybeNull(types.string),
+    dob: types.string,
     birth_history: types.optional(types.string, ""),
     surgical_history: types.optional(types.string, ""),
     current_medications: types.optional(types.string, ""),

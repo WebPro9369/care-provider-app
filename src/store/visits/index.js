@@ -10,9 +10,9 @@ export const VisitsStore = types
     visits: types.array(
       types.model({
         id: types.number,
-        parent_id: types.maybeNull(types.number),
-        child_id: types.maybeNull(types.number),
-        address_id: types.maybeNull(types.number),
+        parent_id: types.number,
+        child_id: types.number,
+        address_id: types.number,
         care_provider_id: types.maybeNull(types.number),
         reason: types.string,
         symptoms: types.array(types.string),
@@ -24,7 +24,7 @@ export const VisitsStore = types
         child: types.optional(ChildStore, {
           id: -1,
           gender: "",
-          avatar_image_index: -1,
+          avatar_image_index: 0,
           first_name: "",
           last_name: "",
           dob: "01/01/1900",
