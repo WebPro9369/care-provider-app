@@ -11,7 +11,6 @@ import {
 } from "../../../components/cards";
 import { ServiceButton } from "../../../components/service-button";
 import { ContainerView, View, ViewCentered } from "../../../components/views";
-import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
 import { StyledText } from "../../../components/text";
 import { IllnessContainer, TextBox } from "./styles";
@@ -20,6 +19,7 @@ import {
   getValueById,
   formatAMPM
 } from "../../../utils/helpers";
+import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -130,7 +130,7 @@ class VisitInProgressScreen extends React.Component {
             Visit In Progress
           </StyledText>
         </ViewCentered>
-        <ScrollView padding={0}>
+        <KeyboardScrollView padding={0}>
           {strAllergies.length ? (
             <IllnessContainer>
               <StyledText fontSize={16} color={colors.WHITE}>
@@ -199,7 +199,7 @@ class VisitInProgressScreen extends React.Component {
               />
             </View>
           </View>
-        </ScrollView>
+        </KeyboardScrollView>
       </ContainerView>
     );
   }
