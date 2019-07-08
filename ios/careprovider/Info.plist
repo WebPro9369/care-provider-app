@@ -46,7 +46,7 @@
 		</array>
 	</dict>
 	<key>LSApplicationCategoryType</key>
-	<string/>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -62,10 +62,10 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Care Provider app uses camera to scan your cards etc.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Enabling Face ID allows you quick and secure access to your account.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We use your camera to take profile photos and scan cards</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We use your location to pair you with consumer requests in your area</string>
 	<key>NSLocationAlwaysUsageDescription</key>
