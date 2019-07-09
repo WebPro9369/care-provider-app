@@ -129,7 +129,7 @@ class EditAddressScreen extends React.Component {
       }
     } = this.props;
 
-    const { street, city, zip: zip, name } = this.state;
+    const { street, city, zip, name } = this.state;
     const data = {
       care_provider: {
         addresses_attributes: [
@@ -171,7 +171,7 @@ class EditAddressScreen extends React.Component {
           style={{ paddingLeft: 16 }}
           onPressBackButton={() => goBack()}
         />
-        <KeyboardScrollView>
+        <KeyboardScrollView padding={16}>
           <FormWrapper>
             <FormInputView>
               <FormTextInput
