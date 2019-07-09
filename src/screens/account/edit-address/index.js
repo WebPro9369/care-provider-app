@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable prefer-template */
@@ -18,7 +19,7 @@ import {
 } from "../../../components/views";
 import { FormInputView } from "../../../components/views/keyboard-view";
 import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
-import { updateCareProvider } from "../../../services/opear-api";
+import { createAddress, updateAddress } from "../../../services/opear-api";
 import { colors, GOOGLE_API_KEY } from "../../../utils/constants";
 
 const { DARKSKYBLUE } = colors;
@@ -33,19 +34,11 @@ class EditAddressScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const {
-      store: {
-        currentUserStore: {
-          address: { name, street, city, zip }
-        }
-      }
-    } = props;
-
     this.state = {
-      name,
-      street,
-      city,
-      zip
+      name: "",
+      street: "",
+      city: "",
+      zip: ""
     };
   }
 
@@ -105,8 +98,9 @@ class EditAddressScreen extends React.Component {
           .catch(err => {
             console.tron.log("Google map api error: ", err);
             return Alert.alert(
-              "There was an issue", 
-              "Google Map API failed to get your location.");
+              "There was an issue",
+              "Google Map API failed to get your location."
+            );
           });
       },
       error => {
@@ -125,40 +119,57 @@ class EditAddressScreen extends React.Component {
     const {
       navigation: { goBack },
       store: {
-        currentUserStore: { id, address }
+        currentUserStore: { address }
       }
     } = this.props;
 
     const { street, city, zip, name } = this.state;
-    const data = {
-      care_provider: {
-        addresses_attributes: [
-          {
-            name,
-            street,
-            city,
-            zip
-          }
-        ]
+    const updatedFields = Object.keys(this.state).filter(key => {
+      if (!this.state[key]) {
+        return false;
       }
+
+      if (address[key] === this.state[key]) {
+        return false;
+      }
+      return true;
+    });
+
+    const data = {
+      name: name || address.name,
+      city: city || address.city,
+      street: street || address.street,
+      zip: zip || address.zip,
+      state: address.state
     };
 
     const successHandler = () => {
       address
-        .setName(name)
-        .setStreet(street)
-        .setCity(city)
-        .setZipCode(zip);
+        .setName(data.name)
+        .setStreet(data.street)
+        .setCity(data.city)
+        .setZipCode(data.zip);
 
       goBack();
     };
 
-    updateCareProvider(id, data, { successHandler });
+    const errorHandler = () => {
+      Alert.alert("Error", "Failed to update the address.");
+    };
+
+    if (updatedFields.includes("name") && updatedFields.length === 1) {
+      return updateAddress(address.id, data, { successHandler, errorHandler });
+    }
+
+    return createAddress(data, { successHandler, errorHandler });
   };
 
   render() {
     const {
-      navigation: { goBack }
+      navigation: { goBack },
+      store: {
+        currentUserStore: { address }
+      }
     } = this.props;
 
     const { name, street, city, zip } = this.state;
@@ -176,7 +187,7 @@ class EditAddressScreen extends React.Component {
             <FormInputView>
               <FormTextInput
                 label="Address"
-                value={street}
+                value={street || address.street}
                 rightIcon={
                   <TouchableView onPress={this.setCurrentLocation}>
                     <FontAwesome
@@ -197,7 +208,7 @@ class EditAddressScreen extends React.Component {
                     flex: 1,
                     marginRight: 20
                   }}
-                  value={city}
+                  value={city || address.city}
                   onChangeText={this.handleChange("city")}
                 />
                 <FormTextInput
@@ -205,7 +216,7 @@ class EditAddressScreen extends React.Component {
                   wrapperStyle={{
                     flex: 1
                   }}
-                  value={zip}
+                  value={zip || address.zip}
                   onChangeText={this.handleChange("zip")}
                 />
               </FlexView>
@@ -213,7 +224,7 @@ class EditAddressScreen extends React.Component {
             <FormInputView>
               <FormTextInput
                 label="Location Name"
-                value={name}
+                value={name || address.name}
                 onChangeText={this.handleChange("name")}
               />
             </FormInputView>
