@@ -660,6 +660,7 @@ class ApplicationScreen extends React.Component {
                   value={specialties}
                   placeholder="Specialty 1, specialty 2, etc."
                   returnKeyType="next"
+                  maxLength={38}
                   ref={input => (this.inputRefs.specialties = input)}
                   onChangeText={this.handleInputChange("specialties")}
                   onSubmitEditing={() => {
