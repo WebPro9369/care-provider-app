@@ -154,6 +154,40 @@ export const updateAvailabilities = (
     });
 };
 
+export const createAddress = (data, { successHandler, errorHandler } = {}) => {
+  const url = `/v1/addresses/`;
+
+  axios
+    .post(url, data)
+    .then(res => {
+      console.tron.log("Create address done: ", res);
+      if (successHandler) successHandler(res);
+    })
+    .catch(err => {
+      console.tron.log("Create address error: ", err);
+      if (errorHandler) errorHandler(err);
+    });
+};
+
+export const updateAddress = (
+  addressId,
+  data,
+  { successHandler, errorHandler } = {}
+) => {
+  const url = `/v1/addresses/${addressId}`;
+
+  axios
+    .patch(url, data)
+    .then(res => {
+      console.tron.log("Update address done: ", res);
+      if (successHandler) successHandler(res);
+    })
+    .catch(err => {
+      console.tron.log("Update address error: ", err);
+      if (errorHandler) errorHandler(err);
+    });
+};
+
 export const createBankAccountProvider = (
   userID,
   data,
