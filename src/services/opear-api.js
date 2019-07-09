@@ -87,10 +87,7 @@ export const getVisits = ({ past, successHandler, errorHandler } = {}) => {
     });
 };
 
-export const getVisit = (
-  visitID,
-  { successHandler, errorHandler } = {}
-) => {
+export const getVisit = (visitID, { successHandler, errorHandler } = {}) => {
   axios
     .get(`/v1/visits/${visitID}`)
     .then(res => {
