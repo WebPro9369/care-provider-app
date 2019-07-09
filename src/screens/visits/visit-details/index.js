@@ -74,19 +74,17 @@ class VisitDetailsScreen extends React.Component {
       this.getVisitGeo();
     }
     else {
-      successHandler = res => {
-        const {
-          address
-        } = res.data;
-
-        this.setState({
-          address: address
-        });
-        this.getVisitGeo();
-      };
-
-      getVisit(visitID, {successHandler});
+      getVisits({
+        successHandler: res => {
+          visitsStore.setVisits(Object.values(res.data).flat());
+          this.setState({
+            address: getValueById(visitsStore.visits, visitID).address
+          });
+          this.getVisitGeo();
+        }
+      });
     }
+
   }
 
   getVisitGeo = () => {
