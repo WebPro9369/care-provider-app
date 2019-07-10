@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React from "react";
 import { Image, TouchableOpacity } from "react-native";
@@ -99,7 +100,11 @@ class DashboardScreen extends React.Component {
               address,
               allergies,
               parentNotes,
-              date: new Date(appointmentTime).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+              date: new Date(appointmentTime).toLocaleString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+              })
             };
 
             if (visitState === "approving") {
@@ -146,8 +151,9 @@ class DashboardScreen extends React.Component {
     } = this.props;
 
     const {
+      applicationStore: { CareProviderSubscriptionsActive },
       providerStore: { completeApplication },
-      currentUserStore: { firstName }
+      currentUserStore: { firstName, payout_account }
     } = store;
 
     const { visits, visitForApproval, allergiesForReview } = this.state;
@@ -177,6 +183,15 @@ class DashboardScreen extends React.Component {
               </MatchingMessageWrapper>
             </TouchableOpacity>
           ) : null}
+          {CareProviderSubscriptionsActive &&
+            (!payout_account || !payout_account.length) && (
+              <MatchingMessageWrapper>
+                <StyledText fontSize={16}>
+                  You need to set up your annual subscription payment method
+                  before you can accept appointments.
+                </StyledText>
+              </MatchingMessageWrapper>
+            )}
           <View
             style={{
               marginTop: !completeApplication ? 16 : 48,
