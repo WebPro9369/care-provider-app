@@ -6,7 +6,6 @@ import { Alert } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { createPaymentAccount } from "@services/opear-api";
-import InactiveUserBanner from "@components/banner";
 import { FormTextInput } from "../../../components/text";
 import { FormMaskedTextInput } from "../../../components/text-masked";
 import { NavHeader } from "../../../components/nav-header";
@@ -166,7 +165,7 @@ class AddCardScreen extends React.Component {
               }
               rightIcon={
                 // eslint-disable-next-line react/jsx-wrap-multilines
-                <TouchableView onPress={() => navigate("PaymentScanCard")}>
+                <TouchableView onPress={() => navigate("AccountScanCard")}>
                   <FontAwesome
                     name="camera"
                     size={30}

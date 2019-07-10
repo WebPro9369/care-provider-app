@@ -151,7 +151,7 @@ class PayoutsScreen extends React.Component {
                 {(!payout_account || !payout_account.length) && (
                   <View style={{ marginTop: 16, marginLeft: 28 }}>
                     <TouchableWrapper
-                      onPress={() => navigate("PaymentAddCard", { screenRef })}
+                      onPress={() => navigate("AccountAddCard", { screenRef })}
                     >
                       <FlexView justifyContent="start">
                         <AntDesign
