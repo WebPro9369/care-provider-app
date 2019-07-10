@@ -58,7 +58,7 @@ class VisitInProgressScreen extends React.Component {
     const { visits } = visitsStore;
 
     const data = {
-      state: "completed"
+        state: 5
     };
 
     if (visitNotesEdited) {
@@ -67,15 +67,15 @@ class VisitInProgressScreen extends React.Component {
 
     const successHandler = () => {
       const index = getIndexByValue(visits, visitID);
-      visitsStore.setVisitState(index, "canceled");
+      visitsStore.setVisitState(index, "completed");
       if (visitNotesEdited) {
         visitsStore.setVisitNotes(index, visitNotesEdited);
       }
       navigate("VisitsDefault");
     };
 
-    const errorHandler = () => {
-      Alert.alert("Visit Update Error", "Failed to complete the visit.");
+    const errorHandler = res => {
+      Alert.alert("Visit Completion Error", "There was an issue with payment processing. Please contact support for help with completing this visit.");
     };
 
     updateVisit(visitID, data, { successHandler, errorHandler });
