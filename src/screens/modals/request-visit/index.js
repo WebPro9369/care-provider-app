@@ -145,9 +145,7 @@ class RequestVisitModalComponent extends Component {
                 illness={illness}
                 time={time}
                 date={date}
-                address={`${address.street} ,${address.city}${
-                  address.state ? `, ${address.state}` : ""
-                }`}
+                address={address}
               />
             </View>
             <ContentWrapper>
