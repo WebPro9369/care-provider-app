@@ -17,6 +17,7 @@ This is a React Native app for Care Provider App.
 
 * `npm run ios:build`
 * Archive from Xcode
+* checkout the `production` branch before releasing
 * Usual steps
 * Remember to check the upload on appstore.apple.com once it's done processing to approve the compliance questions!
 
