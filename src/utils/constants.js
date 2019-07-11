@@ -3,7 +3,7 @@ import { Dimensions } from "react-native";
 const DEVICE_WIDTH = Dimensions.get("window").width;
 const DEVICE_HEIGHT = Dimensions.get("window").height;
 
-const GOOGLE_API_KEY = "AIzaSyAZGsHKM7GxsqSeKSb9samtlOdDkLQc3aU";
+const GOOGLE_API_KEY = "AIzaSyBv9qJrg7dFXjv0Z23ds82haPgazsY0L1M";
 
 const TITLES = ["MD", "NP", "PA", "APRN"];
 

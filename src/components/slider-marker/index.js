@@ -6,8 +6,8 @@ import { StyledText } from "../text";
 import { colors } from "../../utils/constants";
 
 const timeSlotStrs = [
-  "0am",
-  "0:30am",
+  "12am",
+  "12:30am",
   "1am",
   "1:30am",
   "2am",

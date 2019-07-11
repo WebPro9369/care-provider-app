@@ -106,7 +106,7 @@ class VisitDetailsScreen extends React.Component {
     const { visits } = visitsStore;
 
     const data = {
-      state: "in_progress"
+      state: 4
     };
 
     const successHandler = () => {

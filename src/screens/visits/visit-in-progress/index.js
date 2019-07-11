@@ -58,7 +58,7 @@ class VisitInProgressScreen extends React.Component {
     const { visits } = visitsStore;
 
     const data = {
-      state: "completed"
+        state: 5
     };
 
     if (visitNotesEdited) {
@@ -67,15 +67,15 @@ class VisitInProgressScreen extends React.Component {
 
     const successHandler = () => {
       const index = getIndexByValue(visits, visitID);
-      visitsStore.setVisitState(index, "canceled");
+      visitsStore.setVisitState(index, "completed");
       if (visitNotesEdited) {
         visitsStore.setVisitNotes(index, visitNotesEdited);
       }
       navigate("VisitsDefault");
     };
 
-    const errorHandler = () => {
-      Alert.alert("Visit Update Error", "Failed to complete the visit.");
+    const errorHandler = res => {
+      Alert.alert("Visit Completion Error", "There was an issue with payment processing. Please contact support for help with completing this visit.");
     };
 
     updateVisit(visitID, data, { successHandler, errorHandler });
@@ -97,19 +97,17 @@ class VisitInProgressScreen extends React.Component {
       reason,
       parent_notes,
       visit_notes,
-      appointment_time
+      appointment_time,
+      symptoms
     } = visit;
 
     const strAllergies = child.allergies || "N/A";
-    const strSymptoms = (child.symptoms || []).join(", ");
-    const childName = child.firstName
+    const childName = child.first_name
       ? `${child.first_name} ${child.last_name}`
       : "";
     const strTime = formatAMPM(new Date(appointment_time));
-    const strAddress = `${address.city}${
-      address.state ? `, ${address.state}` : ""
-    }`;
     const strVisitNotes = visitNotesEdited || visit_notes;
+    const formattedDate = new Date(appointment_time).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
     return (
       <ContainerView>
@@ -142,9 +140,10 @@ class VisitInProgressScreen extends React.Component {
             <VisitDetailCard
               avatarImg={child.avatarImg || imgDog}
               name={childName}
-              illness={strSymptoms}
+              illness={symptoms.join(", ")}
               time={strTime}
-              address={strAddress}
+              date={formattedDate}
+              address={address}
             />
             <View style={{ marginTop: 32 }}>
               <LargeBookedDetailCard

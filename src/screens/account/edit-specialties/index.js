@@ -91,7 +91,7 @@ class EditSpecialtiesScreen extends React.Component {
         />
         <FormWrapper>
           <FormInputView>
-            <FormTextInput
+            <FormTextInput maxLength={38}
               label="Specialties"
               value={specialties}
               onChangeText={this.handleInputChange("specialties")}
