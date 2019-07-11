@@ -806,15 +806,15 @@ class ApplicationScreen extends React.Component {
                   checkedColor={colors.SEAFOAMBLUE}
                 />
               </FormInputWrapper>
+              <FormInputWrapper
+                style={{ marginBottom: 20, marginTop: 0, paddingTop: 0 }}
+              >
+                <ServiceButton
+                  title="Submit Application"
+                  onPress={this.onSubmit}
+                />
+              </FormInputWrapper>
             </FormWrapper>
-            <FormInputWrapper
-              style={{ marginBottom: 20, marginTop: 0, paddingTop: 0 }}
-            >
-              <ServiceButton
-                title="Submit Application"
-                onPress={this.onSubmit}
-              />
-            </FormInputWrapper>
           </KeyboardScrollView>
         </SafeAreaView>
       </ContainerView>
