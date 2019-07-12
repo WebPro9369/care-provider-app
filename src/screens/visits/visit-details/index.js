@@ -39,7 +39,10 @@ class VisitDetailsScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { navigation } = props;
+    const {
+      navigation,
+      store: { visitsStore }
+     } = props;
     var visitID = navigation.getParam("visitID", false);
     // TODO: if (!visitID) error!
     const routeInfo = navigation.getParam("routeInfo", false);
