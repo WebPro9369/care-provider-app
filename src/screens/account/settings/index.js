@@ -1,6 +1,7 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React from "react";
-import { Switch } from "react-native";
+import { ActivityIndicator, Alert, Switch } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { Avatar } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -37,13 +38,14 @@ class SettingsScreen extends React.Component {
 
     const {
       store: {
-        currentUserStore: { avatar }
+        currentUserStore: { avatar, smsNotification }
       }
     } = this.props;
 
     this.state = {
+      loading: false,
       avatarSource: { uri: avatar },
-      smsNotification: false
+      smsNotification
     };
   }
 
@@ -95,9 +97,37 @@ class SettingsScreen extends React.Component {
   };
 
   onChangeSmsNotification = value => {
+    const {
+      store: { currentUserStore }
+    } = this.props;
+
     console.tron.log("Sms notification: ", value);
+
+    const data = {
+      parent: {
+        sms_notification: value
+      }
+    };
+
+    const successHandler = ({ data: { sms_notification } }) => {
+      this.setState({ loading: false, smsNotification: sms_notification }, () =>
+        currentUserStore.setSmsNotification(sms_notification)
+      );
+    };
+
+    const errorHandler = () => {
+      this.setState({ loading: false }, () =>
+        Alert.alert("Error", "Failed to update SMS Notification setting.")
+      );
+    };
+
     this.setState({
-      smsNotification: value
+      loading: true
+    });
+
+    updateCareProvider(currentUserStore.id, data, {
+      successHandler,
+      errorHandler
     });
   };
 
@@ -126,7 +156,7 @@ class SettingsScreen extends React.Component {
       }
     } = this.props;
     const name = `${firstName} ${lastName}`;
-    const { avatarSource, smsNotification } = this.state;
+    const { loading, avatarSource, smsNotification } = this.state;
     const avatarOptions = { source: imgDoctor };
 
     if (avatarSource.uri !== "/images/original/missing.png") {
@@ -143,97 +173,104 @@ class SettingsScreen extends React.Component {
             onPressBackButton={() => navigate("AccountDefault")}
           />
         </HeaderWrapper>
-        <ScrollView>
-          <ViewCentered paddingTop={0}>
-            <Avatar
-              {...avatarOptions}
-              rounded
-              size={120}
-              showEditButton
-              editButton={{
-                containerStyle: {
-                  backgroundColor: GREEN,
-                  borderRadius: 12
-                },
-                size: 24,
-                onPress: this.onAddAvatar
-              }}
-            />
+        {loading && (
+          <ViewCentered paddingBottom={12} style={{ flex: 1 }}>
+            <ActivityIndicator size="large" color={colors.SEAFOAMBLUE} />
           </ViewCentered>
-          <View>
-            <StyledText fontSize={24}>Personal Information</StyledText>
-            <View style={{ padding: 16 }}>
-              <InputButton
-                label="Name"
-                value={name}
-                icon={
-                  <FontAwesome name="angle-right" size={24} color={MIDGREY} />
-                }
-                onPress={() => navigate("AccountEditName")}
+        )}
+        {!loading && (
+          <ScrollView>
+            <ViewCentered paddingTop={0}>
+              <Avatar
+                {...avatarOptions}
+                rounded
+                size={120}
+                showEditButton
+                editButton={{
+                  containerStyle: {
+                    backgroundColor: GREEN,
+                    borderRadius: 12
+                  },
+                  size: 24,
+                  onPress: this.onAddAvatar
+                }}
               />
+            </ViewCentered>
+            <View>
+              <StyledText fontSize={24}>Personal Information</StyledText>
+              <View style={{ padding: 16 }}>
+                <InputButton
+                  label="Name"
+                  value={name}
+                  icon={
+                    <FontAwesome name="angle-right" size={24} color={MIDGREY} />
+                  }
+                  onPress={() => navigate("AccountEditName")}
+                />
+              </View>
+              <View style={{ padding: 16 }}>
+                <InputButton
+                  label="Address"
+                  value={address.street}
+                  icon={
+                    <FontAwesome name="angle-right" size={24} color={MIDGREY} />
+                  }
+                  onPress={() => navigate("AccountEditAddress")}
+                />
+              </View>
+              <View style={{ padding: 16 }}>
+                <InputButton
+                  label="Email"
+                  value={email}
+                  icon={
+                    <FontAwesome name="angle-right" size={24} color={MIDGREY} />
+                  }
+                  onPress={() => navigate("AccountEditEmail")}
+                />
+              </View>
+              <View style={{ padding: 16 }}>
+                <InputButton
+                  label="Phone Number"
+                  value={phone}
+                  icon={
+                    <FontAwesome name="angle-right" size={24} color={MIDGREY} />
+                  }
+                  onPress={() => navigate("AccountEditPhoneNumber")}
+                />
+              </View>
+              <View style={{ padding: 16 }}>
+                <InputButton
+                  label="Specialties"
+                  value={specialties.join(", ")}
+                  icon={
+                    <FontAwesome name="angle-right" size={24} color={MIDGREY} />
+                  }
+                  onPress={() => navigate("AccountEditSpecialties")}
+                />
+              </View>
+              <View style={{ padding: 16 }}>
+                <InputButton
+                  label="Short Biography"
+                  value={biography}
+                  icon={
+                    <FontAwesome name="angle-right" size={24} color={MIDGREY} />
+                  }
+                  onPress={() => navigate("AccountEditBio")}
+                />
+              </View>
             </View>
-            <View style={{ padding: 16 }}>
-              <InputButton
-                label="Address"
-                value={address.street}
-                icon={
-                  <FontAwesome name="angle-right" size={24} color={MIDGREY} />
-                }
-                onPress={() => navigate("AccountEditAddress")}
+            <FlexView style={{ padding: 16 }}>
+              <StyledText fontSize={20}>SMS Notifications</StyledText>
+              <Switch
+                value={smsNotification}
+                onValueChange={this.onChangeSmsNotification}
               />
+            </FlexView>
+            <View style={{ marginTop: 32, marginBottom: 32 }}>
+              <ServiceButton title="Log Out" onPress={this.logOut} />
             </View>
-            <View style={{ padding: 16 }}>
-              <InputButton
-                label="Email"
-                value={email}
-                icon={
-                  <FontAwesome name="angle-right" size={24} color={MIDGREY} />
-                }
-                onPress={() => navigate("AccountEditEmail")}
-              />
-            </View>
-            <View style={{ padding: 16 }}>
-              <InputButton
-                label="Phone Number"
-                value={phone}
-                icon={
-                  <FontAwesome name="angle-right" size={24} color={MIDGREY} />
-                }
-                onPress={() => navigate("AccountEditPhoneNumber")}
-              />
-            </View>
-            <View style={{ padding: 16 }}>
-              <InputButton
-                label="Specialties"
-                value={specialties.join(", ")}
-                icon={
-                  <FontAwesome name="angle-right" size={24} color={MIDGREY} />
-                }
-                onPress={() => navigate("AccountEditSpecialties")}
-              />
-            </View>
-            <View style={{ padding: 16 }}>
-              <InputButton
-                label="Short Biography"
-                value={biography}
-                icon={
-                  <FontAwesome name="angle-right" size={24} color={MIDGREY} />
-                }
-                onPress={() => navigate("AccountEditBio")}
-              />
-            </View>
-          </View>
-          <FlexView style={{ padding: 16 }}>
-            <StyledText fontSize={20}>SMS Notifications</StyledText>
-            <Switch
-              value={smsNotification}
-              onValueChange={this.onChangeSmsNotification}
-            />
-          </FlexView>
-          <View style={{ marginTop: 32, marginBottom: 32 }}>
-            <ServiceButton title="Log Out" onPress={this.logOut} />
-          </View>
-        </ScrollView>
+          </ScrollView>
+        )}
       </KeyboardAvoidingView>
     );
   }
