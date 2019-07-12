@@ -104,7 +104,7 @@ class SettingsScreen extends React.Component {
     console.tron.log("Sms notification: ", value);
 
     const data = {
-      parent: {
+      care_provider: {
         sms_notification: value
       }
     };
