@@ -10,7 +10,8 @@ const ParentStore = types
     phone: types.string,
     accepted_privacy: types.boolean,
     accepted_terms_of_service: types.boolean,
-    active: types.boolean
+    active: types.boolean,
+    sms_notification: types.boolean
   })
   .actions(self => ({
     setName(value) {
@@ -39,6 +40,10 @@ const ParentStore = types
     },
     setActive(value) {
       self.active = value;
+      return self;
+    },
+    setSmsNotification(value) {
+      self.sms_notification = value;
       return self;
     }
   }));
