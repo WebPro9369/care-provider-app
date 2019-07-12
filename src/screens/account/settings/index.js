@@ -14,6 +14,7 @@ import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { HeaderWrapper, ViewCentered, View } from "../../../components/views";
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
+import { formatPhoneNumber } from "@utils/helpers";
 import { updateCareProvider } from "@services/opear-api";
 
 const { GREEN, MIDGREY } = colors;
@@ -184,7 +185,7 @@ class SettingsScreen extends React.Component {
             <View style={{ padding: 16 }}>
               <InputButton
                 label="Phone Number"
-                value={phone}
+                value={formatPhoneNumber(phone)}
                 icon={
                   <FontAwesome name="angle-right" size={24} color={MIDGREY} />
                 }
