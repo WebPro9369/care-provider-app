@@ -112,7 +112,7 @@ class RequestVisitModalComponent extends Component {
     if (!modalVisible) return null;
 
     const {
-      visit: { name, illness, symptoms, time, allergies, parentNotes, address }
+      visit: { name, illness, symptoms, time, allergies, parentNotes, address, date }
     } = this.state;
 
     return (
@@ -144,13 +144,24 @@ class RequestVisitModalComponent extends Component {
                 name={name}
                 illness={illness}
                 time={time}
-                address={`${address.street} ,${address.city}${
-                  address.state ? `, ${address.state}` : ""
-                }`}
+                address={address}
               />
             </View>
             <ContentWrapper>
               <View style={{ marginTop: 8 }}>
+                <FlexView
+                  justifyContent="start"
+                  style={{ paddingTop: 6, paddingBottom: 6 }}
+                >
+                  <View style={{ width: 100 }}>
+                    <StyledText fontSize={14} fontFamily="FlamaMedium">
+                      Date
+                    </StyledText>
+                  </View>
+                  <StyledText fontSize={14}>
+                    {date ? date : "-"}
+                  </StyledText>
+                </FlexView>
                 <FlexView
                   justifyContent="start"
                   style={{ paddingTop: 6, paddingBottom: 6 }}

@@ -33,7 +33,8 @@ export default class App extends React.Component {
       },
       onNotification(notification) {
         console.tron && console.tron.log("NOTIFICATION:", notification);
-      }
+      }, 
+      senderID: "95891248163"
     });
   }
 

@@ -50,6 +50,7 @@ class EditAddressScreen extends React.Component {
   }
 
   setCurrentLocation = () => {
+
     navigator.geolocation.getCurrentPosition(
       position => {
         console.tron.log("Current position: ", position);
@@ -85,12 +86,20 @@ class EditAddressScreen extends React.Component {
             let address = "";
             // eslint-disable-next-line no-restricted-syntax
             for (const a of addressComponents) {
-              if (!a.types.includes("locality")) {
-                address += " ";
-                address += a.short_name;
-              } else {
+
+              if(a.types.includes("street_number")) {
+                address = a.short_name;
+              }
+
+              if(a.types.includes("route")) {
+                address += " " + a.short_name;
                 this.setState({
-                  address,
+                  street: address
+                });
+              }
+
+              if (a.types.includes("locality")) {
+                this.setState({
                   city: a.short_name
                 });
               }
@@ -105,7 +114,7 @@ class EditAddressScreen extends React.Component {
           .catch(err => {
             console.tron.log("Google map api error: ", err);
             return Alert.alert(
-              "There was an issue", 
+              "There was an issue",
               "Google Map API failed to get your location.");
           });
       },
@@ -175,7 +184,7 @@ class EditAddressScreen extends React.Component {
           <FormWrapper>
             <FormInputView>
               <FormTextInput
-                label="Address"
+                label="Street Address"
                 value={street}
                 rightIcon={
                   <TouchableView onPress={this.setCurrentLocation}>

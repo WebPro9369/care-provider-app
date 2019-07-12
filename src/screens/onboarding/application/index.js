@@ -660,6 +660,7 @@ class ApplicationScreen extends React.Component {
                   value={specialties}
                   placeholder="Specialty 1, specialty 2, etc."
                   returnKeyType="next"
+                  maxLength={38}
                   ref={input => (this.inputRefs.specialties = input)}
                   onChangeText={this.handleInputChange("specialties")}
                   onSubmitEditing={() => {
@@ -805,15 +806,15 @@ class ApplicationScreen extends React.Component {
                   checkedColor={colors.SEAFOAMBLUE}
                 />
               </FormInputWrapper>
+              <FormInputWrapper
+                style={{ marginBottom: 20, marginTop: 0, paddingTop: 0 }}
+              >
+                <ServiceButton
+                  title="Submit Application"
+                  onPress={this.onSubmit}
+                />
+              </FormInputWrapper>
             </FormWrapper>
-            <FormInputWrapper
-              style={{ marginBottom: 20, marginTop: 0, paddingTop: 0 }}
-            >
-              <ServiceButton
-                title="Submit Application"
-                onPress={this.onSubmit}
-              />
-            </FormInputWrapper>
           </KeyboardScrollView>
         </SafeAreaView>
       </ContainerView>

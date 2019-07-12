@@ -13,7 +13,7 @@ export const ChildStore = types
     current_medications: types.optional(types.string, ""),
     hospitalizations: types.optional(types.string, ""),
     current_medical_conditions: types.optional(types.string, ""),
-    allergies: types.string
+    allergies: types.maybeNull(types.string)
   })
   .actions(self => ({
     setGender(value) {

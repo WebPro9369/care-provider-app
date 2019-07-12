@@ -51,7 +51,16 @@ export const isToday = someDate => {
 };
 
 export const addressToString = address => {
-  return `${address.street} ,${address.city}${
+  return `${address.street}, ${address.city}${
     address.state ? `, ${address.state}` : ""
   }`;
 };
+
+export const formatCardInfo = data => ({
+  cardNumber: data.cardNumber || "",
+  expiryYear: data.expiryYear || 0,
+  expiryMonth: data.expiryMonth || 0,
+  cvv: data.cvv || "",
+  cardType: data.cardType || "",
+  fullName: data.fullName || ""
+});

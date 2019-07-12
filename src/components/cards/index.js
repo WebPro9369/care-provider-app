@@ -26,9 +26,9 @@ export const ProviderCard = ({
 }) => (
   <ProviderCardWrapper {...rest}>
     <FlexView alignItems="stretch">
-      <FlexView>
+      <FlexView style={{ flex: 1 }}>
         <Avatar rounded size={80} source={avatarImg} />
-        <View style={{ paddingLeft: 20 }}>
+        <View style={{ paddingLeft: 20, flex: 1 }}>
           <StyledText
             fontSize={16}
             fontFamily="FlamaMedium"
@@ -39,12 +39,7 @@ export const ProviderCard = ({
           <StyledText fontSize={16} color={colors.BLACK87}>
             {bio}
           </StyledText>
-          <StyledText
-            fontSize={14}
-            lineHeight={18}
-            color={colors.BLACK38}
-            style={{ maxWidth: 170 }}
-          >
+          <StyledText fontSize={14} lineHeight={18} color={colors.BLACK38}>
             {history}
           </StyledText>
         </View>
@@ -258,26 +253,31 @@ export const VisitDetailCard = ({
   illness,
   time,
   address,
+  date,
   ...rest
 }) => (
   <VisitDetailCardWrapper {...rest}>
-    <FlexView justifyContent="start" alignItems="center">
-      <Avatar rounded size={40} source={avatarImg} />
-      <View style={{ marginLeft: 20 }}>
-        <StyledText
-          fontSize={14}
-          fontFamily="FlamaMedium"
-          lineHeight={18}
-          color={colors.BLACK87}
-        >
-          {name}
-        </StyledText>
-        <StyledText fontSize={14} lineHeight={18} color={colors.BLACK60}>
-          {illness}
-        </StyledText>
-      </View>
-    </FlexView>
-    <View style={{ display: "flex", alignItems: "center" }}>
+    <Avatar rounded size={40} source={avatarImg} />
+    <View style={{ marginLeft: 20, flex: 1 }}>
+      <StyledText
+        fontSize={14}
+        fontFamily="FlamaMedium"
+        lineHeight={18}
+        color={colors.BLACK87}
+        style={{ alignSelf: "flex-start" }}
+      >
+        {name}
+      </StyledText>
+      <StyledText
+        fontSize={14}
+        lineHeight={18}
+        color={colors.BLACK60}
+        style={{ alignSelf: "flex-start" }}
+      >
+        {illness}
+      </StyledText>
+    </View>
+    <View>
       <StyledText
         fontSize={16}
         fontFamily="FlamaMedium"
@@ -285,6 +285,9 @@ export const VisitDetailCard = ({
         color={colors.BLACK60}
       >
         {time}
+      </StyledText>
+      <StyledText fontSize={12} lineHeight={24} color={colors.BLACK60}>
+        {date}
       </StyledText>
       <StyledText fontSize={12} lineHeight={24} color={colors.BLACK60}>
         {addressToString(address)}
@@ -298,5 +301,6 @@ VisitDetailCard.propTypes = {
   name: PropTypes.string.isRequired,
   illness: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
   address: PropTypes.object.isRequired
 };
