@@ -144,12 +144,24 @@ class RequestVisitModalComponent extends Component {
                 name={name}
                 illness={illness}
                 time={time}
-                date={date}
                 address={address}
               />
             </View>
             <ContentWrapper>
               <View style={{ marginTop: 8 }}>
+                <FlexView
+                  justifyContent="start"
+                  style={{ paddingTop: 6, paddingBottom: 6 }}
+                >
+                  <View style={{ width: 100 }}>
+                    <StyledText fontSize={14} fontFamily="FlamaMedium">
+                      Date
+                    </StyledText>
+                  </View>
+                  <StyledText fontSize={14}>
+                    {date ? date : "-"}
+                  </StyledText>
+                </FlexView>
                 <FlexView
                   justifyContent="start"
                   style={{ paddingTop: 6, paddingBottom: 6 }}

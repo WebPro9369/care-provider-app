@@ -92,7 +92,7 @@ class AccountScreen extends React.Component {
           <ListTouchableButtonWrapper
             onPress={() => navigate("AccountPayouts")}
           >
-            <ListButtonText>Payouts</ListButtonText>
+            <ListButtonText>Payouts / Payments</ListButtonText>
             <FontAwesome name="angle-right" color={colors.MIDGREY} size={24} />
           </ListTouchableButtonWrapper>
           <ListTouchableButtonWrapper

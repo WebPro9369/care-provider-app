@@ -2,7 +2,7 @@
 /* eslint-disable no-return-assign */
 import React from "react";
 // import axios from "axios";
-import { Platform, Keyboard, Alert, Linking, SafeAreaView } from "react-native";
+import { Platform, Keyboard, Alert, Linking, SafeAreaView, ActivityIndicator } from "react-native";
 import { Avatar, ButtonGroup, CheckBox, Icon } from "react-native-elements";
 import { inject, observer, PropTypes } from "mobx-react";
 import ImagePicker from "react-native-image-picker";
@@ -55,7 +55,8 @@ class ApplicationScreen extends React.Component {
       supervisingPhysician: "",
       selectedIndexes: [],
       acceptedTermsOfService: false,
-      acceptedPrivacy: false
+      acceptedPrivacy: false,
+      loading: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -306,12 +307,13 @@ class ApplicationScreen extends React.Component {
     // TODO: Fix alert to pop up
     const errorHandler = err => {
       console.tron.log("API Error: ", err);
+      this.setState({loading: false});
       Alert.alert(
         "Uhoh",
         "There was an issue with creating your account. Please ensure your information is correct and try again, or contact help@opear.com."
       );
     };
-
+    this.setState({loading: true});
     registerCareProvider(data, { successHandler, errorHandler });
   };
 
@@ -347,7 +349,8 @@ class ApplicationScreen extends React.Component {
       supervisingPhysician,
       selectedIndexes,
       acceptedTermsOfService,
-      acceptedPrivacy
+      acceptedPrivacy,
+      loading
     } = this.state;
 
     const avatarOptions = avatarSource
@@ -806,15 +809,17 @@ class ApplicationScreen extends React.Component {
                   checkedColor={colors.SEAFOAMBLUE}
                 />
               </FormInputWrapper>
+              {loading ? <ActivityIndicator size="large" color="#00ff00" /> :
+                <FormInputWrapper
+                  style={{ marginBottom: 20, marginTop: 0, paddingTop: 0 }}
+                >
+                  <ServiceButton
+                    title="Submit Application"
+                    onPress={this.onSubmit}
+                  />
+                </FormInputWrapper>
+            }
             </FormWrapper>
-            <FormInputWrapper
-              style={{ marginBottom: 20, marginTop: 0, paddingTop: 0 }}
-            >
-              <ServiceButton
-                title="Submit Application"
-                onPress={this.onSubmit}
-              />
-            </FormInputWrapper>
           </KeyboardScrollView>
         </SafeAreaView>
       </ContainerView>

@@ -14,6 +14,13 @@ export function commaStringToArray(value) {
   return value.split(",").map(item => item.trim());
 }
 
+export function formatPhoneNumber(phone)
+{
+    phone = phone.replace(/\D[^\.]/g, "");
+    phone = "1 ("+phone.slice(0,3)+") "+phone.slice(3,6)+"-"+phone.slice(6);
+    return phone;
+}
+
 export function getFormattedDate(date) {
   const year = date.getFullYear();
 
@@ -55,3 +62,12 @@ export const addressToString = address => {
     address.state ? `, ${address.state}` : ""
   }`;
 };
+
+export const formatCardInfo = data => ({
+  cardNumber: data.cardNumber || "",
+  expiryYear: data.expiryYear || 0,
+  expiryMonth: data.expiryMonth || 0,
+  cvv: data.cvv || "",
+  cardType: data.cardType || "",
+  fullName: data.fullName || ""
+});
