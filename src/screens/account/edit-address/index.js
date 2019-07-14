@@ -34,16 +34,23 @@ class EditAddressScreen extends React.Component {
   constructor(props) {
     super(props);
 
+    const {
+      store: {
+        currentUserStore: {
+          address: { name, street, city, zip }
+        }
+      }
+    } = this.props;
+
     this.state = {
-      name: "",
-      street: "",
-      city: "",
-      zip: ""
+      name,
+      street,
+      city,
+      zip
     };
   }
 
   setCurrentLocation = () => {
-
     navigator.geolocation.getCurrentPosition(
       position => {
         console.tron.log("Current position: ", position);
@@ -79,12 +86,11 @@ class EditAddressScreen extends React.Component {
             let address = "";
             // eslint-disable-next-line no-restricted-syntax
             for (const a of addressComponents) {
-
-              if(a.types.includes("street_number")) {
+              if (a.types.includes("street_number")) {
                 address = a.short_name;
               }
 
-              if(a.types.includes("route")) {
+              if (a.types.includes("route")) {
                 address += " " + a.short_name;
                 this.setState({
                   street: address
@@ -175,10 +181,7 @@ class EditAddressScreen extends React.Component {
 
   render() {
     const {
-      navigation: { goBack },
-      store: {
-        currentUserStore: { address }
-      }
+      navigation: { goBack }
     } = this.props;
 
     const { name, street, city, zip } = this.state;
@@ -196,7 +199,7 @@ class EditAddressScreen extends React.Component {
             <FormInputView>
               <FormTextInput
                 label="Address"
-                value={street || address.street}
+                value={street}
                 rightIcon={
                   <TouchableView onPress={this.setCurrentLocation}>
                     <FontAwesome
@@ -217,7 +220,7 @@ class EditAddressScreen extends React.Component {
                     flex: 1,
                     marginRight: 20
                   }}
-                  value={city || address.city}
+                  value={city}
                   onChangeText={this.handleChange("city")}
                 />
                 <FormTextInput
@@ -225,7 +228,7 @@ class EditAddressScreen extends React.Component {
                   wrapperStyle={{
                     flex: 1
                   }}
-                  value={zip || address.zip}
+                  value={zip}
                   onChangeText={this.handleChange("zip")}
                 />
               </FlexView>
@@ -233,7 +236,7 @@ class EditAddressScreen extends React.Component {
             <FormInputView>
               <FormTextInput
                 label="Location Name"
-                value={name || address.name}
+                value={name}
                 onChangeText={this.handleChange("name")}
               />
             </FormInputView>
