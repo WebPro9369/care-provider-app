@@ -20,14 +20,18 @@ class EditEmailScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { store: { currentUserStore: { email } } }  = props; 
+    const {
+      store: {
+        currentUserStore: { email }
+      }
+    } = props;
 
     this.state = {
-      email,
+      email
     };
   }
 
-  handleChange = (email) => {
+  handleChange = email => {
     this.setState({ email });
   };
 
@@ -46,11 +50,7 @@ class EditEmailScreen extends React.Component {
       goBack();
     };
 
-    updateCareProvider(
-      id,
-      data,
-      { successHandler }
-    );
+    updateCareProvider(id, data, { successHandler });
   };
 
   render() {
@@ -70,7 +70,11 @@ class EditEmailScreen extends React.Component {
         />
         <FormWrapper>
           <FormInputView>
-            <FormTextInput label="Email" value={email} onChangeText={this.handleChange} />
+            <FormTextInput
+              label="Email"
+              value={email}
+              onChangeText={this.handleChange}
+            />
           </FormInputView>
         </FormWrapper>
         <FormInputView>

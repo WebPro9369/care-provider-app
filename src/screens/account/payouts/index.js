@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from "react";
 import { ActivityIndicator } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
@@ -87,12 +88,12 @@ class PayoutsScreen extends React.Component {
             >
               {"Total Earnings: "}
             </StyledText>
-            {loading
-              ? <ActivityIndicator size="small" color={colors.SEAFOAMBLUE} />
-              : (
-                <StyledText fontSize={24} color={colors.SEAFOAMBLUE}>
-                  ${stripe_balance || "0"}
-                </StyledText>
+            {loading ? (
+              <ActivityIndicator size="small" color={colors.SEAFOAMBLUE} />
+            ) : (
+              <StyledText fontSize={24} color={colors.SEAFOAMBLUE}>
+                {`$${stripe_balance || "0"}`}
+              </StyledText>
             )}
           </FlexView>
           <View style={{ paddingTop: 16, paddingBottom: 16 }}>

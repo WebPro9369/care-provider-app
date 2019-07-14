@@ -21,11 +21,6 @@ class AccountScreen extends React.Component {
     store: PropTypes.observableObject.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-  }
-
   componentDidMount() {
     const { navigation } = this.props;
     this._onFocusListener = navigation.addListener("didFocus", () => {
@@ -61,9 +56,9 @@ class AccountScreen extends React.Component {
       }
     } = store;
 
-    var avatarImg = null;
+    let avatarImg = null;
 
-    if(avatar != "" && avatar != "/images/original/missing.png") {
+    if (avatar !== "" && avatar !== "/images/original/missing.png") {
       avatarImg = avatar;
     }
 
@@ -80,7 +75,7 @@ class AccountScreen extends React.Component {
           </StyledText>
         </View>
         <ProviderCard
-          avatarImg={(avatarImg ? {uri: avatarImg} : imgDoctor)}
+          avatarImg={avatarImg ? { uri: avatarImg } : imgDoctor}
           name={`${firstName} ${lastName}`}
           bio={biography}
           history={workHistory.join(", ")}
