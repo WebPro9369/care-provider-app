@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
 import { FormTextInput } from "@components/text";
@@ -71,7 +72,7 @@ class EditSpecialtiesScreen extends React.Component {
       goBack();
     };
 
-    updateCareProvider(id, data, { successHandler });
+    return updateCareProvider(id, data, { successHandler });
   };
 
   render() {
@@ -91,7 +92,8 @@ class EditSpecialtiesScreen extends React.Component {
         />
         <FormWrapper>
           <FormInputView>
-            <FormTextInput maxLength={38}
+            <FormTextInput
+              maxLength={38}
               label="Specialties"
               value={specialties}
               onChangeText={this.handleInputChange("specialties")}

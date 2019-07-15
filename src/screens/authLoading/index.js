@@ -138,6 +138,7 @@ class AuthLoadingScreen extends Component {
           if (addresses && addresses.length > 0) {
             const addressData = addresses[addresses.length - 1];
             address
+              .setId(addressData.id || -1)
               .setName(addressData.name || "")
               .setStreet(addressData.street || "")
               .setCity(addressData.city || "")

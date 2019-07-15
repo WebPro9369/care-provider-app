@@ -11,6 +11,10 @@ const AddressStore = types
     zip: types.string
   })
   .actions(self => ({
+    setId(value) {
+      self.id = value;
+      return self;
+    },
     setName(value) {
       self.name = value;
       return self;

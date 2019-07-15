@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React from "react";
@@ -160,6 +161,7 @@ class SettingsScreen extends React.Component {
       }
     } = this.props;
     const name = `${firstName} ${lastName}`;
+
     const { loading, avatarSource, smsNotification } = this.state;
     const avatarOptions = { source: imgDoctor };
 
