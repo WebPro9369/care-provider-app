@@ -108,7 +108,8 @@ class AuthLoadingScreen extends Component {
             biography,
             addresses,
             rating,
-            avatar
+            avatar,
+            sms_notification: smsNotification
           } = res.data;
 
           if (!active) return navigate("ApplicationPending");
@@ -129,7 +130,8 @@ class AuthLoadingScreen extends Component {
             .setStripeBalance(stripe_balance)
             .setPayoutAccount(payout_account)
             .setRating(rating)
-            .setAvatar(avatar);
+            .setAvatar(avatar)
+            .setSmsNotification(smsNotification);
 
           address.setZipCode(zip);
 

@@ -38,7 +38,8 @@ const MainStore = types.model("MainStore", {
     rating: 0,
     avatar: "",
     acceptedStripeTOS: false,
-    notificationToken: ""
+    notificationToken: "",
+    smsNotification: false
   }),
   visitsStore: types.optional(VisitsStore, {
     visits: []
