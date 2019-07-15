@@ -75,13 +75,16 @@ class SettingsScreen extends React.Component {
           console.tron.log(res.data);
         };
 
-        const data = {
-          care_provider: {
-            avatar: {
-              uri: source.uri
-            }
-          }
-        };
+        const parts = source.uri.split('/');
+        const name = parts[parts.length -1];
+
+        const data = new FormData();
+        data.append('id', currentUserStore.id);
+        data.append('care_provider[avatar]', {
+          name,
+          uri: source.uri,
+          type: 'image/jpg'
+        });
 
         updateCareProvider(currentUserStore.id, data, { successHandler });
       }
