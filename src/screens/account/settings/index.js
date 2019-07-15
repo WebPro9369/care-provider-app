@@ -196,7 +196,7 @@ class SettingsScreen extends React.Component {
                 }}
               />
             </ViewCentered>
-            <View>
+            <View style={{ marginBottom: 45 }}>
               <StyledText fontSize={24}>Personal Information</StyledText>
               <View style={{ padding: 16 }}>
                 <InputButton
@@ -258,14 +258,14 @@ class SettingsScreen extends React.Component {
                   onPress={() => navigate("AccountEditBio")}
                 />
               </View>
+              <FlexView style={{ padding: 16 }}>
+                <StyledText fontSize={20}>SMS Notifications</StyledText>
+                <Switch
+                  value={smsNotification}
+                  onValueChange={this.onChangeSmsNotification}
+                />
+              </FlexView>
             </View>
-            <FlexView style={{ padding: 16 }}>
-              <StyledText fontSize={20}>SMS Notifications</StyledText>
-              <Switch
-                value={smsNotification}
-                onValueChange={this.onChangeSmsNotification}
-              />
-            </FlexView>
             <View style={{ marginTop: 32, marginBottom: 32 }}>
               <ServiceButton title="Log Out" onPress={this.logOut} />
             </View>
