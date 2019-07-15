@@ -22,6 +22,7 @@ import {
 } from "../../../components/views";
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
+import { formatPhoneNumber } from "@utils/helpers";
 
 const { GREEN, MIDGREY } = colors;
 const imgDoctor = require("../../../../assets/images/Doctor.png");
@@ -83,13 +84,16 @@ class SettingsScreen extends React.Component {
           console.tron.log(res.data);
         };
 
-        const data = {
-          care_provider: {
-            avatar: {
-              uri: source.uri
-            }
-          }
-        };
+        const parts = source.uri.split('/');
+        const name = parts[parts.length -1];
+
+        const data = new FormData();
+        data.append('id', currentUserStore.id);
+        data.append('care_provider[avatar]', {
+          name,
+          uri: source.uri,
+          type: 'image/jpg'
+        });
 
         updateCareProvider(currentUserStore.id, data, { successHandler });
       }
@@ -231,7 +235,7 @@ class SettingsScreen extends React.Component {
               <View style={{ padding: 16 }}>
                 <InputButton
                   label="Phone Number"
-                  value={phone}
+                  value={formatPhoneNumber(phone)}
                   icon={
                     <FontAwesome name="angle-right" size={24} color={MIDGREY} />
                   }

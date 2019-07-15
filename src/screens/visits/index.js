@@ -15,7 +15,6 @@ import { getVisits } from "@services/opear-api";
 import { tabViewStyles, TabItem } from "./styles";
 import UpcomingVisitsScreen from "./upcoming-visits";
 import PastVisitsScreen from "./past-visits";
-import { getAge } from "../../utils/helpers";
 
 const FirstRoute = () => <UpcomingVisitsScreen />;
 const SecondRoute = () => <PastVisitsScreen />;
@@ -58,7 +57,12 @@ class ManageVisitsScreen extends React.Component {
       return false;
     }
 
-    visitsStore.setVisits(Object.values(data).flat());
+    const visitArr = Object.values(data).reduce((acc, current) => {
+      (current || []).forEach(item => acc.push(item));
+      return acc;
+    }, []);
+
+    visitArr.forEach(visit => visitsStore.addVisit(visit));
     return true;
   };
 
