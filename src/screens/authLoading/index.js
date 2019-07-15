@@ -4,8 +4,12 @@ import React, { Component } from "react";
 import { Alert, ActivityIndicator, View, Linking } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { getCareProvider } from "@services/opear-api";
-import { getAuthentication, removeAuthentication } from "@services/authentication";
+import {
+  getAuthentication,
+  removeAuthentication
+} from "@services/authentication";
 import { getFormattedDate } from "@utils/helpers";
+import { SUBSCRIPTIONS_ACTIVE_START_DATE } from "../../utils/constants";
 
 @inject("store")
 @observer
@@ -35,8 +39,12 @@ class AuthLoadingScreen extends Component {
       if (!isAuthenticated) return navigate("Onboarding");
 
       const {
-        store: { currentUserStore }
+        store: { applicationStore, currentUserStore }
       } = this.props;
+
+      applicationStore.setSubscriptionsActive(
+        new Date() > SUBSCRIPTIONS_ACTIVE_START_DATE
+      );
       currentUserStore.setAuthentication({ id, apiKey });
 
       const successHandler = res => {
@@ -71,7 +79,8 @@ class AuthLoadingScreen extends Component {
             biography,
             addresses,
             rating,
-            avatar
+            avatar,
+            sms_notification: smsNotification
           } = res.data;
 
           if (!active) return navigate("ApplicationPending");
@@ -92,13 +101,15 @@ class AuthLoadingScreen extends Component {
             .setStripeBalance(stripe_balance)
             .setPayoutAccount(payout_account)
             .setRating(rating)
-            .setAvatar(avatar);
+            .setAvatar(avatar)
+            .setSmsNotification(smsNotification);
 
           address.setZipCode(zip);
 
           if (addresses && addresses.length > 0) {
             const addressData = addresses[addresses.length - 1];
             address
+              .setId(addressData.id || -1)
               .setName(addressData.name || "")
               .setStreet(addressData.street || "")
               .setCity(addressData.city || "")

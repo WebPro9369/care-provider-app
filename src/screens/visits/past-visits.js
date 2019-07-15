@@ -58,7 +58,7 @@ class PastVisitsScreen extends React.Component {
         : "N/A";
 
       return visitsDisplayStack.push(
-        <View style={{ marginBottom: 9 }}>
+        <View key={`visit-detail-wrapper-${visit.id}`} style={{ marginBottom: 9 }}>
           <VisitDetailCard
             key={`visit-detail-${visit.id}`}
             avatarImg={imgFox}

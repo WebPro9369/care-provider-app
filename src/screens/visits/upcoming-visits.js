@@ -57,15 +57,17 @@ class UpcomingVisitsScreen extends React.Component {
         ? `${visit.child.first_name} ${visit.child.last_name}`
         : "N/A";
 
+        console.tron.log(visit.address);
+
       return visitsDisplayStack.push(
-        <View style={{ marginBottom: 9 }}>
+        <View key={`visit-detail-wrapper-${visit.id}`} style={{ marginBottom: 9 }}>
           <VisitDetailCard
             key={`visit-detail-${visit.id}`}
             avatarImg={imgFox}
             name={childName}
             illness={visit.reason}
             time={formattedTime[1]}
-            address={{ street: visit.address.street }}
+            address={visit.address}
             onPress={() =>
               navigate("VisitsVisitDetails", {
                 visitID: visit.id

@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable prefer-template */
@@ -18,7 +19,7 @@ import {
 } from "../../../components/views";
 import { FormInputView } from "../../../components/views/keyboard-view";
 import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
-import { updateCareProvider } from "../../../services/opear-api";
+import { createAddress, updateAddress } from "../../../services/opear-api";
 import { colors, GOOGLE_API_KEY } from "../../../utils/constants";
 import { DeeplinkHandler } from "@components/deeplink-handler";
 
@@ -40,7 +41,7 @@ class EditAddressScreen extends React.Component {
           address: { name, street, city, zip }
         }
       }
-    } = props;
+    } = this.props;
 
     this.state = {
       name,
@@ -86,12 +87,19 @@ class EditAddressScreen extends React.Component {
             let address = "";
             // eslint-disable-next-line no-restricted-syntax
             for (const a of addressComponents) {
-              if (!a.types.includes("locality")) {
-                address += " ";
-                address += a.short_name;
-              } else {
+              if (a.types.includes("street_number")) {
+                address = a.short_name;
+              }
+
+              if (a.types.includes("route")) {
+                address += " " + a.short_name;
                 this.setState({
-                  address,
+                  street: address
+                });
+              }
+
+              if (a.types.includes("locality")) {
+                this.setState({
                   city: a.short_name
                 });
               }
@@ -107,7 +115,9 @@ class EditAddressScreen extends React.Component {
             console.tron.log("Google map api error: ", err);
             return Alert.alert(
               "There was an issue",
-              "Google Map API failed to get your location.");
+              "Google Map API failed to get your location."
+            );
+
           });
       },
       error => {
@@ -126,35 +136,49 @@ class EditAddressScreen extends React.Component {
     const {
       navigation: { goBack },
       store: {
-        currentUserStore: { id, address }
+        currentUserStore: { address }
       }
     } = this.props;
 
-    const { street, city, zip: zip, name } = this.state;
-    const data = {
-      care_provider: {
-        addresses_attributes: [
-          {
-            name,
-            street,
-            city,
-            zip
-          }
-        ]
+    const { street, city, zip, name } = this.state;
+    const updatedFields = Object.keys(this.state).filter(key => {
+      if (!this.state[key]) {
+        return false;
       }
+
+      if (address[key] === this.state[key]) {
+        return false;
+      }
+      return true;
+    });
+
+    const data = {
+      name: name || address.name,
+      city: city || address.city,
+      street: street || address.street,
+      zip: zip || address.zip,
+      state: address.state
     };
 
     const successHandler = () => {
       address
-        .setName(name)
-        .setStreet(street)
-        .setCity(city)
-        .setZipCode(zip);
+        .setName(data.name)
+        .setStreet(data.street)
+        .setCity(data.city)
+        .setZipCode(data.zip);
 
       goBack();
     };
 
-    updateCareProvider(id, data, { successHandler });
+    const errorHandler = () => {
+      Alert.alert("Error", "Failed to update the address.");
+    };
+
+    if (updatedFields.includes("name") && updatedFields.length === 1) {
+      return updateAddress(address.id, data, { successHandler, errorHandler });
+    }
+
+    return createAddress(data, { successHandler, errorHandler });
   };
 
   render() {
@@ -173,7 +197,7 @@ class EditAddressScreen extends React.Component {
           style={{ paddingLeft: 16 }}
           onPressBackButton={() => goBack()}
         />
-        <KeyboardScrollView>
+        <KeyboardScrollView padding={16}>
           <FormWrapper>
             <FormInputView>
               <FormTextInput

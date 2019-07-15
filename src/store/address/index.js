@@ -7,10 +7,14 @@ const AddressStore = types
     name: types.string,
     street: types.string,
     city: types.string,
-    state: types.string,
+    state: types.maybeNull(types.string),
     zip: types.string
   })
   .actions(self => ({
+    setId(value) {
+      self.id = value;
+      return self;
+    },
     setName(value) {
       self.name = value;
       return self;

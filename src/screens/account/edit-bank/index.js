@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 import { Alert, Linking } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -13,6 +15,7 @@ import {
   FormInputView
 } from "../../../components/views/keyboard-view";
 import { colors } from "../../../utils/constants";
+
 import { createBankAccountProvider, updateCareProvider } from "../../../services/opear-api";
 import { DeeplinkHandler } from "@components/deeplink-handler";
 
@@ -55,7 +58,9 @@ class EditBankScreen extends React.Component {
       currency: "usd",
       accountHolderType: "individual",
       // eslint-disable-next-line prettier/prettier
-      accountHolderName: `${currentUserStore.first_name} ${currentUserStore.last_name}`
+      accountHolderName: `${currentUserStore.first_name} ${
+        currentUserStore.last_name
+      }`
     };
     this.setState({ loading: true });
     try {
@@ -94,7 +99,7 @@ class EditBankScreen extends React.Component {
       }
     };
 
-    const successHandler = response => {
+    const successHandler = () => {
       currentUserStore.setAcceptedStripeTOS(true);
     };
 
@@ -107,14 +112,19 @@ class EditBankScreen extends React.Component {
       console.tron.log("Error saving bank account:", err);
     };
 
-    updateCareProvider(id, data, { successHandler, errorHandler });
+    return updateCareProvider(id, data, { successHandler, errorHandler });
   };
 
   render() {
     const {
       navigation: { goBack }
     } = this.props;
-    const { accountNumber, routingNumber, loading, acceptedStripeTOS } = this.state;
+    const {
+      accountNumber,
+      routingNumber,
+      loading,
+      acceptedStripeTOS
+    } = this.state;
     return (
       <KeyboardAvoidingView enabled>
         <DeeplinkHandler navigation={this.props.navigation}/>
@@ -151,7 +161,7 @@ class EditBankScreen extends React.Component {
                 color: colors.BLACK60
               }}
             >
-            By adding your account, you agree to the {" "}
+              By adding your account, you agree to the{" "}
               <StyledText
                 style={{
                   color: colors.BLUE,
@@ -160,23 +170,23 @@ class EditBankScreen extends React.Component {
                   fontSize: 16
                 }}
                 onPress={() =>
-                  Linking.openURL("https://www.stripe.com/connect-account/legal")
+                  Linking.openURL(
+                    "https://www.stripe.com/connect-account/legal"
+                  )
                 }
               >
                 Stripe Connected Account Agreement
-                </StyledText>
-                .
               </StyledText>
+              .
+            </StyledText>
             <CheckBox
               title="I have read and accept"
               checked={acceptedStripeTOS}
-              onPress={() =>
-                {
-                  this.setState({
-                    acceptedStripeTOS: !acceptedStripeTOS
-                  });
-                }
-              }
+              onPress={() => {
+                this.setState({
+                  acceptedStripeTOS: !acceptedStripeTOS
+                });
+              }}
               size={36}
               textStyle={{ fontSize: 18 }}
               containerStyle={{

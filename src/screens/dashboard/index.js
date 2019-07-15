@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React from "react";
 import { Image, TouchableOpacity } from "react-native";
@@ -59,17 +60,19 @@ class DashboardScreen extends React.Component {
         let visitForApproval;
 
         const {
-          store: {
-            visitsStore
-          }
+          store: { visitsStore }
         } = this.props;
 
-        const visits = Object.values(res.data)
-          .flat();
+        const visits = Object.values(res.data).flat();
 
-          visitsStore.setVisits(visits);
+        visitsStore.setVisits(visits);
 
-          const viewVisits = visits.map(visitData => {
+        const viewVisits = visits
+          .sort(
+            (a, b) =>
+              new Date(a.appointment_time) - new Date(b.appointment_time)
+          )
+          .map(visitData => {
             const {
               id,
               state: visitState,
@@ -94,9 +97,15 @@ class DashboardScreen extends React.Component {
               illness,
               symptoms,
               time: formatAMPM(new Date(appointmentTime)),
+              appointmentTime,
               address,
               allergies,
-              parentNotes
+              parentNotes,
+              date: new Date(appointmentTime).toLocaleString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+              })
             };
 
             if (visitState === "approving") {
@@ -143,8 +152,9 @@ class DashboardScreen extends React.Component {
     } = this.props;
 
     const {
+      applicationStore: { CareProviderSubscriptionsActive },
       providerStore: { completeApplication },
-      currentUserStore: { firstName }
+      currentUserStore: { firstName, payout_account }
     } = store;
 
     const { visits, visitForApproval, allergiesForReview } = this.state;
@@ -175,6 +185,15 @@ class DashboardScreen extends React.Component {
               </MatchingMessageWrapper>
             </TouchableOpacity>
           ) : null}
+          {CareProviderSubscriptionsActive &&
+            (!payout_account || !payout_account.length) && (
+              <MatchingMessageWrapper>
+                <StyledText fontSize={16}>
+                  You need to set up your annual subscription payment method
+                  before you can accept appointments.
+                </StyledText>
+              </MatchingMessageWrapper>
+            )}
           <View
             style={{
               marginTop: !completeApplication ? 16 : 48,
@@ -184,7 +203,7 @@ class DashboardScreen extends React.Component {
             <ContentWrapper>
               <StyledText>Upcoming bookings</StyledText>
               <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {visits.map(item => (
+                {visits.slice(0, 3).map(item => (
                   <View key={item.id} style={{ marginBottom: 9 }}>
                     <VisitDetailCard
                       avatarImg={item.avatarImg}
@@ -192,6 +211,7 @@ class DashboardScreen extends React.Component {
                       illness={item.illness}
                       time={item.time}
                       address={item.address}
+                      date={item.date}
                       onPress={() =>
                         navigate("DashboardVisitDetails", { visitID: item.id })
                       }

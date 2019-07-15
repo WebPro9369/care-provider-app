@@ -140,7 +140,7 @@ class VisitDetailsScreen extends React.Component {
     const { visits } = visitsStore;
 
     const data = {
-      state: "in_progress"
+      state: 4
     };
 
     const successHandler = () => {
@@ -274,6 +274,7 @@ class VisitDetailsScreen extends React.Component {
       : "N/A";
 
     const appointmentTime = new Date(appointment_time);
+    const formattedDate = new Date(appointmentTime).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
     const time = formatAMPM(appointmentTime);
 
     if (!loaded) {
@@ -311,6 +312,7 @@ class VisitDetailsScreen extends React.Component {
               illness={symptoms.join(", ")}
               time={time}
               address={address}
+              date={formattedDate}
               disabled
             />
             <View style={{ marginTop: 32 }}>

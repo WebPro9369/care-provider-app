@@ -20,14 +20,18 @@ class EditPhoneNumberScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { store: { currentUserStore: { phone } } }  = props;
+    const {
+      store: {
+        currentUserStore: { phone }
+      }
+    } = props;
 
     this.state = {
-      phone,
+      phone
     };
   }
 
-  handleInputChange = (phone) => {
+  handleInputChange = phone => {
     this.setState({ phone });
   };
 
@@ -46,12 +50,8 @@ class EditPhoneNumberScreen extends React.Component {
       goBack();
     };
 
-    updateCareProvider(
-      id,
-      data,
-      { successHandler }
-    );
-  }
+    updateCareProvider(id, data, { successHandler });
+  };
 
   render() {
     const {

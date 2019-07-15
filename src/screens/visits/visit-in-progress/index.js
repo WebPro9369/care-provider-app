@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 import React from "react";
 import { Alert, Linking } from "react-native";
@@ -10,7 +11,7 @@ import {
 } from "../../../components/cards";
 import { ServiceButton } from "../../../components/service-button";
 import { ContainerView, View, ViewCentered } from "../../../components/views";
-import { ScrollView } from "../../../components/views/scroll-view";
+import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
 import { colors } from "../../../utils/constants";
 import { StyledText } from "../../../components/text";
 import { IllnessContainer, TextBox } from "./styles";
@@ -37,9 +38,16 @@ class VisitInProgressScreen extends React.Component {
     const visitID = navigation.getParam("visitID", false);
 
     this.state = {
-      visitID
+      visitID,
+      visitNotesEdited: null
     };
   }
+
+  onChangeVisitNotes = text => {
+    this.setState({
+      visitNotesEdited: text
+    });
+  };
 
   completeVisit = () => {
     const {
@@ -47,21 +55,28 @@ class VisitInProgressScreen extends React.Component {
       store: { visitsStore }
     } = this.props;
 
-    const { visitID } = this.state;
+    const { visitID, visitNotesEdited } = this.state;
     const { visits } = visitsStore;
 
     const data = {
-      state: "completed"
+        state: 5
     };
+
+    if (visitNotesEdited) {
+      data.visit_notes = visitNotesEdited;
+    }
 
     const successHandler = () => {
       const index = getIndexByValue(visits, visitID);
-      visitsStore.setVisitState(index, "canceled");
+      visitsStore.setVisitState(index, "completed");
+      if (visitNotesEdited) {
+        visitsStore.setVisitNotes(index, visitNotesEdited);
+      }
       navigate("VisitsDefault");
     };
 
-    const errorHandler = () => {
-      Alert.alert("Visit Update Error", "Failed to complete the visit.");
+    const errorHandler = res => {
+      Alert.alert("Visit Completion Error", "There was an issue with payment processing. Please contact support for help with completing this visit.");
     };
 
     updateVisit(visitID, data, { successHandler, errorHandler });
@@ -73,7 +88,7 @@ class VisitInProgressScreen extends React.Component {
     } = this.props;
     // const { arrived } = providerStore;
     const { visits } = visitsStore;
-    const { visitID } = this.state;
+    const { visitID, visitNotesEdited } = this.state;
 
     const visit = getValueById(visits, visitID);
     const {
@@ -83,15 +98,17 @@ class VisitInProgressScreen extends React.Component {
       reason,
       parent_notes,
       visit_notes,
-      appointment_time
+      appointment_time,
+      symptoms
     } = visit;
 
-    const strAllergies = (child.allergies || []).join(", ");
-    const strSymptoms = (child.symptoms || []).join(", ");
-    const childName = child.firstName
-      ? `${child.firstName} ${child.lastName}`
+    const strAllergies = child.allergies || "N/A";
+    const childName = child.first_name
+      ? `${child.first_name} ${child.last_name}`
       : "";
     const strTime = formatAMPM(new Date(appointment_time));
+    const strVisitNotes = visitNotesEdited || visit_notes;
+    const formattedDate = new Date(appointment_time).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
     return (
       <ContainerView>
@@ -113,18 +130,21 @@ class VisitInProgressScreen extends React.Component {
             Visit In Progress
           </StyledText>
         </ViewCentered>
-        <ScrollView padding={0}>
-          <IllnessContainer>
-            <StyledText fontSize={16} color={colors.WHITE}>
-              {`Allergies: ${strAllergies}`}
-            </StyledText>
-          </IllnessContainer>
+        <KeyboardScrollView padding={0}>
+          {strAllergies.length ? (
+            <IllnessContainer>
+              <StyledText fontSize={16} color={colors.WHITE}>
+                {`Allergies: ${strAllergies}`}
+              </StyledText>
+            </IllnessContainer>
+          ) : null}
           <View style={{ padding: 16, marginTop: 16 }}>
             <VisitDetailCard
               avatarImg={child.avatarImg || imgDog}
               name={childName}
-              illness={strSymptoms}
+              illness={symptoms.join(", ")}
               time={strTime}
+              date={formattedDate}
               address={address}
             />
             <View style={{ marginTop: 32 }}>
@@ -158,7 +178,12 @@ class VisitInProgressScreen extends React.Component {
                 Visit Notes
               </StyledText>
             </View>
-            <TextBox editable multiline value={visit_notes} />
+            <TextBox
+              editable
+              multiline
+              value={strVisitNotes}
+              onChangeText={this.onChangeVisitNotes}
+            />
           </View>
           <View style={{ marginTop: 48, paddingLeft: 16, paddingRight: 16 }}>
             <View style={{ paddingTop: 6, paddingBottom: 6 }}>
@@ -175,7 +200,7 @@ class VisitInProgressScreen extends React.Component {
               />
             </View>
           </View>
-        </ScrollView>
+        </KeyboardScrollView>
       </ContainerView>
     );
   }
