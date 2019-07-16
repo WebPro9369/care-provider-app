@@ -24,7 +24,6 @@ import {
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
 
-import { updateCareProvider } from "@services/opear-api";
 import { DeeplinkHandler } from "@components/deeplink-handler";
 import { formatPhoneNumber } from "@utils/helpers";
 
