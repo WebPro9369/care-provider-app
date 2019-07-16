@@ -16,6 +16,7 @@ import { SliderMarker } from "@components/slider-marker";
 import { ServiceButton } from "@components/service-button";
 import { WEEKDAYS, colors } from "@utils/constants";
 import { getAvailabilities, updateAvailabilities } from "@services/opear-api";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer
@@ -235,6 +236,7 @@ class AvailabilityScreen extends React.Component {
 
     return (
       <ContainerView style={{ paddingTop: 16, paddingBottom: 16 }}>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <View
           style={{
             paddingTop: 24,

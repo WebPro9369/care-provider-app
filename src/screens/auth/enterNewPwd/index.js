@@ -9,6 +9,7 @@ import { FormInputWrapper, FormWrapper } from "../../../components/views";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { updatePassword } from "../../../services/opear-api";
 import { colors } from "../../../utils/constants";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 class NewPwdScreen extends React.Component {
   constructor(props) {
@@ -88,6 +89,7 @@ class NewPwdScreen extends React.Component {
         enabled
         style={{ backgroundColor: colors.LIGHTGREEN, height: "100%" }}
       >
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Enter New Password"
           size="medium"

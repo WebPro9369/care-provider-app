@@ -20,6 +20,7 @@ import { formatAMPM } from "@utils/helpers";
 import ReviewAllergiesModalComponent from "../modals/review-allergies";
 import RequestVisitModalComponent from "../modals/request-visit";
 import { ContentWrapper, MatchingMessageWrapper } from "./styles";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgRightArrow = require("../../../assets/images/Right_arrow.png");
 const imgDog = require("../../../assets/images/Dog.png");
@@ -160,6 +161,7 @@ class DashboardScreen extends React.Component {
 
     return (
       <ContainerView>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <HeaderWrapper>
           <NavHeader title="" size="small" hasBackButton={false} />
         </HeaderWrapper>

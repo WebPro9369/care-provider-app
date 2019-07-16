@@ -12,6 +12,7 @@ import {
 } from "@components/views/keyboard-view";
 import { commaStringToArray } from "@utils/helpers";
 import { Alert } from "react-native";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer
@@ -84,6 +85,7 @@ class EditSpecialtiesScreen extends React.Component {
 
     return (
       <KeyboardAvoidingView startFromTop behavior="padding" enabled>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit specialties"
           size="medium"

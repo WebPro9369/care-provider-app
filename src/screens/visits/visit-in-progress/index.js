@@ -11,6 +11,7 @@ import {
 } from "../../../components/cards";
 import { ServiceButton } from "../../../components/service-button";
 import { ContainerView, View, ViewCentered } from "../../../components/views";
+import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
 import { colors } from "../../../utils/constants";
 import { StyledText } from "../../../components/text";
 import { IllnessContainer, TextBox } from "./styles";
@@ -19,7 +20,7 @@ import {
   getValueById,
   formatAMPM
 } from "../../../utils/helpers";
-import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -119,6 +120,7 @@ class VisitInProgressScreen extends React.Component {
             onPressBackButton={() => goBack()}
           />
         </HeaderWrapper> */}
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <ViewCentered paddingTop={44} paddingBottom={20}>
           <StyledText
             fontSize={24}

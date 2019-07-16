@@ -21,6 +21,7 @@ import { FormInputView } from "../../../components/views/keyboard-view";
 import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
 import { createAddress, updateAddress } from "../../../services/opear-api";
 import { colors, GOOGLE_API_KEY } from "../../../utils/constants";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const { DARKSKYBLUE } = colors;
 
@@ -116,6 +117,7 @@ class EditAddressScreen extends React.Component {
               "There was an issue",
               "Google Map API failed to get your location."
             );
+
           });
       },
       error => {
@@ -187,6 +189,7 @@ class EditAddressScreen extends React.Component {
     const { name, street, city, zip } = this.state;
     return (
       <ContainerView style={{ paddingTop: 16 }}>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit Address"
           size="medium"

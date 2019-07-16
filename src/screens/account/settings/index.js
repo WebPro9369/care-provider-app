@@ -23,6 +23,9 @@ import {
 } from "../../../components/views";
 import { ScrollView } from "../../../components/views/scroll-view";
 import { colors } from "../../../utils/constants";
+
+import { updateCareProvider } from "@services/opear-api";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 import { formatPhoneNumber } from "@utils/helpers";
 
 const { GREEN, MIDGREY } = colors;
@@ -171,6 +174,7 @@ class SettingsScreen extends React.Component {
 
     return (
       <KeyboardAvoidingView enabled>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <HeaderWrapper>
           <NavHeader
             title="Settings"

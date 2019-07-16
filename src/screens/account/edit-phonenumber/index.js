@@ -7,6 +7,8 @@ import { ServiceButton } from "../../../components/service-button";
 import { View } from "../../../components/views";
 import { updateCareProvider } from "../../../services/opear-api";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
+import { colors } from "../../../utils/constants";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 @observer
@@ -59,6 +61,7 @@ class EditPhoneNumberScreen extends React.Component {
 
     return (
       <KeyboardAvoidingView startFromTop behavior="padding" enabled>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit phone number"
           size="medium"

@@ -14,7 +14,7 @@ import { ServiceButton } from "@components/service-button";
 import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { colors } from "@utils/constants";
-import { updateVisit } from "@services/opear-api";
+import { getVisit, updateVisit } from "@services/opear-api";
 import {
   getValueById,
   getIndexByValue,
@@ -23,6 +23,7 @@ import {
   addressToString
 } from "@utils/helpers";
 import { GoogleMapsService } from "@services";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -38,9 +39,18 @@ class VisitDetailsScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { navigation } = props;
-    const visitID = navigation.getParam("visitID", false);
+    const {
+      navigation,
+      store: { visitsStore }
+     } = props;
+    var visitID = navigation.getParam("visitID", false);
     // TODO: if (!visitID) error!
+    const routeInfo = navigation.getParam("routeInfo", false);
+
+    if(!visitID) {
+      var splitRoute = routeInfo.split("/");
+      visitID = splitRoute[1].split("=")[1];
+    }
 
     this.state = {
       visitID,
@@ -53,18 +63,40 @@ class VisitDetailsScreen extends React.Component {
         currentLatitude: 37.78925,
         currentLongitude: -122.4924,
         distance: 0
-      }
+      },
+      address:"",
+      loaded: false
     };
-    this.getVisitGeo();
+
+    if(!routeInfo) {
+      this.setState({
+        address: getValueById(visitsStore.visits, visitID).address
+      });
+      this.getVisitGeo();
+    }
+    else {
+      getVisits({
+        successHandler: res => {
+          visitsStore.setVisits(Object.values(res.data).flat());
+          this.setState({
+            address: getValueById(visitsStore.visits, visitID).address
+          });
+          this.getVisitGeo();
+        }
+      });
+    }
+
   }
 
   getVisitGeo = () => {
     const {
       store: { visitsStore }
     } = this.props;
-    const { visitID, map } = this.state;
-    const visit = getValueById(visitsStore.visits, visitID);
-    const { address } = visit;
+
+    const {
+      address
+    } = this.state;
+
 
     GoogleMapsService.getGeo(addressToString(address), innerRes => {
       const { data } = innerRes;
@@ -215,6 +247,7 @@ class VisitDetailsScreen extends React.Component {
     if (!visit) {
       return (
         <ContainerView>
+          <DeeplinkHandler navigation={this.props.navigation}/>
           <HeaderWrapper>
             <NavHeader title="Loading..." size="medium" />
           </HeaderWrapper>

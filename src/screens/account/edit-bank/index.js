@@ -15,10 +15,9 @@ import {
   FormInputView
 } from "../../../components/views/keyboard-view";
 import { colors } from "../../../utils/constants";
-import {
-  createBankAccountProvider,
-  updateCareProvider
-} from "../../../services/opear-api";
+
+import { createBankAccountProvider, updateCareProvider } from "../../../services/opear-api";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const { BLUE } = colors;
 
@@ -128,6 +127,7 @@ class EditBankScreen extends React.Component {
     } = this.state;
     return (
       <KeyboardAvoidingView enabled>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit bank"
           size="medium"

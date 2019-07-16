@@ -11,6 +11,7 @@ import { ListTouchableButtonWrapper, ListButtonText } from "./styles";
 import { View } from "../../components/views";
 import { ScrollView } from "../../components/views/scroll-view";
 import { colors } from "../../utils/constants";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgDoctor = require("../../../assets/images/Doctor.png");
 
@@ -64,6 +65,7 @@ class AccountScreen extends React.Component {
 
     return (
       <ScrollView padding={16}>
+        <DeeplinkHandler navigation={this.props.navigation}/>
         <View style={{ paddingTop: 24, paddingBottom: 24 }}>
           <StyledText
             fontSize={28}
