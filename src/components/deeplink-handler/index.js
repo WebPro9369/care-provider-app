@@ -6,7 +6,6 @@ import { View, Linking } from "react-native";
 class DeeplinkHandler extends React.Component {
   constructor(props) {
     super(props);
-    console.tron.log(props);
   }
 
   componentDidMount() {
@@ -22,7 +21,6 @@ class DeeplinkHandler extends React.Component {
   };
 
   navigate = url => {
-    console.tron.log(url);
     const {
       navigation: { navigate }
     } = this.props;

@@ -49,9 +49,7 @@ class VisitDetailsScreen extends React.Component {
 
     if(!visitID) {
       var splitRoute = routeInfo.split("/");
-      console.tron.log(splitRoute);
       visitID = splitRoute[1].split("=")[1];
-      console.tron.log(visitID);
     }
 
     this.state = {
