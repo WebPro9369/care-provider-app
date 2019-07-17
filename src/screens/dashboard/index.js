@@ -17,10 +17,10 @@ import { VisitDetailCard } from "@components/cards";
 import { colors } from "@utils/constants";
 import { getVisits } from "@services/opear-api";
 import { formatAMPM } from "@utils/helpers";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 import ReviewAllergiesModalComponent from "../modals/review-allergies";
 import RequestVisitModalComponent from "../modals/request-visit";
 import { ContentWrapper, MatchingMessageWrapper } from "./styles";
-import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgRightArrow = require("../../../assets/images/Right_arrow.png");
 const imgDog = require("../../../assets/images/Dog.png");
@@ -45,13 +45,36 @@ class DashboardScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.getVisits();
-    this.timer = setInterval(() => this.getVisits(), 30000);
+    getVisits({ successHandler: this.handleFetchedVisits });
+    this.timer = setInterval(
+      () => getVisits({ successHandler: this.handleFetchedVisits }),
+      30000
+    );
   }
 
   componentWillUnmount() {
     clearInterval(this.timer);
   }
+
+  handleFetchedVisits = res => {
+    const {
+      store: { visitsStore }
+    } = this.props;
+    const { data } = res;
+
+    if (!data || typeof data !== "object") {
+      console.tron.log("Invalid data: ", data);
+      return false;
+    }
+
+    const visitArr = Object.values(data).reduce((acc, current) => {
+      (current || []).forEach(item => acc.push(item));
+      return acc;
+    }, []);
+
+    visitArr.forEach(visit => visitsStore.addVisit(visit));
+    return true;
+  };
 
   getVisits = () => {
     getVisits({
@@ -146,22 +169,72 @@ class DashboardScreen extends React.Component {
   };
 
   render() {
-    const {
-      navigation: { navigate },
-      store
-    } = this.props;
+    const { navigation, store } = this.props;
+
+    const { navigate } = navigation;
 
     const {
       applicationStore: { CareProviderSubscriptionsActive },
       providerStore: { completeApplication },
-      currentUserStore: { firstName, payout_account }
+      currentUserStore: { firstName, payout_account },
+      visitsStore: { visits }
     } = store;
 
-    const { visits, visitForApproval, allergiesForReview } = this.state;
+    const { allergiesForReview } = this.state;
+
+    let visitForApproval = null;
+    const viewVisits = visits
+      .sort(
+        (a, b) => new Date(a.appointment_time) - new Date(b.appointment_time)
+      )
+      .map(visitData => {
+        const {
+          id,
+          state: visitState,
+          reason: illness,
+          appointment_time: appointmentTime,
+          address,
+          symptoms,
+          parent_notes: parentNotes,
+          child: {
+            first_name: childFirstName,
+            last_name: childLastName,
+            allergies
+          }
+        } = visitData;
+
+        const visit = {
+          id,
+          avatarImg: [imgDog, imgTiger, imgFox][Math.floor(Math.random() * 3)], // TODO: add actual avatar
+          name: `${childFirstName} ${childLastName}`,
+          illness,
+          symptoms,
+          time: formatAMPM(new Date(appointmentTime)),
+          appointmentTime,
+          address,
+          allergies,
+          parentNotes,
+          date: new Date(appointmentTime).toLocaleString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+          })
+        };
+
+        if (visitState === "approving") {
+          visitForApproval = visit;
+        }
+
+        if (visitState !== "scheduled" && visitState !== "in_progress")
+          return false;
+
+        return visit;
+      })
+      .filter(Boolean);
 
     return (
       <ContainerView>
-        <DeeplinkHandler navigation={this.props.navigation}/>
+        <DeeplinkHandler navigation={navigation} />
         <HeaderWrapper>
           <NavHeader title="" size="small" hasBackButton={false} />
         </HeaderWrapper>
@@ -203,7 +276,7 @@ class DashboardScreen extends React.Component {
             <ContentWrapper>
               <StyledText>Upcoming bookings</StyledText>
               <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {visits.slice(0, 3).map(item => (
+                {viewVisits.slice(0, 3).map(item => (
                   <View key={item.id} style={{ marginBottom: 9 }}>
                     <VisitDetailCard
                       avatarImg={item.avatarImg}
