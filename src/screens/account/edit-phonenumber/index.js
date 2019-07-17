@@ -1,5 +1,6 @@
 import React from "react";
 import { inject, observer, PropTypes } from "mobx-react";
+import { Alert } from "react-native";
 import { StyledText } from "../../../components/text";
 import { StyledMaskedTextInput } from "../../../components/text-masked";
 import { NavHeader } from "../../../components/nav-header";
@@ -45,6 +46,10 @@ class EditPhoneNumberScreen extends React.Component {
     const { phone } = this.state;
     const data = { phone };
 
+    if(phone.length < 14) {
+      return Alert.alert("Phone input error","Please enter your 10-digit phone number.");
+    }
+
     const successHandler = () => {
       currentUserStore.setPhone(phone);
       goBack();
@@ -73,6 +78,7 @@ class EditPhoneNumberScreen extends React.Component {
           <View>
             <StyledMaskedTextInput
               fontSize={28}
+              maxLength={14}
               autoFocus
               placeholder="(123) 456 - 7890"
               keyboardType="number-pad"

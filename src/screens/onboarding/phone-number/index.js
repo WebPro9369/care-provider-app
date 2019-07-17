@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View, SafeAreaView } from "react-native";
+import { Image, View, SafeAreaView, Alert } from "react-native";
 import { inject, observer, PropTypes } from "mobx-react";
 import { TextInputMask } from "react-native-masked-text";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
@@ -35,12 +35,16 @@ class PhoneNumberScreen extends Component {
       store: { currentUserStore }
     } = this.props;
 
+    if(phone.length < 14) {
+      return Alert.alert("Phone input error","Please enter your 10-digit phone number.");
+    }
+
     console.tron.log("Phone number: ", phone);
 
-    /* 
+    /*
     if(!this.phone.isValidNumber()) {
       return Alert.alert("There was an issue", "Please enter a valid phone number.");
-    } 
+    }
     */
 
     currentUserStore.setPhone(phone);
@@ -72,6 +76,7 @@ class PhoneNumberScreen extends Component {
             <View>
               <TextInputMask
                 fontSize={28}
+                maxLength={14}
                 autoFocus
                 placeholder="(123) 456 - 7890"
                 value={phone}
