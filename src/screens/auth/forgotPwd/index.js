@@ -2,9 +2,10 @@
 /* eslint-disable import/order */
 import React from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { Alert, Linking } from "react-native";
+import { Alert } from "react-native";
 import { inject } from "mobx-react";
 // import axios from "axios";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 import { FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
@@ -12,7 +13,6 @@ import { FormInputWrapper, FormWrapper } from "../../../components/views";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { colors } from "../../../utils/constants";
 import { passwordReset } from "@services/opear-api";
-import { DeeplinkHandler } from "@components/deeplink-handler";
 
 @inject("store")
 class ForgotPwdScreen extends React.Component {
@@ -52,9 +52,8 @@ class ForgotPwdScreen extends React.Component {
   };
 
   render() {
-    const {
-      navigation: { goBack }
-    } = this.props;
+    const { navigation } = this.props;
+    const { goBack } = navigation;
     const { email } = this.state;
     return (
       <KeyboardAvoidingView
@@ -62,7 +61,7 @@ class ForgotPwdScreen extends React.Component {
         enabled
         style={{ backgroundColor: colors.LIGHTGREEN, height: "100%" }}
       >
-        <DeeplinkHandler navigation={this.props.navigation}/>
+        <DeeplinkHandler navigation={navigation} />
         <NavHeader
           title="Forgot Password"
           size="medium"

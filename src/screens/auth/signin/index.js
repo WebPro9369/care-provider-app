@@ -2,7 +2,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable import/no-unresolved */
 import React from "react";
-import { Alert, Linking } from "react-native";
+import { Alert } from "react-native";
 import { inject, PropTypes } from "mobx-react";
 import { FormTextInput, StyledText } from "@components/text";
 import { NavHeader } from "@components/nav-header";
@@ -24,8 +24,8 @@ class SignInScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: null,
-      password: null
+      email: "",
+      password: ""
     };
   }
 
@@ -121,7 +121,7 @@ class SignInScreen extends React.Component {
           .setGovernmentIdCountry(governmentIdCountry)
           .setGovernmentIdNumber(governmentIdNumber);
 
-        navigate("Tabs");
+        return navigate("Tabs");
       };
 
       return getCareProvider(id, { successHandler });
@@ -159,6 +159,7 @@ class SignInScreen extends React.Component {
   };
 
   render() {
+    const { navigation } = this.props;
     const { email, password } = this.state;
     return (
       <KeyboardAvoidingView
@@ -166,7 +167,7 @@ class SignInScreen extends React.Component {
         enabled
         style={{ backgroundColor: colors.LIGHTGREEN, height: "100%" }}
       >
-        <DeeplinkHandler navigation={this.props.navigation}/>
+        <DeeplinkHandler navigation={navigation} />
         <NavHeader
           title="Sign In"
           size="medium"

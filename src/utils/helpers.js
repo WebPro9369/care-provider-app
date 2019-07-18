@@ -16,8 +16,13 @@ export function commaStringToArray(value) {
 
 export function formatPhoneNumber(phone)
 {
-    phone = phone.replace(/\D[^\.]/g, "");
-    phone = "1 ("+phone.slice(0,3)+") "+phone.slice(3,6)+"-"+phone.slice(6);
+    if(phone.length<=9){
+      phone = "1 ("+phone.slice(0,3)+") "+phone.slice(3,6)+"-"+phone.slice(6);
+    } else if(phone.length == 10) {
+      phone = phone.slice(0,1) + " ("+phone.slice(1,4)+") "+phone.slice(4,7)+"-"+phone.slice(7);
+    } else {
+      phone = "1 " + phone;
+    }
     return phone;
 }
 

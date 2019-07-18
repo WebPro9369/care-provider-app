@@ -94,16 +94,20 @@ export const VisitsStore = types
     },
     addVisit(visit) {
       let found = false;
-      (self.visits || []).forEach((v, index) => {
+      const newVisits = (self.visits || []).map(v => {
         if (v.id === visit.id) {
           found = true;
-          self.visits[index] = visit;
+          return visit;
         }
+        return v;
       });
 
-      if (!found) {
+      if (found) {
+        self.visits.replace(newVisits);
+      } else {
         self.visits.push(visit);
       }
+
       return self;
     },
     replaceVisit(index, visit) {

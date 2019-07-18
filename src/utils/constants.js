@@ -73,10 +73,10 @@ const WEEKDAYS = [
   {
     key: "sun",
     label: "Su"
-  },
+  }
 ];
 
-const SUBSCRIPTIONS_ACTIVE_START_DATE = new Date("2018-12-31");
+const SUBSCRIPTIONS_ACTIVE_START_DATE = new Date("2019-12-31");
 
 export {
   DEVICE_WIDTH,

@@ -173,7 +173,7 @@ class ApplicationScreen extends React.Component {
       navigation: { navigate },
       store: { currentUserStore }
     } = this.props;
-    const { dateOfBirth, ssn } = this.state;
+    const { dateOfBirth, ssn, avatarSource } = this.state;
 
     console.tron.log("User data: ", currentUserStore.toJSON());
 
@@ -256,41 +256,50 @@ class ApplicationScreen extends React.Component {
       }
     } = currentUserStore;
 
+    let avatarFileName = '';
+    if (avatarSource.uri) {
+      const avatarFileNameParts = avatarSource.uri.split('/');
+      avatarFileName = avatarFileNameParts[avatarFileNameParts.length -1];
+    }
+
     const data = {
-      care_provider: {
-        name: `${firstName} ${lastName}`,
-        email,
-        password,
-        dob: new Date(dob),
-        phone,
-        zip,
-        license_number,
-        license_type,
-        license_issuer,
-        license_state,
-        license_city,
-        government_id_number,
-        government_id_type,
-        certification,
-        malpractice,
-        education,
-        work_history,
-        specialties,
-        source,
-        title,
-        supervisor,
-        accepted_terms_of_service,
-        accepted_privacy,
-        ssn_last_4,
-        addresses_attributes: [
-          {
-            street,
-            city,
-            state,
-            zip
-          }
-        ]
-      }
+      name: `${firstName} ${lastName}`,
+      email,
+      password,
+      dob: new Date(dob),
+      phone,
+      avatar: {
+        name: avatarFileName,
+        uri: avatarSource.uri,
+        type: 'image/jpg'
+      },
+      zip,
+      license_number,
+      license_type,
+      license_issuer,
+      license_state,
+      license_city,
+      government_id_number,
+      government_id_type,
+      certification,
+      malpractice,
+      education,
+      work_history,
+      specialties,
+      source,
+      title,
+      supervisor,
+      accepted_terms_of_service,
+      accepted_privacy,
+      ssn_last_4,
+      addresses_attributes: [
+        {
+          street,
+          city,
+          state,
+          zip
+        }
+      ]
     };
 
     const successHandler = response => {
@@ -314,7 +323,11 @@ class ApplicationScreen extends React.Component {
       );
     };
     this.setState({loading: true});
-    registerCareProvider(data, { successHandler, errorHandler });
+
+    const formData = new FormData();
+    Object.keys(data).forEach(key => formData.append(`care_provider[${key}]`, data[key]));
+
+    registerCareProvider(formData, { successHandler, errorHandler });
   };
 
   updateIndex = selectedIndexes => {
