@@ -20,7 +20,7 @@ import {
   getIndexByValue,
   formatAMPM,
   isToday,
-  addressToString
+  addressToStringMap
 } from "@utils/helpers";
 import { GoogleMapsService } from "@services";
 import { DeeplinkHandler } from "@components/deeplink-handler";
@@ -69,18 +69,12 @@ class VisitDetailsScreen extends React.Component {
     };
 
     if(!routeInfo) {
-      this.setState({
-        address: getValueById(visitsStore.visits, visitID).address
-      });
       this.getVisitGeo();
     }
     else {
       getVisits({
         successHandler: res => {
           visitsStore.setVisits(Object.values(res.data).flat());
-          this.setState({
-            address: getValueById(visitsStore.visits, visitID).address
-          });
           this.getVisitGeo();
         }
       });
@@ -93,15 +87,18 @@ class VisitDetailsScreen extends React.Component {
       store: { visitsStore }
     } = this.props;
 
-    const {
-      address
-    } = this.state;
+    const { visitID } = this.state;
 
+    const addressString = addressToStringMap(
+      getValueById(visitsStore.visits, visitID).address
+    );
 
-    GoogleMapsService.getGeo(addressToString(address), innerRes => {
+    GoogleMapsService.getGeo(addressString, innerRes => {
       const { data } = innerRes;
+      const { map } = this.state;
       if (data && data.results && data.results[0].geometry) {
         const { lat, lng } = data.results[0].geometry.location;
+
         this.setState({
           map: {
             ...map,
@@ -220,14 +217,24 @@ class VisitDetailsScreen extends React.Component {
   }
 
   navigateHandler = () => {
-    const { map } = this.state;
-    const from = `${map.currentLatitude},${map.currentLongitude}`;
-    const to = `${map.latitude},${map.longitude}`;
-    const url = Platform.select({
-      ios: `maps:0, 0?saddr=${from}&daddr=${to}`,
-      android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
-    });
-    Linking.openURL(url);
+
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const { map } = this.state;
+
+        const from = `${position.coords.latitude},${position.coords.longitude}`;
+        const to = `${map.latitude},${map.longitude}`;
+
+        const url = Platform.select({
+          ios: `maps:0, 0?saddr=${from}&daddr=${to}`,
+          android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
+        });
+        Linking.openURL(url);
+      },
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+
   };
 
   callParent = phone => {

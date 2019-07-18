@@ -68,6 +68,12 @@ export const addressToString = address => {
   }`;
 };
 
+export const addressToStringMap = address => {
+  return `${address.street}, ${address.city}${
+    address.state ? `, ${address.state}` : ""
+  } ${address.zip}`;
+};
+
 export const formatCardInfo = data => ({
   cardNumber: data.cardNumber || "",
   expiryYear: data.expiryYear || 0,
