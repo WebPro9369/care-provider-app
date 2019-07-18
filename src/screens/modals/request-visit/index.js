@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactPropTypes from "prop-types";
 import { inject, observer } from "mobx-react";
-import { Modal } from "react-native";
+import { Alert, Modal } from "react-native";
 import MapView from "react-native-maps";
 import haversine from "haversine";
 import { updateVisit } from "@services/opear-api";
@@ -26,8 +26,7 @@ class RequestVisitModalComponent extends Component {
   state = {
     visit: null,
     modalVisible: false,
-    // TODO: Remove static map data
-    distance: "3.8 miles away",
+    distance: "-",
     region: null
   };
 
@@ -51,7 +50,9 @@ class RequestVisitModalComponent extends Component {
   }
 
   getVisitGeoInfo = () => {
-    const { visit: { address } } = this.state;
+    const {
+      visit: { address }
+    } = this.state;
     if (address) {
       GoogleMapsService.getGeo(
         `${address.street} ,${address.city}${
@@ -72,32 +73,32 @@ class RequestVisitModalComponent extends Component {
             });
 
             navigator.geolocation.getCurrentPosition(
-        	      position => {
-                  const { region } = this.state;
+              position => {
+                const { region } = this.state;
 
-                  const fromCoordinate = {
-                    latitude:position.coords.latitude,
-                    longitude:position.coords.longitude
-                  };
+                const fromCoordinate = {
+                  latitude: position.coords.latitude,
+                  longitude: position.coords.longitude
+                };
 
-                  console.tron.log(fromCoordinate);
-                  console.tron.log(region);
+                console.tron.log(fromCoordinate);
+                console.tron.log(region);
 
+                const toCoordinate = {
+                  latitude: region.latitude,
+                  longitude: region.longitude
+                };
 
-                  const toCoordinate = {
-                    latitude:region.latitude,
-                    longitude:region.longitude
-                  };
+                const distance =
+                  haversine(fromCoordinate, toCoordinate, {
+                    unit: "mile"
+                  }).toFixed(1) || 0;
 
-                  const distance =
-                    (haversine(fromCoordinate, toCoordinate, { unit: "miles" })).toFixed(1) || 0;
-
-                  this.setState({ distance: distance + " miles away" });
-        	      },
-        	      error => Alert.alert(error.message),
-        	      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-        	    );
-
+                this.setState({ distance: `${distance} miles away` });
+              },
+              error => Alert.alert(error.message),
+              { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+            );
           } else {
             this.setState({
               region: null
@@ -111,7 +112,7 @@ class RequestVisitModalComponent extends Component {
         }
       );
     }
-  }
+  };
 
   accept = () => {
     const { onAccept } = this.props;
@@ -132,7 +133,7 @@ class RequestVisitModalComponent extends Component {
 
     const successHandler = () => onCancel();
     // TODO: move this to a secure and specific endpoint like /visit/{id}/cancel
-    updateVisit(id, { state: 'pending' }, { successHandler });
+    updateVisit(id, { state: "pending" }, { successHandler });
   };
 
   render() {
@@ -141,7 +142,16 @@ class RequestVisitModalComponent extends Component {
     if (!modalVisible) return null;
 
     const {
-      visit: { name, illness, symptoms, time, allergies, parentNotes, address, date }
+      visit: {
+        name,
+        illness,
+        symptoms,
+        time,
+        allergies,
+        parentNotes,
+        address,
+        date
+      }
     } = this.state;
 
     return (
@@ -187,9 +197,7 @@ class RequestVisitModalComponent extends Component {
                       Date
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>
-                    {date ? date : "-"}
-                  </StyledText>
+                  <StyledText fontSize={14}>{date ? date : "-"}</StyledText>
                 </FlexView>
                 <FlexView
                   justifyContent="start"

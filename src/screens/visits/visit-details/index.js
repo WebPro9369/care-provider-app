@@ -14,7 +14,7 @@ import { ServiceButton } from "@components/service-button";
 import { ContainerView, HeaderWrapper, View } from "@components/views";
 import { ScrollView } from "@components/views/scroll-view";
 import { colors } from "@utils/constants";
-import { getVisit, updateVisit } from "@services/opear-api";
+import { updateVisit } from "@services/opear-api";
 import {
   getValueById,
   getIndexByValue,
@@ -42,7 +42,7 @@ class VisitDetailsScreen extends React.Component {
     const {
       navigation,
       store: { visitsStore }
-     } = props;
+    } = props;
     var visitID = navigation.getParam("visitID", false);
     // TODO: if (!visitID) error!
     const routeInfo = navigation.getParam("routeInfo", false);
@@ -196,7 +196,7 @@ class VisitDetailsScreen extends React.Component {
           longitude
         };
         const distance =
-          haversine(visitCoordinate, newCoordinate, { unit: "meter" }) || 0;
+          haversine(visitCoordinate, newCoordinate, { unit: "mile" }) || 0;
         providerStore.setArrived(distance < threshold);
 
         this.setState({
