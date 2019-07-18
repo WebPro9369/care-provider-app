@@ -20,7 +20,7 @@ import {
   getIndexByValue,
   formatAMPM,
   isToday,
-  addressToString
+  addressToStringMap
 } from "@utils/helpers";
 import { GoogleMapsService } from "@services";
 import { DeeplinkHandler } from "@components/deeplink-handler";
@@ -52,6 +52,20 @@ class VisitDetailsScreen extends React.Component {
       visitID = splitRoute[1].split("=")[1];
     }
 
+    let address;
+
+    if(!routeInfo) {
+      address = getValueById(visitsStore.visits, visitID).address;
+    }
+    else {
+      getVisits({
+        successHandler: res => {
+          visitsStore.setVisits(Object.values(res.data).flat());
+          address = getValueById(visitsStore.visits, visitID).address;
+        }
+      });
+    }
+
     this.state = {
       visitID,
       map: {
@@ -64,27 +78,11 @@ class VisitDetailsScreen extends React.Component {
         currentLongitude: -122.4924,
         distance: 0
       },
-      address:"",
+      address,
       loaded: false
     };
 
-    if(!routeInfo) {
-      this.setState({
-        address: getValueById(visitsStore.visits, visitID).address
-      });
-      this.getVisitGeo();
-    }
-    else {
-      getVisits({
-        successHandler: res => {
-          visitsStore.setVisits(Object.values(res.data).flat());
-          this.setState({
-            address: getValueById(visitsStore.visits, visitID).address
-          });
-          this.getVisitGeo();
-        }
-      });
-    }
+    this.getVisitGeo();
 
   }
 
@@ -97,8 +95,7 @@ class VisitDetailsScreen extends React.Component {
       address
     } = this.state;
 
-
-    GoogleMapsService.getGeo(addressToString(address), innerRes => {
+    GoogleMapsService.getGeo(addressToStringMap(address), innerRes => {
       const { data } = innerRes;
       const { map } = this.state;
       if (data && data.results && data.results[0].geometry) {
@@ -111,6 +108,8 @@ class VisitDetailsScreen extends React.Component {
           },
           loaded: true
         });
+        console.tron.log(this.state.map);
+        this.forceUpdate();
       }
     });
   };
