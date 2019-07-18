@@ -45,9 +45,9 @@ class DashboardScreen extends React.Component {
   }
 
   componentDidMount() {
-    getVisits({ successHandler: this.handleFetchedVisits });
+    this.getUserVisits();
     this.timer = setInterval(
-      () => getVisits({ successHandler: this.handleFetchedVisits }),
+      () => this.getUserVisits(),
       30000
     );
   }
@@ -76,7 +76,7 @@ class DashboardScreen extends React.Component {
     return true;
   };
 
-  getVisits = () => {
+  getUserVisits = () => {
     getVisits({
       successHandler: res => {
         if (!res.data) return;
@@ -176,61 +176,10 @@ class DashboardScreen extends React.Component {
     const {
       applicationStore: { CareProviderSubscriptionsActive },
       providerStore: { completeApplication },
-      currentUserStore: { firstName, payout_account },
-      visitsStore: { visits }
+      currentUserStore: { firstName, payout_account }
     } = store;
 
-    const { allergiesForReview } = this.state;
-
-    let visitForApproval = null;
-    const viewVisits = visits
-      .sort(
-        (a, b) => new Date(a.appointment_time) - new Date(b.appointment_time)
-      )
-      .map(visitData => {
-        const {
-          id,
-          state: visitState,
-          reason: illness,
-          appointment_time: appointmentTime,
-          address,
-          symptoms,
-          parent_notes: parentNotes,
-          child: {
-            first_name: childFirstName,
-            last_name: childLastName,
-            allergies
-          }
-        } = visitData;
-
-        const visit = {
-          id,
-          avatarImg: [imgDog, imgTiger, imgFox][Math.floor(Math.random() * 3)], // TODO: add actual avatar
-          name: `${childFirstName} ${childLastName}`,
-          illness,
-          symptoms,
-          time: formatAMPM(new Date(appointmentTime)),
-          appointmentTime,
-          address,
-          allergies,
-          parentNotes,
-          date: new Date(appointmentTime).toLocaleString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric"
-          })
-        };
-
-        if (visitState === "approving") {
-          visitForApproval = visit;
-        }
-
-        if (visitState !== "scheduled" && visitState !== "in_progress")
-          return false;
-
-        return visit;
-      })
-      .filter(Boolean);
+    const { allergiesForReview, visits, visitForApproval } = this.state;
 
     return (
       <ContainerView>
@@ -276,7 +225,7 @@ class DashboardScreen extends React.Component {
             <ContentWrapper>
               <StyledText>Upcoming bookings</StyledText>
               <View style={{ paddingTop: 16, paddingBottom: 16 }}>
-                {viewVisits.slice(0, 3).map(item => (
+                {visits.slice(0, 3).map(item => (
                   <View key={item.id} style={{ marginBottom: 9 }}>
                     <VisitDetailCard
                       avatarImg={item.avatarImg}
