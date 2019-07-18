@@ -89,11 +89,13 @@ class VisitDetailsScreen extends React.Component {
 
     const { visitID } = this.state;
 
-  const addressString = addressToStringMap(getValueById(visitsStore.visits, visitID).address);
+    const addressString = addressToStringMap(
+      getValueById(visitsStore.visits, visitID).address
+    );
 
     GoogleMapsService.getGeo(addressString, innerRes => {
       const { data } = innerRes;
-
+      const { map } = this.state;
       if (data && data.results && data.results[0].geometry) {
         const { lat, lng } = data.results[0].geometry.location;
 
