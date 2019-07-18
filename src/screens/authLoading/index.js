@@ -150,10 +150,11 @@ class AuthLoadingScreen extends Component {
           navigate("Authenticating");
         }
         if (err.response.status === 500) {
-          Alert.alert(
-            "Error",
-            "There was an error signing in to your account. Please try again later"
-          );
+          navigate("Authenticating");
+          // Alert.alert(
+          //   "Error",
+          //   "There was an error signing in to your account. Please try again later"
+          // );
         }
       };
 
