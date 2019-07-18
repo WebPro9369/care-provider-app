@@ -3,6 +3,7 @@ import ReactPropTypes from "prop-types";
 import { inject, observer } from "mobx-react";
 import { Modal } from "react-native";
 import MapView from "react-native-maps";
+import haversine from "haversine";
 import { updateVisit } from "@services/opear-api";
 import {
   ModalWrapper,
@@ -69,6 +70,34 @@ class RequestVisitModalComponent extends Component {
                 loaded: true
               }
             });
+
+            navigator.geolocation.getCurrentPosition(
+        	      position => {
+                  const { region } = this.state;
+
+                  const fromCoordinate = {
+                    latitude:position.coords.latitude,
+                    longitude:position.coords.longitude
+                  };
+
+                  console.tron.log(fromCoordinate);
+                  console.tron.log(region);
+
+
+                  const toCoordinate = {
+                    latitude:region.latitude,
+                    longitude:region.longitude
+                  };
+
+                  const distance =
+                    (haversine(fromCoordinate, toCoordinate, { unit: "miles" })).toFixed(1) || 0;
+
+                  this.setState({ distance: distance + " miles away" });
+        	      },
+        	      error => Alert.alert(error.message),
+        	      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+        	    );
+
           } else {
             this.setState({
               region: null
