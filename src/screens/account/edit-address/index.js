@@ -201,7 +201,7 @@ class EditAddressScreen extends React.Component {
           <FormWrapper>
             <FormInputView>
               <FormTextInput
-                label="Address"
+                label="Street Address"
                 value={street}
                 rightIcon={
                   <TouchableView onPress={this.setCurrentLocation}>

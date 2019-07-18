@@ -1,7 +1,7 @@
+/* eslint-disable import/no-unresolved */
 import React from "react";
 import { Alert } from "react-native";
-// import { inject, observer } from "mobx-react";
-// import axios from "axios";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 import { FormTextInput } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
@@ -9,7 +9,6 @@ import { FormInputWrapper, FormWrapper } from "../../../components/views";
 import { KeyboardAvoidingView } from "../../../components/views/keyboard-view";
 import { updatePassword } from "../../../services/opear-api";
 import { colors } from "../../../utils/constants";
-import { DeeplinkHandler } from "@components/deeplink-handler";
 
 class NewPwdScreen extends React.Component {
   constructor(props) {
@@ -82,6 +81,7 @@ class NewPwdScreen extends React.Component {
   };
 
   render() {
+    const { navigation } = this.props;
     const { confirm, password } = this.state;
     return (
       <KeyboardAvoidingView
@@ -89,7 +89,7 @@ class NewPwdScreen extends React.Component {
         enabled
         style={{ backgroundColor: colors.LIGHTGREEN, height: "100%" }}
       >
-        <DeeplinkHandler navigation={this.props.navigation}/>
+        <DeeplinkHandler navigation={navigation} />
         <NavHeader
           title="Enter New Password"
           size="medium"

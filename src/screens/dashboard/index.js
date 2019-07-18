@@ -17,10 +17,10 @@ import { VisitDetailCard } from "@components/cards";
 import { colors } from "@utils/constants";
 import { getVisits } from "@services/opear-api";
 import { formatAMPM } from "@utils/helpers";
+import { DeeplinkHandler } from "@components/deeplink-handler";
 import ReviewAllergiesModalComponent from "../modals/review-allergies";
 import RequestVisitModalComponent from "../modals/request-visit";
 import { ContentWrapper, MatchingMessageWrapper } from "./styles";
-import { DeeplinkHandler } from "@components/deeplink-handler";
 
 const imgRightArrow = require("../../../assets/images/Right_arrow.png");
 const imgDog = require("../../../assets/images/Dog.png");
@@ -45,15 +45,38 @@ class DashboardScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.getVisits();
-    this.timer = setInterval(() => this.getVisits(), 30000);
+    this.getUserVisits();
+    this.timer = setInterval(
+      () => this.getUserVisits(),
+      30000
+    );
   }
 
   componentWillUnmount() {
     clearInterval(this.timer);
   }
 
-  getVisits = () => {
+  handleFetchedVisits = res => {
+    const {
+      store: { visitsStore }
+    } = this.props;
+    const { data } = res;
+
+    if (!data || typeof data !== "object") {
+      console.tron.log("Invalid data: ", data);
+      return false;
+    }
+
+    const visitArr = Object.values(data).reduce((acc, current) => {
+      (current || []).forEach(item => acc.push(item));
+      return acc;
+    }, []);
+
+    visitArr.forEach(visit => visitsStore.addVisit(visit));
+    return true;
+  };
+
+  getUserVisits = () => {
     getVisits({
       successHandler: res => {
         if (!res.data) return;
@@ -146,10 +169,9 @@ class DashboardScreen extends React.Component {
   };
 
   render() {
-    const {
-      navigation: { navigate },
-      store
-    } = this.props;
+    const { navigation, store } = this.props;
+
+    const { navigate } = navigation;
 
     const {
       applicationStore: { CareProviderSubscriptionsActive },
@@ -157,11 +179,11 @@ class DashboardScreen extends React.Component {
       currentUserStore: { firstName, payout_account }
     } = store;
 
-    const { visits, visitForApproval, allergiesForReview } = this.state;
+    const { allergiesForReview, visits, visitForApproval } = this.state;
 
     return (
       <ContainerView>
-        <DeeplinkHandler navigation={this.props.navigation}/>
+        <DeeplinkHandler navigation={navigation} />
         <HeaderWrapper>
           <NavHeader title="" size="small" hasBackButton={false} />
         </HeaderWrapper>
