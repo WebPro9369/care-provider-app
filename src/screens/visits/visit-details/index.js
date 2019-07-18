@@ -100,10 +100,12 @@ class VisitDetailsScreen extends React.Component {
 
     GoogleMapsService.getGeo(addressToString(address), innerRes => {
       const { data } = innerRes;
+      const { map } = this.state;
       if (data && data.results && data.results[0].geometry) {
         const { lat, lng } = data.results[0].geometry.location;
         this.setState({
           map: {
+            ...map,
             latitude: lat,
             longitude: lng
           },
