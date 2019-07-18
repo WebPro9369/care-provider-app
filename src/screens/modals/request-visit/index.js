@@ -90,9 +90,10 @@ class RequestVisitModalComponent extends Component {
                 };
 
                 const distance =
-                  haversine(fromCoordinate, toCoordinate, {
+                  (haversine(fromCoordinate, toCoordinate, {
                     unit: "mile"
-                  }).toFixed(1) || 0;
+                  }) || 0
+                ).toFixed(2);
 
                 this.setState({ distance: `${distance} miles away` });
               },

@@ -196,7 +196,7 @@ class VisitDetailsScreen extends React.Component {
           longitude
         };
         const distance =
-          haversine(visitCoordinate, newCoordinate, { unit: "mile" }) || 0;
+          (haversine(visitCoordinate, newCoordinate, { unit: "mile" }) || 0).toFixed(2);
         providerStore.setArrived(distance < threshold);
 
         this.setState({
