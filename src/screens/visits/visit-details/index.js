@@ -119,14 +119,22 @@ class VisitDetailsScreen extends React.Component {
   }
 
   navigateHandler = () => {
-    const { map } = this.state;
-    const from = `${map.currentLatitude},${map.currentLongitude}`;
-    const to = `${map.latitude},${map.longitude}`;
-    const url = Platform.select({
-      ios: `maps:0, 0?saddr=${from}&daddr=${to}`,
-      android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
-    });
-    Linking.openURL(url);
+    navigator.geolocation.getCurrentPosition(
+	      position => {
+	        const { map } = this.state;
+
+	        const from = `${position.coords.latitude},${position.coords.longitude}`;
+	        const to = `${map.latitude},${map.longitude}`;
+
+	        const url = Platform.select({
+	          ios: `maps:0, 0?saddr=${from}&daddr=${to}`,
+	          android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
+	        });
+	        Linking.openURL(url);
+	      },
+	      error => Alert.alert(error.message),
+	      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+	    );
   };
 
   startVisit = () => {
