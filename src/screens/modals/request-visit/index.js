@@ -30,7 +30,8 @@ class RequestVisitModalComponent extends Component {
     modalVisible: false,
     distance: "-",
     region: null,
-    userInfo: null
+    userInfo: null,
+    loading: false
   };
 
   static propTypes = {
@@ -51,7 +52,8 @@ class RequestVisitModalComponent extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.visit && (!this.state.region || !this.state.region.loaded)) {
+    if (this.state.visit && (!this.state.region || !this.state.region.loaded) && !this.state.loading) {
+      this.setState({ loading: true });
       this.getVisitGeoInfo();
     }
   }
@@ -65,6 +67,7 @@ class RequestVisitModalComponent extends Component {
       visit: { address }
     } = this.state;
     if (address) {
+
       GoogleMapsService.getGeo(
         `${address.street} ,${address.city}${
           address.state ? `, ${address.state}` : ""
