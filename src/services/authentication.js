@@ -2,7 +2,7 @@ import * as Keychain from "react-native-keychain";
 import { API_SETTINGS, updateCareProvider } from "@services/opear-api";
 
 export function setAuthentication({ id, apiKey }) {
-  Keychain.setGenericPassword(`${id}`, apiKey);
+  Keychain.setGenericPassword(`${id}`, ""); // Do not remember the api key
   API_SETTINGS.apiKey = apiKey;
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, StatusBar } from "react-native";
+import { AppState, Alert, StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { inject, observer, PropTypes } from "mobx-react";
 import UserInactivity from "react-native-user-inactivity";
@@ -33,11 +33,14 @@ class RootContainer extends React.Component {
     this.state = {
       firstTime: true,
       active: true,
-      authenticated: true
+      authenticated: true,
+      appState: AppState.currentState,
     };
   }
 
   componentDidMount() {
+    AppState.addEventListener("change", this.handleAppStateChange);
+
     const {
       store: {
         currentUserStore: { apiKey }
@@ -46,6 +49,18 @@ class RootContainer extends React.Component {
     if (apiKey) {
       this.showTouchId(false);
     }
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener("change", this.handleAppStateChange);
+  }
+
+  handleAppStateChange = nextAppState =>{
+    if (this.state.appState.match(/background/) && nextAppState === 'active') {
+      this.showTouchId(true);
+    }
+
+    this.setState({appState: nextAppState});
   }
 
   componentWillReceiveProps(nextProps) {
