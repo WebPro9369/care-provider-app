@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import ReactPropTypes from "prop-types";
 import { inject, observer } from "mobx-react";
-import { Modal } from "react-native";
+import { Alert, Modal } from "react-native";
 import MapView from "react-native-maps";
+import haversine from "haversine";
 import { updateVisit } from "@services/opear-api";
 import {
   ModalWrapper,
@@ -22,12 +23,13 @@ const imgDog = require("../../../../assets/images/Dog.png");
 @inject("store")
 @observer
 class RequestVisitModalComponent extends Component {
+
   state = {
     visit: null,
     modalVisible: false,
-    // TODO: Remove static map data
-    distance: "3.8 miles away",
-    region: null
+    distance: "-",
+    region: null,
+    userInfo: null
   };
 
   static propTypes = {
@@ -37,7 +39,11 @@ class RequestVisitModalComponent extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.modalVisible !== prevState.modalVisible) {
-      return { modalVisible: nextProps.modalVisible, visit: nextProps.visit };
+      return { modalVisible: nextProps.modalVisible,
+        visit: nextProps.visit,
+        userInfo: nextProps.userInfo,
+        region: nextProps.region,
+        distance: nextProps.distance };
     }
 
     return null;
@@ -49,8 +55,14 @@ class RequestVisitModalComponent extends Component {
     }
   }
 
+  onRegionChange = region => {
+    this.setState({ region });
+  };
+
   getVisitGeoInfo = () => {
-    const { visit: { address } } = this.state;
+    const {
+      visit: { address }
+    } = this.state;
     if (address) {
       GoogleMapsService.getGeo(
         `${address.street} ,${address.city}${
@@ -65,9 +77,9 @@ class RequestVisitModalComponent extends Component {
                 latitude: lat,
                 longitude: lng,
                 latitudeDelta: 0.09,
-                longitudeDelta: 0.09,
+                longitudeDelta: 0.09
+              },
                 loaded: true
-              }
             });
           } else {
             this.setState({
@@ -82,7 +94,40 @@ class RequestVisitModalComponent extends Component {
         }
       );
     }
-  }
+
+    const { userInfo } = this.state;
+
+    GoogleMapsService.getGeo(
+      `${userInfo.address.street} ,${userInfo.address.city}${
+        userInfo.address.state ? `, ${userInfo.address.state} ${userInfo.address.zip}` : ""
+      }`,
+      innerRes => {
+        const { data } = innerRes;
+        const { region } = this.state;
+        if (data && data.results && data.results[0].geometry) {
+          const { lat, lng } = data.results[0].geometry.location;
+
+          const fromCoordinate = {
+            latitude: lat,
+            longitude: lng
+          };
+
+          const toCoordinate = {
+            latitude: region.latitude,
+            longitude: region.longitude
+          };
+
+          const distance =
+            (haversine(fromCoordinate, toCoordinate, {
+              unit: "mile"
+            }) || 0
+          ).toFixed(2);
+
+          this.setState({ distance: `${distance} miles away` });
+        }
+      });
+
+  };
 
   accept = () => {
     const { onAccept } = this.props;
@@ -103,7 +148,7 @@ class RequestVisitModalComponent extends Component {
 
     const successHandler = () => onCancel();
     // TODO: move this to a secure and specific endpoint like /visit/{id}/cancel
-    updateVisit(id, { state: 'pending' }, { successHandler });
+    updateVisit(id, { state: "pending" }, { successHandler });
   };
 
   render() {
@@ -112,7 +157,16 @@ class RequestVisitModalComponent extends Component {
     if (!modalVisible) return null;
 
     const {
-      visit: { name, illness, symptoms, time, allergies, parentNotes, address, date }
+      visit: {
+        name,
+        illness,
+        symptoms,
+        time,
+        allergies,
+        parentNotes,
+        address,
+        date
+      }
     } = this.state;
 
     return (
@@ -136,6 +190,8 @@ class RequestVisitModalComponent extends Component {
               <MapView
                 style={{ alignSelf: "stretch", height: 160 }}
                 initialRegion={region}
+                region={region}
+                onRegionChange={this.onRegionChange}
               />
             )}
             <View style={{ paddingTop: 32, paddingBottom: 16 }}>
@@ -158,9 +214,7 @@ class RequestVisitModalComponent extends Component {
                       Date
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>
-                    {date ? date : "-"}
-                  </StyledText>
+                  <StyledText fontSize={14}>{date ? date : "-"}</StyledText>
                 </FlexView>
                 <FlexView
                   justifyContent="start"
