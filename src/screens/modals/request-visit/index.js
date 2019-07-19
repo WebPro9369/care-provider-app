@@ -17,6 +17,7 @@ import { VisitDetailCard } from "../../../components/cards";
 import { ModalButton } from "../../../components/modal-button";
 import { colors } from "../../../utils/constants";
 import { GoogleMapsService } from "@services";
+import { ScrollView } from "@components/views/scroll-view";
 
 const imgDog = require("../../../../assets/images/Dog.png");
 
@@ -172,7 +173,7 @@ class RequestVisitModalComponent extends Component {
     return (
       <Modal animationType="slide" transparent={false}>
         <ModalWrapper>
-          <View>
+          <ScrollView>
             <ViewCentered paddingTop={16} paddingBottom={16}>
               <StyledText
                 fontSize={24}
@@ -257,7 +258,7 @@ class RequestVisitModalComponent extends Component {
                 </FlexView>
               </View>
             </ContentWrapper>
-          </View>
+          </ScrollView>
           <FlexView>
             <ModalButton label="Accept" pos="left" onPress={this.accept} />
             <ModalButton
