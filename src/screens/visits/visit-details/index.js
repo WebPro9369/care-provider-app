@@ -227,17 +227,6 @@ class VisitDetailsScreen extends React.Component {
     );
   }
 
-  navigateHandler = () => {
-    const { map } = this.state;
-    const from = `${map.currentLatitude},${map.currentLongitude}`;
-    const to = `${map.latitude},${map.longitude}`;
-    const url = Platform.select({
-      ios: `maps:0, 0?saddr=${from}&daddr=${to}`,
-      android: `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}`
-    });
-    Linking.openURL(url);
-  };
-
   callParent = phone => {
     TwilioVoice.connect({ To: phone });
     console.tron.log("Place call to parent at: ", phone);
