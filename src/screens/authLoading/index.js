@@ -19,7 +19,7 @@ class AuthLoadingScreen extends Component {
   };
 
   componentDidMount() {
-        return this.bootstrapAsync();
+    return this.bootstrapAsync();
   }
 
   bootstrapAsync = async () => {
@@ -150,11 +150,10 @@ class AuthLoadingScreen extends Component {
           navigate("Authenticating");
         }
         if (err.response.status === 500) {
-          navigate("Authenticating");
-          // Alert.alert(
-          //   "Error",
-          //   "There was an error signing in to your account. Please try again later"
-          // );
+          Alert.alert(
+            "Error",
+            "There was an error signing in to your account. Please try again later"
+          );
         }
       };
 
