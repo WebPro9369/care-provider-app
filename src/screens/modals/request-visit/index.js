@@ -70,7 +70,7 @@ class RequestVisitModalComponent extends Component {
 
       GoogleMapsService.getGeo(
         `${address.street} ,${address.city}${
-          address.state ? `, ${address.state}` : ""
+        address.state ? `, ${address.state}` : ""
         }`,
         innerRes => {
           const { data } = innerRes;
@@ -83,7 +83,7 @@ class RequestVisitModalComponent extends Component {
                 latitudeDelta: 0.09,
                 longitudeDelta: 0.09
               },
-                loaded: true
+              loaded: true
             });
           } else {
             this.setState({
@@ -97,39 +97,39 @@ class RequestVisitModalComponent extends Component {
           });
         }
       );
-    }
 
-    const { userInfo } = this.state;
+      const { userInfo } = this.state;
 
-    GoogleMapsService.getGeo(
-      `${userInfo.address.street} ,${userInfo.address.city}${
+      GoogleMapsService.getGeo(
+        `${userInfo.address.street} ,${userInfo.address.city}${
         userInfo.address.state ? `, ${userInfo.address.state} ${userInfo.address.zip}` : ""
-      }`,
-      innerRes => {
-        const { data } = innerRes;
-        const { region } = this.state;
-        if (data && data.results && data.results[0].geometry) {
-          const { lat, lng } = data.results[0].geometry.location;
+        }`,
+        innerRes => {
+          const { data } = innerRes;
+          const { region } = this.state;
+          if (data && data.results && data.results[0].geometry) {
+            const { lat, lng } = data.results[0].geometry.location;
 
-          const fromCoordinate = {
-            latitude: lat,
-            longitude: lng
-          };
+            const fromCoordinate = {
+              latitude: lat,
+              longitude: lng
+            };
 
-          const toCoordinate = {
-            latitude: region.latitude,
-            longitude: region.longitude
-          };
+            const toCoordinate = {
+              latitude: region.latitude,
+              longitude: region.longitude
+            };
 
-          const distance =
-            (haversine(fromCoordinate, toCoordinate, {
-              unit: "mile"
-            }) || 0
-          ).toFixed(2);
+            const distance =
+              (haversine(fromCoordinate, toCoordinate, {
+                unit: "mile"
+              }) || 0
+              ).toFixed(2);
 
-          this.setState({ distance: `${distance} miles away` });
-        }
-      });
+            this.setState({ distance: `${distance} miles away` });
+          }
+        });
+    }
 
   };
 
