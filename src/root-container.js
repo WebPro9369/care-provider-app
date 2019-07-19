@@ -7,6 +7,7 @@ import TouchID from "react-native-touch-id";
 import styled from "styled-components/native";
 import stripe from "tipsi-stripe";
 import AppNavigationContainer from "./navigation/main.navigator";
+import { hasCachedAuthentication } from "./services/authentication";
 import { colors } from "./utils/constants";
 
 stripe.setOptions({
@@ -56,7 +57,7 @@ class RootContainer extends React.Component {
   }
 
   handleAppStateChange = nextAppState =>{
-    if (this.state.appState.match(/background/) && nextAppState === 'active') {
+    if (hasCachedAuthentication() && this.state.appState.match(/background/) && nextAppState === 'active') {
       this.showTouchId(true);
     }
 

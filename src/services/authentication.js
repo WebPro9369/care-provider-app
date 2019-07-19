@@ -6,6 +6,10 @@ export function setAuthentication({ id, apiKey }) {
   API_SETTINGS.apiKey = apiKey;
 }
 
+export function hasCachedAuthentication() {
+  return API_SETTINGS.apiKey;
+}
+
 export function storeNotificationToken(id, notificationToken) {
   if (!notificationToken) return;
 
