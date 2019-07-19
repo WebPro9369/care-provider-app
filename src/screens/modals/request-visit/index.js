@@ -23,11 +23,13 @@ const imgDog = require("../../../../assets/images/Dog.png");
 @inject("store")
 @observer
 class RequestVisitModalComponent extends Component {
+
   state = {
     visit: null,
     modalVisible: false,
     distance: "-",
-    region: null
+    region: null,
+    userInfo: null
   };
 
   static propTypes = {
@@ -37,7 +39,11 @@ class RequestVisitModalComponent extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.modalVisible !== prevState.modalVisible) {
-      return { modalVisible: nextProps.modalVisible, visit: nextProps.visit };
+      return { modalVisible: nextProps.modalVisible,
+        visit: nextProps.visit,
+        userInfo: nextProps.userInfo,
+        region: nextProps.region,
+        distance: nextProps.distance };
     }
 
     return null;
@@ -48,6 +54,10 @@ class RequestVisitModalComponent extends Component {
       this.getVisitGeoInfo();
     }
   }
+
+  onRegionChange = region => {
+    this.setState({ region });
+  };
 
   getVisitGeoInfo = () => {
     const {
@@ -67,39 +77,10 @@ class RequestVisitModalComponent extends Component {
                 latitude: lat,
                 longitude: lng,
                 latitudeDelta: 0.09,
-                longitudeDelta: 0.09,
-                loaded: true
-              }
-            });
-
-            navigator.geolocation.getCurrentPosition(
-              position => {
-                const { region } = this.state;
-
-                const fromCoordinate = {
-                  latitude: position.coords.latitude,
-                  longitude: position.coords.longitude
-                };
-
-                console.tron.log(fromCoordinate);
-                console.tron.log(region);
-
-                const toCoordinate = {
-                  latitude: region.latitude,
-                  longitude: region.longitude
-                };
-
-                const distance =
-                  (haversine(fromCoordinate, toCoordinate, {
-                    unit: "mile"
-                  }) || 0
-                ).toFixed(2);
-
-                this.setState({ distance: `${distance} miles away` });
+                longitudeDelta: 0.09
               },
-              error => Alert.alert(error.message),
-              { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-            );
+                loaded: true
+            });
           } else {
             this.setState({
               region: null
@@ -113,6 +94,39 @@ class RequestVisitModalComponent extends Component {
         }
       );
     }
+
+    const { userInfo } = this.state;
+
+    GoogleMapsService.getGeo(
+      `${userInfo.address.street} ,${userInfo.address.city}${
+        userInfo.address.state ? `, ${userInfo.address.state} ${userInfo.address.zip}` : ""
+      }`,
+      innerRes => {
+        const { data } = innerRes;
+        const { region } = this.state;
+        if (data && data.results && data.results[0].geometry) {
+          const { lat, lng } = data.results[0].geometry.location;
+
+          const fromCoordinate = {
+            latitude: lat,
+            longitude: lng
+          };
+
+          const toCoordinate = {
+            latitude: region.latitude,
+            longitude: region.longitude
+          };
+
+          const distance =
+            (haversine(fromCoordinate, toCoordinate, {
+              unit: "mile"
+            }) || 0
+          ).toFixed(2);
+
+          this.setState({ distance: `${distance} miles away` });
+        }
+      });
+
   };
 
   accept = () => {
@@ -176,6 +190,8 @@ class RequestVisitModalComponent extends Component {
               <MapView
                 style={{ alignSelf: "stretch", height: 160 }}
                 initialRegion={region}
+                region={region}
+                onRegionChange={this.onRegionChange}
               />
             )}
             <View style={{ paddingTop: 32, paddingBottom: 16 }}>

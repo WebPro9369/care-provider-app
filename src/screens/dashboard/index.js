@@ -284,6 +284,7 @@ class DashboardScreen extends React.Component {
         </ScrollView>
         <RequestVisitModalComponent
           visit={visitForApproval}
+          userInfo={store.currentUserStore}
           modalVisible={!!visitForApproval}
           onAccept={this.onRequestVisitAccept}
           onCancel={this.onRequestVisitCancel}
