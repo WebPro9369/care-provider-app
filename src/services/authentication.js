@@ -46,4 +46,5 @@ export async function getAuthentication() {
 
 export function removeAuthentication(id) {
   Keychain.setGenericPassword(`${id}`, "");
+  API_SETTINGS.apiKey = null;
 }
