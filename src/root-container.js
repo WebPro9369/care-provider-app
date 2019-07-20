@@ -1,13 +1,17 @@
 import React from "react";
 import { AppState, Alert, StatusBar } from "react-native";
 import { ThemeProvider } from "styled-components";
+import { NavigationActions } from "react-navigation";
 import { inject, observer, PropTypes } from "mobx-react";
 import UserInactivity from "react-native-user-inactivity";
-import TouchID from "react-native-touch-id";
 import styled from "styled-components/native";
 import stripe from "tipsi-stripe";
 import AppNavigationContainer from "./navigation/main.navigator";
-import { hasCachedAuthentication } from "./services/authentication";
+import { 
+  hasCachedAuthentication,
+  requestTouchID,
+  removeAuthentication,
+} from "./services/authentication";
 import { colors } from "./utils/constants";
 
 stripe.setOptions({
@@ -34,7 +38,6 @@ class RootContainer extends React.Component {
     this.state = {
       firstTime: true,
       active: true,
-      authenticated: true,
       appState: AppState.currentState,
     };
   }
@@ -83,32 +86,20 @@ class RootContainer extends React.Component {
     const { firstTime } = this.state;
 
     if (firstTime || active) {
-      this.setState({
-        firstTime: false
-      });
+      this.setState({ firstTime: false });
 
-      TouchID.isSupported()
-        .then(biometryType => {
-          console.tron.log("BiometryType: ", biometryType);
-          TouchID.authenticate()
-            .then(() => {
-              this.setState({ authenticated: true }, () =>
-                Alert.alert("Success", "Authenticated Successfully")
-              );
-            })
-            .catch(error => {
-              console.tron.log(error);
-              this.setState({ authenticated: false }, () =>
-                Alert.alert("Error", "Authentication failed.")
-              );
-            });
-        })
-        .catch(error => {
-          console.tron.log("TouchID not supported: ", error);
-          this.setState({ authenticated: false }, () =>
-            Alert.alert("Error", "Touch ID is not supported.")
-          );
-        });
+      const onFail = (error) => {
+        console.tron.log("TouchID error", error);
+        removeAuthentication();
+        const navRef = this.navigatorRef;
+        navRef.dispatch(
+          NavigationActions.navigate({
+            routeName: "Authenticating"
+          })
+        );      
+      };
+
+      requestTouchID({ onFail })
     }
   };
 
@@ -138,17 +129,19 @@ class RootContainer extends React.Component {
   };
 
   render() {
-    const { authenticated } = this.state;
-
     return (
       <UserInactivity
         timeForInactivity={15 * 60 * 1000}
         onAction={this.onAction}
       >
         <ThemeProvider theme={colors}>
-          <Root style={authenticated ? null : { display: "none" }}>
+          <Root>
             <StatusBar />
-            <AppNavigationContainer />
+            <AppNavigationContainer 
+              ref={navigatorRef => {
+                this.navigatorRef = navigatorRef;
+              }}
+            />
           </Root>
         </ThemeProvider>
       </UserInactivity>

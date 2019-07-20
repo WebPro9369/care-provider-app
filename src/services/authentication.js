@@ -1,8 +1,9 @@
 import * as Keychain from "react-native-keychain";
 import { API_SETTINGS, updateCareProvider } from "@services/opear-api";
+import TouchID from "react-native-touch-id";
 
 export function setAuthentication({ id, apiKey }) {
-  Keychain.setGenericPassword(`${id}`, ""); // Do not remember the api key
+  Keychain.setGenericPassword(`${id}`, apiKey);
   API_SETTINGS.apiKey = apiKey;
 }
 
@@ -47,4 +48,20 @@ export async function getAuthentication() {
 export function removeAuthentication(id) {
   Keychain.setGenericPassword(`${id}`, "");
   API_SETTINGS.apiKey = null;
+}
+
+export function requestTouchID({ onSuccess,  onFail }) {
+  onSuccess = onSuccess || (() => {});
+  onFail = onFail || (() => {});
+
+  TouchID.isSupported()
+    .then(biometryType => {
+      console.tron.log("BiometryType: ", biometryType);
+      TouchID.authenticate('to authenticate back', {
+        passcodeFallback: true,
+      })
+        .then(onSuccess)
+        .catch(onFail);
+    })
+    .catch(onFail);
 }
