@@ -292,14 +292,6 @@ class ApplicationScreen extends React.Component {
       accepted_terms_of_service,
       accepted_privacy,
       ssn_last_4,
-      addresses_attributes: [
-        {
-          street,
-          city,
-          state,
-          zip
-        }
-      ]
     };
 
     const successHandler = response => {
@@ -326,6 +318,10 @@ class ApplicationScreen extends React.Component {
 
     const formData = new FormData();
     Object.keys(data).forEach(key => formData.append(`care_provider[${key}]`, data[key]));
+    formData.append('care_provider[addresses_attributes][0][street]', street);
+    formData.append('care_provider[addresses_attributes][0][city]', city);
+    formData.append('care_provider[addresses_attributes][0][state]', state);
+    formData.append('care_provider[addresses_attributes][0][zip]', zip);
 
     registerCareProvider(formData, { successHandler, errorHandler });
   };
