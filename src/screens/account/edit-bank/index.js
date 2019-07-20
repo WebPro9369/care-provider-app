@@ -10,10 +10,8 @@ import { FormTextInput, StyledText } from "../../../components/text";
 import { NavHeader } from "../../../components/nav-header";
 import { ServiceButton } from "../../../components/service-button";
 import { FormWrapper } from "../../../components/views";
-import {
-  KeyboardAvoidingView,
-  FormInputView
-} from "../../../components/views/keyboard-view";
+import { FormInputView } from "../../../components/views/keyboard-view";
+import { KeyboardScrollView } from "../../../components/views/keyboard-scroll-view";
 import { colors } from "../../../utils/constants";
 
 import { createBankAccountProvider, updateCareProvider } from "../../../services/opear-api";
@@ -126,7 +124,7 @@ class EditBankScreen extends React.Component {
       acceptedStripeTOS
     } = this.state;
     return (
-      <KeyboardAvoidingView enabled>
+      <KeyboardScrollView padding={16}>
         <DeeplinkHandler navigation={this.props.navigation}/>
         <NavHeader
           title="Edit bank"
@@ -201,14 +199,16 @@ class EditBankScreen extends React.Component {
             />
           </FormInputView>
         </FormWrapper>
-        <ServiceButton
-          title="Save Bank"
-          onPress={async () => {
-            await this.saveBankHandler();
-          }}
-          loading={loading}
-        />
-      </KeyboardAvoidingView>
+        <FormInputView>
+          <ServiceButton
+            title="Save Bank"
+            onPress={async () => {
+              await this.saveBankHandler();
+            }}
+            loading={loading}
+          />
+        </FormInputView>
+      </KeyboardScrollView>
     );
   }
 }
