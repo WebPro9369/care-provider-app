@@ -21,7 +21,7 @@ import { KeyboardScrollView } from "@components/views/keyboard-scroll-view";
 import { storeNotificationToken } from "@services/authentication";
 import { registerCareProvider } from "@services/opear-api";
 import { colors, TITLES } from "@utils/constants";
-import { objectToFormData, commaStringToArray } from "@utils/helpers";
+import { commaStringToArray } from "@utils/helpers";
 
 @inject("store")
 @observer
