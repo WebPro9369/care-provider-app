@@ -38,7 +38,7 @@ class EditAddressScreen extends React.Component {
     const {
       store: {
         currentUserStore: {
-          address: { name, street, city, zip }
+          address: { name, street, city, zip, state }
         }
       }
     } = this.props;
@@ -47,7 +47,8 @@ class EditAddressScreen extends React.Component {
       name,
       street,
       city,
-      zip
+      zip,
+      state
     };
   }
 
@@ -58,7 +59,8 @@ class EditAddressScreen extends React.Component {
         this.setState({
           address: "",
           city: "",
-          zip: ""
+          zip: "",
+          state: ""
         });
         return axios
           .get(
@@ -140,7 +142,7 @@ class EditAddressScreen extends React.Component {
       }
     } = this.props;
 
-    const { street, city, zip, name } = this.state;
+    const { street, city, zip, name, state } = this.state;
     const updatedFields = Object.keys(this.state).filter(key => {
       if (!this.state[key]) {
         return false;
@@ -157,7 +159,7 @@ class EditAddressScreen extends React.Component {
       city: city || address.city,
       street: street || address.street,
       zip: zip || address.zip,
-      state: address.state
+      state: state || address.state
     };
 
     const successHandler = () => {
@@ -165,7 +167,8 @@ class EditAddressScreen extends React.Component {
         .setName(data.name)
         .setStreet(data.street)
         .setCity(data.city)
-        .setZipCode(data.zip);
+        .setZipCode(data.zip)
+        .setState(data.state);
 
       goBack();
     };
@@ -186,7 +189,7 @@ class EditAddressScreen extends React.Component {
       navigation: { goBack }
     } = this.props;
 
-    const { name, street, city, zip } = this.state;
+    const { name, street, city, zip,state } = this.state;
     return (
       <ContainerView style={{ paddingTop: 16 }}>
         <DeeplinkHandler navigation={this.props.navigation}/>
@@ -235,6 +238,13 @@ class EditAddressScreen extends React.Component {
                   onChangeText={this.handleChange("zip")}
                 />
               </FlexView>
+            </FormInputView>
+            <FormInputView>
+              <FormTextInput
+                label="State"
+                value={state}
+                onChangeText={this.handleChange("state")}
+              />
             </FormInputView>
             <FormInputView>
               <FormTextInput
