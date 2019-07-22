@@ -198,16 +198,16 @@ class EditBankScreen extends React.Component {
               checkedColor={colors.SEAFOAMBLUE}
             />
           </FormInputView>
+          <FormInputView>
+            <ServiceButton
+              title="Save Bank"
+              onPress={async () => {
+                await this.saveBankHandler();
+              }}
+              loading={loading}
+            />
+          </FormInputView>
         </FormWrapper>
-        <FormInputView>
-          <ServiceButton
-            title="Save Bank"
-            onPress={async () => {
-              await this.saveBankHandler();
-            }}
-            loading={loading}
-          />
-        </FormInputView>
       </KeyboardScrollView>
     );
   }
