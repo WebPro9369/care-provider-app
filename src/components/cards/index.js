@@ -257,42 +257,45 @@ export const VisitDetailCard = ({
   ...rest
 }) => (
   <VisitDetailCardWrapper {...rest}>
-    <Avatar rounded size={40} source={avatarImg} />
-    <View style={{ marginLeft: 20, flex: 1 }}>
-      <StyledText
-        fontSize={14}
-        fontFamily="FlamaMedium"
-        lineHeight={18}
-        color={colors.BLACK87}
-        style={{ alignSelf: "flex-start" }}
-      >
-        {name}
-      </StyledText>
-      <StyledText
-        fontSize={14}
-        lineHeight={18}
-        color={colors.BLACK60}
-        style={{ alignSelf: "flex-start" }}
-      >
-        {illness}
-      </StyledText>
-    </View>
-    <View>
-      <StyledText
-        fontSize={16}
-        fontFamily="FlamaMedium"
-        lineHeight={24}
-        color={colors.BLACK60}
-      >
-        {time}
-      </StyledText>
-      <StyledText fontSize={12} lineHeight={24} color={colors.BLACK60}>
-        {date}
-      </StyledText>
-      <StyledText fontSize={12} lineHeight={24} color={colors.BLACK60}>
-        {addressToString(address)}
-      </StyledText>
-    </View>
+      <View style={{ flex: 1 }}>
+        <Avatar rounded size={40} source={avatarImg} />
+      </View>
+      <View style={{ marginLeft: 20, flex: 3 }}>
+        <StyledText
+          fontSize={14}
+          fontFamily="FlamaMedium"
+          lineHeight={18}
+          color={colors.BLACK87}
+          style={{ alignSelf: "flex-start" }}
+        >
+          {name}
+        </StyledText>
+        <StyledText
+          fontSize={14}
+          lineHeight={18}
+          color={colors.BLACK60}
+          style={{ alignSelf: "flex-start" }}
+        >
+          {illness}
+        </StyledText>
+      </View>
+      <View style={{ flex: 3 }}>
+        <StyledText
+          fontSize={16}
+          fontFamily="FlamaMedium"
+          lineHeight={24}
+          color={colors.BLACK60}
+        >
+          {time}
+        </StyledText>
+        { date ?
+        <StyledText fontSize={12} lineHeight={24} color={colors.BLACK60}>
+          {date}
+        </StyledText> : null }
+        <StyledText fontSize={12} lineHeight={18} color={colors.BLACK60}>
+          {addressToString(address)}
+        </StyledText>
+      </View>
   </VisitDetailCardWrapper>
 );
 
