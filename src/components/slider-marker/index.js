@@ -58,9 +58,15 @@ const timeSlotStrs = [
 
 export const SliderMarker = ({ currentValue, disabled }) => {
   // console.tron.log("Custom marker props: ", rest);
+  let viewWidth = null;
+
+  if(timeSlotStrs[currentValue].length >= 7) {
+    viewWidth = 65;
+  }
+
   return (
     <View
-      style={{ paddingTop: disabled ? 0 : 16, backgroundColor: "transparent" }}
+      style={{ paddingTop: disabled ? 0 : 16, backgroundColor: "transparent", width: viewWidth }}
     >
       <FlexView justifyContent="center">
         <FontAwesome
@@ -71,9 +77,9 @@ export const SliderMarker = ({ currentValue, disabled }) => {
         />
       </FlexView>
       {!disabled ? (
-        <StyledText fontSize={14} lineHeight={18} color={colors.BLACK87}>
-          {timeSlotStrs[currentValue]}
-        </StyledText>
+          <StyledText fontSize={14} lineHeight={18} color={colors.BLACK87}>
+            {timeSlotStrs[currentValue]}
+          </StyledText>
       ) : null}
     </View>
   );
