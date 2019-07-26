@@ -111,7 +111,7 @@ const ApplicationStore = types
       return self;
     },
     setTitles(value) {
-      self.titles = value;
+      self.titles.replace(value);
       return self;
     },
     setAcceptedPrivacy(value) {
