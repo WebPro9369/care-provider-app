@@ -234,7 +234,12 @@ export const CurrentUserStore = types
       return self;
     },
     setPayoutAccount(value) {
-      self.payout_account = value;
+      if(self.payout_account) {
+        self.payout_account.setTokenId(value.token_id);
+        self.payout_account.setLast4(value.last4);
+      } else {
+        self.payout_account = value;
+      }
       return self;
     },
     setStripeBalance(value) {
