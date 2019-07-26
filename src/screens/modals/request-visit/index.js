@@ -231,33 +231,47 @@ class RequestVisitModalComponent extends Component {
                       Allergies
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>
-                    {allergies ? allergies : "-"}
-                  </StyledText>
+                  <StyledText fontSize={14}>{allergies || "-"}</StyledText>
                 </FlexView>
                 <FlexView
                   justifyContent="start"
-                  style={{ paddingTop: 6, paddingBottom: 6 }}
+                  style={{
+                    paddingTop: 6,
+                    paddingBottom: 12,
+                    flex: 1,
+                    flexDirection: "row"
+                  }}
                 >
-                  <View style={{ width: 100 }}>
+                  <View style={{ flex: 1 }}>
                     <StyledText fontSize={14} fontFamily="FlamaMedium">
                       Other
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>
-                    {parentNotes ? parentNotes : "-"}
+                  <StyledText
+                    fontSize={14}
+                    style={{ flexWrap: "wrap", flex: 2 }}
+                  >
+                    {parentNotes || "-"}
                   </StyledText>
                 </FlexView>
                 <FlexView
                   justifyContent="start"
-                  style={{ paddingTop: 6, paddingBottom: 6 }}
+                  style={{
+                    paddingTop: 6,
+                    paddingBottom: 12,
+                    flex: 1,
+                    flexDirection: "row"
+                  }}
                 >
-                  <View style={{ width: 100 }}>
+                  <View style={{ flex: 1 }}>
                     <StyledText fontSize={14} fontFamily="FlamaMedium">
                       Visit Reason
                     </StyledText>
                   </View>
-                  <StyledText fontSize={14}>
+                  <StyledText
+                    fontSize={14}
+                    style={{ flexWrap: "wrap", flex: 2 }}
+                  >
                     {symptoms.length ? symptoms.join(", ") : "-"}
                   </StyledText>
                 </FlexView>
