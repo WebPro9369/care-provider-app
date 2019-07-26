@@ -186,9 +186,11 @@ class RequestVisitModalComponent extends Component {
                 {"Request: "}
                 {illness}
               </StyledText>
-              <StyledText fontSize={14} color={colors.MIDGREY}>
-                {distance}
-              </StyledText>
+              {distance && (
+                <StyledText fontSize={14} color={colors.MIDGREY}>
+                  {distance}
+                </StyledText>
+              )}
             </ViewCentered>
             {region && (
               <MapView
